@@ -4,12 +4,14 @@
 #include <QApplication>
 #include "constants.hpp"
 #include <QQmlApplicationEngine>
+#include <QSplashScreen>
 #include "chathandler.hpp"
 #include <QtWebEngine/QtWebEngine>
 #include "githubapi.hpp"
 #include "clipboardqml.hpp"
 #include "qmlutils.hpp"
 #include "i18n.hpp"
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -26,6 +28,10 @@ int main(int argc, char *argv[])
     QMLUtils* qmlUtils = new QMLUtils(settings, "qml_utils");
 
     QApplication app(argc, argv);
+
+    QSplashScreen* splashScreen = new QSplashScreen(QPixmap(":/icon.ico"));
+    splashScreen->show();
+
     QtWebEngine::initialize();
 
     //Window icon
@@ -83,6 +89,10 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+    splashScreen->close();
+    delete splashScreen;
+    splashScreen = nullptr;
 
     int returnCode = app.exec();
 
