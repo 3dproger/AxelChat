@@ -80,11 +80,10 @@ ScrollView {
         Text {
             id: element2
             x: 8
-            y: 458
             textFormat: Text.RichText
             text: "Some icons made by <a href=\"http://www.freepik.com/\" title=\"Freepik\">Freepik</a> and <a href=\"https://www.flaticon.com/authors/google\" title=\"Google\">Google</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\"> www.flaticon.com</a> and <a href=\"https://icons8.com\">https://icons8.com</a>"
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
+            anchors.bottomMargin: 20
             font.pixelSize: 12
 
             onLinkActivated: {
