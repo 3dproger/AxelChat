@@ -226,6 +226,50 @@ ApplicationWindow {
             return visibleArea.yPosition * contentHeight + listMessages.height + 160 >= contentHeight;
         }
     }
+    function openAuthorWindow(authorName,
+                              messageType,
+                              authorAvatarUrl,
+                              authorPageUrl,
+                              authorChatModerator,
+                              authorIsChatOwner,
+                              authorChatSponsor,
+                              authorIsVerified)
+    {
+        if (messageType === ChatMessage.SoftwareNotification && messageType !== ChatMessage.TestMessage)
+        {
+            return;
+        }
+
+        var posX, posY;
+        if (typeof(root.authorInfoWindow) != "undefined")
+        {
+            posX = root.authorInfoWindow.x;
+            posY = root.authorInfoWindow.y;
+            root.authorInfoWindow.destroy();
+        }
+
+        var component = Qt.createComponent("qrc:/author_info_window.qml");
+        root.authorInfoWindow = component.createObject(root);
+
+        root.authorInfoWindow.close();
+
+        root.authorInfoWindow.authorName      = authorName;
+        root.authorInfoWindow.authorAvatarUrl = authorAvatarUrl;
+        root.authorInfoWindow.authorPageUrl   = authorPageUrl;
+
+        root.authorInfoWindow.authorChatModerator = authorChatModerator;
+        root.authorInfoWindow.authorIsChatOwner   = authorIsChatOwner;
+        root.authorInfoWindow.authorChatSponsor   = authorChatSponsor;
+        root.authorInfoWindow.authorIsVerified    = authorIsVerified;
+
+        if (typeof(posX) != "undefined")
+        {
+            root.authorInfoWindow.x = posX;
+            root.authorInfoWindow.y = posY;
+        }
+
+        root.authorInfoWindow.show();
+    }
 
     Component {
         id: messageDelegate
@@ -233,43 +277,7 @@ ApplicationWindow {
         Rectangle {
             id: messageContent
 
-            function openAuthorWindow()
-            {
-                if (messageType == ChatMessage.SoftwareNotification && messageType != ChatMessage.TestMessage)
-                {
-                    return;
-                }
 
-                var posX, posY;
-                if (typeof(root.authorInfoWindow) != "undefined")
-                {
-                    posX = root.authorInfoWindow.x;
-                    posY = root.authorInfoWindow.y;
-                    root.authorInfoWindow.destroy();
-                }
-
-                var component = Qt.createComponent("qrc:/author_info_window.qml");
-                root.authorInfoWindow = component.createObject(root);
-
-                root.authorInfoWindow.close();
-
-                root.authorInfoWindow.authorName      = authorName;
-                root.authorInfoWindow.authorAvatarUrl = authorAvatarUrl;
-                root.authorInfoWindow.authorPageUrl   = authorPageUrl;
-
-                root.authorInfoWindow.authorChatModerator = authorChatModerator;
-                root.authorInfoWindow.authorIsChatOwner   = authorIsChatOwner;
-                root.authorInfoWindow.authorChatSponsor   = authorChatSponsor;
-                root.authorInfoWindow.authorIsVerified    = authorIsVerified;
-
-                if (typeof(posX) != "undefined")
-                {
-                    root.authorInfoWindow.x = posX;
-                    root.authorInfoWindow.y = posY;
-                }
-
-                root.authorInfoWindow.show();
-            }
 
             width: listMessages.width
             height: Math.max(textEditMessageText.y + textEditMessageText.height, 40)
@@ -367,7 +375,14 @@ ApplicationWindow {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
-                            openAuthorWindow();
+                            openAuthorWindow(authorName,
+                                             messageType,
+                                             authorAvatarUrl,
+                                             authorPageUrl,
+                                             authorChatModerator,
+                                             authorIsChatOwner,
+                                             authorChatSponsor,
+                                             authorIsVerified);
                         }
                     }
 
@@ -501,7 +516,14 @@ ApplicationWindow {
                     }
 
                     onClicked: {
-                        openAuthorWindow();
+                        openAuthorWindow(authorName,
+                                         messageType,
+                                         authorAvatarUrl,
+                                         authorPageUrl,
+                                         authorChatModerator,
+                                         authorIsChatOwner,
+                                         authorChatSponsor,
+                                         authorIsVerified);
                     }
                 }
             }
