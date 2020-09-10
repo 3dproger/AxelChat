@@ -56,39 +56,55 @@
 <context>
     <name>about</name>
     <message>
-        <location filename="setting_pages/about.qml" line="162"/>
+        <location filename="setting_pages/about.qml" line="179"/>
         <source>You are using the most current version!</source>
         <oldsource>You are using the latest version!</oldsource>
         <translation>Вы используете наиболее актуальную версию!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="168"/>
+        <location filename="setting_pages/about.qml" line="185"/>
         <source>Failed to connect to server. Check your internet connection!</source>
         <translation>Не удалось подключиться к серверу. Проверьте подключение к интернету!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="173"/>
+        <location filename="setting_pages/about.qml" line="190"/>
         <source>Request limits exceeded! Please try again later</source>
         <translation>Превышен лимит запросов! Пожалуйста, повторите попытку  позже</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="45"/>
+        <location filename="setting_pages/about.qml" line="63"/>
         <source>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020</source>
         <oldsource>Alexander Kirsanov (Axel_k) (c) 2020</oldsource>
         <translation>Александр &apos;Axel_k&apos; Кирсанов (c) 2020</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="60"/>
+        <location filename="setting_pages/about.qml" line="49"/>
+        <source>32-bit Build</source>
+        <translation>32-битная сборка</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="51"/>
+        <source>64-bit Build</source>
+        <translation>64-битная сборка</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="53"/>
+        <source>Build Architecture: %1</source>
+        <oldsource>Build Architecture: </oldsource>
+        <translation>Архитектура сборки: %1</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="78"/>
         <source>YouTube Channel</source>
         <translation>YouTube канал</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="99"/>
+        <location filename="setting_pages/about.qml" line="116"/>
         <source>Check for Updates</source>
         <translation>Проверить обновления</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="132"/>
+        <location filename="setting_pages/about.qml" line="149"/>
         <source>subscribe</source>
         <translation>подпишись</translation>
     </message>
@@ -224,22 +240,22 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="main.qml" line="558"/>
+        <location filename="main.qml" line="572"/>
         <source>Connecting to %1</source>
         <translation>Подключение к %1</translation>
     </message>
     <message>
-        <location filename="main.qml" line="565"/>
+        <location filename="main.qml" line="579"/>
         <source>Link or broadcast ID is not specified</source>
         <translation>Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="main.qml" line="569"/>
+        <location filename="main.qml" line="583"/>
         <source>Right click on the window to open the settings</source>
         <translation>Кликните правой кнопкой мыши по окну, чтобы открыть настройки</translation>
     </message>
     <message>
-        <location filename="main.qml" line="575"/>
+        <location filename="main.qml" line="589"/>
         <source>Incorrect link or broadcast ID specified</source>
         <oldsource>Incorrect link or broadcast ID entered</oldsource>
         <translation>Указана неверная ссылка или ID трансляции</translation>

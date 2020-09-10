@@ -2,6 +2,7 @@
 #include <QProcess>
 #include <QApplication>
 #include <QQmlEngine>
+#include <QSysInfo>
 
 QMLUtils::QMLUtils(QSettings* settings, const QString& settingsGroup, QObject *parent) :
     QObject(parent), _settings(settings), _settingsGroupPath(settingsGroup)
@@ -50,6 +51,11 @@ void QMLUtils::setEnabledHardwareGraphicsAccelerator(bool enabled)
 
         emit enabledHardwareGraphicsAcceleratorChanged();
     }
+}
+
+QString QMLUtils::buildCpuArchitecture() const
+{
+    return QSysInfo::buildCpuArchitecture();
 }
 
 void QMLUtils::declareQml()

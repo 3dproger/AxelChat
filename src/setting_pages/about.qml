@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import AxelChat.UpdateChecker 1.0
+import AxelChat.QMLUtils 1.0
 
 ScrollView {
     id: root
@@ -36,6 +37,22 @@ ScrollView {
             text: Qt.application.name
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: 24
+        }
+
+        Text {
+            id: textBuildInfo
+            x: 309
+            y: 119
+            text:  {
+                if (qmlUtils.buildCpuArchitecture == "i386")
+                    return qsTr("32-bit Build");
+                else if (qmlUtils.buildCpuArchitecture == "x86_64")
+                    return qsTr("64-bit Build");
+                else
+                    return qsTr("Build Architecture: %1").arg(qmlUtils.buildCpuArchitecture);
+            }
+            font.pixelSize: 12
+            anchors.horizontalCenter: textApplicationName.horizontalCenter
         }
 
         Text {
@@ -178,7 +195,6 @@ ScrollView {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:1.75;height:480;width:640}D{i:5;anchors_width:624;anchors_x:8}
-D{i:12;anchors_y:354}D{i:1;anchors_x:142}
+    D{i:0;autoSize:true;formeditorZoom:1.100000023841858;height:480;width:640}
 }
 ##^##*/
