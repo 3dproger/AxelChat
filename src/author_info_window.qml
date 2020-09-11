@@ -42,15 +42,15 @@ Window {
 
     width: rootScrollView.contentWidth
     height: rootScrollView.contentHeight
-    minimumWidth:  380
-    minimumHeight: 240
+    minimumWidth:  500
+    minimumHeight: 272
 
     color: Material.background
 
     ScrollView {
         id: rootScrollView
-        contentWidth:  380
-        contentHeight: 240
+        contentWidth:  500
+        contentHeight: 272
         width: rootWindow.width
         height: rootWindow.height
         Item {
@@ -62,17 +62,15 @@ Window {
                 id: avatarImage
                 x: 8
                 y: 8
-                rounded: true
-                height: 64
-                width: 64
+                rounded: false
+                height: 256
+                width:  height
                 mipmap: true
-                source: typeof(rootWindow.authorAvatarUrl) == "object" ? rootWindow.authorAvatarUrl : ""
+                source: typeof(rootWindow.authorAvatarUrl) == "object" ? youTube.createResizedAvatarUrl(rootWindow.authorAvatarUrl, height) : ""
             }
 
             Button {
                 id: buttonChannel
-                x: 8
-                y: 78
                 text: qsTr("Go To Channel")
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 6
@@ -102,7 +100,6 @@ Window {
                 anchors.left: avatarImage.right
                 anchors.leftMargin: 6
                 anchors.top: avatarImage.top
-                anchors.bottom: avatarImage.bottom
                 anchors.rightMargin: 6
                 anchors.right: parent.right
                 text: typeof(rootWindow.authorName) == "string" ? rootWindow.authorName : ""
@@ -140,8 +137,6 @@ Window {
 
             Label {
                 id: labelAuthorType
-                x: 8
-                y: 78
                 text: {
                     var typeName = "";
                     if (authorIsChatOwner)
@@ -165,15 +160,21 @@ Window {
                     }
                     return typeName;
                 }
+                anchors.left: avatarImage.right
+                anchors.top: labelAuthorName.bottom
+                anchors.topMargin: 8
+                anchors.leftMargin: 6
 
             }
 
             Label {
                 id: labelMessagesSent
-                x: 8
-                y: 101
                 text: qsTr("Messages (Current Session): %1")
                     .arg(chatHandler.authorMessagesSentCurrent(authorChannelId))
+                anchors.left: avatarImage.right
+                anchors.top: labelAuthorType.bottom
+                anchors.topMargin: 6
+                anchors.leftMargin: 6
 
                 Connections {
                     target: chatHandler
@@ -189,6 +190,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.5}D{i:5}D{i:8}
+    D{i:8}D{i:9}
 }
 ##^##*/

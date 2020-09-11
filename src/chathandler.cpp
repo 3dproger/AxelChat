@@ -202,6 +202,11 @@ int ChatHandler::authorMessagesSentCurrent(const QString &channelId) const
     return _authors.value(channelId)._messagesSentCurrent;
 }
 
+QUrl ChatHandler::authorSizedAvatarUrl(const QString &channelId, int height) const
+{
+    return YouTube::createResizedAvatarUrl(_authors.value(channelId).avatarUrl(), height);
+}
+
 YouTube *ChatHandler::youTube() const
 {
     return _youTube;

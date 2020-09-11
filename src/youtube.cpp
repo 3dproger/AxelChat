@@ -490,6 +490,68 @@ QUrl YouTube::controlPanelUrl() const
     return _youtubeInfo.controlPanelUrl;
 }
 
+QUrl YouTube::createResizedAvatarUrl(const QUrl &sourceAvatarUrl, int imageHeight)
+{
+    //qDebug("Source URL: " + sourceAvatarUrl.toString().toUtf8());
+
+    //Source: https://yt3.ggpht.com/-S6Q2MDo9stg/AAAAAAAAAAI/AAAAAAAAAAA/TtVz7JalFEc/s64-c-k-no-mo-rj-c0xffffff/photo.jpg
+    //Result: 6
+
+    //https://yt3.ggpht.com/-NP7w1OMmdlg/AAAAAAAAAAI/AAAAAAAAAAA/-RNBD05bfT4/s64-c-k-no-mo-rj-c0xffffff/photo.jpg
+    QString source = sourceAvatarUrl.toString().trimmed();
+    source.replace('\\', '/');
+    if (source.back() == '/')
+    {
+        source = source.left(source.length() - 1);
+    }
+
+    const QVector<QStringRef>& parts = source.splitRef('/', Qt::KeepEmptyParts);
+    if (parts.count() < 2)
+    {
+        qDebug() << Q_FUNC_INFO << ": Failed to convert: parts.count() < 2";
+        return sourceAvatarUrl;
+    }
+
+    if (!parts.last().startsWith("photo", Qt::CaseInsensitive))
+    {
+        qDebug() << Q_FUNC_INFO << ": !parts.last().startsWith(\"photo\", Qt::CaseInsensitive)";
+        return sourceAvatarUrl;
+    }
+
+    QString targetPart = parts[parts.count() - 2].toString();
+    QRegExp rx("^s(\\d+).*", Qt::CaseInsensitive);
+    rx.setMinimal(false);
+    if (rx.indexIn(targetPart) != -1)
+    {
+        targetPart.remove(rx.pos() + 1, rx.cap(1).length());
+        targetPart.insert(rx.pos() + 1, QString("%1").arg(imageHeight));
+
+        QString newUrlStr;
+        for (int i = 0; i < parts.count(); ++i)
+        {
+            if (i != parts.count() - 2)
+            {
+                newUrlStr += parts[i].toString();
+            }
+            else
+            {
+                newUrlStr += targetPart;
+            }
+
+            if (i != parts.count() - 1)
+            {
+                newUrlStr += "/";
+            }
+        }
+
+        //qDebug("Result URL: " + newUrlStr.toUtf8());
+        return newUrlStr;
+    }
+
+    qDebug() << Q_FUNC_INFO << ": Failed to convert";
+    return sourceAvatarUrl;
+}
+
 QUrl YouTube::broadcastLongUrl() const
 {
     return _youtubeInfo.broadcastLongUrl;

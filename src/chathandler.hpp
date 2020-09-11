@@ -34,6 +34,7 @@ public:
     void setEnabledSoundNewMessage(bool enabled);
 
     Q_INVOKABLE int authorMessagesSentCurrent(const QString& channelId) const;
+    Q_INVOKABLE QUrl authorSizedAvatarUrl(const QString& channelId, int height) const;
 
 signals:
     void messagesReceived(const ChatMessage& message, const MessageAuthor& author);

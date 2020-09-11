@@ -38,6 +38,7 @@ public:
     QUrl broadcastLongUrl() const;
     QUrl chatUrl() const;
     QUrl controlPanelUrl() const;
+    Q_INVOKABLE static QUrl createResizedAvatarUrl(const QUrl& sourceAvatarUrl, int imageHeight);
 
 signals:
     void stateChanged();
