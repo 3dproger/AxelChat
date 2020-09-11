@@ -178,8 +178,6 @@ void YouTube::replyFinished(QNetworkReply *reply)
                         }
                     }
 
-                    qDebug(authorAvatarUrl.toString().toUtf8());
-
                     if (liveChatTextMessageRenderer.contains("authorBadges"))
                     {
                         const QJsonArray& authorBadges = liveChatTextMessageRenderer.value("authorBadges").toArray();
