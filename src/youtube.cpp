@@ -169,10 +169,15 @@ void YouTube::replyFinished(QNetworkReply *reply)
                         const QJsonObject& thumbnail = element.toObject();
 
                         int height = thumbnail.value("height").toInt();
-
-                        if (height > preHeight || authorAvatarUrl.isEmpty())
+                        if (height == 32)
                         {
-                            //Getting only max size avatar
+                            //Preferably 32x32
+                            authorAvatarUrl  = thumbnail.value("url").toString();
+                            break;
+                        }
+                        else if (height > preHeight || authorAvatarUrl.isEmpty())
+                        {
+                            //Getting max size avatar
                             authorAvatarUrl  = thumbnail.value("url").toString();
                             preHeight = height;
                         }

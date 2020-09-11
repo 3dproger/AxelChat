@@ -63,7 +63,7 @@ Window {
                 x: 8
                 y: 8
                 rounded: false
-                height: 256
+                height: 720
                 width:  height
                 mipmap: true
                 source: typeof(rootWindow.authorAvatarUrl) == "object" ? youTube.createResizedAvatarUrl(rootWindow.authorAvatarUrl, height) : ""
