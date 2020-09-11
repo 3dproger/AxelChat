@@ -24,7 +24,7 @@ HEADERS += \
     outputtofile.hpp \
     qmlutils.hpp \
     types.hpp \
-    youtubeinterceptor.hpp
+    youtube.hpp
 
 SOURCES += \
         botaction.cpp \
@@ -37,7 +37,7 @@ SOURCES += \
         main.cpp \
         outputtofile.cpp \
         qmlutils.cpp \
-        youtubeinterceptor.cpp
+        youtube.cpp
 
 RESOURCES += qml.qrc \
     my_components/InteractiveWait/InteractiveWait.qrc \

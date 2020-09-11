@@ -17,15 +17,15 @@ ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObj
             _outputToFile, &OutputToFile::onMessagesReceived);
 
     //YouTube
-    _youTubeInterceptor = new YouTubeInterceptor(_outputToFile, settings, _settingsGroupPath + "/youtube");
+    _youTube = new YouTube(_outputToFile, settings, _settingsGroupPath + "/youtube");
 
-    connect(_youTubeInterceptor, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
+    connect(_youTube, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
 
-    connect(_youTubeInterceptor, SIGNAL(connected(QString)),
+    connect(_youTube, SIGNAL(connected(QString)),
                      this, SLOT(onConnectedYouTube(QString)));
 
-    connect(_youTubeInterceptor, SIGNAL(disconnected(QString)),
+    connect(_youTube, SIGNAL(disconnected(QString)),
             this, SLOT(onDisconnectedYouTube(QString)));
 
     if (_settings)
@@ -53,10 +53,10 @@ ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObj
 
 ChatHandler::~ChatHandler()
 {
-    if (_youTubeInterceptor)
+    if (_youTube)
     {
-        delete _youTubeInterceptor;
-        _youTubeInterceptor = nullptr;
+        delete _youTube;
+        _youTube = nullptr;
     }
 
     if (_bot)
@@ -166,8 +166,8 @@ void ChatHandler::declareQml()
     qmlRegisterUncreatableType<ChatHandler> ("AxelChat.ChatHandler",
                                              1, 0, "ChatHandler", "Type cannot be created in QML");
 
-    qmlRegisterUncreatableType<YouTubeInterceptor> ("AxelChat.YouTubeInterceptor",
-                                                    1, 0, "YouTubeInterceptor", "Type cannot be created in QML");
+    qmlRegisterUncreatableType<YouTube> ("AxelChat.YouTube",
+                                                    1, 0, "YouTube", "Type cannot be created in QML");
 
     qmlRegisterUncreatableType<OutputToFile> ("AxelChat.OutputToFile",
                                               1, 0, "OutputToFile", "Type cannot be created in QML");
@@ -202,9 +202,9 @@ int ChatHandler::authorMessagesSentCurrent(const QString &channelId) const
     return _authors.value(channelId)._messagesSentCurrent;
 }
 
-YouTubeInterceptor *ChatHandler::youTubeInterceptor() const
+YouTube *ChatHandler::youTube() const
 {
-    return _youTubeInterceptor;
+    return _youTube;
 }
 
 OutputToFile *ChatHandler::outputToFile() const

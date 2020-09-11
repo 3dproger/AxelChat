@@ -10,7 +10,7 @@
 #include <QSettings>
 #include "outputtofile.hpp"
 
-class YouTubeInterceptor : public QWebEngineUrlRequestInterceptor
+class YouTube : public QWebEngineUrlRequestInterceptor
 {
     Q_OBJECT
     Q_PROPERTY(QString userSpecifiedLink          READ userSpecifiedLink WRITE setLink NOTIFY linkChanged)
@@ -23,8 +23,8 @@ class YouTubeInterceptor : public QWebEngineUrlRequestInterceptor
     Q_PROPERTY(bool    isBroadcastIdUserSpecified READ isBroadcastIdUserSpecified)
 
 public:
-    explicit YouTubeInterceptor(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
-    ~YouTubeInterceptor();
+    explicit YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
+    ~YouTube();
     void interceptRequest(QWebEngineUrlRequestInfo &info);
     QByteArray replyData() const;
 

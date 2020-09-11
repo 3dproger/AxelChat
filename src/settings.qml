@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.12
 import QtQuick.Window 2.15
 import AxelChat.ChatHandler 1.0
-import AxelChat.YouTubeInterceptor 1.0
+import AxelChat.YouTube 1.0
 import AxelChat.OutputToFile 1.0
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.12

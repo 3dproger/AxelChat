@@ -27,12 +27,11 @@ int main(int argc, char *argv[])
     QMLUtils::declareQml();
     QMLUtils* qmlUtils = new QMLUtils(settings, "qml_utils");
 
+    QtWebEngine::initialize();
     QApplication app(argc, argv);
 
     QSplashScreen* splashScreen = new QSplashScreen(QPixmap(":/icon.ico"));
     splashScreen->show();
-
-    QtWebEngine::initialize();
 
     //Window icon
     app.setWindowIcon(QIcon(":/icon.ico"));
@@ -74,7 +73,7 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("i18n",               i18n);
     engine.rootContext()->setContextProperty("chatHandler",        chatHandler);
-    engine.rootContext()->setContextProperty("youTubeInterceptor", chatHandler->youTubeInterceptor());
+    engine.rootContext()->setContextProperty("youTube",            chatHandler->youTube());
     engine.rootContext()->setContextProperty("outputToFile",       chatHandler->outputToFile());
     engine.rootContext()->setContextProperty("chatBot",            chatHandler->bot());
     engine.rootContext()->setContextProperty("updateChecker",      github);

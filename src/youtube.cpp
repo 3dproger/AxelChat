@@ -1,4 +1,4 @@
-#include "youtubeinterceptor.hpp"
+#include "youtube.hpp"
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -6,10 +6,10 @@
 #include <QUrlQuery>
 #include <QWebEngineProfile>
 
-YouTubeInterceptor::YouTubeInterceptor(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
+YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
     : QWebEngineUrlRequestInterceptor(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
 {
-    connect(_manager, &QNetworkAccessManager::finished, this, &YouTubeInterceptor::replyFinished);
+    connect(_manager, &QNetworkAccessManager::finished, this, &YouTube::replyFinished);
 
     _webPage.setUrlRequestInterceptor(this);
 
@@ -19,7 +19,7 @@ YouTubeInterceptor::YouTubeInterceptor(OutputToFile* outputToFile, QSettings* se
     }
 }
 
-YouTubeInterceptor::~YouTubeInterceptor()
+YouTube::~YouTube()
 {
     _youtubeInfo.broadcastConnected = false;
     emit disconnected(_youtubeInfo.broadcastId);
@@ -31,7 +31,7 @@ YouTubeInterceptor::~YouTubeInterceptor()
     }
 }
 
-void YouTubeInterceptor::interceptRequest(QWebEngineUrlRequestInfo &info)
+void YouTube::interceptRequest(QWebEngineUrlRequestInfo &info)
 {
     QUrl requestUrl = info.requestUrl();
 
@@ -87,7 +87,7 @@ void YouTubeInterceptor::interceptRequest(QWebEngineUrlRequestInfo &info)
     }
 }
 
-void YouTubeInterceptor::replyFinished(QNetworkReply *reply)
+void YouTube::replyFinished(QNetworkReply *reply)
 {
     if (reply)
     {
@@ -360,7 +360,7 @@ void YouTubeInterceptor::replyFinished(QNetworkReply *reply)
     emit stateChanged();
 }
 
-QString YouTubeInterceptor::extractBroadcastId(const QString &link) const
+QString YouTube::extractBroadcastId(const QString &link) const
 {
     QString withoutHttpsWWW = link;
 
@@ -481,57 +481,57 @@ QString YouTubeInterceptor::extractBroadcastId(const QString &link) const
     return broadcastId;
 }
 
-QUrl YouTubeInterceptor::chatUrl() const
+QUrl YouTube::chatUrl() const
 {
     return _youtubeInfo.broadcastChatUrl;
 }
 
-QUrl YouTubeInterceptor::controlPanelUrl() const
+QUrl YouTube::controlPanelUrl() const
 {
     return _youtubeInfo.controlPanelUrl;
 }
 
-QUrl YouTubeInterceptor::broadcastLongUrl() const
+QUrl YouTube::broadcastLongUrl() const
 {
     return _youtubeInfo.broadcastLongUrl;
 }
 
-QString YouTubeInterceptor::userSpecifiedLink() const
+QString YouTube::userSpecifiedLink() const
 {
     return _youtubeInfo.userSpecified;
 }
 
-QUrl YouTubeInterceptor::broadcastShortUrl() const
+QUrl YouTube::broadcastShortUrl() const
 {
     return _youtubeInfo.broadcastShortUrl;
 }
 
-QString YouTubeInterceptor::broadcastId() const
+QString YouTube::broadcastId() const
 {
     return _youtubeInfo.broadcastId;
 }
 
-bool YouTubeInterceptor::isConnected() const
+bool YouTube::isConnected() const
 {
     return _youtubeInfo.broadcastConnected;
 }
 
-bool YouTubeInterceptor::isBroadcastIdUserSpecified() const
+bool YouTube::isBroadcastIdUserSpecified() const
 {
     return _youtubeInfo.userSpecified.trimmed() == _youtubeInfo.broadcastId.trimmed() && !_youtubeInfo.userSpecified.isEmpty();
 }
 
-int YouTubeInterceptor::messagesReceived() const
+int YouTube::messagesReceived() const
 {
     return _messagesReceived;
 }
 
-QByteArray YouTubeInterceptor::replyData() const
+QByteArray YouTube::replyData() const
 {
     return _replyData;
 }
 
-void YouTubeInterceptor::setLink(QString link)
+void YouTube::setLink(QString link)
 {
     link = link.trimmed();
 

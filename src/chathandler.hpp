@@ -5,7 +5,7 @@
 #include <QMap>
 #include <QDateTime>
 #include "types.hpp"
-#include "youtubeinterceptor.hpp"
+#include "youtube.hpp"
 #include "outputtofile.hpp"
 #include "chatbot.hpp"
 #include <QSound>
@@ -24,7 +24,7 @@ public:
     //bool removeChatMessageAction(int index);
 
     OutputToFile *outputToFile() const;
-    YouTubeInterceptor *youTubeInterceptor() const;
+    YouTube *youTube() const;
     ChatBot *bot() const;
     ChatMessagesModel* messagesModel();
 
@@ -57,7 +57,7 @@ private:
     QString _settingsGroupPath;
     QSettings*    _settings                 = nullptr;
 
-    YouTubeInterceptor* _youTubeInterceptor = nullptr;
+    YouTube* _youTube = nullptr;
     OutputToFile* _outputToFile             = nullptr;
     ChatBot* _bot                           = nullptr;
 
