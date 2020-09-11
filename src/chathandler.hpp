@@ -33,6 +33,8 @@ public:
     inline bool enabledSoundNewMessage() const { return _enabledSoundNewMessage; }
     void setEnabledSoundNewMessage(bool enabled);
 
+    Q_INVOKABLE int authorMessagesSentCurrent(const QString& channelId) const;
+
 signals:
     void messagesReceived(const ChatMessage& message, const MessageAuthor& author);
     void connectedSomeChanged();

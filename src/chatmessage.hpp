@@ -10,6 +10,8 @@ class ChatMessage;
 class MessageAuthor{
     Q_GADGET
 public:
+    friend class ChatHandler;
+
     MessageAuthor() { };
 
     inline bool valid() const;
@@ -51,6 +53,11 @@ public:
         return _pageUrl;
     }
 
+    inline int messagesSentCurrent() const
+    {
+        return _messagesSentCurrent;
+    }
+
     static MessageAuthor createFromYouTube(const QString& name,
                                 const QString& channelId,
                                 const QUrl& avatarUrl,
@@ -84,6 +91,7 @@ private:
     bool _isChatSponsor   = false;
     bool _isChatModerator = false;
     bool _isDonation      = false;
+    int _messagesSentCurrent = 0;
 
     static MessageAuthor _softwareAuthor;
     static MessageAuthor _testMessageAuthor;

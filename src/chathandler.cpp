@@ -88,7 +88,16 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
 
     for (const MessageAuthor& author : authors)
     {
-        _authors.insert(author.channelId(), author);
+        const QString& channelId = author.channelId();
+        int messagesSentCurrent = 0;
+
+        if (_authors.contains(channelId))
+        {
+            messagesSentCurrent = _authors[channelId]._messagesSentCurrent;
+        }
+
+        _authors[channelId] = author;
+        _authors[channelId]._messagesSentCurrent = messagesSentCurrent;
     }
 
     for (const ChatMessage& message : messages)
@@ -97,6 +106,12 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
         {
             /*qDebug(QString("%1: %2")
                    .arg(message.authorName).arg(message.text).toUtf8());*/
+
+            const QString& channelId = message.author().channelId();
+            if (_authors.contains(channelId))
+            {
+                _authors[channelId]._messagesSentCurrent++;
+            }
 
             if (_bot && message.author().channelId() != MessageAuthor::softwareAuthor().channelId())
             {
@@ -180,6 +195,11 @@ void ChatHandler::setEnabledSoundNewMessage(bool enabled)
 
         emit enabledSoundNewMessageChanged();
     }
+}
+
+int ChatHandler::authorMessagesSentCurrent(const QString &channelId) const
+{
+    return _authors.value(channelId)._messagesSentCurrent;
 }
 
 YouTubeInterceptor *ChatHandler::youTubeInterceptor() const

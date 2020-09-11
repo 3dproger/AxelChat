@@ -5,6 +5,7 @@ import Qt.labs.settings 1.1
 import QtQuick.Controls.Material 2.12
 import "my_components" as MyComponents
 import AxelChat.MessageAuthor 1.0
+import AxelChat.ChatHandler 1.0
 
 Window {
     id: rootWindow
@@ -18,6 +19,7 @@ Window {
     Material.primary :    "#03A9F4"
 
     property var authorName: "";
+    property var authorChannelId;
     property var authorAvatarUrl;
     property var authorPageUrl;
     property var authorCustomBadgeUrl;
@@ -165,12 +167,28 @@ Window {
                 }
 
             }
+
+            Label {
+                id: labelMessagesSent
+                x: 8
+                y: 101
+                text: qsTr("Messages (Current Session): %1")
+                    .arg(chatHandler.authorMessagesSentCurrent(authorChannelId))
+
+                Connections {
+                    target: chatHandler
+                    function onMessagesReceived() {
+                        labelMessagesSent.text = qsTr("Messages (Current Session): %1")
+                        .arg(chatHandler.authorMessagesSentCurrent(authorChannelId));
+                    }
+                }
+            }
         }
     }
 }
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.5}D{i:5;anchors_x:8;anchors_y:78}
+    D{i:0;formeditorZoom:1.5}D{i:5}D{i:8}
 }
 ##^##*/

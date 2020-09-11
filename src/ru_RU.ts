@@ -12,12 +12,12 @@
         <translation type="vanished">Тестовое сообщение</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="121"/>
+        <location filename="chathandler.cpp" line="136"/>
         <source>YouTube connected: %1</source>
         <translation>YouTube подключён: %1</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="128"/>
+        <location filename="chathandler.cpp" line="143"/>
         <source>YouTube disconnected: %1</source>
         <translation>YouTube отключён: %1</translation>
     </message>
@@ -56,55 +56,55 @@
 <context>
     <name>about</name>
     <message>
-        <location filename="setting_pages/about.qml" line="179"/>
+        <location filename="setting_pages/about.qml" line="178"/>
         <source>You are using the most current version!</source>
         <oldsource>You are using the latest version!</oldsource>
         <translation>Вы используете наиболее актуальную версию!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="185"/>
+        <location filename="setting_pages/about.qml" line="184"/>
         <source>Failed to connect to server. Check your internet connection!</source>
         <translation>Не удалось подключиться к серверу. Проверьте подключение к интернету!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="190"/>
+        <location filename="setting_pages/about.qml" line="189"/>
         <source>Request limits exceeded! Please try again later</source>
         <translation>Превышен лимит запросов! Пожалуйста, повторите попытку  позже</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="63"/>
+        <location filename="setting_pages/about.qml" line="62"/>
         <source>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020</source>
         <oldsource>Alexander Kirsanov (Axel_k) (c) 2020</oldsource>
         <translation>Александр &apos;Axel_k&apos; Кирсанов (c) 2020</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="49"/>
+        <location filename="setting_pages/about.qml" line="48"/>
         <source>32-bit Build</source>
         <translation>32-битная сборка</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="51"/>
+        <location filename="setting_pages/about.qml" line="50"/>
         <source>64-bit Build</source>
         <translation>64-битная сборка</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="53"/>
+        <location filename="setting_pages/about.qml" line="52"/>
         <source>Build Architecture: %1</source>
         <oldsource>Build Architecture: </oldsource>
         <translation>Архитектура сборки: %1</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="78"/>
+        <location filename="setting_pages/about.qml" line="77"/>
         <source>YouTube Channel</source>
         <translation>YouTube канал</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="116"/>
+        <location filename="setting_pages/about.qml" line="115"/>
         <source>Check for Updates</source>
         <translation>Проверить обновления</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="149"/>
+        <location filename="setting_pages/about.qml" line="148"/>
         <source>subscribe</source>
         <translation>подпишись</translation>
     </message>
@@ -140,33 +140,39 @@
 <context>
     <name>author_info_window</name>
     <message>
-        <location filename="author_info_window.qml" line="11"/>
+        <location filename="author_info_window.qml" line="12"/>
         <source>Participant Information</source>
         <translation>Информация об участнике</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="74"/>
+        <location filename="author_info_window.qml" line="76"/>
         <source>Go To Channel</source>
         <oldsource>Channel</oldsource>
         <translation>Перейти на канал</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="162"/>
+        <location filename="author_info_window.qml" line="164"/>
         <source>Regular Participant</source>
         <translation>Обычный участник</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="148"/>
+        <location filename="author_info_window.qml" line="175"/>
+        <source>Messages (Current Session): %1</source>
+        <oldsource>Messages Sent (Current Session): %1</oldsource>
+        <translation>Сообщения (текущая сессия): %1</translation>
+    </message>
+    <message>
+        <location filename="author_info_window.qml" line="150"/>
         <source>Channel Author</source>
         <translation>Автор канала</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="153"/>
+        <location filename="author_info_window.qml" line="155"/>
         <source>Moderator</source>
         <translation>Модератор</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="158"/>
+        <location filename="author_info_window.qml" line="160"/>
         <source>Sponsor</source>
         <translation>Спонсор</translation>
     </message>
@@ -240,22 +246,22 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="main.qml" line="572"/>
+        <location filename="main.qml" line="598"/>
         <source>Connecting to %1</source>
         <translation>Подключение к %1</translation>
     </message>
     <message>
-        <location filename="main.qml" line="579"/>
+        <location filename="main.qml" line="605"/>
         <source>Link or broadcast ID is not specified</source>
         <translation>Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="main.qml" line="583"/>
+        <location filename="main.qml" line="609"/>
         <source>Right click on the window to open the settings</source>
         <translation>Кликните правой кнопкой мыши по окну, чтобы открыть настройки</translation>
     </message>
     <message>
-        <location filename="main.qml" line="589"/>
+        <location filename="main.qml" line="615"/>
         <source>Incorrect link or broadcast ID specified</source>
         <oldsource>Incorrect link or broadcast ID entered</oldsource>
         <translation>Указана неверная ссылка или ID трансляции</translation>

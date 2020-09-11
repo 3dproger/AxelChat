@@ -226,7 +226,8 @@ ApplicationWindow {
             return visibleArea.yPosition * contentHeight + listMessages.height + 160 >= contentHeight;
         }
     }
-    function openAuthorWindow(authorName,
+    function openAuthorWindow(authorChannelId,
+                              authorName,
                               messageType,
                               authorAvatarUrl,
                               authorPageUrl,
@@ -253,6 +254,7 @@ ApplicationWindow {
 
         root.authorInfoWindow.close();
 
+        root.authorInfoWindow.authorChannelId = authorChannelId;
         root.authorInfoWindow.authorName      = authorName;
         root.authorInfoWindow.authorAvatarUrl = authorAvatarUrl;
         root.authorInfoWindow.authorPageUrl   = authorPageUrl;
@@ -375,7 +377,8 @@ ApplicationWindow {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
-                            openAuthorWindow(authorName,
+                            openAuthorWindow(authorChannelId,
+                                             authorName,
                                              messageType,
                                              authorAvatarUrl,
                                              authorPageUrl,
@@ -516,7 +519,8 @@ ApplicationWindow {
                     }
 
                     onClicked: {
-                        openAuthorWindow(authorName,
+                        openAuthorWindow(authorChannelId,
+                                         authorName,
                                          messageType,
                                          authorAvatarUrl,
                                          authorPageUrl,
