@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QApplication::setApplicationName(AxelChat::APPLICATION_NAME);
-    QApplication::setOrganizationName(AxelChat::ORGANIZATION_NAME);
+    QApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
+    QApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
     QApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
     QApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
 

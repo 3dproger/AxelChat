@@ -162,22 +162,23 @@ void YouTube::replyFinished(QNetworkReply *reply)
                             .value("authorPhoto").toObject()
                             .value("thumbnails").toArray();
 
-                    int preWidth = -1;
+                    int preHeight = -1;
 
-                    foreach (const QJsonValue& element, thumbnails)
+                    for (const QJsonValue& element : thumbnails)
                     {
-                        const QJsonObject thumbnail = element.toObject();
+                        const QJsonObject& thumbnail = element.toObject();
 
-                        int width = thumbnail.value("width").toInt();
+                        int height = thumbnail.value("height").toInt();
 
-                        if (width > preWidth && authorAvatarUrl.isEmpty())
+                        if (height > preHeight || authorAvatarUrl.isEmpty())
                         {
-                            //Getting only max size thumbnail
+                            //Getting only max size avatar
                             authorAvatarUrl  = thumbnail.value("url").toString();
-
-                            preWidth = width;
+                            preHeight = height;
                         }
                     }
+
+                    qDebug(authorAvatarUrl.toString().toUtf8());
 
                     if (liveChatTextMessageRenderer.contains("authorBadges"))
                     {
