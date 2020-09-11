@@ -145,36 +145,46 @@
         <translation>Информация об участнике</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="76"/>
+        <location filename="author_info_window.qml" line="166"/>
+        <source>Open Image</source>
+        <translation>Открыть изображение</translation>
+    </message>
+    <message>
+        <location filename="author_info_window.qml" line="191"/>
         <source>Go To Channel</source>
         <oldsource>Channel</oldsource>
         <translation>Перейти на канал</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="164"/>
+        <location filename="author_info_window.qml" line="135"/>
         <source>Regular Participant</source>
         <translation>Обычный участник</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="175"/>
+        <location filename="author_info_window.qml" line="148"/>
+        <location filename="author_info_window.qml" line="158"/>
         <source>Messages (Current Session): %1</source>
         <oldsource>Messages Sent (Current Session): %1</oldsource>
         <translation>Сообщения (текущая сессия): %1</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="150"/>
+        <location filename="author_info_window.qml" line="121"/>
         <source>Channel Author</source>
         <translation>Автор канала</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="155"/>
+        <location filename="author_info_window.qml" line="126"/>
         <source>Moderator</source>
         <translation>Модератор</translation>
     </message>
     <message>
-        <location filename="author_info_window.qml" line="160"/>
+        <location filename="author_info_window.qml" line="131"/>
         <source>Sponsor</source>
         <translation>Спонсор</translation>
+    </message>
+    <message>
+        <source>Download Image</source>
+        <translation type="vanished">Загрузить изображение</translation>
     </message>
     <message>
         <source>Verified</source>
@@ -398,39 +408,39 @@
 <context>
     <name>youtube</name>
     <message>
-        <location filename="setting_pages/youtube.qml" line="23"/>
+        <location filename="setting_pages/youtube.qml" line="24"/>
         <source>Broadcast link or ID:</source>
         <translation>Ссылка или ID трансляции:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="40"/>
+        <location filename="setting_pages/youtube.qml" line="41"/>
         <source>Paste the broadcast link or ID here...</source>
         <translation>Вставьте ссылку или ID трансляции здесь...</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="60"/>
+        <location filename="setting_pages/youtube.qml" line="61"/>
         <source>Broadcast ID:</source>
         <translation>ID трансляции:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="82"/>
+        <location filename="setting_pages/youtube.qml" line="83"/>
         <source>Broadcast:</source>
         <oldsource>Broadcast URL:</oldsource>
         <translation>Трансляция:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="103"/>
+        <location filename="setting_pages/youtube.qml" line="104"/>
         <source>Chat:</source>
         <oldsource>Chat URL:</oldsource>
         <translation>Чат:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="124"/>
+        <location filename="setting_pages/youtube.qml" line="125"/>
         <source>YouTube</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="157"/>
+        <location filename="setting_pages/youtube.qml" line="158"/>
         <source>Control Panel:</source>
         <translation>Панель управления:</translation>
     </message>
@@ -439,27 +449,27 @@
         <translation type="vanished">URL панели управления:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="167"/>
+        <location filename="setting_pages/youtube.qml" line="168"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="494"/>
+        <location filename="setting_pages/youtube.qml" line="495"/>
         <source>Link or broadcast ID is not specified</source>
         <translation>Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="498"/>
+        <location filename="setting_pages/youtube.qml" line="499"/>
         <source>Incorrect link or broadcast ID specified</source>
         <translation>Указана неверная ссылка или ID трансляции</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="503"/>
+        <location filename="setting_pages/youtube.qml" line="504"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="507"/>
+        <location filename="setting_pages/youtube.qml" line="508"/>
         <source>Successfully Connected!</source>
         <translation>Успешно подключено!</translation>
     </message>
@@ -468,25 +478,25 @@
         <translation type="vanished">Вырезать</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="189"/>
-        <location filename="setting_pages/youtube.qml" line="213"/>
-        <location filename="setting_pages/youtube.qml" line="322"/>
-        <location filename="setting_pages/youtube.qml" line="347"/>
-        <location filename="setting_pages/youtube.qml" line="372"/>
-        <location filename="setting_pages/youtube.qml" line="397"/>
+        <location filename="setting_pages/youtube.qml" line="190"/>
+        <location filename="setting_pages/youtube.qml" line="214"/>
+        <location filename="setting_pages/youtube.qml" line="323"/>
+        <location filename="setting_pages/youtube.qml" line="348"/>
+        <location filename="setting_pages/youtube.qml" line="373"/>
+        <location filename="setting_pages/youtube.qml" line="398"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="203"/>
+        <location filename="setting_pages/youtube.qml" line="204"/>
         <source>Copied!</source>
         <translation>Скопировано!</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="224"/>
-        <location filename="setting_pages/youtube.qml" line="253"/>
-        <location filename="setting_pages/youtube.qml" line="276"/>
-        <location filename="setting_pages/youtube.qml" line="299"/>
+        <location filename="setting_pages/youtube.qml" line="225"/>
+        <location filename="setting_pages/youtube.qml" line="254"/>
+        <location filename="setting_pages/youtube.qml" line="277"/>
+        <location filename="setting_pages/youtube.qml" line="300"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>

@@ -42,15 +42,16 @@ Window {
 
     width: rootScrollView.contentWidth
     height: rootScrollView.contentHeight
-    minimumWidth:  500
-    minimumHeight: 272
+    minimumWidth:  480
+    minimumHeight: 256
+    maximumHeight: 256
 
     color: Material.background
 
     ScrollView {
         id: rootScrollView
-        contentWidth:  500
-        contentHeight: 272
+        contentWidth:  480
+        contentHeight: 256
         width: rootWindow.width
         height: rootWindow.height
         Item {
@@ -63,40 +64,15 @@ Window {
                 x: 8
                 y: 8
                 rounded: false
-                height: 720
+                height: 240
                 width:  height
                 mipmap: true
                 source: typeof(rootWindow.authorAvatarUrl) == "object" ? youTube.createResizedAvatarUrl(rootWindow.authorAvatarUrl, height) : ""
             }
 
-            Button {
-                id: buttonChannel
-                text: qsTr("Go To Channel")
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 6
-                anchors.right: parent.right
-                anchors.rightMargin: 6
-                icon.source: "qrc:/resources/images/forward-arrow.svg"
-                highlighted: true
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.NoButton
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                }
-
-                onClicked: {
-                    if (typeof(rootWindow.authorPageUrl) == "object")
-                    {
-                        Qt.openUrlExternally(rootWindow.authorPageUrl)
-                    }
-                }
-            }
-
             MyComponents.MyTextField {
                 id: labelAuthorName
                 width: 400
-                height: 40
                 anchors.left: avatarImage.right
                 anchors.leftMargin: 6
                 anchors.top: avatarImage.top
@@ -181,6 +157,55 @@ Window {
                     function onMessagesReceived() {
                         labelMessagesSent.text = qsTr("Messages (Current Session): %1")
                         .arg(chatHandler.authorMessagesSentCurrent(authorChannelId));
+                    }
+                }
+            }
+
+            Button {
+                id: buttonAvatar
+                text: qsTr("Open Image")
+                anchors.top: labelMessagesSent.bottom
+                anchors.topMargin: 12
+                anchors.left: avatarImage.right
+                anchors.leftMargin: 6
+                icon.source: "qrc:/resources/images/forward-arrow.svg"
+                highlighted: false
+                flat: true
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                }
+
+                onClicked: {
+                    if (typeof(rootWindow.authorPageUrl) == "object")
+                    {
+                        Qt.openUrlExternally(youTube.createResizedAvatarUrl(rootWindow.authorAvatarUrl, 720))
+                    }
+                }
+            }
+
+            Button {
+                id: buttonChannel
+                text: qsTr("Go To Channel")
+                anchors.top: buttonAvatar.bottom
+                anchors.topMargin: 0
+                anchors.left: avatarImage.right
+                anchors.leftMargin: 6
+                icon.source: "qrc:/resources/images/forward-arrow.svg"
+                highlighted: true
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                }
+
+                onClicked: {
+                    if (typeof(rootWindow.authorPageUrl) == "object")
+                    {
+                        Qt.openUrlExternally(rootWindow.authorPageUrl)
                     }
                 }
             }

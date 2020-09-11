@@ -177,7 +177,7 @@ void YouTube::replyFinished(QNetworkReply *reply)
                         }
                         else if (height > preHeight || authorAvatarUrl.isEmpty())
                         {
-                            //Getting max size avatar
+                            //Or getting max size avatar
                             authorAvatarUrl  = thumbnail.value("url").toString();
                             preHeight = height;
                         }
