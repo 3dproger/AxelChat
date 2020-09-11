@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import Qt.labs.settings 1.1
 import AxelChat.ChatHandler 1.0
-import AxelChat.YouTubeInterceptor 1.0
+import AxelChat.YouTube 1.0
 import AxelChat.UpdateChecker 1.0
 import AxelChat.MessageAuthor 1.0
 import AxelChat.ChatMessage 1.0
@@ -226,6 +226,52 @@ ApplicationWindow {
             return visibleArea.yPosition * contentHeight + listMessages.height + 160 >= contentHeight;
         }
     }
+    function openAuthorWindow(authorChannelId,
+                              authorName,
+                              messageType,
+                              authorAvatarUrl,
+                              authorPageUrl,
+                              authorChatModerator,
+                              authorIsChatOwner,
+                              authorChatSponsor,
+                              authorIsVerified)
+    {
+        if (messageType === ChatMessage.SoftwareNotification && messageType !== ChatMessage.TestMessage)
+        {
+            return;
+        }
+
+        var posX, posY;
+        if (typeof(root.authorInfoWindow) != "undefined")
+        {
+            posX = root.authorInfoWindow.x;
+            posY = root.authorInfoWindow.y;
+            root.authorInfoWindow.destroy();
+        }
+
+        var component = Qt.createComponent("qrc:/author_info_window.qml");
+        root.authorInfoWindow = component.createObject(root);
+
+        root.authorInfoWindow.close();
+
+        root.authorInfoWindow.authorChannelId = authorChannelId;
+        root.authorInfoWindow.authorName      = authorName;
+        root.authorInfoWindow.authorAvatarUrl = authorAvatarUrl;
+        root.authorInfoWindow.authorPageUrl   = authorPageUrl;
+
+        root.authorInfoWindow.authorChatModerator = authorChatModerator;
+        root.authorInfoWindow.authorIsChatOwner   = authorIsChatOwner;
+        root.authorInfoWindow.authorChatSponsor   = authorChatSponsor;
+        root.authorInfoWindow.authorIsVerified    = authorIsVerified;
+
+        if (typeof(posX) != "undefined")
+        {
+            root.authorInfoWindow.x = posX;
+            root.authorInfoWindow.y = posY;
+        }
+
+        root.authorInfoWindow.show();
+    }
 
     Component {
         id: messageDelegate
@@ -233,43 +279,7 @@ ApplicationWindow {
         Rectangle {
             id: messageContent
 
-            function openAuthorWindow()
-            {
-                if (messageType == ChatMessage.SoftwareNotification && messageType != ChatMessage.TestMessage)
-                {
-                    return;
-                }
 
-                var posX, posY;
-                if (typeof(root.authorInfoWindow) != "undefined")
-                {
-                    posX = root.authorInfoWindow.x;
-                    posY = root.authorInfoWindow.y;
-                    root.authorInfoWindow.destroy();
-                }
-
-                var component = Qt.createComponent("qrc:/author_info_window.qml");
-                root.authorInfoWindow = component.createObject(root);
-
-                root.authorInfoWindow.close();
-
-                root.authorInfoWindow.authorName      = authorName;
-                root.authorInfoWindow.authorAvatarUrl = authorAvatarUrl;
-                root.authorInfoWindow.authorPageUrl   = authorPageUrl;
-
-                root.authorInfoWindow.authorChatModerator = authorChatModerator;
-                root.authorInfoWindow.authorIsChatOwner   = authorIsChatOwner;
-                root.authorInfoWindow.authorChatSponsor   = authorChatSponsor;
-                root.authorInfoWindow.authorIsVerified    = authorIsVerified;
-
-                if (typeof(posX) != "undefined")
-                {
-                    root.authorInfoWindow.x = posX;
-                    root.authorInfoWindow.y = posY;
-                }
-
-                root.authorInfoWindow.show();
-            }
 
             width: listMessages.width
             height: Math.max(textEditMessageText.y + textEditMessageText.height, 40)
@@ -367,7 +377,15 @@ ApplicationWindow {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
-                            openAuthorWindow();
+                            openAuthorWindow(authorChannelId,
+                                             authorName,
+                                             messageType,
+                                             authorAvatarUrl,
+                                             authorPageUrl,
+                                             authorChatModerator,
+                                             authorIsChatOwner,
+                                             authorChatSponsor,
+                                             authorIsVerified);
                         }
                     }
 
@@ -501,7 +519,15 @@ ApplicationWindow {
                     }
 
                     onClicked: {
-                        openAuthorWindow();
+                        openAuthorWindow(authorChannelId,
+                                         authorName,
+                                         messageType,
+                                         authorAvatarUrl,
+                                         authorPageUrl,
+                                         authorChatModerator,
+                                         authorIsChatOwner,
+                                         authorChatSponsor,
+                                         authorIsVerified);
                     }
                 }
             }
@@ -535,9 +561,9 @@ ApplicationWindow {
         forcedImage: {
             textZZZ.visible = false;
 
-            if (youTubeInterceptor.broadcastId.length == 0)
+            if (youTube.broadcastId.length == 0)
             {
-                if (youTubeInterceptor.userSpecifiedLink.trim().length == 0)
+                if (youTube.userSpecifiedLink.trim().length == 0)
                 {
                     textZZZ.visible = true;
                     return "qrc:/gifs/sleeping_200_transparent.gif";
@@ -567,14 +593,14 @@ ApplicationWindow {
         wrapMode: Text.Wrap
         function getConnectionWaitText()
         {
-            if (youTubeInterceptor.broadcastId.length != 0)
+            if (youTube.broadcastId.length != 0)
             {
-                return qsTr("Connecting to %1").arg(youTubeInterceptor.broadcastId) +
+                return qsTr("Connecting to %1").arg(youTube.broadcastId) +
                         "\n\n" + "(^=◕ᴥ◕=^)";
             }
             else
             {
-                if (youTubeInterceptor.userSpecifiedLink.trim().length == 0)
+                if (youTube.userSpecifiedLink.trim().length == 0)
                 {
                     var s = qsTr("Link or broadcast ID is not specified");
 

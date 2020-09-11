@@ -11,6 +11,8 @@ class QMLUtils : public QObject
                READ enabledHardwareGraphicsAccelerator
                WRITE setEnabledHardwareGraphicsAccelerator
                NOTIFY enabledHardwareGraphicsAcceleratorChanged)
+    Q_PROPERTY(QString buildCpuArchitecture
+               READ buildCpuArchitecture)
 public:
     explicit QMLUtils(QSettings* settings, const QString& settingsGroup, QObject *parent = nullptr);
     static void declareQml();
@@ -18,6 +20,8 @@ public:
     Q_INVOKABLE static void restartApplication();
     bool enabledHardwareGraphicsAccelerator() const;
     void setEnabledHardwareGraphicsAccelerator(bool enabled);
+
+    QString buildCpuArchitecture() const;
 
 signals:
     void enabledHardwareGraphicsAcceleratorChanged();

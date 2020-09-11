@@ -1,6 +1,8 @@
-QT += gui quick multimedia webengine webenginewidgets
+QT += multimedia webengine webenginewidgets
 
 CONFIG += c++11
+TEMPLATE = lib
+DEFINES += AXELCHAT_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -18,36 +20,32 @@ HEADERS += \
     chatbot.hpp \
     chathandler.hpp \
     chatmessage.hpp \
-    clipboardqml.hpp \
+    #clipboardqml.hpp \
+    constants.hpp \
     githubapi.hpp \
-    i18n.hpp \
+    #i18n.hpp \
     outputtofile.hpp \
-    qmlutils.hpp \
+    #qmlutils.hpp \
+    shared_library_interface.hpp \
     types.hpp \
-    youtube.hpp
+    youtubeinterceptor.hpp
 
 SOURCES += \
         botaction.cpp \
         chatbot.cpp \
         chathandler.cpp \
         chatmessage.cpp \
-        clipboardqml.cpp \
+        #clipboardqml.cpp \
         githubapi.cpp \
-        i18n.cpp \
+        #i18n.cpp \
         main.cpp \
         outputtofile.cpp \
-        qmlutils.cpp \
-        youtube.cpp
+        #qmlutils.cpp \
+        youtubeinterceptor.cpp
 
-RESOURCES += qml.qrc \
-    my_components/InteractiveWait/InteractiveWait.qrc \
-    resources.qrc \
-    translations.qrc
+RESOURCES +=
 
-TRANSLATIONS += \
-    ru_RU.ts
-
-RC_FILE = icon.rc
+TRANSLATIONS +=
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -87,5 +85,6 @@ win32: {
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+else: unix: target.path = /usr/lib
+
 !isEmpty(target.path): INSTALLS += target

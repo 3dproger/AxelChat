@@ -151,14 +151,18 @@ void ChatMessagesModel::append(const QList<ChatMessage>& messages)
 
     beginInsertRows(QModelIndex(), preSize, preSize + messages.count() - 1);
 
-    for (const ChatMessage& message : messages)
+    for (ChatMessage message : messages)
     {
         QVariant* messageData = new QVariant();
+        message._idNum = _lastIdNum;
+        _lastIdNum++;
+
         messageData->setValue(message);
 
         _idByData.insert(messageData, message.id());
         _dataById.insert(message.id(), messageData);
-        _data.append(messageData);
+        _dataByIdNum.insert(message._idNum, messageData);
+        _data.append(messageData);  
     }
 
     endInsertRows();
@@ -184,9 +188,11 @@ bool ChatMessagesModel::removeRows(int position, int rows, const QModelIndex &pa
         const ChatMessage& message = qvariant_cast<ChatMessage>(*messageData);
 
         const QString& id = message.id();
+        const uint64_t& idNum = message.idNum();
 
         _dataById.remove(id);
         _idByData.remove(messageData);
+        _dataByIdNum.remove(idNum);
         _data.removeAt(position);
 
         delete messageData;
@@ -195,6 +201,11 @@ bool ChatMessagesModel::removeRows(int position, int rows, const QModelIndex &pa
     endRemoveRows();
 
     return true;
+}
+
+uint64_t ChatMessagesModel::lastIdNum() const
+{
+    return _lastIdNum;
 }
 
 bool ChatMessagesModel::contains(const QString &id)
@@ -223,9 +234,12 @@ QVariant ChatMessagesModel::data(const QModelIndex &index, int role) const
     }
 
     const QVariant* data = _data.value(index.row());
-
     const ChatMessage& message = qvariant_cast<ChatMessage>(*data);
+    return dataByRole(message, role);
+}
 
+QVariant ChatMessagesModel::dataByRole(const ChatMessage &message, int role)
+{
     switch (role) {
     case MessageId:
         return message.id();
@@ -260,6 +274,17 @@ QVariant ChatMessagesModel::data(const QModelIndex &index, int role) const
         return message.author().isChatModerator();
     default:
         return QVariant();
+    }
+    return QVariant();
+}
+
+QVariant ChatMessagesModel::dataByNumId(const uint64_t &idNum, int role)
+{
+    if (_dataByIdNum.contains(idNum))
+    {
+        const QVariant* data = _dataByIdNum.value(idNum);
+        const ChatMessage& message = qvariant_cast<ChatMessage>(*data);
+        return dataByRole(message, role);
     }
 
     return QVariant();

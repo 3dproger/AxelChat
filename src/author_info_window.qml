@@ -5,6 +5,7 @@ import Qt.labs.settings 1.1
 import QtQuick.Controls.Material 2.12
 import "my_components" as MyComponents
 import AxelChat.MessageAuthor 1.0
+import AxelChat.ChatHandler 1.0
 
 Window {
     id: rootWindow
@@ -18,6 +19,7 @@ Window {
     Material.primary :    "#03A9F4"
 
     property var authorName: "";
+    property var authorChannelId;
     property var authorAvatarUrl;
     property var authorPageUrl;
     property var authorCustomBadgeUrl;
@@ -40,15 +42,16 @@ Window {
 
     width: rootScrollView.contentWidth
     height: rootScrollView.contentHeight
-    minimumWidth:  380
-    minimumHeight: 240
+    minimumWidth:  480
+    minimumHeight: 256
+    maximumHeight: 256
 
     color: Material.background
 
     ScrollView {
         id: rootScrollView
-        contentWidth:  380
-        contentHeight: 240
+        contentWidth:  480
+        contentHeight: 256
         width: rootWindow.width
         height: rootWindow.height
         Item {
@@ -60,47 +63,19 @@ Window {
                 id: avatarImage
                 x: 8
                 y: 8
-                rounded: true
-                height: 64
-                width: 64
+                rounded: false
+                height: 240
+                width:  height
                 mipmap: true
-                source: typeof(rootWindow.authorAvatarUrl) == "object" ? rootWindow.authorAvatarUrl : ""
-            }
-
-            Button {
-                id: buttonChannel
-                x: 8
-                y: 78
-                text: qsTr("Go To Channel")
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 6
-                anchors.right: parent.right
-                anchors.rightMargin: 6
-                icon.source: "qrc:/resources/images/forward-arrow.svg"
-                highlighted: true
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.NoButton
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                }
-
-                onClicked: {
-                    if (typeof(rootWindow.authorPageUrl) == "object")
-                    {
-                        Qt.openUrlExternally(rootWindow.authorPageUrl)
-                    }
-                }
+                source: typeof(rootWindow.authorAvatarUrl) == "object" ? youTube.createResizedAvatarUrl(rootWindow.authorAvatarUrl, height) : ""
             }
 
             MyComponents.MyTextField {
                 id: labelAuthorName
                 width: 400
-                height: 40
                 anchors.left: avatarImage.right
                 anchors.leftMargin: 6
                 anchors.top: avatarImage.top
-                anchors.bottom: avatarImage.bottom
                 anchors.rightMargin: 6
                 anchors.right: parent.right
                 text: typeof(rootWindow.authorName) == "string" ? rootWindow.authorName : ""
@@ -138,8 +113,6 @@ Window {
 
             Label {
                 id: labelAuthorType
-                x: 8
-                y: 78
                 text: {
                     var typeName = "";
                     if (authorIsChatOwner)
@@ -163,7 +136,78 @@ Window {
                     }
                     return typeName;
                 }
+                anchors.left: avatarImage.right
+                anchors.top: labelAuthorName.bottom
+                anchors.topMargin: 8
+                anchors.leftMargin: 6
 
+            }
+
+            Label {
+                id: labelMessagesSent
+                text: qsTr("Messages (Current Session): %1")
+                    .arg(chatHandler.authorMessagesSentCurrent(authorChannelId))
+                anchors.left: avatarImage.right
+                anchors.top: labelAuthorType.bottom
+                anchors.topMargin: 6
+                anchors.leftMargin: 6
+
+                Connections {
+                    target: chatHandler
+                    function onMessagesReceived() {
+                        labelMessagesSent.text = qsTr("Messages (Current Session): %1")
+                        .arg(chatHandler.authorMessagesSentCurrent(authorChannelId));
+                    }
+                }
+            }
+
+            Button {
+                id: buttonAvatar
+                text: qsTr("Open Image")
+                anchors.top: labelMessagesSent.bottom
+                anchors.topMargin: 12
+                anchors.left: avatarImage.right
+                anchors.leftMargin: 6
+                icon.source: "qrc:/resources/images/forward-arrow.svg"
+                highlighted: false
+                flat: true
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                }
+
+                onClicked: {
+                    if (typeof(rootWindow.authorPageUrl) == "object")
+                    {
+                        Qt.openUrlExternally(youTube.createResizedAvatarUrl(rootWindow.authorAvatarUrl, 720))
+                    }
+                }
+            }
+
+            Button {
+                id: buttonChannel
+                text: qsTr("Go To Channel")
+                anchors.top: buttonAvatar.bottom
+                anchors.topMargin: 0
+                anchors.left: avatarImage.right
+                anchors.leftMargin: 6
+                icon.source: "qrc:/resources/images/forward-arrow.svg"
+                highlighted: true
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                }
+
+                onClicked: {
+                    if (typeof(rootWindow.authorPageUrl) == "object")
+                    {
+                        Qt.openUrlExternally(rootWindow.authorPageUrl)
+                    }
+                }
             }
         }
     }
@@ -171,6 +215,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.5}D{i:5;anchors_x:8;anchors_y:78}
+    D{i:8}D{i:9}
 }
 ##^##*/

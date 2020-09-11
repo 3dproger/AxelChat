@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import "../my_components" as MyComponents
+import AxelChat.YouTube 1.0
 
 ScrollView {
     id: root
@@ -45,11 +46,11 @@ ScrollView {
             anchors.rightMargin: 8
 
             Component.onCompleted: {
-                text = youTubeInterceptor.userSpecifiedLink
+                text = youTube.userSpecifiedLink
             }
 
             onTextChanged: {
-                youTubeInterceptor.userSpecifiedLink = text
+                youTube.userSpecifiedLink = text
             }
         }
 
@@ -65,7 +66,7 @@ ScrollView {
             id: textBroadcastId
             y: 153
             height: 46
-            text: youTubeInterceptor.broadcastId
+            text: youTube.broadcastId
             anchors.right: buttonCopyBroadcastId.left
             anchors.rightMargin: 4
             anchors.left: element3.right
@@ -87,7 +88,7 @@ ScrollView {
             id: textBroadcastURL
             y: 202
             height: 46
-            text: youTubeInterceptor.broadcastShortUrl
+            text: youTube.broadcastShortUrl
             anchors.left: element4.right
             anchors.leftMargin: 6
             anchors.right: buttonCopyBroadcastUrl.left
@@ -108,7 +109,7 @@ ScrollView {
             id: textChatURL
             y: 306
             height: 46
-            text: youTubeInterceptor.chatUrl
+            text: youTube.chatUrl
             anchors.left: element5.right
             anchors.leftMargin: 17
             anchors.right: buttonCopyChatUrl.left
@@ -141,7 +142,7 @@ ScrollView {
             id: textControlPanelURL
             y: 254
             height: 46
-            text: youTubeInterceptor.controlPanelUrl
+            text: youTube.controlPanelUrl
             anchors.left: element6.right
             anchors.leftMargin: 8
             anchors.right: buttonCopyControlPanelCopy.left
@@ -232,7 +233,7 @@ ScrollView {
             onClicked: {
                 if (textFieldUserSpecifiedLink.text.length != 0)
                 {
-                    if (youTubeInterceptor.isBroadcastIdUserSpecified)
+                    if (youTube.isBroadcastIdUserSpecified)
                     {
                         Qt.openUrlExternally(textBroadcastURL.text)
                     }
@@ -417,9 +418,9 @@ ScrollView {
             id: busyIndicator
             y: 4
             visible: {
-                if (youTubeInterceptor.broadcastId.length == 0)
+                if (youTube.broadcastId.length == 0)
                 {
-                    if (youTubeInterceptor.userSpecifiedLink.trim().length == 0)
+                    if (youTube.userSpecifiedLink.trim().length == 0)
                     {
                         return false
                     }
@@ -428,7 +429,7 @@ ScrollView {
                         return false
                     }
                 }
-                else if (!youTubeInterceptor.connected)
+                else if (!youTube.connected)
                 {
                     return true
                 }
@@ -456,9 +457,9 @@ ScrollView {
             anchors.left: element2.right
             anchors.leftMargin: 12
             source: {
-                if (youTubeInterceptor.broadcastId.length == 0)
+                if (youTube.broadcastId.length == 0)
                 {
-                    if (youTubeInterceptor.userSpecifiedLink.trim().length == 0)
+                    if (youTube.userSpecifiedLink.trim().length == 0)
                     {
                         return "qrc:/resources/images/alert1.svg"
                     }
@@ -467,7 +468,7 @@ ScrollView {
                         return "qrc:/resources/images/alert1.svg"
                     }
                 }
-                else if (!youTubeInterceptor.connected)
+                else if (!youTube.connected)
                 {
                     return "qrc:/resources/images/alert1.svg"
                 }
@@ -487,9 +488,9 @@ ScrollView {
             x: 241
             y: 20
             text: {
-                if (youTubeInterceptor.broadcastId.length == 0)
+                if (youTube.broadcastId.length == 0)
                 {
-                    if (youTubeInterceptor.userSpecifiedLink.trim().length == 0)
+                    if (youTube.userSpecifiedLink.trim().length == 0)
                     {
                         return qsTr("Link or broadcast ID is not specified");
                     }
@@ -498,7 +499,7 @@ ScrollView {
                         return qsTr("Incorrect link or broadcast ID specified");
                     }
                 }
-                else if (!youTubeInterceptor.connected)
+                else if (!youTube.connected)
                 {
                     return qsTr("Connecting...");
                 }

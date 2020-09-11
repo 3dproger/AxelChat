@@ -17,15 +17,15 @@ ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObj
             _outputToFile, &OutputToFile::onMessagesReceived);
 
     //YouTube
-    _youTubeInterceptor = new YouTubeInterceptor(_outputToFile, settings, _settingsGroupPath + "/youtube");
+    _youTube = new YouTube(_outputToFile, settings, _settingsGroupPath + "/youtube");
 
-    connect(_youTubeInterceptor, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
+    connect(_youTube, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
 
-    connect(_youTubeInterceptor, SIGNAL(connected(QString)),
+    connect(_youTube, SIGNAL(connected(QString)),
                      this, SLOT(onConnectedYouTube(QString)));
 
-    connect(_youTubeInterceptor, SIGNAL(disconnected(QString)),
+    connect(_youTube, SIGNAL(disconnected(QString)),
             this, SLOT(onDisconnectedYouTube(QString)));
 
     if (_settings)
@@ -53,10 +53,10 @@ ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObj
 
 ChatHandler::~ChatHandler()
 {
-    if (_youTubeInterceptor)
+    if (_youTube)
     {
-        delete _youTubeInterceptor;
-        _youTubeInterceptor = nullptr;
+        delete _youTube;
+        _youTube = nullptr;
     }
 
     if (_bot)
@@ -88,7 +88,16 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
 
     for (const MessageAuthor& author : authors)
     {
-        _authors.insert(author.channelId(), author);
+        const QString& channelId = author.channelId();
+        int messagesSentCurrent = 0;
+
+        if (_authors.contains(channelId))
+        {
+            messagesSentCurrent = _authors[channelId]._messagesSentCurrent;
+        }
+
+        _authors[channelId] = author;
+        _authors[channelId]._messagesSentCurrent = messagesSentCurrent;
     }
 
     for (const ChatMessage& message : messages)
@@ -98,7 +107,13 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
             /*qDebug(QString("%1: %2")
                    .arg(message.authorName).arg(message.text).toUtf8());*/
 
-            if (message.author().channelId() != MessageAuthor::softwareAuthor().channelId())
+            const QString& channelId = message.author().channelId();
+            if (_authors.contains(channelId))
+            {
+                _authors[channelId]._messagesSentCurrent++;
+            }
+
+            if (_bot && message.author().channelId() != MessageAuthor::softwareAuthor().channelId())
             {
                 _bot->processMessage(message);
             }
@@ -151,8 +166,8 @@ void ChatHandler::declareQml()
     qmlRegisterUncreatableType<ChatHandler> ("AxelChat.ChatHandler",
                                              1, 0, "ChatHandler", "Type cannot be created in QML");
 
-    qmlRegisterUncreatableType<YouTubeInterceptor> ("AxelChat.YouTubeInterceptor",
-                                                    1, 0, "YouTubeInterceptor", "Type cannot be created in QML");
+    qmlRegisterUncreatableType<YouTube> ("AxelChat.YouTube",
+                                                    1, 0, "YouTube", "Type cannot be created in QML");
 
     qmlRegisterUncreatableType<OutputToFile> ("AxelChat.OutputToFile",
                                               1, 0, "OutputToFile", "Type cannot be created in QML");
@@ -182,9 +197,19 @@ void ChatHandler::setEnabledSoundNewMessage(bool enabled)
     }
 }
 
-YouTubeInterceptor *ChatHandler::youTubeInterceptor() const
+int ChatHandler::authorMessagesSentCurrent(const QString &channelId) const
 {
-    return _youTubeInterceptor;
+    return _authors.value(channelId)._messagesSentCurrent;
+}
+
+QUrl ChatHandler::authorSizedAvatarUrl(const QString &channelId, int height) const
+{
+    return YouTube::createResizedAvatarUrl(_authors.value(channelId).avatarUrl(), height);
+}
+
+YouTube *ChatHandler::youTube() const
+{
+    return _youTube;
 }
 
 OutputToFile *ChatHandler::outputToFile() const

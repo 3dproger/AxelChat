@@ -1,4 +1,4 @@
-#include "youtubeinterceptor.hpp"
+#include "youtube.hpp"
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -6,17 +6,12 @@
 #include <QUrlQuery>
 #include <QWebEngineProfile>
 
-YouTubeInterceptor::YouTubeInterceptor(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
-    : QWebEngineUrlRequestInterceptor(parent)
+YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
+    : QWebEngineUrlRequestInterceptor(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
 {
-    _outputToFile = outputToFile;
+    connect(_manager, &QNetworkAccessManager::finished, this, &YouTube::replyFinished);
 
-    _settings = settings;
-    _settingsGroupPath = settingsGroupPath;
-
-    connect(_manager, &QNetworkAccessManager::finished, this, &YouTubeInterceptor::replyFinished);
-
-    _webPage->setUrlRequestInterceptor(this);
+    _webPage.setUrlRequestInterceptor(this);
 
     if (_settings)
     {
@@ -24,7 +19,7 @@ YouTubeInterceptor::YouTubeInterceptor(OutputToFile* outputToFile, QSettings* se
     }
 }
 
-YouTubeInterceptor::~YouTubeInterceptor()
+YouTube::~YouTube()
 {
     _youtubeInfo.broadcastConnected = false;
     emit disconnected(_youtubeInfo.broadcastId);
@@ -36,7 +31,7 @@ YouTubeInterceptor::~YouTubeInterceptor()
     }
 }
 
-void YouTubeInterceptor::interceptRequest(QWebEngineUrlRequestInfo &info)
+void YouTube::interceptRequest(QWebEngineUrlRequestInfo &info)
 {
     QUrl requestUrl = info.requestUrl();
 
@@ -92,7 +87,7 @@ void YouTubeInterceptor::interceptRequest(QWebEngineUrlRequestInfo &info)
     }
 }
 
-void YouTubeInterceptor::replyFinished(QNetworkReply *reply)
+void YouTube::replyFinished(QNetworkReply *reply)
 {
     if (reply)
     {
@@ -167,20 +162,24 @@ void YouTubeInterceptor::replyFinished(QNetworkReply *reply)
                             .value("authorPhoto").toObject()
                             .value("thumbnails").toArray();
 
-                    int preWidth = -1;
+                    int preHeight = -1;
 
-                    foreach (const QJsonValue& element, thumbnails)
+                    for (const QJsonValue& element : thumbnails)
                     {
-                        const QJsonObject thumbnail = element.toObject();
+                        const QJsonObject& thumbnail = element.toObject();
 
-                        int width = thumbnail.value("width").toInt();
-
-                        if (width > preWidth && authorAvatarUrl.isEmpty())
+                        int height = thumbnail.value("height").toInt();
+                        if (height == 32)
                         {
-                            //Getting only max size thumbnail
+                            //Preferably 32x32
                             authorAvatarUrl  = thumbnail.value("url").toString();
-
-                            preWidth = width;
+                            break;
+                        }
+                        else if (height > preHeight || authorAvatarUrl.isEmpty())
+                        {
+                            //Or getting max size avatar
+                            authorAvatarUrl  = thumbnail.value("url").toString();
+                            preHeight = height;
                         }
                     }
 
@@ -365,7 +364,7 @@ void YouTubeInterceptor::replyFinished(QNetworkReply *reply)
     emit stateChanged();
 }
 
-QString YouTubeInterceptor::extractBroadcastId(const QString &link) const
+QString YouTube::extractBroadcastId(const QString &link) const
 {
     QString withoutHttpsWWW = link;
 
@@ -486,57 +485,119 @@ QString YouTubeInterceptor::extractBroadcastId(const QString &link) const
     return broadcastId;
 }
 
-QUrl YouTubeInterceptor::chatUrl() const
+QUrl YouTube::chatUrl() const
 {
     return _youtubeInfo.broadcastChatUrl;
 }
 
-QUrl YouTubeInterceptor::controlPanelUrl() const
+QUrl YouTube::controlPanelUrl() const
 {
     return _youtubeInfo.controlPanelUrl;
 }
 
-QUrl YouTubeInterceptor::broadcastLongUrl() const
+QUrl YouTube::createResizedAvatarUrl(const QUrl &sourceAvatarUrl, int imageHeight)
+{
+    //qDebug("Source URL: " + sourceAvatarUrl.toString().toUtf8());
+
+    //Source: https://yt3.ggpht.com/-S6Q2MDo9stg/AAAAAAAAAAI/AAAAAAAAAAA/TtVz7JalFEc/s64-c-k-no-mo-rj-c0xffffff/photo.jpg
+    //Result: 6
+
+    //https://yt3.ggpht.com/-NP7w1OMmdlg/AAAAAAAAAAI/AAAAAAAAAAA/-RNBD05bfT4/s64-c-k-no-mo-rj-c0xffffff/photo.jpg
+    QString source = sourceAvatarUrl.toString().trimmed();
+    source.replace('\\', '/');
+    if (source.back() == '/')
+    {
+        source = source.left(source.length() - 1);
+    }
+
+    const QVector<QStringRef>& parts = source.splitRef('/', Qt::KeepEmptyParts);
+    if (parts.count() < 2)
+    {
+        qDebug() << Q_FUNC_INFO << ": Failed to convert: parts.count() < 2";
+        return sourceAvatarUrl;
+    }
+
+    if (!parts.last().startsWith("photo", Qt::CaseInsensitive))
+    {
+        qDebug() << Q_FUNC_INFO << ": !parts.last().startsWith(\"photo\", Qt::CaseInsensitive)";
+        return sourceAvatarUrl;
+    }
+
+    QString targetPart = parts[parts.count() - 2].toString();
+    QRegExp rx("^s(\\d+).*", Qt::CaseInsensitive);
+    rx.setMinimal(false);
+    if (rx.indexIn(targetPart) != -1)
+    {
+        targetPart.remove(rx.pos() + 1, rx.cap(1).length());
+        targetPart.insert(rx.pos() + 1, QString("%1").arg(imageHeight));
+
+        QString newUrlStr;
+        for (int i = 0; i < parts.count(); ++i)
+        {
+            if (i != parts.count() - 2)
+            {
+                newUrlStr += parts[i].toString();
+            }
+            else
+            {
+                newUrlStr += targetPart;
+            }
+
+            if (i != parts.count() - 1)
+            {
+                newUrlStr += "/";
+            }
+        }
+
+        //qDebug("Result URL: " + newUrlStr.toUtf8());
+        return newUrlStr;
+    }
+
+    qDebug() << Q_FUNC_INFO << ": Failed to convert";
+    return sourceAvatarUrl;
+}
+
+QUrl YouTube::broadcastLongUrl() const
 {
     return _youtubeInfo.broadcastLongUrl;
 }
 
-QString YouTubeInterceptor::userSpecifiedLink() const
+QString YouTube::userSpecifiedLink() const
 {
     return _youtubeInfo.userSpecified;
 }
 
-QUrl YouTubeInterceptor::broadcastShortUrl() const
+QUrl YouTube::broadcastShortUrl() const
 {
     return _youtubeInfo.broadcastShortUrl;
 }
 
-QString YouTubeInterceptor::broadcastId() const
+QString YouTube::broadcastId() const
 {
     return _youtubeInfo.broadcastId;
 }
 
-bool YouTubeInterceptor::isConnected() const
+bool YouTube::isConnected() const
 {
     return _youtubeInfo.broadcastConnected;
 }
 
-bool YouTubeInterceptor::isBroadcastIdUserSpecified() const
+bool YouTube::isBroadcastIdUserSpecified() const
 {
     return _youtubeInfo.userSpecified.trimmed() == _youtubeInfo.broadcastId.trimmed() && !_youtubeInfo.userSpecified.isEmpty();
 }
 
-int YouTubeInterceptor::messagesReceived() const
+int YouTube::messagesReceived() const
 {
     return _messagesReceived;
 }
 
-QByteArray YouTubeInterceptor::replyData() const
+QByteArray YouTube::replyData() const
 {
     return _replyData;
 }
 
-void YouTubeInterceptor::setLink(QString link)
+void YouTube::setLink(QString link)
 {
     link = link.trimmed();
 
@@ -591,8 +652,7 @@ void YouTubeInterceptor::setLink(QString link)
         qDebug() << "Broadcast URL:" << _youtubeInfo.broadcastURL.toString();
         qDebug() << "Chat URL:" << _youtubeInfo.broadcastChatURL.toString();*/
 
-        _webPage->load(QUrl(_youtubeInfo.broadcastChatUrl));
-        //_webPage->load(QUrl(_broadcastUrl));
+        _webPage.load(QUrl(_youtubeInfo.broadcastChatUrl));
 
         emit linkChanged();
     }

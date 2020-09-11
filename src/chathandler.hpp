@@ -5,7 +5,7 @@
 #include <QMap>
 #include <QDateTime>
 #include "types.hpp"
-#include "youtubeinterceptor.hpp"
+#include "youtube.hpp"
 #include "outputtofile.hpp"
 #include "chatbot.hpp"
 #include <QSound>
@@ -17,14 +17,14 @@ class ChatHandler : public QObject
     Q_PROPERTY(bool enabledSoundNewMessage READ enabledSoundNewMessage WRITE setEnabledSoundNewMessage NOTIFY enabledSoundNewMessageChanged)
 
 public:
-    explicit ChatHandler(QSettings* settings, const QString& settingsGroup, QObject *parent = nullptr);
+    explicit ChatHandler(QSettings* settings, const QString& settingsGroup = "chat_handler", QObject *parent = nullptr);
     ~ChatHandler();
     MessageAuthor authorByChannelId(const QString& channelId) const;
 
     //bool removeChatMessageAction(int index);
 
     OutputToFile *outputToFile() const;
-    YouTubeInterceptor *youTubeInterceptor() const;
+    YouTube *youTube() const;
     ChatBot *bot() const;
     ChatMessagesModel* messagesModel();
 
@@ -32,6 +32,9 @@ public:
     bool isConnectedSome();
     inline bool enabledSoundNewMessage() const { return _enabledSoundNewMessage; }
     void setEnabledSoundNewMessage(bool enabled);
+
+    Q_INVOKABLE int authorMessagesSentCurrent(const QString& channelId) const;
+    Q_INVOKABLE QUrl authorSizedAvatarUrl(const QString& channelId, int height) const;
 
 signals:
     void messagesReceived(const ChatMessage& message, const MessageAuthor& author);
@@ -52,10 +55,10 @@ private:
     ChatMessagesModel _messagesModel;
     QMap<QString, MessageAuthor> _authors;
 
-    QString _settingsGroupPath = "chat_handler";
+    QString _settingsGroupPath;
     QSettings*    _settings                 = nullptr;
 
-    YouTubeInterceptor* _youTubeInterceptor = nullptr;
+    YouTube* _youTube = nullptr;
     OutputToFile* _outputToFile             = nullptr;
     ChatBot* _bot                           = nullptr;
 

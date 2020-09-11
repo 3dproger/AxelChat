@@ -1,5 +1,10 @@
+#if defined(AXELCHAT_LIBRARY)
+#include "shared_library_interface.hpp"
+#else
 #include <QApplication>
+#include "constants.hpp"
 #include <QQmlApplicationEngine>
+#include <QSplashScreen>
 #include "chathandler.hpp"
 #include <QtWebEngine/QtWebEngine>
 #include "githubapi.hpp"
@@ -11,10 +16,10 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QApplication::setApplicationName("AxelChat");
-    QApplication::setOrganizationName("Axel_k");
-    QApplication::setOrganizationDomain("https://www.youtube.com/channel/UCujkj8ZgVkscm34GA1Z8wTQ");
-    QApplication::setApplicationVersion("0.8.0");
+    QApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
+    QApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
+    QApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
+    QApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
 
     QSettings* settings = new QSettings();
 
@@ -24,6 +29,9 @@ int main(int argc, char *argv[])
 
     QtWebEngine::initialize();
     QApplication app(argc, argv);
+
+    QSplashScreen* splashScreen = new QSplashScreen(QPixmap(":/icon.ico"));
+    splashScreen->show();
 
     //Window icon
     app.setWindowIcon(QIcon(":/icon.ico"));
@@ -65,7 +73,7 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("i18n",               i18n);
     engine.rootContext()->setContextProperty("chatHandler",        chatHandler);
-    engine.rootContext()->setContextProperty("youTubeInterceptor", chatHandler->youTubeInterceptor());
+    engine.rootContext()->setContextProperty("youTube",            chatHandler->youTube());
     engine.rootContext()->setContextProperty("outputToFile",       chatHandler->outputToFile());
     engine.rootContext()->setContextProperty("chatBot",            chatHandler->bot());
     engine.rootContext()->setContextProperty("updateChecker",      github);
@@ -81,7 +89,13 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
+    splashScreen->close();
+    delete splashScreen;
+    splashScreen = nullptr;
+
     int returnCode = app.exec();
 
     return returnCode;
 }
+
+#endif
