@@ -145,7 +145,7 @@ Window {
 
             Label {
                 id: labelMessagesSent
-                text: qsTr("Messages (Current Session): %1")
+                text: qsTr("Messages (current session): %1")
                     .arg(chatHandler.authorMessagesSentCurrent(authorChannelId))
                 anchors.left: avatarImage.right
                 anchors.top: labelAuthorType.bottom
@@ -155,7 +155,7 @@ Window {
                 Connections {
                     target: chatHandler
                     function onMessagesReceived() {
-                        labelMessagesSent.text = qsTr("Messages (Current Session): %1")
+                        labelMessagesSent.text = qsTr("Messages (current session): %1")
                         .arg(chatHandler.authorMessagesSentCurrent(authorChannelId));
                     }
                 }

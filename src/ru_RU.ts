@@ -163,9 +163,9 @@
     <message>
         <location filename="author_info_window.qml" line="148"/>
         <location filename="author_info_window.qml" line="158"/>
-        <source>Messages (Current Session): %1</source>
-        <oldsource>Messages Sent (Current Session): %1</oldsource>
-        <translation>Сообщения (текущая сессия): %1</translation>
+        <source>Messages (current session): %1</source>
+        <oldsource>Messages (in the current session): %1</oldsource>
+        <translation>Сообщений (текущая сессия): %1</translation>
     </message>
     <message>
         <location filename="author_info_window.qml" line="121"/>
