@@ -24,7 +24,8 @@ HEADERS += \
     outputtofile.hpp \
     qmlutils.hpp \
     types.hpp \
-    youtube.hpp
+    youtube.hpp \
+    constants.hpp
 
 SOURCES += \
         botaction.cpp \
