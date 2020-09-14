@@ -241,6 +241,7 @@ public:
     bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex()) override;
     uint64_t lastIdNum() const;
     QModelIndex createIndexByPtr(QVariant* data) const;
+    int getRow(QVariant* data);
 
 private:
     void printMessageInfo(const QString& prefix, const ChatMessage& message);
@@ -252,7 +253,7 @@ private:
     QHash<uint64_t, QVariant*> _dataByIdNum;//idNum, *data
     QHash<QVariant*, uint64_t> _idNumByData;//*data, idNum
 
-    const int _maxSize  = 10000;
+    const int _maxSize  = 10;
 
     uint64_t _lastIdNum = 0;
     uint64_t _removedRows = 0;

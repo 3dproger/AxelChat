@@ -323,6 +323,26 @@ QModelIndex ChatMessagesModel::createIndexByPtr(QVariant *data) const
     }
 }
 
+int ChatMessagesModel::getRow(QVariant *data)
+{
+    if (data)
+    {
+        const QModelIndex& index = createIndexByPtr(data);
+        if (index.isValid())
+        {
+            return index.row();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    else
+    {
+        return -1;
+    }
+}
+
 QString boolToString(const bool& value)
 {
     if (value)
@@ -343,14 +363,7 @@ void ChatMessagesModel::printMessageInfo(const QString &prefix, const ChatMessag
 
     text += "===========================";
 
-    int row = -1;
-    QVariant* data = _dataById.value(message.id());
-    if (data)
-    {
-        QModelIndex index = createIndexByPtr(data);
-        row = index.row();
-    }
-
+    const int row = getRow(_dataById.value(message.id()));
 
     text += "\nAuthor Name: \"" + message.author().name() + "\"";
     text += "\nMessage Text: \"" + message.text() + "\"";
