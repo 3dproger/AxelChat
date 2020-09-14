@@ -215,8 +215,7 @@ void ChatMessagesModel::append(const QList<ChatMessage>& messages)
                     const ChatMessage& oldMessage = qvariant_cast<ChatMessage>(*data);
 
                     printMessageInfo("Raw new message:", rawMessage);
-                    printMessageInfo(QString("%1: Old message:")
-                                     .arg(Q_FUNC_INFO), oldMessage);
+                    printMessageInfo("Old message:", oldMessage);
                 }
                 else
                 {
@@ -240,8 +239,7 @@ void ChatMessagesModel::append(const QList<ChatMessage>& messages)
                         qDebug(QString("%1: failed to set data with role ChatMessageRoles::MessageMarkedAsDeleted")
                                .arg(Q_FUNC_INFO).toUtf8());
 
-                        printMessageInfo(QString("Raw message:")
-                                         .arg(Q_FUNC_INFO), rawMessage);
+                        printMessageInfo("Raw message:"), rawMessage);
                     }
 
                     if (!setData(index, rawMessage.text(), ChatMessageRoles::MessageText))
@@ -249,8 +247,7 @@ void ChatMessagesModel::append(const QList<ChatMessage>& messages)
                         qDebug(QString("%1: failed to set data with role ChatMessageRoles::MessageText")
                                .arg(Q_FUNC_INFO).toUtf8());
 
-                        printMessageInfo(QString("Raw message:")
-                                         .arg(Q_FUNC_INFO), rawMessage);
+                        printMessageInfo("Raw message:", rawMessage);
                     }
 
                     //qDebug(QString("Message \"%1\" marked as deleted").arg(rawMessage.id()).toUtf8());
@@ -260,8 +257,7 @@ void ChatMessagesModel::append(const QList<ChatMessage>& messages)
                     qDebug(QString("%1: index not valid")
                            .arg(Q_FUNC_INFO).toUtf8());
 
-                    printMessageInfo(QString("Raw message:")
-                                     .arg(Q_FUNC_INFO), rawMessage);
+                    printMessageInfo("Raw message:", rawMessage);
                 }
             }
         }
