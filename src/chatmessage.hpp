@@ -59,13 +59,13 @@ public:
     }
 
     static MessageAuthor createFromYouTube(const QString& name,
-                                const QString& channelId,
-                                const QUrl& avatarUrl,
-                                const QUrl badgeUrl,
-                                const bool isVerified,
-                                const bool isChatOwner,
-                                const bool isChatSponsor,
-                                const bool isChatModerator);
+                                           const QString& channelId,
+                                           const QUrl& avatarUrl,
+                                           const QUrl badgeUrl,
+                                           const bool isVerified,
+                                           const bool isChatOwner,
+                                           const bool isChatSponsor,
+                                           const bool isChatModerator);
 
     static const MessageAuthor& softwareAuthor();
     static const MessageAuthor& testMessageAuthor();
@@ -115,11 +115,14 @@ public:
     };
     Q_ENUMS(Type)
 
-    static ChatMessage createYouTube(const QString& text,
+    static ChatMessage createFromYouTube(const QString& text,
                               const QString& id,
                               const QDateTime& publishedAt,
                               const QDateTime& receivedAt,
                               const MessageAuthor& author);
+
+    static ChatMessage createDeleterFromYouTube(const QString& text,
+                                                const QString& id);
 
     static ChatMessage createSoftwareNotification(const QString& text);
     static ChatMessage createTestMessage         (const QString& text);
@@ -135,6 +138,10 @@ public:
     inline bool isBotCommand() const
     {
         return _isBotCommand;
+    }
+    inline bool isDeleterItem() const
+    {
+        return _isDeleterItem;
     }
     inline Type type() const
     {
@@ -160,6 +167,10 @@ public:
     {
         return _idNum;
     }
+    inline bool markedAsDeleted() const
+    {
+        return _markedAsDeleted;
+    }
 
     bool valid() const;
 
@@ -171,12 +182,14 @@ public:
 
 private:
     bool _valid = false;
+    bool _markedAsDeleted = false;
 
     uint64_t _idNum = 0;
     QString _id;
     QString _text;
 
     mutable bool _isBotCommand = false;
+    bool _isDeleterItem = false;
 
     Type _type = Type::Unknown;
 
@@ -201,6 +214,7 @@ public:
         MessagePublishedAt,
         MessageReceivedAt,
         MessageIsBotCommand,
+        MessageMarkedAsDeleted,
 
         AuthorChannelId,
         AuthorPageUrl,
@@ -221,20 +235,26 @@ public:
     bool contains(const QString& id);
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     static QVariant dataByRole(const ChatMessage& message, int role);
     QVariant dataByNumId(const uint64_t &idNum, int role);
     bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex()) override;
     uint64_t lastIdNum() const;
+    QModelIndex createIndexByPtr(QVariant* data) const;
 
 private:
+    void printMessageInfo(const QString& prefix, const ChatMessage& message);
+
     static const QHash<int, QByteArray> _roleNames;
     QList<QVariant*> _data;//*data
     QHash<QString, QVariant*> _dataById;//message_id, *data
     QHash<QVariant*, QString> _idByData;//*data, message_id
     QHash<uint64_t, QVariant*> _dataByIdNum;//idNum, *data
+    QHash<QVariant*, uint64_t> _idNumByData;//*data, idNum
 
     const int _maxSize  = 10000;
 
     uint64_t _lastIdNum = 0;
+    uint64_t _removedRows = 0;
 };
 

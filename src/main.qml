@@ -535,7 +535,26 @@ ApplicationWindow {
             //Text Message
             TextEdit {
                 id: textEditMessageText
-                color: messageIsBotCommand ? "yellow" : "white"
+
+                color: {
+                    if (messageMarkedAsDeleted)
+                    {
+                        return "gray";
+                    }
+                    else
+                    {
+                        if (messageIsBotCommand)
+                        {
+                            return "yellow";
+                        }
+                        else
+                        {
+                            //Normal message
+                            return "white";
+                        }
+                    }
+                }
+
                 anchors.left: avatarImage.right
                 anchors.right: parent.right
                 anchors.top: authorRow.bottom
@@ -543,6 +562,7 @@ ApplicationWindow {
                 wrapMode: Text.Wrap
                 text: messageText
                 font.weight: messageIsBotCommand ? Font.Black : Font.DemiBold
+                font.italic: messageMarkedAsDeleted
                 selectByMouse: true
                 selectByKeyboard: true
                 readOnly: true

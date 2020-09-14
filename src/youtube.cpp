@@ -115,6 +115,7 @@ void YouTube::replyFinished(QNetworkReply *reply)
         foreach (const QJsonValue& actionJson, actionsJson)
         {
             bool valid = false;
+            bool isDeleter = false;
 
             QString messageText;
             QString messageId;
@@ -274,15 +275,19 @@ void YouTube::replyFinished(QNetworkReply *reply)
 
                 const QJsonArray& runs = deletedStateMessage
                         .value("runs").toArray();
-                foreach (const QJsonValue& run, runs)
+                for (const QJsonValue& run : runs)
                 {
                     messageText += run.toObject().value("text").toString();
                 }
 
+                messageId = markChatItemAsDeletedAction.value("targetItemId").toString();
+
+                isDeleter = true;
                 valid = true;
             }
             else if (actionObject.contains("markChatItemsByAuthorAsDeletedAction"))
             {
+                //ToDo: нужно протестировать. Возможно, это событие удаления всех сообщений
                 //Deleted message by author
 
                 const QJsonObject& markChatItemsByAuthorAsDeletedAction = actionObject.value("markChatItemsByAuthorAsDeletedAction").toObject();
@@ -290,11 +295,14 @@ void YouTube::replyFinished(QNetworkReply *reply)
 
                 const QJsonArray& runs = deletedStateMessage
                         .value("runs").toArray();
-                foreach (const QJsonValue& run, runs)
+                for (const QJsonValue& run : runs)
                 {
                     messageText += run.toObject().value("text").toString();
                 }
 
+                messageId = markChatItemsByAuthorAsDeletedAction.value("targetItemId").toString();
+
+                isDeleter = true;
                 valid = true;
             }
             else if (actionObject.contains("replaceChatItemAction"))
@@ -330,29 +338,37 @@ void YouTube::replyFinished(QNetworkReply *reply)
 
             if (valid)
             {
-                const MessageAuthor& author = MessageAuthor::createFromYouTube(
-                            authorName,
-                            authorChannelId,
-                            authorAvatarUrl,
-                            authorBadgeUrl,
-                            authorIsVerified,
-                            authorIsChatOwner,
-                            authorIsChatSponsor,
-                            authorIsChatModerator);
+                if (isDeleter)
+                {
+                    const ChatMessage& message = ChatMessage::createDeleterFromYouTube(messageText, messageId);
+                    messages.append(message);
+                }
+                else
+                {
+                    const MessageAuthor& author = MessageAuthor::createFromYouTube(
+                                authorName,
+                                authorChannelId,
+                                authorAvatarUrl,
+                                authorBadgeUrl,
+                                authorIsVerified,
+                                authorIsChatOwner,
+                                authorIsChatSponsor,
+                                authorIsChatModerator);
 
-                const ChatMessage& message = ChatMessage::createYouTube(
-                            messageText,
-                            messageId,
-                            publishedAt,
-                            receivedAt,
-                            author);
+                    const ChatMessage& message = ChatMessage::createFromYouTube(
+                                messageText,
+                                messageId,
+                                publishedAt,
+                                receivedAt,
+                                author);
 
-                messages.append(message);
-                authors.append(author);
+                    messages.append(message);
+                    authors.append(author);
+
+                    _messagesReceived++;
+                }
             }
         }
-
-        _messagesReceived += messages.count();
 
         emit readyRead(messages, authors);
     }
