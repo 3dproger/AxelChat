@@ -239,7 +239,7 @@ void ChatMessagesModel::append(const QList<ChatMessage>& messages)
                         qDebug(QString("%1: failed to set data with role ChatMessageRoles::MessageMarkedAsDeleted")
                                .arg(Q_FUNC_INFO).toUtf8());
 
-                        printMessageInfo("Raw message:"), rawMessage);
+                        printMessageInfo("Raw message:", rawMessage);
                     }
 
                     if (!setData(index, rawMessage.text(), ChatMessageRoles::MessageText))
