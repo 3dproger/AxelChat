@@ -253,7 +253,7 @@ private:
     QHash<uint64_t, QVariant*> _dataByIdNum;//idNum, *data
     QHash<QVariant*, uint64_t> _idNumByData;//*data, idNum
 
-    const int _maxSize  = 10;
+    const int _maxSize  = 10000;
 
     uint64_t _lastIdNum = 0;
     uint64_t _removedRows = 0;
