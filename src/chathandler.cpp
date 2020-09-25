@@ -100,9 +100,10 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
         _authors[channelId]._messagesSentCurrent = messagesSentCurrent;
     }
 
-    for (const ChatMessage& message : messages)
+
+    for (ChatMessage message : messages)//ToDo: убрать копирование
     {
-        if (!_messagesModel.contains(message.id()))
+        if (!_messagesModel.contains(message.id()) || message.isDeleterItem())
         {
             /*qDebug(QString("%1: %2")
                    .arg(message.authorName).arg(message.text).toUtf8());*/
@@ -118,11 +119,18 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
                 _bot->processMessage(message);
             }
 
+            _messagesModel.append(std::move(message));
+
             emit messagesReceived(message, message.author());
         }
-    }
+        else
+        {
+            qDebug(QString("%1: ignore message because this id already exists")
+                   .arg(Q_FUNC_INFO).toUtf8());
 
-    _messagesModel.append(messages);
+            message.printMessageInfo("Raw new message:");
+        }
+    }
 }
 
 void ChatHandler::sendTestMessage(const QString &text)

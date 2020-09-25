@@ -180,6 +180,8 @@ public:
                                      1, 0, "ChatMessage", "Type cannot be created in QML");
     }
 
+    void printMessageInfo(const QString& prefix, const int& row = -1) const;
+
 private:
     bool _valid = false;
     bool _markedAsDeleted = false;
@@ -231,7 +233,7 @@ public:
         return _roleNames;
     }
 
-    void append(const QList<ChatMessage>& messages);
+    void append(ChatMessage&& message);
     bool contains(const QString& id);
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
@@ -244,8 +246,6 @@ public:
     int getRow(QVariant* data);
 
 private:
-    void printMessageInfo(const QString& prefix, const ChatMessage& message);
-
     static const QHash<int, QByteArray> _roleNames;
     QList<QVariant*> _data;//*data
     QHash<QString, QVariant*> _dataById;//message_id, *data

@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QAbstractListModel>
 #include <QUrl>
+#include "chatmessage.hpp"
 
 enum class BroadcastState{
     NotConnected,
@@ -35,5 +36,3 @@ struct BroadcastInfo{
     QString liveChatId;
     QString title;
 };
-
-

@@ -132,6 +132,51 @@ bool ChatMessage::valid() const
     return _valid;
 }
 
+QString boolToString(const bool& value)
+{
+    if (value)
+    {
+        return "true";
+    }
+    else
+    {
+        return "false";
+    }
+}
+
+void ChatMessage::printMessageInfo(const QString &prefix, const int &row) const
+{
+    QString resultString = prefix;
+    if (!resultString.isEmpty())
+        resultString += "\n";
+
+    resultString += "===========================";
+
+    resultString += "\nAuthor Name: \"" + author().name() + "\"";
+    resultString += "\nMessage Text: \"" + text() + "\"";
+    resultString += "\nMessage Id: \"" + id() + "\"";
+    resultString += QString("\nMessage Id Num: %1").arg(idNum());
+
+    if (row != -1)
+    {
+        resultString += QString("\nMessage Row: %1").arg(row);
+    }
+    else
+    {
+        resultString += "\nMessage Row: failed to retrieve";
+    }
+
+    resultString += "\nMessage Is Valid: " + boolToString(valid());
+    resultString += "\nMessage Is Bot Command: " + boolToString(isBotCommand());
+    resultString += "\nMessage Is Marked as Deleted: " + boolToString(markedAsDeleted());
+    resultString += "\nMessage Is Deleter: " + boolToString(isDeleterItem());
+    //ToDo: message._type message._receivedAt message._publishedAt
+    //ToDo: other author data
+
+    resultString += "\n===========================";
+    qDebug(resultString.toUtf8());
+}
+
 const QHash<int, QByteArray> ChatMessagesModel::_roleNames = QHash<int, QByteArray>{
     {MessageId ,              "messageId"},
     {MessageText ,            "messageText"},
@@ -158,107 +203,106 @@ ChatMessagesModel::ChatMessagesModel(QObject *parent) : QAbstractListModel(paren
 
 }
 
-void ChatMessagesModel::append(const QList<ChatMessage>& messages)
+void ChatMessagesModel::append(ChatMessage&& message)
 {
     //ToDo: добавить сортировку по времени
 
-    for (ChatMessage rawMessage : messages)
+    if (!message.valid())
     {
-        if (!rawMessage.valid())
+        message.printMessageInfo(QString("%1: Ignore not valid message:")
+                                  .arg(Q_FUNC_INFO));
+        return;
+    }
+
+
+    if (message.id().isEmpty())
+    {
+        message.printMessageInfo(QString("%1: Ignore message with empty id:")
+                         .arg(Q_FUNC_INFO));
+        return;
+    }
+
+    if (!message.isDeleterItem())
+    {
+        if (!_dataById.contains(message.id()))
         {
-            printMessageInfo(QString("%1: Ignore not valid message:")
-                             .arg(Q_FUNC_INFO), rawMessage);
-            continue;
-        }
+            //Normal message
 
+            beginInsertRows(QModelIndex(), _data.count(), _data.count());
 
-        if (rawMessage.id().isEmpty())
-        {
-            printMessageInfo(QString("%1: Ignore message with empty id:")
-                             .arg(Q_FUNC_INFO), rawMessage);
-            continue;
-        }
+            message._idNum = _lastIdNum;
+            _lastIdNum++;
 
-        if (!rawMessage.isDeleterItem())
-        {
-            if (!_dataById.contains(rawMessage.id()))
-            {
-                //Normal message
+            QVariant* messageData = new QVariant();
 
-                beginInsertRows(QModelIndex(), _data.count(), _data.count());
+            messageData->setValue(message);
 
-                rawMessage._idNum = _lastIdNum;
-                _lastIdNum++;
+            _idByData.insert(messageData, message.id());
+            _dataById.insert(message.id(), messageData);
+            _dataByIdNum.insert(message._idNum, messageData);
+            _idNumByData.insert(messageData, message._idNum);
+            _data.append(messageData);
 
-                QVariant* messageData = new QVariant();
+            //printMessageInfo("New message:", rawMessage);
 
-                messageData->setValue(rawMessage);
-
-                _idByData.insert(messageData, rawMessage.id());
-                _dataById.insert(rawMessage.id(), messageData);
-                _dataByIdNum.insert(rawMessage._idNum, messageData);
-                _idNumByData.insert(messageData, rawMessage._idNum);
-                _data.append(messageData);
-
-                //printMessageInfo("New message:", rawMessage);
-
-                endInsertRows();
-            }
-            else
-            {
-                qDebug(QString("%1: ignore message because this id already exists")
-                       .arg(Q_FUNC_INFO).toUtf8());
-
-                const QVariant* data = _dataById.value(rawMessage.id());
-                if (data)
-                {
-                    const ChatMessage& oldMessage = qvariant_cast<ChatMessage>(*data);
-
-                    printMessageInfo("Raw new message:", rawMessage);
-                    printMessageInfo("Old message:", oldMessage);
-                }
-                else
-                {
-                    printMessageInfo("Raw new message:", rawMessage);
-                    qDebug("Old message: nullptr");
-                }
-            }
+            endInsertRows();
         }
         else
         {
-            //Deleter
+            qDebug(QString("%1: ignore message because this id already exists")
+                   .arg(Q_FUNC_INFO).toUtf8());
 
-            QVariant* data = _dataById[rawMessage.id()];
-            if (_dataById.contains(rawMessage.id()) && data)
+            const QVariant* data = _dataById.value(message.id());
+            if (data)
             {
-                const QModelIndex& index = createIndexByPtr(data);
-                if (index.isValid())
+                const ChatMessage& oldMessage = qvariant_cast<ChatMessage>(*data);
+
+                message.printMessageInfo("Raw new message:");
+                oldMessage.printMessageInfo("Old message:");
+            }
+            else
+            {
+                message.printMessageInfo("Raw new message:");
+                qDebug("Old message: nullptr");
+            }
+        }
+    }
+    else
+    {
+        //Deleter
+
+        //ToDo: Если пришёл делетер, а сообщение ещё нет, то когда это сообщение придёт не будет удалено
+
+        QVariant* data = _dataById[message.id()];
+        if (_dataById.contains(message.id()) && data)
+        {
+            const QModelIndex& index = createIndexByPtr(data);
+            if (index.isValid())
+            {
+                if (!setData(index, true, ChatMessageRoles::MessageMarkedAsDeleted))
                 {
-                    if (!setData(index, true, ChatMessageRoles::MessageMarkedAsDeleted))
-                    {
-                        qDebug(QString("%1: failed to set data with role ChatMessageRoles::MessageMarkedAsDeleted")
-                               .arg(Q_FUNC_INFO).toUtf8());
-
-                        printMessageInfo("Raw message:", rawMessage);
-                    }
-
-                    if (!setData(index, rawMessage.text(), ChatMessageRoles::MessageText))
-                    {
-                        qDebug(QString("%1: failed to set data with role ChatMessageRoles::MessageText")
-                               .arg(Q_FUNC_INFO).toUtf8());
-
-                        printMessageInfo("Raw message:", rawMessage);
-                    }
-
-                    //qDebug(QString("Message \"%1\" marked as deleted").arg(rawMessage.id()).toUtf8());
-                }
-                else
-                {
-                    qDebug(QString("%1: index not valid")
+                    qDebug(QString("%1: failed to set data with role ChatMessageRoles::MessageMarkedAsDeleted")
                            .arg(Q_FUNC_INFO).toUtf8());
 
-                    printMessageInfo("Raw message:", rawMessage);
+                    message.printMessageInfo("Raw message:");
                 }
+
+                if (!setData(index, message.text(), ChatMessageRoles::MessageText))
+                {
+                    qDebug(QString("%1: failed to set data with role ChatMessageRoles::MessageText")
+                           .arg(Q_FUNC_INFO).toUtf8());
+
+                    message.printMessageInfo("Raw message:");
+                }
+
+                //qDebug(QString("Message \"%1\" marked as deleted").arg(rawMessage.id()).toUtf8());
+            }
+            else
+            {
+                qDebug(QString("%1: index not valid")
+                       .arg(Q_FUNC_INFO).toUtf8());
+
+                message.printMessageInfo("Raw message:");
             }
         }
     }
@@ -337,53 +381,6 @@ int ChatMessagesModel::getRow(QVariant *data)
     {
         return -1;
     }
-}
-
-QString boolToString(const bool& value)
-{
-    if (value)
-    {
-        return "true";
-    }
-    else
-    {
-        return "false";
-    }
-}
-
-void ChatMessagesModel::printMessageInfo(const QString &prefix, const ChatMessage &message)
-{
-    QString text = prefix;
-    if (!text.isEmpty())
-        text += "\n";
-
-    text += "===========================";
-
-    const int row = getRow(_dataById.value(message.id()));
-
-    text += "\nAuthor Name: \"" + message.author().name() + "\"";
-    text += "\nMessage Text: \"" + message.text() + "\"";
-    text += "\nMessage Id: \"" + message.id() + "\"";
-    text += QString("\nMessage Id Num: %1").arg(message.idNum());
-
-    if (row != -1)
-    {
-        text += QString("\nMessage Row: %1").arg(row);
-    }
-    else
-    {
-        text += "\nMessage Row: failed to retrieve";
-    }
-
-    text += "\nMessage Is Valid: " + boolToString(message.valid());
-    text += "\nMessage Is Bot Command: " + boolToString(message.isBotCommand());
-    text += "\nMessage Is Marked as Deleted: " + boolToString(message.markedAsDeleted());
-    text += "\nMessage Is Deleter: " + boolToString(message.isDeleterItem());
-    //ToDo: message._type message._receivedAt message._publishedAt
-    //ToDo: other author data
-
-    text += "\n===========================";
-    qDebug(text.toUtf8());
 }
 
 bool ChatMessagesModel::contains(const QString &id)
