@@ -15,6 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     botaction.hpp \
+    cefhandler.h \
     chatbot.hpp \
     chathandler.hpp \
     chatmessage.hpp \
@@ -29,6 +30,7 @@ HEADERS += \
 
 SOURCES += \
         botaction.cpp \
+        cefhandler.cpp \
         chatbot.cpp \
         chathandler.cpp \
         chatmessage.cpp \
@@ -90,3 +92,17 @@ win32: {
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+# CEF
+win32: LIBS += -L$$PWD/../cef/Release/ -llibcef
+
+INCLUDEPATH += $$PWD/../cef
+DEPENDPATH += $$PWD/../cef
+
+win32: LIBS += -L$$PWD/../cef/libcef_dll_wrapper/Release/ -llibcef_dll_wrapper
+
+QMAKE_CXXFLAGS_RELEASE += /MT
+QMAKE_CXXFLAGS_DEBUG += /MTd
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/liblibcef_dll_wrapper.a

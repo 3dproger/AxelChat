@@ -11,6 +11,8 @@
 #include "clipboardqml.hpp"
 #include "qmlutils.hpp"
 #include "i18n.hpp"
+#include "cefhandler.h"
+//#include "clienthandler.h"
 
 int main(int argc, char *argv[])
 {
@@ -27,6 +29,17 @@ int main(int argc, char *argv[])
     QMLUtils::declareQml();
     QMLUtils* qmlUtils = new QMLUtils(settings, "qml_utils");
 
+    //CEF
+    CefMainArgs main_args((HINSTANCE)GetModuleHandle(0));
+
+    CefRefPtr<CEFHandler> cefHandler(new CEFHandler);
+    CefSettings cefSettings;
+    //CefString(&cefSettings.browser_subprocess_path) = CefString("cefsubprocess.exe");
+    cefSettings.no_sandbox = true;
+
+    CefInitialize(main_args, cefSettings, cefHandler.get(), nullptr);
+
+    //Qt
     QtWebEngine::initialize();
     QApplication app(argc, argv);
 
@@ -94,6 +107,8 @@ int main(int argc, char *argv[])
     splashScreen = nullptr;
 
     int returnCode = app.exec();
+
+    CefShutdown();
 
     return returnCode;
 }
