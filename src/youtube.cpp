@@ -9,7 +9,7 @@
 YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
     : QWebEngineUrlRequestInterceptor(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
 {
-    connect(_manager, &QNetworkAccessManager::finished, this, &YouTube::replyFinished);
+    //connect(_manager, &QNetworkAccessManager::finished, this, &YouTube::replyFinished);
 
     _webPage.setUrlRequestInterceptor(this);
 
@@ -88,28 +88,32 @@ void YouTube::interceptRequest(QWebEngineUrlRequestInfo &info)
     }
 }
 
-void YouTube::replyFinished(QNetworkReply *reply)
+void YouTube::replyFinished(void *data, size_t data_size)
 {
-    if (reply)
+    if (data)
     {
-        _replyData = reply->readAll();
+        //_replyData = reply->readAll();
 
         /*qDebug(QString("=================================================\n"
                        "%1\n"
                        "=================================================")
                .arg(QString::fromUtf8(_replyData))
                .toUtf8());*/
+        _replyData = QByteArray((const char*)data, data_size);
 
-        reply->deleteLater();
+        qDebug() << "=========================RECEIVED DATA=========================";
+        qDebug() << _replyData;
+        qDebug() << "===============================================================";
 
         QList<ChatMessage> messages;
         QList<MessageAuthor> authors;
 
 
         QJsonDocument jsonDocument(QJsonDocument::fromJson(_replyData));
-        QJsonObject responseJson = jsonDocument.object().value("response").toObject();
 
-        QJsonObject liveChatContinuation = responseJson.value("continuationContents").toObject().value("liveChatContinuation").toObject();
+        //QJsonObject responseJson = jsonDocument.object().value("response").toObject();
+
+        QJsonObject liveChatContinuation = jsonDocument.object().value("continuationContents").toObject().value("liveChatContinuation").toObject();
 
         QJsonArray actionsJson = liveChatContinuation.value("actions").toArray();
 
@@ -673,4 +677,9 @@ void YouTube::setLink(QString link)
 
         emit linkChanged();
     }
+}
+
+void YouTube::onDataReceived(void *data, size_t data_size)
+{
+    replyFinished(data, data_size);
 }

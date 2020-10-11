@@ -50,9 +50,10 @@ signals:
 
 public slots:
     void setLink(QString link);
+    void onDataReceived(void *data, size_t data_size);
 
 private slots:
-    void replyFinished(QNetworkReply* reply);
+    void replyFinished(void *data, size_t data_size);
 
 private:
     QString extractBroadcastId(const QString& link) const;

@@ -8,12 +8,13 @@
 #include "include/cef_command_line.h"
 #include "include/views/cef_browser_view.h"
 #include "include/views/cef_window.h"
-#include "include/wrapper/cef_helpers.h"
 #include "include/wrapper/cef_closure_task.h"
 
 #include "include/cef_browser.h"
 #include "include/views/cef_browser_view_delegate.h"
 #include "include/views/cef_view.h"
+
+#include <QString>
 
 namespace {
 
@@ -28,8 +29,9 @@ std::string GetDataURI(const std::string& data, const std::string& mime_type) {
 
 }  // namespace
 
-QtCefHandler::QtCefHandler(bool use_views)
-    : use_views_(use_views), is_closing_(false) {
+QtCefHandler::QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool use_views)
+    : use_views_(use_views), is_closing_(false), _cefApp(cefApp)
+{
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -41,6 +43,12 @@ QtCefHandler::~QtCefHandler() {
 // static
 QtCefHandler* QtCefHandler::GetInstance() {
     return g_instance;
+}
+
+bool QtCefHandler::ReadResponse(void *data_out, int bytes_to_read, int &bytes_read, CefRefPtr<CefCallback> callback)
+{
+    qDebug() << "OK";
+    return false;
 }
 
 void QtCefHandler::OnTitleChange(CefRefPtr<CefBrowser> browser,
@@ -132,21 +140,38 @@ void QtCefHandler::OnLoadError(CefRefPtr<CefBrowser> browser,
   qDebug() << "ERROR (" << errorCode << "): " << errorText.ToWString();
 }
 
+class MyCallback : public CefCallback
+{
+public:
+    virtual void Continue() OVERRIDE
+    {
+        qDebug() << "Continue";
+    }
+    virtual void Cancel() OVERRIDE
+    {
+        qDebug() << "Cancel";
+    }
+private:
+    IMPLEMENT_REFCOUNTING(MyCallback);
+};
+
 bool QtCefHandler::OnResourceResponse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response)
 {
+    //request->GetPostData();
     //qDebug() << request->GetReferrerURL().ToWString();
+
 
     return false;
 }
 
 void QtCefHandler::OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, CefResourceRequestHandler::URLRequestStatus status, int64 received_content_length)
 {
-    //qDebug() << request->GetReferrerURL().ToWString();
-    //response->
+    CEF_REQUIRE_IO_THREAD();
 }
 
 CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_in_size, size_t &data_in_read, void *data_out, size_t data_out_size, size_t &data_out_written)
 {
+    CEF_REQUIRE_IO_THREAD();
     DCHECK((data_in_size == 0U && !data_in) || (data_in_size > 0U && data_in));
     DCHECK_EQ(data_in_read, 0U);
     DCHECK(data_out);
@@ -171,10 +196,30 @@ CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_
         memcpy(data_out, data_in, data_out_written);
     }
 
-    qDebug() << "=========================\n" << QByteArray((const char*)data_out, 400/*data_in_size*/);
+    if (data_in_size > 0)
+    {
+        if (QByteArray((const char*)data_out, 1) == "{")
+        {
+            if (_cefApp)
+            {
+                _cefApp->OnDataReceived(data_out, data_in_size);
+            }
+            //qDebug() << "=========================\n" << QByteArray((const char*)data_out, data_in_size);
+        }
+    }
 
     return RESPONSE_FILTER_DONE;
 }
+
+/*bool QtCefHandler::Read(void *data_out, int bytes_to_read, int &bytes_read, CefRefPtr<CefResourceReadCallback> callback)
+{
+    CEF_REQUIRE_IO_THREAD();
+    qDebug() << "=========================\n" << QByteArray((const char*)data_out, 100);
+
+    bytes_read += bytes_to_read;
+    callback->Continue(bytes_to_read);
+    return false;
+}*/
 
 void QtCefHandler::CloseAllBrowsers(bool force_close) {
   if (!CefCurrentlyOn(TID_UI)) {
@@ -282,7 +327,7 @@ void QtCefApp::OnContextInitialized()
   #endif
 
     // SimpleHandler implements browser-level callbacks.
-    CefRefPtr<QtCefHandler> handler(new QtCefHandler(use_views));
+    CefRefPtr<QtCefHandler> handler(new QtCefHandler(this, use_views));
 
     // Specify CEF browser settings here.
     CefBrowserSettings browser_settings;
@@ -331,6 +376,11 @@ void QtCefApp::OnContextInitialized()
                                           nullptr,
                                           nullptr);
     }
+}
+
+void QtCefApp::OnDataReceived(void *data, size_t data_size)
+{
+    emit dataReceived(data, data_size);
 }
 
 void QtCefApp::timerEvent(QTimerEvent *event)

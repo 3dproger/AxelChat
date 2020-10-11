@@ -66,6 +66,7 @@ int main(int argc, char *argv[])
     // CEF has initialized.
     CefRefPtr<QtCefApp> cefApp(new QtCefApp());
 
+
     // Initialize CEF.
     CefInitialize(main_args, cefSettings, cefApp.get(), sandbox_info);
     CefDoMessageLoopWork();
@@ -100,6 +101,9 @@ int main(int argc, char *argv[])
     ChatHandler::declareQml();
     ChatHandler* chatHandler = new ChatHandler(settings, "chat_handler");
     settings->setParent(chatHandler);
+
+    qRegisterMetaType<size_t>("size_t");
+    QObject::connect(cefApp, &QtCefApp::dataReceived, chatHandler->youTube(), &YouTube::onDataReceived);
 
     //Update Checker
     GitHubApi::declareQml();
