@@ -29,7 +29,6 @@ int main(int argc, char *argv[])
     QMLUtils* qmlUtils = new QMLUtils(settings, "qml_utils");
 
     //CEF
-
     // Enable High-DPI support on Windows 7 or newer.
     CefEnableHighDPISupport();
 
@@ -65,15 +64,13 @@ int main(int argc, char *argv[])
     // SimpleApp implements application-level callbacks for the browser process.
     // It will create the first browser instance in OnContextInitialized() after
     // CEF has initialized.
-    CefRefPtr<QtCefApp> cefApp(new QtCefApp);
+    CefRefPtr<QtCefApp> cefApp(new QtCefApp());
 
     // Initialize CEF.
     CefInitialize(main_args, cefSettings, cefApp.get(), sandbox_info);
-
-    CefRunMessageLoop();
+    CefDoMessageLoopWork();
 
     //Qt
-    QtWebEngine::initialize();
     QApplication app(argc, argv);
 
     QSplashScreen* splashScreen = new QSplashScreen(QPixmap(":/icon.ico"));
@@ -138,6 +135,9 @@ int main(int argc, char *argv[])
     splashScreen->close();
     delete splashScreen;
     splashScreen = nullptr;
+
+    cefApp->moveToThread(engine.thread());
+    cefApp->startTimer(200);
 
     int returnCode = app.exec();
 

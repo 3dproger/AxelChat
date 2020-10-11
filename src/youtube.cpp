@@ -82,7 +82,6 @@ void YouTube::interceptRequest(QWebEngineUrlRequestInfo &info)
 
         //QString newUrl = requestUrl.toString().replace("youtubei/v1/live_chat/get_live_chat", "live_chat/get_live_chat", Qt::CaseSensitivity::CaseInsensitive);
         QString newUrl = requestUrl.toString().replace("youtubei/v1/live_chat/get_live_chat", "live_chat/get_live_chat", Qt::CaseSensitivity::CaseInsensitive);
-        qDebug() << "New URL: " << newUrl;
         QNetworkRequest request = QNetworkRequest(newUrl);
         request.setRawHeader("User-Agent", QWebEngineProfile::defaultProfile()->httpUserAgent().toUtf8());
         _manager->get(request);
