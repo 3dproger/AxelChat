@@ -4,15 +4,10 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QUrlQuery>
-#include <QWebEngineProfile>
 
 YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
-    : QWebEngineUrlRequestInterceptor(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
+    : _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
 {
-    //connect(_manager, &QNetworkAccessManager::finished, this, &YouTube::replyFinished);
-
-    _webPage.setUrlRequestInterceptor(this);
-
     if (_settings)
     {
         setLink(_settings->value(_settingsGroupPath + "/" + _settingsKeyUserSpecifiedLink).toString());
@@ -31,7 +26,7 @@ YouTube::~YouTube()
     }
 }
 
-void YouTube::interceptRequest(QWebEngineUrlRequestInfo &info)
+/*void YouTube::interceptRequest(QWebEngineUrlRequestInfo &info)
 {
     QUrl requestUrl = info.requestUrl();
 
@@ -86,7 +81,7 @@ void YouTube::interceptRequest(QWebEngineUrlRequestInfo &info)
         request.setRawHeader("User-Agent", QWebEngineProfile::defaultProfile()->httpUserAgent().toUtf8());
         _manager->get(request);
     }
-}
+}*/
 
 void YouTube::replyFinished(void *data, size_t data_size)
 {
@@ -105,13 +100,27 @@ void YouTube::replyFinished(void *data, size_t data_size)
         qDebug() << _replyData;
         qDebug() << "===============================================================";
 
+
         QList<ChatMessage> messages;
         QList<MessageAuthor> authors;
 
 
         QJsonDocument jsonDocument(QJsonDocument::fromJson(_replyData));
 
-        //QJsonObject responseJson = jsonDocument.object().value("response").toObject();
+
+        if (jsonDocument.isObject() && !_youtubeInfo.broadcastConnected && !_youtubeInfo.broadcastId.isEmpty())
+        {
+            qDebug(QString("YouTube connected: %1")
+                   .arg(_youtubeInfo.broadcastId).toUtf8());
+            _youtubeInfo.broadcastConnected = true;
+            if (_outputToFile)
+            {
+                _outputToFile->setYouTubeInfo(_youtubeInfo);
+            }
+
+            emit connected(_youtubeInfo.broadcastId);
+            emit connectedChanged();
+        }
 
         QJsonObject liveChatContinuation = jsonDocument.object().value("continuationContents").toObject().value("liveChatContinuation").toObject();
 
@@ -673,7 +682,7 @@ void YouTube::setLink(QString link)
         qDebug() << "Broadcast URL:" << _youtubeInfo.broadcastURL.toString();
         qDebug() << "Chat URL:" << _youtubeInfo.broadcastChatURL.toString();*/
 
-        _webPage.load(QUrl(_youtubeInfo.broadcastChatUrl));
+        //_webPage.load(QUrl(_youtubeInfo.broadcastChatUrl));
 
         emit linkChanged();
     }

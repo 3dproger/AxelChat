@@ -1,4 +1,4 @@
-QT += gui quick multimedia webengine webenginewidgets
+QT += widgets gui quick multimedia
 
 CONFIG += c++11
 
@@ -105,4 +105,4 @@ QMAKE_CXXFLAGS_RELEASE += /MT
 QMAKE_CXXFLAGS_DEBUG += /MTd
 
 win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.lib
-else:win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/liblibcef_dll_wrapper.a
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.a

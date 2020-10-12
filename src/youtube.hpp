@@ -2,15 +2,13 @@
 #define YOUTUBEINTERCEPTOR_HPP
 
 #include <QObject>
-#include <QWebEngineUrlRequestInterceptor>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include "types.hpp"
-#include <QWebEnginePage>
 #include <QSettings>
 #include "outputtofile.hpp"
 
-class YouTube : public QWebEngineUrlRequestInterceptor
+class YouTube : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString userSpecifiedLink          READ userSpecifiedLink WRITE setLink NOTIFY linkChanged)
@@ -25,7 +23,7 @@ class YouTube : public QWebEngineUrlRequestInterceptor
 public:
     explicit YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
     ~YouTube();
-    void interceptRequest(QWebEngineUrlRequestInfo &info);
+    //void interceptRequest(QWebEngineUrlRequestInfo &info);
     QByteArray replyData() const;
 
     int messagesReceived() const;
@@ -69,8 +67,6 @@ private:
     int _messagesReceived = 0;
 
     YouTubeInfo _youtubeInfo;
-
-    QWebEnginePage _webPage;
 
     const QString _settingsKeyUserSpecifiedLink = "user_specified_link";
 };
