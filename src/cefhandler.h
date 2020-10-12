@@ -23,14 +23,11 @@ class QtCefHandler: public CefClient,
 public:
     explicit QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool use_views);
     ~QtCefHandler();
-
     static QtCefHandler* GetInstance();
-
     virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() OVERRIDE { return this; }
     virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() OVERRIDE { return this; }
     virtual CefRefPtr<CefLoadHandler> GetLoadHandler() OVERRIDE { return this; }
-    //virtual CefRefPtr<CefRequestHandler> GetRequestHandler() OVERRIDE { return this; }
-
+    virtual CefRefPtr<CefRequestHandler> GetRequestHandler() OVERRIDE { return this; }
     virtual CefRefPtr<CefResourceRequestHandler> GetResourceRequestHandler(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, bool is_navigation, bool is_download, const CefString &request_initiator, bool &disable_default_handling) OVERRIDE
     {
         Q_UNUSED(browser);
@@ -66,7 +63,6 @@ public:
                              const CefString& failedUrl) OVERRIDE;
 
     virtual ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefRequestCallback> callback) OVERRIDE;
-
     virtual void OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, URLRequestStatus status, int64 received_content_length) OVERRIDE;
 
     virtual bool InitFilter() OVERRIDE { return true; }
@@ -74,7 +70,6 @@ public:
 
     // Request that all existing browser windows close.
     void CloseAllBrowsers(bool force_close);
-
     bool IsClosing() const { return is_closing_; }
 
 private:
