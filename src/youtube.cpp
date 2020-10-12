@@ -6,7 +6,7 @@
 #include <QUrlQuery>
 
 YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
-    : _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
+    : QObject(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
 {
     if (_settings)
     {
@@ -24,374 +24,6 @@ YouTube::~YouTube()
     {
         _outputToFile->setYouTubeInfo(_youtubeInfo);
     }
-}
-
-/*void YouTube::interceptRequest(QWebEngineUrlRequestInfo &info)
-{
-    QUrl requestUrl = info.requestUrl();
-
-    //qDebug() << "request:" << requestUrl;
-
-    QString host = requestUrl.host().toLower();
-    if (host.startsWith("www.", Qt::CaseInsensitive))
-    {
-        host = host.mid(4);
-    }
-    if (host.startsWith("studio.", Qt::CaseInsensitive))
-    {
-        host = host.mid(7);
-    }
-
-    QString path = requestUrl.path().toLower();
-    if (path.startsWith('/'))
-    {
-        path = path.mid(1);
-    }
-    if (path.endsWith('/'))
-    {
-        path = path.left(path.lastIndexOf('/'));
-    }
-
-    //qDebug() << "host:" << host;
-    //qDebug() << "path:" << path;
-
-    //Chat update
-    if (host.contains(QRegExp("^youtube\\..+$", Qt::CaseSensitivity::CaseInsensitive)) && (
-                path.toLower() == "live_chat/get_live_chat" ||
-                path.toLower() == "youtubei/v1/live_chat/get_live_chat"
-                ))
-    {
-        if (!_youtubeInfo.broadcastConnected && !_youtubeInfo.broadcastId.isEmpty())
-        {
-            qDebug(QString("YouTube connected: %1")
-                   .arg(_youtubeInfo.broadcastId).toUtf8());
-            _youtubeInfo.broadcastConnected = true;
-            if (_outputToFile)
-            {
-                _outputToFile->setYouTubeInfo(_youtubeInfo);
-            }
-
-            emit connected(_youtubeInfo.broadcastId);
-            emit connectedChanged();
-        }
-
-        //QString newUrl = requestUrl.toString().replace("youtubei/v1/live_chat/get_live_chat", "live_chat/get_live_chat", Qt::CaseSensitivity::CaseInsensitive);
-        QString newUrl = requestUrl.toString().replace("youtubei/v1/live_chat/get_live_chat", "live_chat/get_live_chat", Qt::CaseSensitivity::CaseInsensitive);
-        QNetworkRequest request = QNetworkRequest(newUrl);
-        request.setRawHeader("User-Agent", QWebEngineProfile::defaultProfile()->httpUserAgent().toUtf8());
-        _manager->get(request);
-    }
-}*/
-
-void YouTube::replyFinished(void *data, size_t data_size)
-{
-    if (data)
-    {
-        //_replyData = reply->readAll();
-
-        /*qDebug(QString("=================================================\n"
-                       "%1\n"
-                       "=================================================")
-               .arg(QString::fromUtf8(_replyData))
-               .toUtf8());*/
-        _replyData = QByteArray((const char*)data, data_size);
-
-        qDebug() << "=========================RECEIVED DATA=========================";
-        qDebug() << _replyData;
-        qDebug() << "===============================================================";
-
-
-        QList<ChatMessage> messages;
-        QList<MessageAuthor> authors;
-
-
-        QJsonDocument jsonDocument(QJsonDocument::fromJson(_replyData));
-
-
-        if (jsonDocument.isObject() && !_youtubeInfo.broadcastConnected && !_youtubeInfo.broadcastId.isEmpty())
-        {
-            qDebug(QString("YouTube connected: %1")
-                   .arg(_youtubeInfo.broadcastId).toUtf8());
-            _youtubeInfo.broadcastConnected = true;
-            if (_outputToFile)
-            {
-                _outputToFile->setYouTubeInfo(_youtubeInfo);
-            }
-
-            emit connected(_youtubeInfo.broadcastId);
-            emit connectedChanged();
-        }
-
-        QJsonObject liveChatContinuation = jsonDocument.object().value("continuationContents").toObject().value("liveChatContinuation").toObject();
-
-        QJsonArray actionsJson = liveChatContinuation.value("actions").toArray();
-
-        foreach (const QJsonValue& actionJson, actionsJson)
-        {
-            bool valid = false;
-            bool isDeleter = false;
-
-            QString messageText;
-            QString messageId;
-            const QDateTime& receivedAt = QDateTime::currentDateTime();
-            QDateTime publishedAt;
-
-            QString authorName;
-            QString authorChannelId;
-            QUrl authorBadgeUrl;
-            QUrl authorAvatarUrl;
-            bool authorIsVerified      = false;
-            bool authorIsChatOwner     = false;
-            bool authorIsChatSponsor   = false;
-            bool authorIsChatModerator = false;
-
-            const QJsonObject& actionObject = actionJson.toObject();
-
-            if (actionObject.contains("addChatItemAction"))
-            {
-                //Message
-
-                const QJsonObject& addChatItemAction = actionObject.value("addChatItemAction").toObject();
-
-                const QJsonObject& liveChatTextMessageRenderer = addChatItemAction
-                        .value("item").toObject()
-                        .value("liveChatTextMessageRenderer").toObject();
-
-                if (!liveChatTextMessageRenderer.isEmpty())
-                {
-                    messageId = liveChatTextMessageRenderer
-                            .value("id").toString();
-
-                    publishedAt = QDateTime::fromMSecsSinceEpoch(
-                                liveChatTextMessageRenderer.value("timestampUsec").toString().toLongLong() / 1000,
-                                Qt::TimeSpec::UTC).toLocalTime();
-
-                    authorName = liveChatTextMessageRenderer
-                            .value("authorName").toObject()
-                            .value("simpleText").toString();
-
-                    authorChannelId = liveChatTextMessageRenderer
-                            .value("authorExternalChannelId").toString();
-
-                    const QJsonArray& thumbnails = liveChatTextMessageRenderer
-                            .value("authorPhoto").toObject()
-                            .value("thumbnails").toArray();
-
-                    int preHeight = -1;
-
-                    for (const QJsonValue& element : thumbnails)
-                    {
-                        const QJsonObject& thumbnail = element.toObject();
-
-                        int height = thumbnail.value("height").toInt();
-                        if (height == 32)
-                        {
-                            //Preferably 32x32
-                            authorAvatarUrl  = thumbnail.value("url").toString();
-                            break;
-                        }
-                        else if (height > preHeight || authorAvatarUrl.isEmpty())
-                        {
-                            //Or getting max size avatar
-                            authorAvatarUrl  = thumbnail.value("url").toString();
-                            preHeight = height;
-                        }
-                    }
-
-                    if (liveChatTextMessageRenderer.contains("authorBadges"))
-                    {
-                        const QJsonArray& authorBadges = liveChatTextMessageRenderer.value("authorBadges").toArray();
-
-                        foreach (const QJsonValue& badge, authorBadges)
-                        {
-                            const QJsonObject& liveChatAuthorBadgeRenderer = badge.toObject().value("liveChatAuthorBadgeRenderer").toObject();
-
-                            if (liveChatAuthorBadgeRenderer.contains("icon"))
-                            {
-                                const QString& iconType = liveChatAuthorBadgeRenderer.value("icon").toObject()
-                                        .value("iconType").toString();
-
-                                bool foundIconType = false;
-
-                                if (iconType.toLower() == "owner")
-                                {
-                                    authorIsChatOwner = true;
-                                    foundIconType = true;
-                                }
-
-                                if (iconType.toLower() == "moderator")
-                                {
-                                    authorIsChatModerator = true;
-                                    foundIconType = true;
-                                }
-
-                                if (iconType.toLower() == "verified")
-                                {
-                                    authorIsVerified = true;
-                                    foundIconType = true;
-                                }
-
-                                if (!foundIconType && !iconType.isEmpty())
-                                {
-                                    qDebug() << "Unknown iconType" << iconType;
-                                }
-                            }
-                            else if (liveChatAuthorBadgeRenderer.contains("customThumbnail"))
-                            {
-                                authorIsChatSponsor = true;//ToDo: is not a fact
-
-                                const QJsonArray& thumbnails = liveChatAuthorBadgeRenderer.value("customThumbnail").toObject()
-                                        .value("thumbnails").toArray();
-
-                                foreach (const QJsonValue& thumbnailJson, thumbnails)
-                                {
-                                    if (authorBadgeUrl.isEmpty())
-                                    {
-                                        authorBadgeUrl = QUrl(thumbnailJson.toObject().value("url").toString());
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                qDebug(QString("YouTubeInterceptor: Unknown json structure of object \"%1\". Data:\n"
-                                               "==============================================================="
-                                               "%1"
-                                               "===============================================================")
-                                       .arg("liveChatAuthorBadgeRenderer")
-                                       .arg(QString::fromUtf8(_replyData))
-                                       .toUtf8());
-                            }
-                        }
-                    }
-
-                    const QJsonArray& runs = liveChatTextMessageRenderer
-                            .value("message").toObject()
-                            .value("runs").toArray();
-                    foreach (const QJsonValue& run, runs)
-                    {
-
-                        messageText += run.toObject().value("text").toString();
-                    }
-
-                    valid = true;
-                }
-            }
-            else if (actionObject.contains("markChatItemAsDeletedAction"))
-            {
-                //Deleted message by unknown
-
-                const QJsonObject& markChatItemAsDeletedAction = actionObject.value("markChatItemAsDeletedAction").toObject();
-                const QJsonObject& deletedStateMessage = markChatItemAsDeletedAction.value("deletedStateMessage").toObject();
-
-                const QJsonArray& runs = deletedStateMessage
-                        .value("runs").toArray();
-                for (const QJsonValue& run : runs)
-                {
-                    messageText += run.toObject().value("text").toString();
-                }
-
-                messageId = markChatItemAsDeletedAction.value("targetItemId").toString();
-
-                isDeleter = true;
-                valid = true;
-            }
-            else if (actionObject.contains("markChatItemsByAuthorAsDeletedAction"))
-            {
-                //ToDo: нужно протестировать. Возможно, это событие удаления всех сообщений
-                //Deleted message by author
-
-                const QJsonObject& markChatItemsByAuthorAsDeletedAction = actionObject.value("markChatItemsByAuthorAsDeletedAction").toObject();
-                const QJsonObject& deletedStateMessage = markChatItemsByAuthorAsDeletedAction.value("deletedStateMessage").toObject();
-
-                const QJsonArray& runs = deletedStateMessage
-                        .value("runs").toArray();
-                for (const QJsonValue& run : runs)
-                {
-                    messageText += run.toObject().value("text").toString();
-                }
-
-                messageId = markChatItemsByAuthorAsDeletedAction.value("targetItemId").toString();
-
-                isDeleter = true;
-                valid = true;
-            }
-            else if (actionObject.contains("replaceChatItemAction"))
-            {
-                qDebug("YouTubeInterceptor: object \"replaceChatItemAction\" not support");
-                qDebug(QString("Data:\n"
-                               "==============================================================="
-                               "%1"
-                               "===============================================================")
-                       .arg(QString::fromUtf8(_replyData))
-                       .toUtf8());
-            }
-            else if (actionObject.contains("addLiveChatTickerItemAction"))
-            {
-                qDebug("YouTubeInterceptor: object \"addLiveChatTickerItemAction\" not support");
-                qDebug(QString("Data:\n"
-                               "==============================================================="
-                               "%1"
-                               "===============================================================")
-                       .arg(QString::fromUtf8(_replyData))
-                       .toUtf8());
-            }
-            else
-            {
-                qDebug(QString("YouTubeInterceptor: Unknown json structure of array \"%1\". Data:\n"
-                               "==============================================================="
-                               "%2"
-                               "===============================================================")
-                       .arg("actions")
-                       .arg(QString::fromUtf8(_replyData))
-                       .toUtf8());
-            }
-
-            if (valid)
-            {
-                if (isDeleter)
-                {
-                    const ChatMessage& message = ChatMessage::createDeleterFromYouTube(messageText, messageId);
-                    messages.append(message);
-                }
-                else
-                {
-                    const MessageAuthor& author = MessageAuthor::createFromYouTube(
-                                authorName,
-                                authorChannelId,
-                                authorAvatarUrl,
-                                authorBadgeUrl,
-                                authorIsVerified,
-                                authorIsChatOwner,
-                                authorIsChatSponsor,
-                                authorIsChatModerator);
-
-                    const ChatMessage& message = ChatMessage::createFromYouTube(
-                                messageText,
-                                messageId,
-                                publishedAt,
-                                receivedAt,
-                                author);
-
-                    messages.append(message);
-                    authors.append(author);
-
-                    _messagesReceived++;
-                }
-            }
-        }
-
-        emit readyRead(messages, authors);
-    }
-    else
-    {
-        qDebug() << "reply == nullptr";
-    }
-
-    emit stateChanged();
 }
 
 QString YouTube::extractBroadcastId(const QString &link) const
@@ -622,11 +254,6 @@ int YouTube::messagesReceived() const
     return _messagesReceived;
 }
 
-QByteArray YouTube::replyData() const
-{
-    return _replyData;
-}
-
 void YouTube::setLink(QString link)
 {
     link = link.trimmed();
@@ -690,5 +317,302 @@ void YouTube::setLink(QString link)
 
 void YouTube::onDataReceived(void *data, size_t data_size)
 {
-    replyFinished(data, data_size);
+    if (data)
+    {
+        QByteArray baData = QByteArray((const char*)data, data_size);
+
+        qDebug() << "=========================RECEIVED DATA=========================";
+        qDebug() << baData;
+        qDebug() << "===============================================================";
+
+        QList<ChatMessage> messages;
+        QList<MessageAuthor> authors;
+
+        QJsonDocument jsonDocument(QJsonDocument::fromJson(baData));
+
+
+        if (jsonDocument.isObject() && !_youtubeInfo.broadcastConnected && !_youtubeInfo.broadcastId.isEmpty())
+        {
+            qDebug(QString("YouTube connected: %1")
+                   .arg(_youtubeInfo.broadcastId).toUtf8());
+            _youtubeInfo.broadcastConnected = true;
+            if (_outputToFile)
+            {
+                _outputToFile->setYouTubeInfo(_youtubeInfo);
+            }
+
+            emit connected(_youtubeInfo.broadcastId);
+            emit connectedChanged();
+        }
+
+        QJsonObject liveChatContinuation = jsonDocument.object().value("continuationContents").toObject().value("liveChatContinuation").toObject();
+
+        QJsonArray actionsJson = liveChatContinuation.value("actions").toArray();
+
+        foreach (const QJsonValue& actionJson, actionsJson)
+        {
+            bool valid = false;
+            bool isDeleter = false;
+
+            QString messageText;
+            QString messageId;
+            const QDateTime& receivedAt = QDateTime::currentDateTime();
+            QDateTime publishedAt;
+
+            QString authorName;
+            QString authorChannelId;
+            QUrl authorBadgeUrl;
+            QUrl authorAvatarUrl;
+            bool authorIsVerified      = false;
+            bool authorIsChatOwner     = false;
+            bool authorIsChatSponsor   = false;
+            bool authorIsChatModerator = false;
+
+            const QJsonObject& actionObject = actionJson.toObject();
+
+            if (actionObject.contains("addChatItemAction"))
+            {
+                //Message
+
+                const QJsonObject& addChatItemAction = actionObject.value("addChatItemAction").toObject();
+
+                const QJsonObject& liveChatTextMessageRenderer = addChatItemAction
+                        .value("item").toObject()
+                        .value("liveChatTextMessageRenderer").toObject();
+
+                if (!liveChatTextMessageRenderer.isEmpty())
+                {
+                    messageId = liveChatTextMessageRenderer
+                            .value("id").toString();
+
+                    publishedAt = QDateTime::fromMSecsSinceEpoch(
+                                liveChatTextMessageRenderer.value("timestampUsec").toString().toLongLong() / 1000,
+                                Qt::TimeSpec::UTC).toLocalTime();
+
+                    authorName = liveChatTextMessageRenderer
+                            .value("authorName").toObject()
+                            .value("simpleText").toString();
+
+                    authorChannelId = liveChatTextMessageRenderer
+                            .value("authorExternalChannelId").toString();
+
+                    const QJsonArray& thumbnails = liveChatTextMessageRenderer
+                            .value("authorPhoto").toObject()
+                            .value("thumbnails").toArray();
+
+                    int preHeight = -1;
+
+                    for (const QJsonValue& element : thumbnails)
+                    {
+                        const QJsonObject& thumbnail = element.toObject();
+
+                        int height = thumbnail.value("height").toInt();
+                        if (height == 32)
+                        {
+                            //Preferably 32x32
+                            authorAvatarUrl  = thumbnail.value("url").toString();
+                            break;
+                        }
+                        else if (height > preHeight || authorAvatarUrl.isEmpty())
+                        {
+                            //Or getting max size avatar
+                            authorAvatarUrl  = thumbnail.value("url").toString();
+                            preHeight = height;
+                        }
+                    }
+
+                    if (liveChatTextMessageRenderer.contains("authorBadges"))
+                    {
+                        const QJsonArray& authorBadges = liveChatTextMessageRenderer.value("authorBadges").toArray();
+
+                        foreach (const QJsonValue& badge, authorBadges)
+                        {
+                            const QJsonObject& liveChatAuthorBadgeRenderer = badge.toObject().value("liveChatAuthorBadgeRenderer").toObject();
+
+                            if (liveChatAuthorBadgeRenderer.contains("icon"))
+                            {
+                                const QString& iconType = liveChatAuthorBadgeRenderer.value("icon").toObject()
+                                        .value("iconType").toString();
+
+                                bool foundIconType = false;
+
+                                if (iconType.toLower() == "owner")
+                                {
+                                    authorIsChatOwner = true;
+                                    foundIconType = true;
+                                }
+
+                                if (iconType.toLower() == "moderator")
+                                {
+                                    authorIsChatModerator = true;
+                                    foundIconType = true;
+                                }
+
+                                if (iconType.toLower() == "verified")
+                                {
+                                    authorIsVerified = true;
+                                    foundIconType = true;
+                                }
+
+                                if (!foundIconType && !iconType.isEmpty())
+                                {
+                                    qDebug() << "Unknown iconType" << iconType;
+                                }
+                            }
+                            else if (liveChatAuthorBadgeRenderer.contains("customThumbnail"))
+                            {
+                                authorIsChatSponsor = true;//ToDo: is not a fact
+
+                                const QJsonArray& thumbnails = liveChatAuthorBadgeRenderer.value("customThumbnail").toObject()
+                                        .value("thumbnails").toArray();
+
+                                foreach (const QJsonValue& thumbnailJson, thumbnails)
+                                {
+                                    if (authorBadgeUrl.isEmpty())
+                                    {
+                                        authorBadgeUrl = QUrl(thumbnailJson.toObject().value("url").toString());
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                qDebug(QString("YouTubeInterceptor: Unknown json structure of object \"%1\". Data:\n"
+                                               "==============================================================="
+                                               "%1"
+                                               "===============================================================")
+                                       .arg("liveChatAuthorBadgeRenderer")
+                                       .arg(QString::fromUtf8(baData))
+                                       .toUtf8());
+                            }
+                        }
+                    }
+
+                    const QJsonArray& runs = liveChatTextMessageRenderer
+                            .value("message").toObject()
+                            .value("runs").toArray();
+                    foreach (const QJsonValue& run, runs)
+                    {
+
+                        messageText += run.toObject().value("text").toString();
+                    }
+
+                    valid = true;
+                }
+            }
+            else if (actionObject.contains("markChatItemAsDeletedAction"))
+            {
+                //Deleted message by unknown
+
+                const QJsonObject& markChatItemAsDeletedAction = actionObject.value("markChatItemAsDeletedAction").toObject();
+                const QJsonObject& deletedStateMessage = markChatItemAsDeletedAction.value("deletedStateMessage").toObject();
+
+                const QJsonArray& runs = deletedStateMessage
+                        .value("runs").toArray();
+                for (const QJsonValue& run : runs)
+                {
+                    messageText += run.toObject().value("text").toString();
+                }
+
+                messageId = markChatItemAsDeletedAction.value("targetItemId").toString();
+
+                isDeleter = true;
+                valid = true;
+            }
+            else if (actionObject.contains("markChatItemsByAuthorAsDeletedAction"))
+            {
+                //ToDo: нужно протестировать. Возможно, это событие удаления всех сообщений
+                //Deleted message by author
+
+                const QJsonObject& markChatItemsByAuthorAsDeletedAction = actionObject.value("markChatItemsByAuthorAsDeletedAction").toObject();
+                const QJsonObject& deletedStateMessage = markChatItemsByAuthorAsDeletedAction.value("deletedStateMessage").toObject();
+
+                const QJsonArray& runs = deletedStateMessage
+                        .value("runs").toArray();
+                for (const QJsonValue& run : runs)
+                {
+                    messageText += run.toObject().value("text").toString();
+                }
+
+                messageId = markChatItemsByAuthorAsDeletedAction.value("targetItemId").toString();
+
+                isDeleter = true;
+                valid = true;
+            }
+            else if (actionObject.contains("replaceChatItemAction"))
+            {
+                qDebug("YouTubeInterceptor: object \"replaceChatItemAction\" not support");
+                qDebug(QString("Data:\n"
+                               "==============================================================="
+                               "%1"
+                               "===============================================================")
+                       .arg(QString::fromUtf8(baData))
+                       .toUtf8());
+            }
+            else if (actionObject.contains("addLiveChatTickerItemAction"))
+            {
+                qDebug("YouTubeInterceptor: object \"addLiveChatTickerItemAction\" not support");
+                qDebug(QString("Data:\n"
+                               "==============================================================="
+                               "%1"
+                               "===============================================================")
+                       .arg(QString::fromUtf8(baData))
+                       .toUtf8());
+            }
+            else
+            {
+                qDebug(QString("YouTubeInterceptor: Unknown json structure of array \"%1\". Data:\n"
+                               "==============================================================="
+                               "%2"
+                               "===============================================================")
+                       .arg("actions")
+                       .arg(QString::fromUtf8(baData))
+                       .toUtf8());
+            }
+
+            if (valid)
+            {
+                if (isDeleter)
+                {
+                    const ChatMessage& message = ChatMessage::createDeleterFromYouTube(messageText, messageId);
+                    messages.append(message);
+                }
+                else
+                {
+                    const MessageAuthor& author = MessageAuthor::createFromYouTube(
+                                authorName,
+                                authorChannelId,
+                                authorAvatarUrl,
+                                authorBadgeUrl,
+                                authorIsVerified,
+                                authorIsChatOwner,
+                                authorIsChatSponsor,
+                                authorIsChatModerator);
+
+                    const ChatMessage& message = ChatMessage::createFromYouTube(
+                                messageText,
+                                messageId,
+                                publishedAt,
+                                receivedAt,
+                                author);
+
+                    messages.append(message);
+                    authors.append(author);
+
+                    _messagesReceived++;
+                }
+            }
+        }
+
+        emit readyRead(messages, authors);
+    }
+    else
+    {
+        qDebug() << "data == nullptr";
+    }
+
+    emit stateChanged();
 }

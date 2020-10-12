@@ -6,21 +6,24 @@
 #include <QQmlApplicationEngine>
 #include <QSplashScreen>
 #include "chathandler.hpp"
-#include <QtWebEngine/QtWebEngine>
 #include "githubapi.hpp"
 #include "clipboardqml.hpp"
 #include "qmlutils.hpp"
 #include "i18n.hpp"
 #include "cefhandler.h"
+#include <QIcon>
+#include <QStandardPaths>
+#include <QDir>
+#include <QQmlContext>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
-    QApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
-    QApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
-    QApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
+    QCoreApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
+    QCoreApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
+    QCoreApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
+    QCoreApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
 
     QSettings* settings = new QSettings();
 
