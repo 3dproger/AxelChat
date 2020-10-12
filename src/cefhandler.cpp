@@ -164,7 +164,7 @@ CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_
 
     if (_enableBuffer)
     {
-        _buffer.append((const char*)data_out, data_out_written);
+        _buffer.append((const char*)data_out, (int)data_out_written);
     }
 
     return RESPONSE_FILTER_DONE;
@@ -187,7 +187,9 @@ void QtCefHandler::OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefP
 
             if (!QString::fromStdWString(request->GetURL().ToWString()).contains("get_live_chat"))
             {
+                qWarning("===============WARNING:====================");
                 qWarning(Q_FUNC_INFO + QString(": url not contains \"get_live_chat\", url: \"%1\"").arg(request->GetURL().ToWString()).toUtf8());
+                qWarning("===========================================");
             }
         }
 

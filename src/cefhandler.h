@@ -18,101 +18,81 @@ class QtCefHandler: public CefClient,
                     public CefLifeSpanHandler,
                     public CefLoadHandler,
                     public CefRequestHandler,
-                    public CefResourceHandler,
                     public CefResourceRequestHandler,
-                    public CefResponseFilter
-{
+                    public CefResponseFilter {
 public:
- explicit QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool use_views);
- ~QtCefHandler();
+    explicit QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool use_views);
+    ~QtCefHandler();
 
- // Provide access to the single global instance of this object.
- static QtCefHandler* GetInstance();
+    static QtCefHandler* GetInstance();
 
- virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() OVERRIDE {
-   return this;
- }
- virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() OVERRIDE {
-   return this;
- }
- virtual CefRefPtr<CefLoadHandler> GetLoadHandler() OVERRIDE { return this; }
+    virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() OVERRIDE { return this; }
+    virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() OVERRIDE { return this; }
+    virtual CefRefPtr<CefLoadHandler> GetLoadHandler() OVERRIDE { return this; }
+    //virtual CefRefPtr<CefRequestHandler> GetRequestHandler() OVERRIDE { return this; }
 
- virtual CefRefPtr<CefRequestHandler> GetRequestHandler() OVERRIDE { return this; }
+    virtual CefRefPtr<CefResourceRequestHandler> GetResourceRequestHandler(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, bool is_navigation, bool is_download, const CefString &request_initiator, bool &disable_default_handling) OVERRIDE
+    {
+        Q_UNUSED(browser);
+        Q_UNUSED(frame);
+        Q_UNUSED(request);
+        Q_UNUSED(is_navigation);
+        Q_UNUSED(is_download);
+        Q_UNUSED(request_initiator);
+        Q_UNUSED(disable_default_handling);
+        CEF_REQUIRE_IO_THREAD();
+        return this;
+    }
 
- virtual CefRefPtr<CefResourceRequestHandler> GetResourceRequestHandler(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, bool is_navigation, bool is_download, const CefString &request_initiator, bool &disable_default_handling) OVERRIDE
- {
-     CEF_REQUIRE_IO_THREAD();
-     return this;
- }
+    virtual CefRefPtr<CefResponseFilter> GetResourceResponseFilter(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response) OVERRIDE
+    {
+        Q_UNUSED(browser);
+        Q_UNUSED(frame);
+        Q_UNUSED(request);
+        Q_UNUSED(response);
+        return this;
+    }
 
- virtual CefRefPtr<CefResponseFilter> GetResourceResponseFilter(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response) OVERRIDE { return this; }
+    // CefLifeSpanHandler methods:
+    virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;
+    virtual bool DoClose(CefRefPtr<CefBrowser> browser) OVERRIDE;
+    virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) OVERRIDE;
 
- virtual CefRefPtr<CefResourceHandler> GetResourceHandler(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request) OVERRIDE
- {
-     //CEF_REQUIRE_IO_THREAD();
-     //return this;
-     return nullptr;
- }
+    // CefLoadHandler methods:
+    virtual void OnLoadError(CefRefPtr<CefBrowser> browser,
+                             CefRefPtr<CefFrame> frame,
+                             ErrorCode errorCode,
+                             const CefString& errorText,
+                             const CefString& failedUrl) OVERRIDE;
 
- virtual void GetResponseHeaders(CefRefPtr<CefResponse> response, int64 &response_length, CefString &redirectUrl) OVERRIDE
- {
-     response->SetStatus(200);
-     response_length = -1;
- }
+    virtual ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefRequestCallback> callback) OVERRIDE;
 
- virtual void Cancel() OVERRIDE {}
- //virtual void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) OVERRIDE;
+    virtual void OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, URLRequestStatus status, int64 received_content_length) OVERRIDE;
 
- // CefLifeSpanHandler methods:
- virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;
- virtual bool DoClose(CefRefPtr<CefBrowser> browser) OVERRIDE;
- virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) OVERRIDE;
+    virtual bool InitFilter() OVERRIDE { return true; }
+    virtual FilterStatus Filter(void *data_in, size_t data_in_size, size_t &data_in_read, void *data_out, size_t data_out_size, size_t &data_out_written) OVERRIDE;
 
- // CefLoadHandler methods:
- virtual void OnLoadError(CefRefPtr<CefBrowser> browser,
-                          CefRefPtr<CefFrame> frame,
-                          ErrorCode errorCode,
-                          const CefString& errorText,
-                          const CefString& failedUrl) OVERRIDE;
+    // Request that all existing browser windows close.
+    void CloseAllBrowsers(bool force_close);
 
- virtual ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefRequestCallback> callback) OVERRIDE;
-
- virtual void OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, URLRequestStatus status, int64 received_content_length) OVERRIDE;
-
- virtual bool Open(CefRefPtr<CefRequest> request, bool &handle_request, CefRefPtr<CefCallback> callback) OVERRIDE
- {
-     qDebug() << request->GetReferrerURL().ToWString();
-     handle_request = false;
-     if (callback)
-        callback->Continue();
-     return true;
- }
-
- virtual bool InitFilter() OVERRIDE { return true; }
- virtual FilterStatus Filter(void *data_in, size_t data_in_size, size_t &data_in_read, void *data_out, size_t data_out_size, size_t &data_out_written) OVERRIDE;
-
- // Request that all existing browser windows close.
- void CloseAllBrowsers(bool force_close);
-
- bool IsClosing() const { return is_closing_; }
+    bool IsClosing() const { return is_closing_; }
 
 private:
+    // True if the application is using the Views framework.
+    const bool use_views_;
 
- // True if the application is using the Views framework.
- const bool use_views_;
+    CefRefPtr<QtCefApp> _cefApp;
+    // List of existing browser windows. Only accessed on the CEF UI thread.
+    typedef std::list<CefRefPtr<CefBrowser>> BrowserList;
+    BrowserList browser_list_;
 
- CefRefPtr<QtCefApp> _cefApp;
- // List of existing browser windows. Only accessed on the CEF UI thread.
- typedef std::list<CefRefPtr<CefBrowser>> BrowserList;
- BrowserList browser_list_;
+    QByteArray _buffer;
+    bool _enableBuffer = false;
 
- QByteArray _buffer;
- bool _enableBuffer = false;
+    bool is_closing_;
 
- bool is_closing_;
-
- // Include the default reference counting implementation.
- IMPLEMENT_REFCOUNTING(QtCefHandler); 
+    // Include the default reference counting implementation.
+    IMPLEMENT_REFCOUNTING(QtCefHandler);
 };
 
 class QtCefApp : public QObject, public CefApp, public CefBrowserProcessHandler
@@ -126,12 +106,12 @@ public:
 
     void OnDataReceived(const QByteArray& data);
 
-private:
-    IMPLEMENT_REFCOUNTING(QtCefApp);
-
 signals:
     void dataReceived(const QByteArray& data);
 
 protected:
-        virtual void timerEvent(QTimerEvent *event) override;
+    virtual void timerEvent(QTimerEvent *event) override;
+
+private:
+    IMPLEMENT_REFCOUNTING(QtCefApp);
 };
