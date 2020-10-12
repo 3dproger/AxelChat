@@ -319,7 +319,7 @@ void YouTube::onDataReceived(void *data, size_t data_size)
 {
     if (data)
     {
-        QByteArray baData = QByteArray((const char*)data, data_size);
+        const QByteArray baData = QByteArray((const char*)data, data_size);
 
         qDebug() << "=========================RECEIVED DATA=========================";
         qDebug() << baData;
@@ -328,8 +328,7 @@ void YouTube::onDataReceived(void *data, size_t data_size)
         QList<ChatMessage> messages;
         QList<MessageAuthor> authors;
 
-        QJsonDocument jsonDocument(QJsonDocument::fromJson(baData));
-
+        const QJsonDocument& jsonDocument = QJsonDocument::fromJson(baData);
 
         if (jsonDocument.isObject() && !_youtubeInfo.broadcastConnected && !_youtubeInfo.broadcastId.isEmpty())
         {
