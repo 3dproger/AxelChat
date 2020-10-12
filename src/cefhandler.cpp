@@ -30,134 +30,102 @@ std::string GetDataURI(const std::string& data, const std::string& mime_type) {
 }  // namespace
 
 QtCefHandler::QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool use_views)
-    : use_views_(use_views), is_closing_(false), _cefApp(cefApp)
+    : use_views_(use_views),  _cefApp(cefApp), is_closing_(false)
 {
   DCHECK(!g_instance);
   g_instance = this;
 }
 
-QtCefHandler::~QtCefHandler() {
-  g_instance = nullptr;
+QtCefHandler::~QtCefHandler()
+{
+    g_instance = nullptr;
 }
 
 // static
-QtCefHandler* QtCefHandler::GetInstance() {
+QtCefHandler* QtCefHandler::GetInstance()
+{
     return g_instance;
 }
 
-bool QtCefHandler::ReadResponse(void *data_out, int bytes_to_read, int &bytes_read, CefRefPtr<CefCallback> callback)
+void QtCefHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
-    qDebug() << "OK";
+    CEF_REQUIRE_UI_THREAD();
+    // Add to the list of existing browsers.
+    browser_list_.push_back(browser);
+}
+
+bool QtCefHandler::DoClose(CefRefPtr<CefBrowser> browser)
+{
+    Q_UNUSED(browser);
+    CEF_REQUIRE_UI_THREAD();
+
+    // Closing the main window requires special handling. See the DoClose()
+    // documentation in the CEF header for a detailed destription of this
+    // process.
+    if (browser_list_.size() == 1) {
+      // Set a flag to indicate that the window close should be allowed.
+      is_closing_ = true;
+    }
+
+    // Allow the close. For windowed browsers this will result in the OS close
+    // event being sent.
     return false;
 }
 
-void QtCefHandler::OnTitleChange(CefRefPtr<CefBrowser> browser,
-                                  const CefString& title) {
-  CEF_REQUIRE_UI_THREAD();
-
-  //qDebug() << title.ToString16();
-
-  if (use_views_) {
-    // Set the title of the window using the Views framework.
-    CefRefPtr<CefBrowserView> browser_view =
-        CefBrowserView::GetForBrowser(browser);
-    if (browser_view) {
-      CefRefPtr<CefWindow> window = browser_view->GetWindow();
-      if (window)
-        window->SetTitle(title);
-    }
-  } else {
-    // Set the title of the window using platform APIs.
-    //PlatformTitleChange(browser, title);
-  }
-}
-
-void QtCefHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
-  CEF_REQUIRE_UI_THREAD();
-
-  //qDebug() << "OnAfterCreated";
-
-  // Add to the list of existing browsers.
-  browser_list_.push_back(browser);
-}
-
-bool QtCefHandler::DoClose(CefRefPtr<CefBrowser> browser) {
-  CEF_REQUIRE_UI_THREAD();
-
-  // Closing the main window requires special handling. See the DoClose()
-  // documentation in the CEF header for a detailed destription of this
-  // process.
-  if (browser_list_.size() == 1) {
-    // Set a flag to indicate that the window close should be allowed.
-    is_closing_ = true;
-  }
-
-  // Allow the close. For windowed browsers this will result in the OS close
-  // event being sent.
-  return false;
-}
-
-void QtCefHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
-  CEF_REQUIRE_UI_THREAD();
-
-  //qDebug() << "OnBeforeClose";
-
-  // Remove from the list of existing browsers.
-  BrowserList::iterator bit = browser_list_.begin();
-  for (; bit != browser_list_.end(); ++bit) {
-    if ((*bit)->IsSame(browser)) {
-      browser_list_.erase(bit);
-      break;
-    }
-  }
-
-  if (browser_list_.empty()) {
-    // All browser windows have closed. Quit the application message loop.
-    CefQuitMessageLoop();
-  }
-}
-
-void QtCefHandler::OnLoadError(CefRefPtr<CefBrowser> browser,
-                                CefRefPtr<CefFrame> frame,
-                                ErrorCode errorCode,
-                                const CefString& errorText,
-                                const CefString& failedUrl) {
-  CEF_REQUIRE_UI_THREAD();
-
-  // Don't display an error for downloaded files.
-  if (errorCode == ERR_ABORTED)
-    return;
-
-  // Display a load error message using a data: URI.
-  std::stringstream ss;
-  ss << "<html><body bgcolor=\"white\">"
-        "<h2>Failed to load URL "
-     << std::string(failedUrl) << " with error " << std::string(errorText)
-     << " (" << errorCode << ").</h2></body></html>";
-
-  frame->LoadURL(GetDataURI(ss.str(), "text/html"));
-
-  qDebug() << "ERROR (" << errorCode << "): " << errorText.ToWString();
-}
-
-bool QtCefHandler::OnResourceResponse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response)
+void QtCefHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
-    //request->GetPostData();
-    //qDebug() << request->GetReferrerURL().ToWString();
+    CEF_REQUIRE_UI_THREAD();
 
+    // Remove from the list of existing browsers.
+    BrowserList::iterator bit = browser_list_.begin();
+    for (; bit != browser_list_.end(); ++bit)
+    {
+        if ((*bit)->IsSame(browser))
+        {
+            browser_list_.erase(bit);
+            break;
+        }
+    }
 
-    return false;
+    if (browser_list_.empty())
+    {
+
+    }
+}
+
+void QtCefHandler::OnLoadError(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, ErrorCode errorCode, const CefString& errorText, const CefString& failedUrl)
+{
+    Q_UNUSED(browser);
+    CEF_REQUIRE_UI_THREAD();
+
+    // Don't display an error for downloaded files.
+    if (errorCode == ERR_ABORTED)
+      return;
+
+    // Display a load error message using a data: URI.
+    std::stringstream ss;
+    ss << "<html><body bgcolor=\"white\">"
+          "<h2>Failed to load URL "
+       << std::string(failedUrl) << " with error " << std::string(errorText)
+       << " (" << errorCode << ").</h2></body></html>";
+
+    frame->LoadURL(GetDataURI(ss.str(), "text/html"));
+
+    qDebug() << "ERROR (" << errorCode << "): " << errorText.ToWString();
 }
 
 CefResourceRequestHandler::ReturnValue QtCefHandler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefRequestCallback> callback)
 {
+    Q_UNUSED(browser);
+    Q_UNUSED(frame);
+    Q_UNUSED(callback);
     CEF_REQUIRE_IO_THREAD();
 
     _enableBuffer = false;
     _buffer.clear();
     _buffer.reserve(32768);
 
-    if (request && QString::fromStdWString(request->GetURL().ToWString()).contains("live_chat"))
+    if (request && QString::fromStdWString(request->GetURL().ToWString()).contains("get_live_chat"))
     {
         _enableBuffer = true;
         //qDebug(QString("START REQUEST: %1").arg(request->GetURL().ToWString()).toUtf8());
@@ -203,13 +171,23 @@ CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_
 
 void QtCefHandler::OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, CefResourceRequestHandler::URLRequestStatus status, int64 received_content_length)
 {
+    Q_UNUSED(browser);
+    Q_UNUSED(frame);
+    Q_UNUSED(response);
+    Q_UNUSED(status);
+    Q_UNUSED(received_content_length);
     CEF_REQUIRE_IO_THREAD();
 
     if (_cefApp && _enableBuffer)
     {
         if (request)
         {
-            qDebug(QString("END REQUEST: %1").arg(request->GetURL().ToWString()).toUtf8());
+            //qDebug(QString("END REQUEST: %1").arg(request->GetURL().ToWString()).toUtf8());
+
+            if (!QString::fromStdWString(request->GetURL().ToWString()).contains("get_live_chat"))
+            {
+                qWarning(Q_FUNC_INFO + QString(": url not contains \"get_live_chat\", url: \"%1\"").arg(request->GetURL().ToWString()).toUtf8());
+            }
         }
 
         qDebug(QString("RECEIVED %1 bytes").arg(_buffer.size()).toUtf8());
