@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
     splashScreen = nullptr;
 
     cefApp->moveToThread(engine.thread());
-    cefApp->startTimer(200);
+    cefApp->startTimer(50);
 
     int returnCode = app.exec();
 

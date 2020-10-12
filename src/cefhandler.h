@@ -82,6 +82,8 @@ public:
 
  virtual bool OnResourceResponse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response) OVERRIDE;
 
+ virtual ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefRequestCallback> callback) OVERRIDE;
+
  virtual void OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, URLRequestStatus status, int64 received_content_length) OVERRIDE;
 
  virtual bool Open(CefRefPtr<CefRequest> request, bool &handle_request, CefRefPtr<CefCallback> callback) OVERRIDE
@@ -111,11 +113,13 @@ private:
  typedef std::list<CefRefPtr<CefBrowser>> BrowserList;
  BrowserList browser_list_;
 
+ QByteArray _buffer;
+ bool _enableBuffer = false;
+
  bool is_closing_;
 
  // Include the default reference counting implementation.
  IMPLEMENT_REFCOUNTING(QtCefHandler); 
-
 };
 
 class QtCefApp : public QObject, public CefApp, public CefBrowserProcessHandler
@@ -127,13 +131,13 @@ public:
     virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override { return this; }
     virtual void OnContextInitialized() override;
 
-    void OnDataReceived(void *data, size_t data_size);
+    void OnDataReceived(const QByteArray& data);
 
 private:
     IMPLEMENT_REFCOUNTING(QtCefApp);
 
 signals:
-    void dataReceived(void *data, size_t data_size);
+    void dataReceived(const QByteArray& data);
 
 protected:
         virtual void timerEvent(QTimerEvent *event) override;

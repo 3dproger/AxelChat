@@ -43,7 +43,7 @@ signals:
 
 public slots:
     void setLink(QString link);
-    void onDataReceived(void *data, size_t data_size);
+    void onDataReceived(const QByteArray& data);
 
 private:
     QString extractBroadcastId(const QString& link) const;
@@ -58,6 +58,8 @@ private:
     YouTubeInfo _youtubeInfo;
 
     const QString _settingsKeyUserSpecifiedLink = "user_specified_link";
+
+    static void printData(const QString& tag, const QByteArray& data);
 };
 
 #endif // YOUTUBEINTERCEPTOR_HPP

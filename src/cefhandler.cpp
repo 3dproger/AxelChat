@@ -140,21 +140,6 @@ void QtCefHandler::OnLoadError(CefRefPtr<CefBrowser> browser,
   qDebug() << "ERROR (" << errorCode << "): " << errorText.ToWString();
 }
 
-class MyCallback : public CefCallback
-{
-public:
-    virtual void Continue() OVERRIDE
-    {
-        qDebug() << "Continue";
-    }
-    virtual void Cancel() OVERRIDE
-    {
-        qDebug() << "Cancel";
-    }
-private:
-    IMPLEMENT_REFCOUNTING(MyCallback);
-};
-
 bool QtCefHandler::OnResourceResponse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response)
 {
     //request->GetPostData();
@@ -164,9 +149,21 @@ bool QtCefHandler::OnResourceResponse(CefRefPtr<CefBrowser> browser, CefRefPtr<C
     return false;
 }
 
-void QtCefHandler::OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, CefResourceRequestHandler::URLRequestStatus status, int64 received_content_length)
+CefResourceRequestHandler::ReturnValue QtCefHandler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefRequestCallback> callback)
 {
     CEF_REQUIRE_IO_THREAD();
+
+    _enableBuffer = false;
+    _buffer.clear();
+    _buffer.reserve(32768);
+
+    if (request && QString::fromStdWString(request->GetURL().ToWString()).contains("live_chat"))
+    {
+        _enableBuffer = true;
+        //qDebug(QString("START REQUEST: %1").arg(request->GetURL().ToWString()).toUtf8());
+    }
+
+    return RV_CONTINUE;
 }
 
 CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_in_size, size_t &data_in_read, void *data_out, size_t data_out_size, size_t &data_out_written)
@@ -196,30 +193,33 @@ CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_
         memcpy(data_out, data_in, data_out_written);
     }
 
-    if (data_in_size > 0)
+    if (_enableBuffer)
     {
-        if (QByteArray((const char*)data_out, 1) == "{")
-        {
-            if (_cefApp)
-            {
-                _cefApp->OnDataReceived(data_out, data_in_size);
-            }
-            //qDebug() << "=========================\n" << QByteArray((const char*)data_out, data_in_size);
-        }
+        _buffer.append((const char*)data_out, data_out_written);
     }
 
     return RESPONSE_FILTER_DONE;
 }
 
-/*bool QtCefHandler::Read(void *data_out, int bytes_to_read, int &bytes_read, CefRefPtr<CefResourceReadCallback> callback)
+void QtCefHandler::OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, CefResourceRequestHandler::URLRequestStatus status, int64 received_content_length)
 {
     CEF_REQUIRE_IO_THREAD();
-    qDebug() << "=========================\n" << QByteArray((const char*)data_out, 100);
 
-    bytes_read += bytes_to_read;
-    callback->Continue(bytes_to_read);
-    return false;
-}*/
+    if (_cefApp && _enableBuffer)
+    {
+        if (request)
+        {
+            qDebug(QString("END REQUEST: %1").arg(request->GetURL().ToWString()).toUtf8());
+        }
+
+        qDebug(QString("RECEIVED %1 bytes").arg(_buffer.size()).toUtf8());
+
+        _cefApp->OnDataReceived(_buffer);
+    }
+
+    _enableBuffer = false;
+    _buffer.clear();
+}
 
 void QtCefHandler::CloseAllBrowsers(bool force_close) {
   if (!CefCurrentlyOn(TID_UI)) {
@@ -359,13 +359,13 @@ void QtCefApp::OnContextInitialized()
     {
       // Information used when creating the native window.
       CefWindowInfo window_info;
-      //window_info.width = 300;
-      //window_info.height = 300;
+      window_info.width  = 250;
+      window_info.height = 500;
 
   #if defined(OS_WIN)
       // On Windows we need to specify certain flags that will be passed to
       // CreateWindowEx().
-      window_info.SetAsPopup(NULL, "cefsimple");
+      window_info.SetAsPopup(NULL, "YouTube");
   #endif
 
       // Create the first browser window.
@@ -375,12 +375,14 @@ void QtCefApp::OnContextInitialized()
                                           browser_settings,
                                           nullptr,
                                           nullptr);
+
+
     }
 }
 
-void QtCefApp::OnDataReceived(void *data, size_t data_size)
+void QtCefApp::OnDataReceived(const QByteArray& data)
 {
-    emit dataReceived(data, data_size);
+    emit dataReceived(data);
 }
 
 void QtCefApp::timerEvent(QTimerEvent *event)
