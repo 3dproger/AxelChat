@@ -119,7 +119,7 @@ class QtCefApp : public QObject, public CefApp, public CefBrowserProcessHandler
 {
     Q_OBJECT
 public:
-    explicit QtCefApp(QObject *parent = nullptr);
+    explicit QtCefApp(QObject *parent = nullptr) : QObject(parent) {}
 
     virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override { return this; }
     virtual void OnContextInitialized() override;
