@@ -108,6 +108,7 @@ int main(int argc, char *argv[])
     settings->setParent(chatHandler);
 
     qRegisterMetaType<size_t>("size_t");
+    qRegisterMetaType<std::shared_ptr<QByteArray>>("std::shared_ptr<QByteArray>");
     QObject::connect(cefApp, &QtCefApp::dataReceived, chatHandler->youTube(), &YouTube::onDataReceived);
 
     //Update Checker

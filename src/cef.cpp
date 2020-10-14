@@ -115,27 +115,7 @@ void QtCefHandler::OnLoadError(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame
     qDebug() << "CEF ERROR (" << errorCode << "): " << errorText.ToWString();
 }
 
-CefResourceRequestHandler::ReturnValue QtCefHandler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefRequestCallback> callback)
-{
-    Q_UNUSED(browser);
-    Q_UNUSED(frame);
-    Q_UNUSED(callback);
-    CEF_REQUIRE_IO_THREAD();
-
-    _enableBuffer = false;
-    _buffer.clear();
-    _buffer.reserve(32768);
-
-    if (request && QString::fromStdWString(request->GetURL().ToWString()).contains("get_live_chat"))
-    {
-        _enableBuffer = true;
-        //qDebug(QString("START REQUEST: %1").arg(request->GetURL().ToWString()).toUtf8());
-    }
-
-    return RV_CONTINUE;
-}
-
-CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_in_size, size_t &data_in_read, void *data_out, size_t data_out_size, size_t &data_out_written)
+CefResponseFilter::FilterStatus ResponseDataInterceptor::Filter(void *data_in, size_t data_in_size, size_t &data_in_read, void *data_out, size_t data_out_size, size_t &data_out_written)
 {
     CEF_REQUIRE_IO_THREAD();
     DCHECK((data_in_size == 0U && !data_in) || (data_in_size > 0U && data_in));
@@ -146,13 +126,13 @@ CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_
 
     if (data_in == nullptr || data_in_size == 0)
     {
+        data_in_read = 0;
+        data_out_written = 0;
         return RESPONSE_FILTER_DONE;
     }
 
-    // All data will be read.
     data_in_read = data_in_size;
 
-    // Write out the contents unchanged.
     if (data_in_read > data_out_size)
     {
         data_out_written = data_out_size;
@@ -167,10 +147,7 @@ CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_
         memcpy(data_out, data_in, data_out_written);
     }
 
-    if (_enableBuffer)
-    {
-        _buffer.append((const char*)data_out, (int)data_out_written);
-    }
+    _interceptedData->append((const char*)data_out, (int)data_out_written);
 
     if (data_in_read < data_out_size)
     {
@@ -184,34 +161,19 @@ CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_
 
 void QtCefHandler::OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, CefResourceRequestHandler::URLRequestStatus status, int64 received_content_length)
 {
+    CEF_REQUIRE_IO_THREAD();
     Q_UNUSED(browser);
     Q_UNUSED(frame);
     Q_UNUSED(response);
     Q_UNUSED(status);
     Q_UNUSED(received_content_length);
-    CEF_REQUIRE_IO_THREAD();
 
-    if (_cefApp && _enableBuffer)
+    const uint64& identifier = request->GetIdentifier();
+
+    if (identifier == _interceptor->GetResponseIdentifier())
     {
-        if (request)
-        {
-            //qDebug(QString("END REQUEST: %1").arg(request->GetURL().ToWString()).toUtf8());
-
-            if (!QString::fromStdWString(request->GetURL().ToWString()).contains("get_live_chat"))
-            {
-                qWarning("===============WARNING:====================");
-                qWarning(Q_FUNC_INFO + QString(": url not contains \"get_live_chat\", url: \"%1\"").arg(request->GetURL().ToWString()).toUtf8());
-                qWarning("===========================================");
-            }
-        }
-
-        //qDebug(QString("RECEIVED %1 bytes").arg(_buffer.size()).toUtf8());
-
-        _cefApp->OnDataReceived(_buffer);
+        _cefApp->OnDataReceived(_interceptor->GetInterceptedData());
     }
-
-    _enableBuffer = false;
-    _buffer.clear();
 }
 
 void QtCefHandler::CloseAllBrowsers(bool force_close) {
@@ -375,7 +337,7 @@ void QtCefApp::OnContextInitialized()
     }
 }
 
-void QtCefApp::OnDataReceived(const QByteArray& data)
+void QtCefApp::OnDataReceived(std::shared_ptr<QByteArray> data)
 {
     emit dataReceived(data);
 }

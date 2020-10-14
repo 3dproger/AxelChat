@@ -324,14 +324,17 @@ void YouTube::setLink(QString link)
     }
 }
 
-void YouTube::onDataReceived(const QByteArray& data)
+void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
 {
-    //printData("RECEIVED DATA", data);
+    if (!data)
+    {
+        return;
+    }
 
     QList<ChatMessage> messages;
     QList<MessageAuthor> authors;
 
-    const QJsonDocument& jsonDocument = QJsonDocument::fromJson(data);
+    const QJsonDocument& jsonDocument = QJsonDocument::fromJson(*data);
 
     if (jsonDocument.isObject() && !_youtubeInfo.broadcastConnected && !_youtubeInfo.broadcastId.isEmpty())
     {
@@ -482,7 +485,7 @@ void YouTube::onDataReceived(const QByteArray& data)
                         }
                         else
                         {
-                            printData(Q_FUNC_INFO + QString(": Unknown json structure of object \"%1\"").arg("liveChatAuthorBadgeRenderer"), data);
+                            printData(Q_FUNC_INFO + QString(": Unknown json structure of object \"%1\"").arg("liveChatAuthorBadgeRenderer"), *data);
                         }
                     }
                 }
@@ -540,15 +543,15 @@ void YouTube::onDataReceived(const QByteArray& data)
         }
         else if (actionObject.contains("replaceChatItemAction"))
         {
-            printData(Q_FUNC_INFO + QString(": object \"replaceChatItemAction\" not support"), data);
+            printData(Q_FUNC_INFO + QString(": object \"replaceChatItemAction\" not support"), *data);
         }
         else if (actionObject.contains("addLiveChatTickerItemAction"))
         {
-            printData(Q_FUNC_INFO + QString(": object \"addLiveChatTickerItemAction\" not support"), data);
+            printData(Q_FUNC_INFO + QString(": object \"addLiveChatTickerItemAction\" not support"), *data);
         }
         else
         {
-            printData(Q_FUNC_INFO + QString(": unknown json structure of array \"%1\"").arg("actions"), data);
+            printData(Q_FUNC_INFO + QString(": unknown json structure of array \"%1\"").arg("actions"), *data);
         }
 
         if (valid)

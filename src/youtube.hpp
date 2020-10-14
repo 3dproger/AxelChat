@@ -43,7 +43,7 @@ signals:
 
 public slots:
     void setLink(QString link);
-    void onDataReceived(const QByteArray& data);
+    void onDataReceived(std::shared_ptr<QByteArray> data);
 
 private:
     QString extractBroadcastId(const QString& link) const;
