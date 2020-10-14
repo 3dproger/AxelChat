@@ -21,7 +21,7 @@ class QtCefHandler: public CefClient,
                     public CefResourceRequestHandler,
                     public CefResponseFilter {
 public:
-    explicit QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool use_views);
+    explicit QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool useViews);
     ~QtCefHandler();
     static QtCefHandler* GetInstance();
     virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() OVERRIDE { return this; }
@@ -50,12 +50,9 @@ public:
         return this;
     }
 
-    // CefLifeSpanHandler methods:
     virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;
     virtual bool DoClose(CefRefPtr<CefBrowser> browser) OVERRIDE;
     virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) OVERRIDE;
-
-    // CefLoadHandler methods:
     virtual void OnLoadError(CefRefPtr<CefBrowser> browser,
                              CefRefPtr<CefFrame> frame,
                              ErrorCode errorCode,
@@ -65,16 +62,18 @@ public:
     virtual ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefRequestCallback> callback) OVERRIDE;
     virtual void OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, URLRequestStatus status, int64 received_content_length) OVERRIDE;
 
-    virtual bool InitFilter() OVERRIDE { return true; }
+    virtual bool InitFilter() OVERRIDE
+    {
+        return true;
+    }
+
     virtual FilterStatus Filter(void *data_in, size_t data_in_size, size_t &data_in_read, void *data_out, size_t data_out_size, size_t &data_out_written) OVERRIDE;
 
-    // Request that all existing browser windows close.
     void CloseAllBrowsers(bool force_close);
     bool IsClosing() const { return is_closing_; }
 
 private:
-    // True if the application is using the Views framework.
-    const bool use_views_;
+    const bool _useViews = true;
 
     CefRefPtr<QtCefApp> _cefApp;
     // List of existing browser windows. Only accessed on the CEF UI thread.
@@ -86,7 +85,6 @@ private:
 
     bool is_closing_;
 
-    // Include the default reference counting implementation.
     IMPLEMENT_REFCOUNTING(QtCefHandler);
 };
 

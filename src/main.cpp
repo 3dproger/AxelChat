@@ -10,7 +10,7 @@
 #include "clipboardqml.hpp"
 #include "qmlutils.hpp"
 #include "i18n.hpp"
-#include "cefhandler.h"
+#include "cef.hpp"
 #include <QIcon>
 #include <QStandardPaths>
 #include <QDir>
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     // SimpleApp implements application-level callbacks for the browser process.
     // It will create the first browser instance in OnContextInitialized() after
     // CEF has initialized.
-    CefRefPtr<QtCefApp> cefApp(new QtCefApp());
+    CefRefPtr<QtCefApp> cefApp = new QtCefApp();
 
 
     // Initialize CEF.

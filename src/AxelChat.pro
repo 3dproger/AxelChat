@@ -15,7 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     botaction.hpp \
-    cefhandler.h \
+    cef.hpp \
     chatbot.hpp \
     chathandler.hpp \
     chatmessage.hpp \
@@ -30,7 +30,7 @@ HEADERS += \
 
 SOURCES += \
         botaction.cpp \
-        cefhandler.cpp \
+        cef.cpp \
         chatbot.cpp \
         chathandler.cpp \
         chatmessage.cpp \

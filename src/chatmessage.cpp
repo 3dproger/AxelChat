@@ -205,7 +205,7 @@ ChatMessagesModel::ChatMessagesModel(QObject *parent) : QAbstractListModel(paren
 
 void ChatMessagesModel::append(ChatMessage&& message)
 {
-    //ToDo: добавить сортировку по времени
+    //ToDo: добавить сортировку сообщений по времени
 
     if (!message.valid())
     {
@@ -217,8 +217,7 @@ void ChatMessagesModel::append(ChatMessage&& message)
 
     if (message.id().isEmpty())
     {
-        message.printMessageInfo(QString("%1: Ignore message with empty id:")
-                         .arg(Q_FUNC_INFO));
+        //message.printMessageInfo(QString("%1: Ignore message with empty id:").arg(Q_FUNC_INFO));
         return;
     }
 

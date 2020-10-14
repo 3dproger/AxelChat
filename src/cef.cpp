@@ -1,4 +1,4 @@
-#include "cefhandler.h"
+#include "cef.hpp"
 
 #include <string>
 
@@ -30,8 +30,8 @@ std::string GetDataURI(const std::string& data, const std::string& mime_type)
 
 }  // namespace
 
-QtCefHandler::QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool use_views)
-    : use_views_(use_views),  _cefApp(cefApp), is_closing_(false)
+QtCefHandler::QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool useViews)
+    : _useViews(useViews),  _cefApp(cefApp), is_closing_(false)
 {
     DCHECK(!g_instance);
     g_instance = this;
@@ -144,6 +144,11 @@ CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_
     DCHECK_GT(data_out_size, 0U);
     DCHECK_EQ(data_out_written, 0U);
 
+    if (data_in == nullptr || data_in_size == 0)
+    {
+        return RESPONSE_FILTER_DONE;
+    }
+
     // All data will be read.
     data_in_read = data_in_size;
 
@@ -167,7 +172,14 @@ CefResponseFilter::FilterStatus QtCefHandler::Filter(void *data_in, size_t data_
         _buffer.append((const char*)data_out, (int)data_out_written);
     }
 
-    return RESPONSE_FILTER_DONE;
+    if (data_in_read < data_out_size)
+    {
+        return RESPONSE_FILTER_NEED_MORE_DATA;
+    }
+    else
+    {
+        return RESPONSE_FILTER_DONE;
+    }
 }
 
 void QtCefHandler::OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRefPtr<CefResponse> response, CefResourceRequestHandler::URLRequestStatus status, int64 received_content_length)
