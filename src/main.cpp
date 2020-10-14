@@ -62,9 +62,9 @@ int main(int argc, char *argv[])
 
     CefString(&cefSettings.accept_language_list).FromString("");
 
-  #if !defined(CEF_USE_SANDBOX)
+#if !defined(CEF_USE_SANDBOX)
     cefSettings.no_sandbox = true;
-  #endif
+#endif
 
     // SimpleApp implements application-level callbacks for the browser process.
     // It will create the first browser instance in OnContextInitialized() after
