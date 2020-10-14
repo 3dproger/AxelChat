@@ -60,6 +60,8 @@ int main(int argc, char *argv[])
       cefSettings.chrome_runtime = true;
     }
 
+    CefString(&cefSettings.accept_language_list).FromString("");
+
   #if !defined(CEF_USE_SANDBOX)
     cefSettings.no_sandbox = true;
   #endif

@@ -205,7 +205,7 @@ void QtCefHandler::OnResourceLoadComplete(CefRefPtr<CefBrowser> browser, CefRefP
             }
         }
 
-        qDebug(QString("RECEIVED %1 bytes").arg(_buffer.size()).toUtf8());
+        //qDebug(QString("RECEIVED %1 bytes").arg(_buffer.size()).toUtf8());
 
         _cefApp->OnDataReceived(_buffer);
     }
