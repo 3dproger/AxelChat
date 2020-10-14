@@ -59,7 +59,7 @@ class QtCefHandler: public CefClient,
                     public CefRequestHandler,
                     public CefResourceRequestHandler {
 public:
-    explicit QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool useViews);
+    explicit QtCefHandler(CefRefPtr<QtCefApp> cefApp);
     ~QtCefHandler();
     static QtCefHandler* GetInstance();
     virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() OVERRIDE { return this; }
@@ -117,8 +117,6 @@ public:
     bool IsClosing() const { return is_closing_; }
 
 private:
-    const bool _useViews = true;
-
     CefRefPtr<QtCefApp> _cefApp;
     // List of existing browser windows. Only accessed on the CEF UI thread.
     typedef std::list<CefRefPtr<CefBrowser>> BrowserList;

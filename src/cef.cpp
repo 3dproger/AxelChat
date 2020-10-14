@@ -30,8 +30,8 @@ std::string GetDataURI(const std::string& data, const std::string& mime_type)
 
 }  // namespace
 
-QtCefHandler::QtCefHandler(CefRefPtr<QtCefApp> cefApp, bool useViews)
-    : _useViews(useViews),  _cefApp(cefApp), is_closing_(false)
+QtCefHandler::QtCefHandler(CefRefPtr<QtCefApp> cefApp)
+    : _cefApp(cefApp), is_closing_(false)
 {
     DCHECK(!g_instance);
     g_instance = this;
@@ -286,7 +286,7 @@ void QtCefApp::OnContextInitialized()
   #endif
 
     // SimpleHandler implements browser-level callbacks.
-    CefRefPtr<QtCefHandler> handler(new QtCefHandler(this, use_views));
+    CefRefPtr<QtCefHandler> handler(new QtCefHandler(this));
 
     // Specify CEF browser settings here.
     CefBrowserSettings browser_settings;
@@ -318,13 +318,11 @@ void QtCefApp::OnContextInitialized()
     {
       // Information used when creating the native window.
       CefWindowInfo window_info;
-      window_info.width  = 250;
-      window_info.height = 500;
 
   #if defined(OS_WIN)
       // On Windows we need to specify certain flags that will be passed to
       // CreateWindowEx().
-      window_info.SetAsPopup(NULL, "YouTube");
+      //window_info.SetAsPopup(NULL, "YouTube");
   #endif
 
       // Create the first browser window.
