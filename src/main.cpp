@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
     //CEF
     // Enable High-DPI support on Windows 7 or newer.
-    CefEnableHighDPISupport();
+    //CefEnableHighDPISupport();
 
     void* sandbox_info = nullptr;
 
@@ -70,7 +70,6 @@ int main(int argc, char *argv[])
     // It will create the first browser instance in OnContextInitialized() after
     // CEF has initialized.
     CefRefPtr<QtCefApp> cefApp = new QtCefApp();
-
 
     // Initialize CEF.
     CefInitialize(main_args, cefSettings, cefApp.get(), sandbox_info);
@@ -147,7 +146,7 @@ int main(int argc, char *argv[])
     splashScreen = nullptr;
 
     cefApp->moveToThread(engine.thread());
-    cefApp->startTimer(50);
+    cefApp->startTimer(100);
 
     int returnCode = app.exec();
 

@@ -326,12 +326,7 @@ void QtCefApp::OnContextInitialized()
   #endif
 
       // Create the first browser window.
-      CefBrowserHost::CreateBrowser(window_info,
-                                          handler,
-                                          url,
-                                          browser_settings,
-                                          nullptr,
-                                          nullptr);
+      CefBrowserHost::CreateBrowser(window_info, handler, url, browser_settings, nullptr, nullptr);
     }
 }
 
