@@ -1,4 +1,4 @@
-QT += gui quick multimedia webengine webenginewidgets
+QT += widgets gui quick multimedia
 
 CONFIG += c++11
 
@@ -15,6 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     botaction.hpp \
+    cef.hpp \
     chatbot.hpp \
     chathandler.hpp \
     chatmessage.hpp \
@@ -24,10 +25,12 @@ HEADERS += \
     outputtofile.hpp \
     qmlutils.hpp \
     types.hpp \
-    youtube.hpp
+    youtube.hpp \
+    constants.hpp
 
 SOURCES += \
         botaction.cpp \
+        cef.cpp \
         chatbot.cpp \
         chathandler.cpp \
         chatmessage.cpp \
@@ -89,3 +92,17 @@ win32: {
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+# CEF
+win32: LIBS += -L$$PWD/../cef/Release/ -llibcef
+
+INCLUDEPATH += $$PWD/../cef
+DEPENDPATH += $$PWD/../cef
+
+win32: LIBS += -L$$PWD/../cef/libcef_dll_wrapper/Release/ -llibcef_dll_wrapper
+
+QMAKE_CXXFLAGS_RELEASE += /MT
+QMAKE_CXXFLAGS_DEBUG += /MTd
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.a

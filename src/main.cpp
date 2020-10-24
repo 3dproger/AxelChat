@@ -6,20 +6,24 @@
 #include <QQmlApplicationEngine>
 #include <QSplashScreen>
 #include "chathandler.hpp"
-#include <QtWebEngine/QtWebEngine>
 #include "githubapi.hpp"
 #include "clipboardqml.hpp"
 #include "qmlutils.hpp"
 #include "i18n.hpp"
+#include "cef.hpp"
+#include <QIcon>
+#include <QStandardPaths>
+#include <QDir>
+#include <QQmlContext>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
-    QApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
-    QApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
-    QApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
+    QCoreApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
+    QCoreApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
+    QCoreApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
+    QCoreApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
 
     QSettings* settings = new QSettings();
 
@@ -27,7 +31,51 @@ int main(int argc, char *argv[])
     QMLUtils::declareQml();
     QMLUtils* qmlUtils = new QMLUtils(settings, "qml_utils");
 
-    QtWebEngine::initialize();
+    //CEF
+    // Enable High-DPI support on Windows 7 or newer.
+    //CefEnableHighDPISupport();
+
+    void* sandbox_info = nullptr;
+
+  #if defined(CEF_USE_SANDBOX)
+    // Manage the life span of the sandbox information object. This is necessary
+    // for sandbox support on Windows. See cef_sandbox_win.h for complete details.
+    CefScopedSandboxInfo scoped_sandbox;
+    sandbox_info = scoped_sandbox.sandbox_info();
+  #endif
+
+#ifdef Q_OS_WIN
+    CefMainArgs main_args((HINSTANCE)GetModuleHandle(0));
+#endif
+
+    // Parse command-line arguments for use in this method.
+    CefRefPtr<CefCommandLine> command_line = CefCommandLine::CreateCommandLine();
+    command_line->InitFromString(::GetCommandLineW());
+
+    // Specify CEF global settings here.
+    CefSettings cefSettings;
+
+    /*if (command_line->HasSwitch("enable-chrome-runtime")) {
+      // Enable experimental Chrome runtime. See issue #2969 for details.
+      cefSettings.chrome_runtime = true;
+    }*/
+
+    CefString(&cefSettings.accept_language_list).FromString("");
+
+#if !defined(CEF_USE_SANDBOX)
+    cefSettings.no_sandbox = true;
+#endif
+
+    // SimpleApp implements application-level callbacks for the browser process.
+    // It will create the first browser instance in OnContextInitialized() after
+    // CEF has initialized.
+    CefRefPtr<QtCefApp> cefApp = new QtCefApp();
+
+    // Initialize CEF.
+    CefInitialize(main_args, cefSettings, cefApp.get(), sandbox_info);
+    CefDoMessageLoopWork();
+
+    //Qt
     QApplication app(argc, argv);
 
     QSplashScreen* splashScreen = new QSplashScreen(QPixmap(":/icon.ico"));
@@ -55,8 +103,12 @@ int main(int argc, char *argv[])
 
     //ChatHandler
     ChatHandler::declareQml();
-    ChatHandler* chatHandler = new ChatHandler(settings, "chat_handler");
+    ChatHandler* chatHandler = new ChatHandler(settings, cefApp, "chat_handler");
     settings->setParent(chatHandler);
+
+    qRegisterMetaType<size_t>("size_t");
+    qRegisterMetaType<std::shared_ptr<QByteArray>>("std::shared_ptr<QByteArray>");
+    QObject::connect(cefApp, &QtCefApp::dataReceived, chatHandler->youTube(), &YouTube::onDataReceived);
 
     //Update Checker
     GitHubApi::declareQml();
@@ -93,7 +145,12 @@ int main(int argc, char *argv[])
     delete splashScreen;
     splashScreen = nullptr;
 
+    cefApp->moveToThread(engine.thread());
+    cefApp->startTimer(100);
+
     int returnCode = app.exec();
+
+    CefShutdown();
 
     return returnCode;
 }

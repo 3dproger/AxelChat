@@ -9,6 +9,7 @@
 #include "outputtofile.hpp"
 #include "chatbot.hpp"
 #include <QSound>
+#include "cef.hpp"
 
 class ChatHandler : public QObject
 {
@@ -17,7 +18,7 @@ class ChatHandler : public QObject
     Q_PROPERTY(bool enabledSoundNewMessage READ enabledSoundNewMessage WRITE setEnabledSoundNewMessage NOTIFY enabledSoundNewMessageChanged)
 
 public:
-    explicit ChatHandler(QSettings* settings, const QString& settingsGroup = "chat_handler", QObject *parent = nullptr);
+    explicit ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroup = "chat_handler", QObject *parent = nullptr);
     ~ChatHandler();
     MessageAuthor authorByChannelId(const QString& channelId) const;
 
@@ -58,6 +59,7 @@ private:
     QString _settingsGroupPath;
     QSettings*    _settings                 = nullptr;
 
+    CefRefPtr<QtCefApp> _cefApp             = nullptr;
     YouTube* _youTube = nullptr;
     OutputToFile* _outputToFile             = nullptr;
     ChatBot* _bot                           = nullptr;

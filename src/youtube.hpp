@@ -2,15 +2,12 @@
 #define YOUTUBEINTERCEPTOR_HPP
 
 #include <QObject>
-#include <QWebEngineUrlRequestInterceptor>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 #include "types.hpp"
-#include <QWebEnginePage>
 #include <QSettings>
 #include "outputtofile.hpp"
+#include "cef.hpp"
 
-class YouTube : public QWebEngineUrlRequestInterceptor
+class YouTube : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString userSpecifiedLink          READ userSpecifiedLink WRITE setLink NOTIFY linkChanged)
@@ -23,11 +20,8 @@ class YouTube : public QWebEngineUrlRequestInterceptor
     Q_PROPERTY(bool    isBroadcastIdUserSpecified READ isBroadcastIdUserSpecified)
 
 public:
-    explicit YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
+    explicit YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
     ~YouTube();
-    void interceptRequest(QWebEngineUrlRequestInfo &info);
-    QByteArray replyData() const;
-
     int messagesReceived() const;
     bool isConnected() const;
     bool isBroadcastIdUserSpecified() const;
@@ -50,9 +44,7 @@ signals:
 
 public slots:
     void setLink(QString link);
-
-private slots:
-    void replyFinished(QNetworkReply* reply);
+    void onDataReceived(std::shared_ptr<QByteArray> data);
 
 private:
     QString extractBroadcastId(const QString& link) const;
@@ -62,16 +54,15 @@ private:
     QSettings* _settings = nullptr;
     QString _settingsGroupPath;
 
-    QNetworkAccessManager *_manager = new QNetworkAccessManager(this);
-    QByteArray _replyData;
-
     int _messagesReceived = 0;
+
+    CefRefPtr<QtCefApp> _cefApp = nullptr;
 
     YouTubeInfo _youtubeInfo;
 
-    QWebEnginePage _webPage;
-
     const QString _settingsKeyUserSpecifiedLink = "user_specified_link";
+
+    static void printData(const QString& tag, const QByteArray& data);
 };
 
 #endif // YOUTUBEINTERCEPTOR_HPP

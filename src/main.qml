@@ -339,7 +339,7 @@ ApplicationWindow {
                 spacing: 4
 
                 //Author Name
-                TextEdit {
+                Text {
                     id: authorNameText
                     color: {
                         if (authorIsChatOwner)
@@ -374,10 +374,14 @@ ApplicationWindow {
 
                     MouseArea {
                         anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: authorPageUrl.toString().length > 0 && authorName.length > 0;
+                        cursorShape: {
+                            if (hoverEnabled)
+                                return Qt.PointingHandCursor;
+                        }
                         onClicked: {
-                            openAuthorWindow(authorChannelId,
+                            if (hoverEnabled)
+                                openAuthorWindow(authorChannelId,
                                              authorName,
                                              messageType,
                                              authorAvatarUrl,
@@ -391,7 +395,7 @@ ApplicationWindow {
 
                     //selectByKeyboard: true
                     //selectByMouse: true
-                    readOnly: true
+                    //readOnly: true
                     //style: Text.Outline
                     //styleColor: "black"
 
@@ -509,17 +513,15 @@ ApplicationWindow {
 
                 MouseArea {
                     anchors.fill: parent;
-                    hoverEnabled: authorPageUrl.toString().length !== 0 ? true : false;
+                    hoverEnabled: authorPageUrl.toString().length > 0;
                     acceptedButtons: Qt.LeftButton;
                     cursorShape: {
-                        if (messageType != ChatMessage.SoftwareNotification && messageType != ChatMessage.TestMessage)
-                        {
+                        if (hoverEnabled)
                             return Qt.PointingHandCursor;
-                        }
                     }
-
                     onClicked: {
-                        openAuthorWindow(authorChannelId,
+                        if (hoverEnabled)
+                            openAuthorWindow(authorChannelId,
                                          authorName,
                                          messageType,
                                          authorAvatarUrl,
@@ -535,7 +537,26 @@ ApplicationWindow {
             //Text Message
             TextEdit {
                 id: textEditMessageText
-                color: messageIsBotCommand ? "yellow" : "white"
+
+                color: {
+                    if (messageMarkedAsDeleted)
+                    {
+                        return "gray";
+                    }
+                    else
+                    {
+                        if (messageIsBotCommand)
+                        {
+                            return "yellow";
+                        }
+                        else
+                        {
+                            //Normal message
+                            return "white";
+                        }
+                    }
+                }
+
                 anchors.left: avatarImage.right
                 anchors.right: parent.right
                 anchors.top: authorRow.bottom
@@ -543,6 +564,7 @@ ApplicationWindow {
                 wrapMode: Text.Wrap
                 text: messageText
                 font.weight: messageIsBotCommand ? Font.Black : Font.DemiBold
+                font.italic: messageMarkedAsDeleted
                 selectByMouse: true
                 selectByKeyboard: true
                 readOnly: true

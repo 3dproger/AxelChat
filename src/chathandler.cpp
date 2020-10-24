@@ -1,11 +1,16 @@
 #include "chathandler.hpp"
 #include <QDebug>
 
-ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObject *parent)
-    : QObject(parent)
+ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroup, QObject *parent)
+    : QObject(parent), _cefApp(cefApp)
 {
     _settingsGroupPath = settingsGroup;
     _settings = settings;
+
+    if (!_cefApp)
+    {
+        qWarning() << Q_FUNC_INFO << ": cefApp == nullptr";
+    }
 
     //Bot
     _bot = new ChatBot(settings, _settingsGroupPath + "/chat_bot");
@@ -17,7 +22,7 @@ ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObj
             _outputToFile, &OutputToFile::onMessagesReceived);
 
     //YouTube
-    _youTube = new YouTube(_outputToFile, settings, _settingsGroupPath + "/youtube");
+    _youTube = new YouTube(_outputToFile, settings, _cefApp, _settingsGroupPath + "/youtube");
 
     connect(_youTube, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
@@ -100,9 +105,10 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
         _authors[channelId]._messagesSentCurrent = messagesSentCurrent;
     }
 
-    for (const ChatMessage& message : messages)
+
+    for (ChatMessage message : messages)//ToDo: убрать копирование
     {
-        if (!_messagesModel.contains(message.id()))
+        if (!_messagesModel.contains(message.id()) || message.isDeleterItem())
         {
             /*qDebug(QString("%1: %2")
                    .arg(message.authorName).arg(message.text).toUtf8());*/
@@ -118,11 +124,18 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
                 _bot->processMessage(message);
             }
 
+            _messagesModel.append(std::move(message));
+
             emit messagesReceived(message, message.author());
         }
-    }
+        else
+        {
+            qDebug(QString("%1: ignore message because this id already exists")
+                   .arg(Q_FUNC_INFO).toUtf8());
 
-    _messagesModel.append(messages);
+            message.printMessageInfo("Raw new message:");
+        }
+    }
 }
 
 void ChatHandler::sendTestMessage(const QString &text)

@@ -113,7 +113,7 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
 
     //ToDo: добавить: !ура,  !боль,  !позабавимся,  !обмыть,  !твари, !отец, !Holyshit, !gameover, !lol, !пиво, !clear, !go, !negative, !победа, !rtrKakTak, !rtrGlavnoe, !дошик, !фиаско2, !zapab, !rtrZaruinil, !rtrZloyBoss, !rtrNadejda, !rtrЁКЛМН, !rtrNevezenie, !GoBen4, !jivi, !rtrPobedaBoss, !rtrBezuprechno, !rtrZlieBossi
 
-    qDebug("Команды:");
+    /*qDebug("Команды:");
     for (int i = 0; i < _actions.count(); ++i)
     {
         const BotAction* action = _actions.at(i);
@@ -136,7 +136,7 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
         {
             qDebug(s.toUtf8());
         }
-    }
+    }*/
 }
 
 int ChatBot::volume() const
