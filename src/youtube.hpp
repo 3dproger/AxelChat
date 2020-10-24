@@ -5,6 +5,7 @@
 #include "types.hpp"
 #include <QSettings>
 #include "outputtofile.hpp"
+#include "cef.hpp"
 
 class YouTube : public QObject
 {
@@ -19,7 +20,7 @@ class YouTube : public QObject
     Q_PROPERTY(bool    isBroadcastIdUserSpecified READ isBroadcastIdUserSpecified)
 
 public:
-    explicit YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
+    explicit YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
     ~YouTube();
     int messagesReceived() const;
     bool isConnected() const;
@@ -54,6 +55,8 @@ private:
     QString _settingsGroupPath;
 
     int _messagesReceived = 0;
+
+    CefRefPtr<QtCefApp> _cefApp = nullptr;
 
     YouTubeInfo _youtubeInfo;
 

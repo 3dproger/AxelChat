@@ -139,6 +139,8 @@ public:
 
     void OnDataReceived(std::shared_ptr<QByteArray> data);
 
+    void setUrl(const QString& url);
+
 signals:
     void dataReceived(std::shared_ptr<QByteArray> data);
 
@@ -146,5 +148,7 @@ protected:
     virtual void timerEvent(QTimerEvent *event) override;
 
 private:
+    CefRefPtr<CefBrowser> _browser = nullptr;
+
     IMPLEMENT_REFCOUNTING(QtCefApp);
 };

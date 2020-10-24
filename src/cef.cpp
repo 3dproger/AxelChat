@@ -192,6 +192,8 @@ void QtCefHandler::CloseAllBrowsers(bool force_close) {
       (*it)->GetHost()->CloseBrowser(force_close);
 }
 
+/*
+
 namespace {
 
 // When using the Views framework this object provides the delegate
@@ -265,15 +267,19 @@ private:
 
 }  // namespace
 
+*/
+
 void QtCefApp::OnContextInitialized()
 {
     CEF_REQUIRE_UI_THREAD();
 
-    CefRefPtr<CefCommandLine> command_line =
-        CefCommandLine::GetGlobalCommandLine();
+    _browser = CefBrowserHost::CreateBrowserSync(CefWindowInfo(), new QtCefHandler(this), "", CefBrowserSettings(), nullptr, nullptr);
 
-    const bool enable_chrome_runtime =
-        command_line->HasSwitch("enable-chrome-runtime");
+    /*
+
+    CefRefPtr<CefCommandLine> command_line = CefCommandLine::GetGlobalCommandLine();
+
+    const bool enable_chrome_runtime = command_line->HasSwitch("enable-chrome-runtime");
 
   #if defined(OS_WIN) || defined(OS_LINUX)
     // Create the browser using the Views framework if "--use-views" is specified
@@ -291,24 +297,12 @@ void QtCefApp::OnContextInitialized()
     // Specify CEF browser settings here.
     CefBrowserSettings browser_settings;
 
-    std::string url;
-
-    // Check if a "--url=" value was provided via the command-line. If so, use
-    // that instead of the default URL.
-    url = command_line->GetSwitchValue("url");
-    if (url.empty())
-    {
-        //url = "https://www.youtube.com/watch?v=5qap5aO4i9A";
-        url = "https://www.youtube.com/live_chat?v=5qap5aO4i9A";
-    }
-
-
     if (use_views && !enable_chrome_runtime)
     {
       // Create the BrowserView.
         qDebug() << "Need create window!";
       CefRefPtr<CefBrowserView> browser_view = CefBrowserView::CreateBrowserView(
-          handler, url, browser_settings, nullptr, nullptr,
+          handler, "https://google.com/", browser_settings, nullptr, nullptr,
           new SimpleBrowserViewDelegate());
 
       // Create the Window. It will show itself after creation.
@@ -322,17 +316,31 @@ void QtCefApp::OnContextInitialized()
   #if defined(OS_WIN)
       // On Windows we need to specify certain flags that will be passed to
       // CreateWindowEx().
-      //window_info.SetAsPopup(NULL, "YouTube");
+      window_info.SetAsPopup(NULL, "YouTube");
   #endif
 
       // Create the first browser window.
-      CefBrowserHost::CreateBrowser(window_info, handler, url, browser_settings, nullptr, nullptr);
+      CefBrowserHost::CreateBrowser(window_info, handler, "https://google.com/", browser_settings, nullptr, nullptr);
     }
+
+    */
 }
 
 void QtCefApp::OnDataReceived(std::shared_ptr<QByteArray> data)
 {
     emit dataReceived(data);
+}
+
+void QtCefApp::setUrl(const QString &url)
+{
+    if (_browser)
+    {
+        _browser->GetMainFrame()->LoadURL(url.toStdWString());
+    }
+    else
+    {
+        qWarning() << Q_FUNC_INFO << ": _browser == nullptr";
+    }
 }
 
 void QtCefApp::timerEvent(QTimerEvent *event)

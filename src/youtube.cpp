@@ -5,9 +5,14 @@
 #include <QJsonArray>
 #include <QUrlQuery>
 
-YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
-    : QObject(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
+YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath, QObject *parent)
+    : QObject(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath), _cefApp(cefApp)
 {
+    if (!_cefApp)
+    {
+        qWarning() << Q_FUNC_INFO << ": cefApp == nullptr";
+    }
+
     if (_settings)
     {
         setLink(_settings->value(_settingsGroupPath + "/" + _settingsKeyUserSpecifiedLink).toString());
@@ -317,6 +322,11 @@ void YouTube::setLink(QString link)
         qDebug() << "Broadcast ID:" << _youtubeInfo.broadcastId;
         qDebug() << "Broadcast URL:" << _youtubeInfo.broadcastURL.toString();
         qDebug() << "Chat URL:" << _youtubeInfo.broadcastChatURL.toString();*/
+
+        if (_cefApp)
+        {
+            _cefApp->setUrl(_youtubeInfo.broadcastChatUrl.toString());
+        }
 
         //_webPage.load(QUrl(_youtubeInfo.broadcastChatUrl));
 

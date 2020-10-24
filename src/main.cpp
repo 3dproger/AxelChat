@@ -55,10 +55,10 @@ int main(int argc, char *argv[])
     // Specify CEF global settings here.
     CefSettings cefSettings;
 
-    if (command_line->HasSwitch("enable-chrome-runtime")) {
+    /*if (command_line->HasSwitch("enable-chrome-runtime")) {
       // Enable experimental Chrome runtime. See issue #2969 for details.
       cefSettings.chrome_runtime = true;
-    }
+    }*/
 
     CefString(&cefSettings.accept_language_list).FromString("");
 
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
 
     //ChatHandler
     ChatHandler::declareQml();
-    ChatHandler* chatHandler = new ChatHandler(settings, "chat_handler");
+    ChatHandler* chatHandler = new ChatHandler(settings, cefApp, "chat_handler");
     settings->setParent(chatHandler);
 
     qRegisterMetaType<size_t>("size_t");

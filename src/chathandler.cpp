@@ -1,11 +1,16 @@
 #include "chathandler.hpp"
 #include <QDebug>
 
-ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObject *parent)
-    : QObject(parent)
+ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroup, QObject *parent)
+    : QObject(parent), _cefApp(cefApp)
 {
     _settingsGroupPath = settingsGroup;
     _settings = settings;
+
+    if (!_cefApp)
+    {
+        qWarning() << Q_FUNC_INFO << ": cefApp == nullptr";
+    }
 
     //Bot
     _bot = new ChatBot(settings, _settingsGroupPath + "/chat_bot");
@@ -17,7 +22,7 @@ ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObj
             _outputToFile, &OutputToFile::onMessagesReceived);
 
     //YouTube
-    _youTube = new YouTube(_outputToFile, settings, _settingsGroupPath + "/youtube");
+    _youTube = new YouTube(_outputToFile, settings, _cefApp, _settingsGroupPath + "/youtube");
 
     connect(_youTube, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
