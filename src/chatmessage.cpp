@@ -345,6 +345,11 @@ bool ChatMessagesModel::removeRows(int position, int rows, const QModelIndex &pa
     return true;
 }
 
+void ChatMessagesModel::clear()
+{
+    removeRows(0, rowCount(QModelIndex()));
+}
+
 uint64_t ChatMessagesModel::lastIdNum() const
 {
     return _lastIdNum;

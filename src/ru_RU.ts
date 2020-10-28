@@ -12,12 +12,12 @@
         <translation type="vanished">Тестовое сообщение</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="136"/>
+        <location filename="chathandler.cpp" line="151"/>
         <source>YouTube connected: %1</source>
         <translation>YouTube подключён: %1</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="143"/>
+        <location filename="chathandler.cpp" line="158"/>
         <source>YouTube disconnected: %1</source>
         <translation>YouTube отключён: %1</translation>
     </message>
@@ -234,6 +234,11 @@
     </message>
     <message>
         <location filename="setting_pages/common.qml" line="98"/>
+        <source>Clear Messages on Link Change</source>
+        <translation>Очистить сообщения при смене ссылки</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/common.qml" line="115"/>
         <source>Enabled Hardware Graphics Accelerator</source>
         <translation>Включить аппаратный ускоритель графики</translation>
     </message>
@@ -243,12 +248,12 @@
         <translation>Изменения вступят в силу после перезапуска программы</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="117"/>
+        <location filename="setting_pages/common.qml" line="134"/>
         <source>Enable Sound when New Message Received</source>
         <translation>Включить звук при получении нового сообщения</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="131"/>
+        <location filename="setting_pages/common.qml" line="148"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -256,22 +261,22 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="main.qml" line="598"/>
+        <location filename="main.qml" line="620"/>
         <source>Connecting to %1</source>
         <translation>Подключение к %1</translation>
     </message>
     <message>
-        <location filename="main.qml" line="605"/>
+        <location filename="main.qml" line="627"/>
         <source>Link or broadcast ID is not specified</source>
         <translation>Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="main.qml" line="609"/>
+        <location filename="main.qml" line="631"/>
         <source>Right click on the window to open the settings</source>
         <translation>Кликните правой кнопкой мыши по окну, чтобы открыть настройки</translation>
     </message>
     <message>
-        <location filename="main.qml" line="615"/>
+        <location filename="main.qml" line="637"/>
         <source>Incorrect link or broadcast ID specified</source>
         <oldsource>Incorrect link or broadcast ID entered</oldsource>
         <translation>Указана неверная ссылка или ID трансляции</translation>

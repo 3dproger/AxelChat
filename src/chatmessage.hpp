@@ -241,6 +241,7 @@ public:
     static QVariant dataByRole(const ChatMessage& message, int role);
     QVariant dataByNumId(const uint64_t &idNum, int role);
     bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex()) override;
+    void clear();
     uint64_t lastIdNum() const;
     QModelIndex createIndexByPtr(QVariant* data) const;
     int getRow(QVariant* data);

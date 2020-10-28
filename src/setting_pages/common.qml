@@ -92,9 +92,26 @@ ScrollView {
         }
 
         Switch {
-            id: switchEnabledHardwareGraphicsAccelerator
+            id: switchClearMessagesOnLinkChange
             x: 8
             y: 62
+            text: qsTr("Clear Messages on Link Change")
+
+            Component.onCompleted: {
+                checked = chatHandler.enabledClearMessagesOnLinkChange;
+                //checked = qmlUtils.enabledHardwareGraphicsAccelerator;
+            }
+
+            onCheckedChanged: {
+                chatHandler.enabledClearMessagesOnLinkChange = checked;
+                //qmlUtils.enabledHardwareGraphicsAccelerator = checked;
+            }
+        }
+
+        Switch {
+            id: switchEnabledHardwareGraphicsAccelerator
+            x: 8
+            y: 116
             text: qsTr("Enabled Hardware Graphics Accelerator")
 
             Component.onCompleted: {
@@ -113,7 +130,7 @@ ScrollView {
         Switch {
             id: switchEnableSoundNewMessage
             x: 8
-            y: 116
+            y: 170
             text: qsTr("Enable Sound when New Message Received")
 
             Component.onCompleted: {
@@ -139,6 +156,6 @@ ScrollView {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.25}D{i:8;anchors_x:8}D{i:9;anchors_x:206;anchors_y:8}D{i:13;anchors_x:202}
+    D{i:0;formeditorZoom:1.25}D{i:8}D{i:9}
 }
 ##^##*/

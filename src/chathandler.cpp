@@ -36,6 +36,8 @@ ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const 
     if (_settings)
     {
         setEnabledSoundNewMessage(_settings->value(_settingsGroupPath + "/" + _settingsEnabledSoundNewMessage, _enabledSoundNewMessage).toBool());
+
+        setEnabledClearMessagesOnLinkChange(_settings->value(_settingsGroupPath + "/" + _settingsEnabledClearMessagesOnLinkChange, _enabledClearMessagesOnLinkChange).toBool());
     }
 
     /*MessageAuthor a = MessageAuthor::createFromYouTube(
@@ -155,6 +157,12 @@ void ChatHandler::onDisconnectedYouTube(QString broadcastId)
 {
     chatNotification(tr("YouTube disconnected: %1").arg(broadcastId));
     _connectedSome = false;
+
+    if (_enabledClearMessagesOnLinkChange)
+    {
+        _messagesModel.clear();
+    }
+
     emit connectedSomeChanged();
 }
 
@@ -207,6 +215,21 @@ void ChatHandler::setEnabledSoundNewMessage(bool enabled)
         }
 
         emit enabledSoundNewMessageChanged();
+    }
+}
+
+void ChatHandler::setEnabledClearMessagesOnLinkChange(bool enabled)
+{
+    if (_enabledClearMessagesOnLinkChange != enabled)
+    {
+        _enabledClearMessagesOnLinkChange = enabled;
+
+        if (_settings)
+        {
+            _settings->setValue(_settingsGroupPath + "/" + _settingsEnabledClearMessagesOnLinkChange, enabled);
+        }
+
+        emit enabledClearMessagesOnLinkChangeChanged();
     }
 }
 
