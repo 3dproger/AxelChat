@@ -21,8 +21,8 @@ A program for adding interactivity to live broadcasts and communication with vie
 # Building
 ## Setting Up the Environment for Windows 7 and newer, x64
 1. Install Visual Studio Community 2019: https://visualstudio.microsoft.com
-  <br> 1.1 In Visual Studio Installer enable "Development of classic C ++ applications" component
-  <br> 1.2 In tab "Language Packs" enable only English beacuse there may be encoding problems in displaying compiler messages when in other languages
+  <br> 1.1 In Visual Studio Installer enable ```Development of classic C ++ applications``` component
+  <br> 1.2 In tab ```Language Packs``` enable only English beacuse there may be encoding problems in displaying compiler messages when in other languages
   <br> 1.3 After installation, you do not need to run Visual Studio
 2. Download Open Source Qt online installer (sign-up or login required during installing): https://www.qt.io/download-qt-installer or you can also find the offline installers (you need Qt 5.15.x or 5.12.x for x86_64 MSVC2019): https://www.qt.io/offline-installers
 3. Run Qt installer
