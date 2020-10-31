@@ -18,8 +18,7 @@ A program for adding interactivity to live broadcasts and communication with vie
   <img src="misc/screenshots/4.png">
 </p>
 
-Building for Windows x64
-------------------
+# Building for Windows x64
 1. Clone repo or download source
 2. Download Open Source Qt online installer (sign-up or login required during installing): https://www.qt.io/download-qt-installer or you can find the offline installers: https://www.qt.io/offline-installers
 3. Run and login and install Qt 5.15.x or 5.12.x (for online installer):
