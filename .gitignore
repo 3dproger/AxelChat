@@ -67,10 +67,8 @@ Thumbs.db
 # Binaries
 # --------
 #*.dll
-*.exe
+#*.exe
 
 # Builds
-build
-build*
-release
-release*
+build-*
+release_*
