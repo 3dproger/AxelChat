@@ -27,13 +27,13 @@ A program for adding interactivity to live broadcasts and communication with vie
 ### Build source
 1. Clone repo or download source
 2. Open file ```<AxelChat_project_folder>/src/AxelChat.pro``` with Qt Creator
-3. Select Desktop ```Qt 5.x.x MSVC2019```
+3. In Qt Creator select ```Desktop Qt 5.x.x MSVC2019``` kit
 4. Select ```Release``` building mode
 5. Click button ```Build Project "AxelChat"```. If successful build, folder ```release_win64``` will appear in the project folder with AxelChat.exe and other files
 6. Unpack ```<AxelChat_project_folder>/app_files/windows_x86_64_msvc.zip``` in ```<AxelChat_project_folder>/release_win64``` without rewriting
 7. Run ```<AxelChat_project_folder>/release_win64/AxelChat.exe``` or click ```Run``` in Qt Creator
 8. For subsequent builds, just close ```AxelChat.exe``` application and click ```Run``` in Qt Creator
-9. To release an AxelChat for use by other users, check if all the required DLLs (*.os for Linux) are in the folder. Utilities https://github.com/3dproger/ProcDepMonitor or https://www.dependencywalker.com/ or analogs can helps you
+9. To release an AxelChat for use by other users, check if all the required DLLs (*.os for Linux) are in the folder except system DLLs (*.os). Utilities https://github.com/3dproger/ProcDepMonitor or https://www.dependencywalker.com/ or analogs can helps you
 
 # Screenshots
 <p align="center">
