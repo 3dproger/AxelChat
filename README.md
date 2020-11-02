@@ -33,7 +33,7 @@ A program for adding interactivity to live broadcasts and communication with vie
 6. Unpack ```<AxelChat_project_folder>/app_files/windows_x86_64_msvc.zip``` in ```<AxelChat_project_folder>/release_win64```
 7. Run ```<AxelChat_project_folder>/release_win64/AxelChat.exe``` or click ```Run``` in Qt Creator
 8. For subsequent builds, just close ```AxelChat.exe``` application and click ```Run``` in Qt Creator
-9. To release an AxelChat for use by other users, check if all the required DLLs (*.os for Linux) are in the folder except system DLLs (*.os). Utilities https://github.com/3dproger/ProcDepMonitor or https://www.dependencywalker.com/ or analogs can helps you
+9. To release an AxelChat for use by other users, check if all the required DLLs (\*.os for Linux) are in the folder except system DLLs (\*.os for Linux). Utilities https://github.com/3dproger/ProcDepMonitor or https://www.dependencywalker.com/ or analogs can helps you
 
 # Screenshots
 <p align="center">
