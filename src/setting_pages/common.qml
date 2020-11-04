@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import AxelChat.QMLUtils 1.0
 import AxelChat.I18n 1.0
+import "../my_components" as MyComponents
 
 ScrollView {
     id: root
@@ -92,26 +93,93 @@ ScrollView {
         }
 
         Switch {
-            id: switchClearMessagesOnLinkChange
+            id: switchEnableProxy
             x: 8
             y: 62
+            text: qsTr("Proxy")
+
+            Component.onCompleted: {
+                checked = chatHandler.proxyEnabled;
+            }
+
+            onCheckedChanged: {
+                chatHandler.proxyEnabled = checked;
+            }
+        }
+
+        MyComponents.MyTextField {
+            id: textFieldProxyServerAddress
+            anchors.left: switchEnableProxy.right
+            anchors.leftMargin: 6
+            maximumLength: 15
+            autoTrim: true
+            y: 65
+            width: 150
+            height: 43
+            placeholderText: qsTr("Proxy Server IP")
+            validator: RegExpValidator {
+                regExp:  /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){0,3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
+           }
+
+            Component.onCompleted: {
+                text = chatHandler.proxyServerAddress
+            }
+
+            onTextChanged: {
+                chatHandler.proxyServerAddress = text
+            }
+        }
+
+        Text {
+            id: text1
+            y: 80
+            text: ":";
+            anchors.left: textFieldProxyServerAddress.right
+            anchors.leftMargin: 6
+        }
+
+        MyComponents.MyTextField {
+            id: textFieldProxyServerPort
+            anchors.left: text1.right
+            anchors.leftMargin: 6
+            maximumLength: 5
+            autoTrim: true
+            y: 65
+            width: 60
+            height: 43
+            placeholderText: qsTr("Port")
+            validator: RegExpValidator {
+                regExp:  /^[0-9]{1,5}$/
+            }
+
+            Component.onCompleted: {
+                text = chatHandler.proxyServerPort
+            }
+
+            onTextChanged: {
+                chatHandler.proxyServerPort = text
+            }
+        }
+
+        Switch {
+            id: switchClearMessagesOnLinkChange
+            x: 10
+            y: 114
             text: qsTr("Clear Messages on Link Change")
 
             Component.onCompleted: {
                 checked = chatHandler.enabledClearMessagesOnLinkChange;
-                //checked = qmlUtils.enabledHardwareGraphicsAccelerator;
             }
 
             onCheckedChanged: {
                 chatHandler.enabledClearMessagesOnLinkChange = checked;
-                //qmlUtils.enabledHardwareGraphicsAccelerator = checked;
             }
         }
 
         Switch {
             id: switchEnabledHardwareGraphicsAccelerator
             x: 8
-            y: 116
+            y: 168
             text: qsTr("Enabled Hardware Graphics Accelerator")
 
             Component.onCompleted: {
@@ -129,8 +197,8 @@ ScrollView {
 
         Switch {
             id: switchEnableSoundNewMessage
-            x: 8
-            y: 170
+            x: 10
+            y: 222
             text: qsTr("Enable Sound when New Message Received")
 
             Component.onCompleted: {
@@ -150,12 +218,13 @@ ScrollView {
             anchors.left: parent.left
             anchors.leftMargin: 8
         }
-
     }
 }
 
+
+
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.25}D{i:8}D{i:9}
+    D{i:0;formeditorZoom:0.8999999761581421}
 }
 ##^##*/

@@ -65,7 +65,6 @@ public:
     virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() OVERRIDE { return this; }
     virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() OVERRIDE { return this; }
     virtual CefRefPtr<CefLoadHandler> GetLoadHandler() OVERRIDE { return this; }
-
     virtual CefRefPtr<CefRequestHandler> GetRequestHandler() OVERRIDE
     {
         CEF_REQUIRE_IO_THREAD();
@@ -133,6 +132,7 @@ class QtCefApp : public QObject, public CefApp, public CefBrowserProcessHandler
     Q_OBJECT
 public:
     explicit QtCefApp(QObject *parent = nullptr) : QObject(parent) {}
+    ~QtCefApp();
 
     virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override { return this; }
     virtual void OnContextInitialized() override;
@@ -140,6 +140,8 @@ public:
     void OnDataReceived(std::shared_ptr<QByteArray> data);
 
     void setUrl(const QString& url);
+    void setProxyServer(const QString& address, int port);
+    void setProxyEnabled(bool enabled);
 
 signals:
     void dataReceived(std::shared_ptr<QByteArray> data);
@@ -148,7 +150,14 @@ protected:
     virtual void timerEvent(QTimerEvent *event) override;
 
 private:
+    void updateProxySettings();
+    void reloadUrl();
+
     CefRefPtr<CefBrowser> _browser = nullptr;
+    CefString _url;
+    bool _proxyEnabled = false;
+    QString _proxyServerAddress;
+    int _proxyServerPort = 0;
 
     IMPLEMENT_REFCOUNTING(QtCefApp);
 };

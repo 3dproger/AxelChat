@@ -25,6 +25,7 @@ public:
     int messagesReceived() const;
     bool isConnected() const;
     bool isBroadcastIdUserSpecified() const;
+    void reconnect();
 
     QString broadcastId() const;
     QString userSpecifiedLink() const;

@@ -263,6 +263,13 @@ bool YouTube::isBroadcastIdUserSpecified() const
     return _youtubeInfo.userSpecified.trimmed() == _youtubeInfo.broadcastId.trimmed() && !_youtubeInfo.userSpecified.isEmpty();
 }
 
+void YouTube::reconnect()
+{
+    const QString link = _youtubeInfo.userSpecified;
+    setLink("");
+    setLink(link);
+}
+
 int YouTube::messagesReceived() const
 {
     return _messagesReceived;

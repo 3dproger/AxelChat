@@ -269,6 +269,14 @@ private:
 
 */
 
+QtCefApp::~QtCefApp()
+{
+    //if (_browser && _browser->GetHost())
+    //{
+    //    _browser->GetHost()->CloseBrowser(true);
+    //}
+}
+
 void QtCefApp::OnContextInitialized()
 {
     CEF_REQUIRE_UI_THREAD();
@@ -276,7 +284,6 @@ void QtCefApp::OnContextInitialized()
     _browser = CefBrowserHost::CreateBrowserSync(CefWindowInfo(), new QtCefHandler(this), "", CefBrowserSettings(), nullptr, nullptr);
 
     /*
-
     CefRefPtr<CefCommandLine> command_line = CefCommandLine::GetGlobalCommandLine();
 
     const bool enable_chrome_runtime = command_line->HasSwitch("enable-chrome-runtime");
@@ -322,7 +329,6 @@ void QtCefApp::OnContextInitialized()
       // Create the first browser window.
       CefBrowserHost::CreateBrowser(window_info, handler, "https://google.com/", browser_settings, nullptr, nullptr);
     }
-
     */
 }
 
@@ -333,9 +339,11 @@ void QtCefApp::OnDataReceived(std::shared_ptr<QByteArray> data)
 
 void QtCefApp::setUrl(const QString &url)
 {
+    _url = url.toStdWString();
+
     if (_browser)
     {
-        _browser->GetMainFrame()->LoadURL(url.toStdWString());
+        _browser->GetMainFrame()->LoadURL(_url);
     }
     else
     {
@@ -343,8 +351,80 @@ void QtCefApp::setUrl(const QString &url)
     }
 }
 
+void QtCefApp::setProxyServer(const QString &address, int port)
+{
+    _proxyServerAddress = address;
+    _proxyServerPort = port;
+    if (_proxyEnabled)
+    {
+        updateProxySettings();
+    }
+}
+
+void QtCefApp::setProxyEnabled(bool enabled)
+{
+    _proxyEnabled = enabled;
+    updateProxySettings();
+}
+
 void QtCefApp::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event);
     CefDoMessageLoopWork();
+}
+
+void QtCefApp::updateProxySettings()
+{
+    if (_browser)
+    {
+        if (_proxyEnabled)
+        {
+            auto _host = _browser->GetHost();
+            auto requestContext = _host->GetRequestContext();
+            CefString error;
+            auto proxyDictionary = CefDictionaryValue::Create();
+            proxyDictionary->SetString(L"mode", L"fixed_servers");
+            proxyDictionary->SetString(L"server", QString("%1:%2").arg(_proxyServerAddress).arg(_proxyServerPort).toStdWString());
+            auto proxyValue = CefValue::Create();
+            proxyValue->SetDictionary(proxyDictionary);
+            if (!requestContext->SetPreference(L"proxy", proxyValue, error))
+            {
+                qWarning() << Q_FUNC_INFO << ": Error while enable proxy: " << error.c_str();
+            }
+        }
+        else
+        {
+            auto _host = _browser->GetHost();
+            auto requestContext = _host->GetRequestContext();
+            CefString error;
+            auto proxyDictionary = CefDictionaryValue::Create();
+            proxyDictionary->SetString(L"no-proxy-server", L"1");
+            auto proxyValue = CefValue::Create();
+            proxyValue->SetDictionary(proxyDictionary);
+            if (!requestContext->SetPreference(L"proxy", proxyValue, error))
+            {
+                qWarning() << Q_FUNC_INFO << ": Error while disable proxy: " << error.c_str();
+            }
+        }
+    }
+    else
+    {
+        qWarning() << Q_FUNC_INFO << ": _browser == nullptr";
+    }
+
+    reloadUrl();
+}
+
+void QtCefApp::reloadUrl()
+{
+    if (_browser)
+    {
+        _browser->GetMainFrame()->LoadURL("");
+        _browser->GetMainFrame()->LoadURL(_url);
+        qDebug() << "URL: " << QString::fromStdWString(_url);
+    }
+    else
+    {
+        qWarning() << Q_FUNC_INFO << ": _browser == nullptr";
+    }
 }

@@ -223,37 +223,52 @@
 <context>
     <name>common</name>
     <message>
-        <location filename="setting_pages/common.qml" line="24"/>
+        <location filename="setting_pages/common.qml" line="25"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="32"/>
+        <location filename="setting_pages/common.qml" line="33"/>
         <source>Restart</source>
         <translation>Перезапуск</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="98"/>
+        <location filename="setting_pages/common.qml" line="105"/>
+        <source>Proxy</source>
+        <translation>Прокси</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/common.qml" line="117"/>
+        <source>Proxy Server IP</source>
+        <translation>IP прокси-сервера</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/common.qml" line="136"/>
+        <source>Port</source>
+        <translation>Порт</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/common.qml" line="144"/>
         <source>Clear Messages on Link Change</source>
         <translation>Очистить сообщения при смене ссылки</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="115"/>
+        <location filename="setting_pages/common.qml" line="161"/>
         <source>Enabled Hardware Graphics Accelerator</source>
         <translation>Включить аппаратный ускоритель графики</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="19"/>
+        <location filename="setting_pages/common.qml" line="20"/>
         <source>Changes will take effect after restarting the program</source>
         <translation>Изменения вступят в силу после перезапуска программы</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="134"/>
+        <location filename="setting_pages/common.qml" line="180"/>
         <source>Enable Sound when New Message Received</source>
         <translation>Включить звук при получении нового сообщения</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="148"/>
+        <location filename="setting_pages/common.qml" line="194"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -353,23 +368,23 @@
         <translation type="vanished">Участники</translation>
     </message>
     <message>
+        <location filename="settings.qml" line="81"/>
         <source>Common</source>
-        <translation type="vanished">Общее</translation>
+        <translation>Общее</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="89"/>
+        <location filename="settings.qml" line="93"/>
         <source>Chat Commands</source>
         <translation>Команды чата</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="93"/>
+        <location filename="settings.qml" line="97"/>
         <source>Output to Files</source>
         <translation>Вывод в файл</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="97"/>
         <source>Other</source>
-        <translation>Прочее</translation>
+        <translation type="vanished">Прочее</translation>
     </message>
     <message>
         <location filename="settings.qml" line="101"/>
