@@ -99,6 +99,8 @@ void QtCefHandler::OnLoadError(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame
     Q_UNUSED(browser);
     CEF_REQUIRE_UI_THREAD();
 
+    qDebug() << "CEF ERROR (" << errorCode << "): " << errorText.ToWString();
+
     // Don't display an error for downloaded files.
     if (errorCode == ERR_ABORTED)
       return;
@@ -111,8 +113,6 @@ void QtCefHandler::OnLoadError(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame
        << " (" << errorCode << ").</h2></body></html>";
 
     frame->LoadURL(GetDataURI(ss.str(), "text/html"));
-
-    qDebug() << "CEF ERROR (" << errorCode << "): " << errorText.ToWString();
 }
 
 CefResponseFilter::FilterStatus ResponseDataInterceptor::Filter(void *data_in, size_t data_in_size, size_t &data_in_read, void *data_out, size_t data_out_size, size_t &data_out_written)
@@ -281,7 +281,8 @@ void QtCefApp::OnContextInitialized()
 {
     CEF_REQUIRE_UI_THREAD();
 
-    _browser = CefBrowserHost::CreateBrowserSync(CefWindowInfo(), new QtCefHandler(this), "", CefBrowserSettings(), nullptr, nullptr);
+    _cefHandler = new QtCefHandler(this);
+    _browser = CefBrowserHost::CreateBrowserSync(CefWindowInfo(), _cefHandler, "", CefBrowserSettings(), nullptr, nullptr);
 
     /*
     CefRefPtr<CefCommandLine> command_line = CefCommandLine::GetGlobalCommandLine();
@@ -340,6 +341,11 @@ void QtCefApp::OnDataReceived(std::shared_ptr<QByteArray> data)
 void QtCefApp::setUrl(const QString &url)
 {
     _url = url.toStdWString();
+
+    if (_cefHandler)
+    {
+        _cefHandler->StopIntercepting();
+    }
 
     if (_browser)
     {
@@ -417,11 +423,15 @@ void QtCefApp::updateProxySettings()
 
 void QtCefApp::reloadUrl()
 {
+    if (_cefHandler)
+    {
+        _cefHandler->StopIntercepting();
+    }
+
     if (_browser)
     {
         _browser->GetMainFrame()->LoadURL("");
         _browser->GetMainFrame()->LoadURL(_url);
-        qDebug() << "URL: " << QString::fromStdWString(_url);
     }
     else
     {

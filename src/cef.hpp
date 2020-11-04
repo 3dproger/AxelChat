@@ -115,6 +115,11 @@ public:
     void CloseAllBrowsers(bool force_close);
     bool IsClosing() const { return is_closing_; }
 
+    void StopIntercepting()
+    {
+        _interceptor->ReInit(0);
+    }
+
 private:
     CefRefPtr<QtCefApp> _cefApp;
     // List of existing browser windows. Only accessed on the CEF UI thread.
@@ -154,6 +159,8 @@ private:
     void reloadUrl();
 
     CefRefPtr<CefBrowser> _browser = nullptr;
+    CefRefPtr<QtCefHandler> _cefHandler = nullptr;
+
     CefString _url;
     bool _proxyEnabled = false;
     QString _proxyServerAddress;
