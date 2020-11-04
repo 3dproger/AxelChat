@@ -91,7 +91,7 @@ private:
     const QString _settingsProxyEnabled = "proxyEnabled";
     QString _proxyServerAddress;
     const QString _settingsProxyAddress = "proxyServerAddress";
-    int _proxyServerPort = 0;
+    int _proxyServerPort = -1;
     const QString _settingsProxyPort    = "proxyServerPort";
 
     bool _connectedSome = false;

@@ -118,11 +118,26 @@ ScrollView {
             }
 
             Component.onCompleted: {
-                text = chatHandler.proxyServerPort
+                var port = chatHandler.proxyServerPort;
+                if (port !== -1)
+                {
+                    text = port;
+                }
+                else
+                {
+                    text = "";
+                }
             }
 
             onTextChanged: {
-                chatHandler.proxyServerPort = text
+                if (text == "")
+                {
+                    chatHandler.proxyServerPort = -1;
+                }
+                else
+                {
+                    chatHandler.proxyServerPort = text;
+                }
             }
         }
 
