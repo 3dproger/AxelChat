@@ -57,7 +57,7 @@ ScrollView {
 
         Text {
             id: element
-            y: 278
+            y: 352
             height: 24
             text: qsTr("Alexander 'Axel_k' Kirsanov (c) 2020")
             anchors.right: parent.right
@@ -71,10 +71,12 @@ ScrollView {
         Button {
             id: buttonYouTubeChannel
             x: 196
-            y: 308
-            width: 249
+            y: 382
+            width: 226
             height: 48
             text: qsTr("YouTube Channel")
+            anchors.horizontalCenterOffset: -20
+            icon.source: "qrc:/resources/images/youtube-black.svg"
             anchors.horizontalCenter: parent.horizontalCenter
 
             onClicked: {
@@ -97,10 +99,11 @@ ScrollView {
         Text {
             id: element2
             x: 8
+            y: 445
             textFormat: Text.RichText
             text: "Some icons made by <a href=\"http://www.freepik.com/\" title=\"Freepik\">Freepik</a> and <a href=\"https://www.flaticon.com/authors/google\" title=\"Google\">Google</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\"> www.flaticon.com</a> and <a href=\"https://icons8.com\">https://icons8.com</a>"
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 20
+            anchors.bottomMargin: 21
             font.pixelSize: 12
 
             onLinkActivated: {
@@ -114,7 +117,9 @@ ScrollView {
             y: 8
             text: qsTr("Check for Updates")
             anchors.right: parent.right
+            highlighted: true
             anchors.rightMargin: 8
+            icon.source: "qrc:/resources/images/refresh.svg"
 
             onClicked: {
                 updateChecker.checkForNewVersion();
@@ -123,12 +128,13 @@ ScrollView {
 
         Text {
             id: element1
-            x: 93
-            y: 320
+            x: 109
             text: "(⌒ω⌒)ﾉ"
             anchors.right: buttonYouTubeChannel.left
+            anchors.top: buttonYouTubeChannel.bottom
             anchors.rightMargin: 6
             font.pixelSize: 20
+            anchors.topMargin: -38
         }
 
         Text {
@@ -144,13 +150,62 @@ ScrollView {
         Text {
             id: element4
             x: 114
-            y: 306
+            y: 390
             text: qsTr("subscribe")
             anchors.horizontalCenterOffset: -5
             anchors.horizontalCenter: element1.horizontalCenter
             anchors.bottom: element1.top
-            anchors.bottomMargin: 0
             font.pixelSize: 12
+        }
+
+        Button {
+            id: buttonReleases
+            x: 8
+            y: 116
+            text: qsTr("Releases")
+            icon.source: "qrc:/resources/images/new-release.svg"
+
+            onClicked: {
+                Qt.openUrlExternally("https://github.com/3dproger/AxelChat/releases");
+            }
+        }
+
+        Button {
+            id: buttonSource
+            x: 9
+            y: 62
+            text: qsTr("Source Code")
+            icon.source: "qrc:/resources/images/github.svg"
+
+            onClicked: {
+                Qt.openUrlExternally("https://github.com/3dproger/AxelChat");
+            }
+        }
+
+        Button {
+            id: buttonComplaintsAndSuggestions
+            x: 9
+            y: 8
+            text: qsTr("Complaints and Suggestions")
+            icon.source: "qrc:/resources/images/feedback.svg"
+
+            onClicked: {
+                Qt.openUrlExternally("https://github.com/3dproger/AxelChat/issues");
+            }
+        }
+
+        Text {
+            id: element6
+            y: 270
+            height: 66
+            text: qsTr("AxelChat is a free and open source software to help you manage live chat and add interactivity to your live streams")
+            anchors.left: parent.left
+            anchors.right: parent.right
+            font.pixelSize: 17
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+            anchors.rightMargin: 8
+            anchors.leftMargin: 8
         }
     }
 
@@ -195,6 +250,6 @@ ScrollView {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:1.100000023841858;height:480;width:640}
+    D{i:0;autoSize:true;formeditorZoom:1.100000023841858;height:480;width:640}D{i:11}
 }
 ##^##*/

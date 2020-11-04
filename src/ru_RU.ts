@@ -56,18 +56,18 @@
 <context>
     <name>about</name>
     <message>
-        <location filename="setting_pages/about.qml" line="178"/>
+        <location filename="setting_pages/about.qml" line="233"/>
         <source>You are using the most current version!</source>
         <oldsource>You are using the latest version!</oldsource>
         <translation>Вы используете наиболее актуальную версию!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="184"/>
+        <location filename="setting_pages/about.qml" line="239"/>
         <source>Failed to connect to server. Check your internet connection!</source>
         <translation>Не удалось подключиться к серверу. Проверьте подключение к интернету!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="189"/>
+        <location filename="setting_pages/about.qml" line="244"/>
         <source>Request limits exceeded! Please try again later</source>
         <translation>Превышен лимит запросов! Пожалуйста, повторите попытку  позже</translation>
     </message>
@@ -99,14 +99,35 @@
         <translation>YouTube канал</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="115"/>
+        <location filename="setting_pages/about.qml" line="118"/>
         <source>Check for Updates</source>
         <translation>Проверить обновления</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="148"/>
+        <location filename="setting_pages/about.qml" line="154"/>
         <source>subscribe</source>
         <translation>подпишись</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="165"/>
+        <source>Releases</source>
+        <translation>Релизы</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="177"/>
+        <source>Source Code</source>
+        <translation>Исходный код</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="189"/>
+        <source>Complaints and Suggestions</source>
+        <translation>Жалобы и предложения</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="201"/>
+        <source>AxelChat is a free and open source software to help you manage live chat and add interactivity to your live streams</source>
+        <oldsource>AxelChat is a free and open source software to help you manage live chat and add interactivity to your streams</oldsource>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
