@@ -12,12 +12,12 @@
         <translation type="vanished">Тестовое сообщение</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="151"/>
+        <location filename="chathandler.cpp" line="155"/>
         <source>YouTube connected: %1</source>
         <translation>YouTube подключён: %1</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="158"/>
+        <location filename="chathandler.cpp" line="162"/>
         <source>YouTube disconnected: %1</source>
         <translation>YouTube отключён: %1</translation>
     </message>
@@ -233,27 +233,24 @@
         <translation>Перезапуск</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="105"/>
         <source>Proxy</source>
-        <translation>Прокси</translation>
+        <translation type="vanished">Прокси</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="117"/>
         <source>Proxy Server IP</source>
-        <translation>IP прокси-сервера</translation>
+        <translation type="vanished">IP прокси-сервера</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="136"/>
         <source>Port</source>
-        <translation>Порт</translation>
+        <translation type="vanished">Порт</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="144"/>
+        <location filename="setting_pages/common.qml" line="99"/>
         <source>Clear Messages on Link Change</source>
         <translation>Очистить сообщения при смене ссылки</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="161"/>
+        <location filename="setting_pages/common.qml" line="114"/>
         <source>Enabled Hardware Graphics Accelerator</source>
         <translation>Включить аппаратный ускоритель графики</translation>
     </message>
@@ -263,12 +260,12 @@
         <translation>Изменения вступят в силу после перезапуска программы</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="180"/>
+        <location filename="setting_pages/common.qml" line="133"/>
         <source>Enable Sound when New Message Received</source>
         <translation>Включить звук при получении нового сообщения</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="194"/>
+        <location filename="setting_pages/common.qml" line="147"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -439,28 +436,43 @@
     </message>
     <message>
         <location filename="setting_pages/youtube.qml" line="61"/>
+        <source>Proxy</source>
+        <translation>Прокси</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/youtube.qml" line="82"/>
+        <source>Proxy Server IP</source>
+        <translation>IP прокси-сервера</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/youtube.qml" line="115"/>
+        <source>Port</source>
+        <translation>Порт</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/youtube.qml" line="133"/>
         <source>Broadcast ID:</source>
         <translation>ID трансляции:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="83"/>
+        <location filename="setting_pages/youtube.qml" line="155"/>
         <source>Broadcast:</source>
         <oldsource>Broadcast URL:</oldsource>
         <translation>Трансляция:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="104"/>
+        <location filename="setting_pages/youtube.qml" line="176"/>
         <source>Chat:</source>
         <oldsource>Chat URL:</oldsource>
         <translation>Чат:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="125"/>
+        <location filename="setting_pages/youtube.qml" line="197"/>
         <source>YouTube</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="158"/>
+        <location filename="setting_pages/youtube.qml" line="230"/>
         <source>Control Panel:</source>
         <translation>Панель управления:</translation>
     </message>
@@ -469,27 +481,27 @@
         <translation type="vanished">URL панели управления:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="168"/>
+        <location filename="setting_pages/youtube.qml" line="240"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="495"/>
+        <location filename="setting_pages/youtube.qml" line="567"/>
         <source>Link or broadcast ID is not specified</source>
         <translation>Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="499"/>
+        <location filename="setting_pages/youtube.qml" line="571"/>
         <source>Incorrect link or broadcast ID specified</source>
         <translation>Указана неверная ссылка или ID трансляции</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="504"/>
+        <location filename="setting_pages/youtube.qml" line="576"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="508"/>
+        <location filename="setting_pages/youtube.qml" line="580"/>
         <source>Successfully Connected!</source>
         <translation>Успешно подключено!</translation>
     </message>
@@ -498,25 +510,25 @@
         <translation type="vanished">Вырезать</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="190"/>
-        <location filename="setting_pages/youtube.qml" line="214"/>
-        <location filename="setting_pages/youtube.qml" line="323"/>
-        <location filename="setting_pages/youtube.qml" line="348"/>
-        <location filename="setting_pages/youtube.qml" line="373"/>
-        <location filename="setting_pages/youtube.qml" line="398"/>
+        <location filename="setting_pages/youtube.qml" line="262"/>
+        <location filename="setting_pages/youtube.qml" line="286"/>
+        <location filename="setting_pages/youtube.qml" line="395"/>
+        <location filename="setting_pages/youtube.qml" line="420"/>
+        <location filename="setting_pages/youtube.qml" line="445"/>
+        <location filename="setting_pages/youtube.qml" line="470"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="204"/>
+        <location filename="setting_pages/youtube.qml" line="276"/>
         <source>Copied!</source>
         <translation>Скопировано!</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="225"/>
-        <location filename="setting_pages/youtube.qml" line="254"/>
-        <location filename="setting_pages/youtube.qml" line="277"/>
-        <location filename="setting_pages/youtube.qml" line="300"/>
+        <location filename="setting_pages/youtube.qml" line="297"/>
+        <location filename="setting_pages/youtube.qml" line="326"/>
+        <location filename="setting_pages/youtube.qml" line="349"/>
+        <location filename="setting_pages/youtube.qml" line="372"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>

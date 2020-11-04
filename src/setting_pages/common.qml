@@ -93,78 +93,9 @@ ScrollView {
         }
 
         Switch {
-            id: switchEnableProxy
-            x: 8
-            y: 62
-            text: qsTr("Proxy")
-
-            Component.onCompleted: {
-                checked = chatHandler.proxyEnabled;
-            }
-
-            onCheckedChanged: {
-                chatHandler.proxyEnabled = checked;
-            }
-        }
-
-        MyComponents.MyTextField {
-            id: textFieldProxyServerAddress
-            anchors.left: switchEnableProxy.right
-            anchors.leftMargin: 6
-            maximumLength: 15
-            autoTrim: true
-            y: 65
-            width: 150
-            height: 43
-            placeholderText: qsTr("Proxy Server IP")
-            validator: RegExpValidator {
-                regExp:  /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){0,3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
-           }
-
-            Component.onCompleted: {
-                text = chatHandler.proxyServerAddress
-            }
-
-            onTextChanged: {
-                chatHandler.proxyServerAddress = text
-            }
-        }
-
-        Text {
-            id: text1
-            y: 80
-            text: ":";
-            anchors.left: textFieldProxyServerAddress.right
-            anchors.leftMargin: 6
-        }
-
-        MyComponents.MyTextField {
-            id: textFieldProxyServerPort
-            anchors.left: text1.right
-            anchors.leftMargin: 6
-            maximumLength: 5
-            autoTrim: true
-            y: 65
-            width: 60
-            height: 43
-            placeholderText: qsTr("Port")
-            validator: RegExpValidator {
-                regExp:  /^[0-9]{1,5}$/
-            }
-
-            Component.onCompleted: {
-                text = chatHandler.proxyServerPort
-            }
-
-            onTextChanged: {
-                chatHandler.proxyServerPort = text
-            }
-        }
-
-        Switch {
             id: switchClearMessagesOnLinkChange
             x: 10
-            y: 114
+            y: 58
             text: qsTr("Clear Messages on Link Change")
 
             Component.onCompleted: {
@@ -179,7 +110,7 @@ ScrollView {
         Switch {
             id: switchEnabledHardwareGraphicsAccelerator
             x: 8
-            y: 168
+            y: 112
             text: qsTr("Enabled Hardware Graphics Accelerator")
 
             Component.onCompleted: {
@@ -197,8 +128,8 @@ ScrollView {
 
         Switch {
             id: switchEnableSoundNewMessage
-            x: 10
-            y: 222
+            x: 8
+            y: 166
             text: qsTr("Enable Sound when New Message Received")
 
             Component.onCompleted: {

@@ -54,17 +54,89 @@ ScrollView {
             }
         }
 
+        Switch {
+            id: switchEnableProxy
+            x: 8
+            y: 159
+            text: qsTr("Proxy")
+
+            Component.onCompleted: {
+                checked = chatHandler.proxyEnabled;
+            }
+
+            onCheckedChanged: {
+                chatHandler.proxyEnabled = checked;
+            }
+        }
+
+        MyComponents.MyTextField {
+            id: textFieldProxyServerAddress
+            anchors.left: switchEnableProxy.right
+            anchors.leftMargin: 0
+            maximumLength: 15
+            autoTrim: true
+            y: 162
+            width: 150
+            height: 43
+            anchors.verticalCenter: switchEnableProxy.verticalCenter
+            placeholderText: qsTr("Proxy Server IP")
+            validator: RegExpValidator {
+                regExp:  /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){0,3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
+           }
+
+            Component.onCompleted: {
+                text = chatHandler.proxyServerAddress
+            }
+
+            onTextChanged: {
+                chatHandler.proxyServerAddress = text
+            }
+        }
+
+        Text {
+            id: text1
+            y: 80
+            text: ":";
+            anchors.verticalCenter: textFieldProxyServerAddress.verticalCenter
+            anchors.left: textFieldProxyServerAddress.right
+            anchors.leftMargin: 6
+        }
+
+        MyComponents.MyTextField {
+            id: textFieldProxyServerPort
+            anchors.left: text1.right
+            anchors.leftMargin: 6
+            maximumLength: 5
+            autoTrim: true
+            y: 65
+            width: 60
+            height: 43
+            anchors.verticalCenter: text1.verticalCenter
+            placeholderText: qsTr("Port")
+            validator: RegExpValidator {
+                regExp:  /^[0-9]{1,5}$/
+            }
+
+            Component.onCompleted: {
+                text = chatHandler.proxyServerPort
+            }
+
+            onTextChanged: {
+                chatHandler.proxyServerPort = text
+            }
+        }
+
         Text {
             id: element3
             x: 8
-            y: 167
+            y: 227
             text: qsTr("Broadcast ID:")
             font.pixelSize: 15
         }
 
         MyComponents.MyTextField {
             id: textBroadcastId
-            y: 153
+            y: 213
             height: 46
             text: youTube.broadcastId
             anchors.right: buttonCopyBroadcastId.left
@@ -79,14 +151,14 @@ ScrollView {
         Text {
             id: element4
             x: 8
-            y: 216
+            y: 276
             text: qsTr("Broadcast:")
             font.pixelSize: 15
         }
 
         MyComponents.MyTextField {
             id: textBroadcastURL
-            y: 202
+            y: 262
             height: 46
             text: youTube.broadcastShortUrl
             anchors.left: element4.right
@@ -100,14 +172,14 @@ ScrollView {
         Text {
             id: element5
             x: 8
-            y: 320
+            y: 380
             text: qsTr("Chat:")
             font.pixelSize: 15
         }
 
         MyComponents.MyTextField {
             id: textChatURL
-            y: 306
+            y: 366
             height: 46
             text: youTube.chatUrl
             anchors.left: element5.right
@@ -140,7 +212,7 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textControlPanelURL
-            y: 254
+            y: 314
             height: 46
             text: youTube.controlPanelUrl
             anchors.left: element6.right
@@ -154,7 +226,7 @@ ScrollView {
         Text {
             id: element6
             x: 8
-            y: 269
+            y: 329
             text: qsTr("Control Panel:")
             font.pixelSize: 15
         }
@@ -248,7 +320,7 @@ ScrollView {
         Button {
             id: buttonOpenBroadcastUrl
             x: 593
-            y: 206
+            y: 266
             width: 39
             height: 39
             text: qsTr("Open")
@@ -271,7 +343,7 @@ ScrollView {
         Button {
             id: buttonOpenControlPanelUrl
             x: 593
-            y: 258
+            y: 318
             width: 39
             height: 39
             text: qsTr("Open")
@@ -294,7 +366,7 @@ ScrollView {
         Button {
             id: buttonOpenChatUrl
             x: 595
-            y: 310
+            y: 370
             width: 39
             height: 39
             text: qsTr("Open")
@@ -317,7 +389,7 @@ ScrollView {
         Button {
             id: buttonCopyBroadcastUrl
             x: 550
-            y: 206
+            y: 266
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -342,7 +414,7 @@ ScrollView {
         Button {
             id: buttonCopyControlPanelCopy
             x: 550
-            y: 258
+            y: 318
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -366,8 +438,8 @@ ScrollView {
 
         Button {
             id: buttonCopyChatUrl
-            x: 550
-            y: 310
+            x: 552
+            y: 370
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -392,7 +464,7 @@ ScrollView {
         Button {
             id: buttonCopyBroadcastId
             x: 550
-            y: 157
+            y: 217
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -516,11 +588,4 @@ ScrollView {
 
 
 
-/*##^##
-Designer {
-    D{i:5;anchors_width:457;anchors_x:105}D{i:7;anchors_width:377;anchors_x:115}D{i:9;anchors_width:453;anchors_x:91}
-D{i:12;anchors_width:408;anchors_x:138}D{i:17;anchors_x:115}D{i:18;anchors_x:115}
-D{i:19;anchors_x:136}D{i:20;anchors_width:39;anchors_x:80}D{i:21;anchors_x:185}D{i:22;anchors_x:185}
-D{i:23;anchors_x:185}D{i:24;anchors_x:185}D{i:25;anchors_height:39;anchors_x:179;anchors_y:4}
-}
-##^##*/
+
