@@ -56,18 +56,18 @@
 <context>
     <name>about</name>
     <message>
-        <location filename="setting_pages/about.qml" line="233"/>
+        <location filename="setting_pages/about.qml" line="247"/>
         <source>You are using the most current version!</source>
         <oldsource>You are using the latest version!</oldsource>
         <translation>Вы используете наиболее актуальную версию!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="239"/>
+        <location filename="setting_pages/about.qml" line="253"/>
         <source>Failed to connect to server. Check your internet connection!</source>
         <translation>Не удалось подключиться к серверу. Проверьте подключение к интернету!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="244"/>
+        <location filename="setting_pages/about.qml" line="258"/>
         <source>Request limits exceeded! Please try again later</source>
         <translation>Превышен лимит запросов! Пожалуйста, повторите попытку  позже</translation>
     </message>
@@ -127,7 +127,12 @@
         <location filename="setting_pages/about.qml" line="201"/>
         <source>AxelChat is a free and open source software to help you manage live chat and add interactivity to your live streams</source>
         <oldsource>AxelChat is a free and open source software to help you manage live chat and add interactivity to your streams</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>AxelChat — это бесплатная программа с открытым исходным кодом, помогающая в работе с чатом прямых трансляций и добавляющая интерактивность в Ваши Live-стримам</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="214"/>
+        <source>GitHub</source>
+        <translation></translation>
     </message>
 </context>
 <context>

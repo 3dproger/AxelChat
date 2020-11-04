@@ -75,7 +75,7 @@ ScrollView {
             width: 226
             height: 48
             text: qsTr("YouTube Channel")
-            anchors.horizontalCenterOffset: -20
+            anchors.horizontalCenterOffset: 0
             icon.source: "qrc:/resources/images/youtube-black.svg"
             anchors.horizontalCenter: parent.horizontalCenter
 
@@ -207,6 +207,20 @@ ScrollView {
             anchors.rightMargin: 8
             anchors.leftMargin: 8
         }
+
+        Button {
+            id: buttonGitHub
+            y: 380
+            text: qsTr("GitHub")
+            anchors.verticalCenter: buttonYouTubeChannel.verticalCenter
+            anchors.left: buttonYouTubeChannel.right
+            anchors.leftMargin: 6
+            icon.source: "qrc:/resources/images/github.svg"
+
+            onClicked: {
+                Qt.openUrlExternally("https://github.com/3dproger");
+            }
+        }
     }
 
     Component.onCompleted: {
@@ -251,5 +265,6 @@ ScrollView {
 /*##^##
 Designer {
     D{i:0;autoSize:true;formeditorZoom:1.100000023841858;height:480;width:640}D{i:11}
+D{i:18}
 }
 ##^##*/
