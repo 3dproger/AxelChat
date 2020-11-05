@@ -127,7 +127,7 @@
         <location filename="setting_pages/about.qml" line="201"/>
         <source>AxelChat is a free and open source software to help you manage live chat and add interactivity to your live streams</source>
         <oldsource>AxelChat is a free and open source software to help you manage live chat and add interactivity to your streams</oldsource>
-        <translation>AxelChat — это бесплатная программа с открытым исходным кодом, помогающая в работе с чатом прямых трансляций и добавляющая интерактивность в Ваши Live-стримам</translation>
+        <translation>AxelChat — это бесплатная программа с открытым исходным кодом, помогающая в работе с чатом прямых трансляций и добавляющая интерактивность Вашим live-стримам</translation>
     </message>
     <message>
         <location filename="setting_pages/about.qml" line="214"/>
