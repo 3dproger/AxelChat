@@ -14,9 +14,13 @@
 class ChatHandler : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool connectedSome READ isConnectedSome NOTIFY connectedSomeChanged)
-    Q_PROPERTY(bool enabledSoundNewMessage READ enabledSoundNewMessage WRITE setEnabledSoundNewMessage NOTIFY enabledSoundNewMessageChanged)
+    Q_PROPERTY(bool connectedSome                    READ isConnectedSome                                                            NOTIFY connectedSomeChanged)
+    Q_PROPERTY(bool enabledSoundNewMessage           READ enabledSoundNewMessage           WRITE setEnabledSoundNewMessage           NOTIFY enabledSoundNewMessageChanged)
     Q_PROPERTY(bool enabledClearMessagesOnLinkChange READ enabledClearMessagesOnLinkChange WRITE setEnabledClearMessagesOnLinkChange NOTIFY enabledClearMessagesOnLinkChangeChanged)
+
+    Q_PROPERTY(bool    proxyEnabled       READ proxyEnabled       WRITE setProxyEnabled       NOTIFY proxyChanged)
+    Q_PROPERTY(QString proxyServerAddress READ proxyServerAddress WRITE setProxyServerAddress NOTIFY proxyChanged)
+    Q_PROPERTY(int     proxyServerPort    READ proxyServerPort    WRITE setProxyServerPort    NOTIFY proxyChanged)
 
 public:
     explicit ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroup = "chat_handler", QObject *parent = nullptr);
@@ -41,11 +45,19 @@ public:
     Q_INVOKABLE int authorMessagesSentCurrent(const QString& channelId) const;
     Q_INVOKABLE QUrl authorSizedAvatarUrl(const QString& channelId, int height) const;
 
+    void setProxyEnabled(bool enabled);
+    inline bool proxyEnabled() const { return _enabledProxy; }
+    void setProxyServerAddress(const QString& address);
+    inline QString proxyServerAddress() const { return _proxyServerAddress; }
+    void setProxyServerPort(int port);
+    inline int proxyServerPort() const { return _proxyServerPort; }
+
 signals:
     void messagesReceived(const ChatMessage& message, const MessageAuthor& author);
     void connectedSomeChanged();
     void enabledSoundNewMessageChanged();
     void enabledClearMessagesOnLinkChangeChanged();
+    void proxyChanged();
 
 public slots:
     void onReadyRead(const QList<ChatMessage>& messages, const QList<MessageAuthor>& authors);
@@ -70,10 +82,17 @@ private:
     ChatBot* _bot                           = nullptr;
 
     bool _enabledSoundNewMessage = false;
-    bool _enabledClearMessagesOnLinkChange = true;
+    bool _enabledClearMessagesOnLinkChange = false;
     const QString _settingsEnabledSoundNewMessage = "enabledSoundNewMessage";
     const QString _settingsEnabledClearMessagesOnLinkChange = "enabledClearMessagesOnLinkChange";
     QSound* _soundDefaultNewMessage = new QSound(":/resources/sound/ui/beep1.wav", this);
+
+    bool _enabledProxy = false;
+    const QString _settingsProxyEnabled = "proxyEnabled";
+    QString _proxyServerAddress;
+    const QString _settingsProxyAddress = "proxyServerAddress";
+    int _proxyServerPort = -1;
+    const QString _settingsProxyPort    = "proxyServerPort";
 
     bool _connectedSome = false;
 };

@@ -38,6 +38,10 @@ ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const 
         setEnabledSoundNewMessage(_settings->value(_settingsGroupPath + "/" + _settingsEnabledSoundNewMessage, _enabledSoundNewMessage).toBool());
 
         setEnabledClearMessagesOnLinkChange(_settings->value(_settingsGroupPath + "/" + _settingsEnabledClearMessagesOnLinkChange, _enabledClearMessagesOnLinkChange).toBool());
+
+        setProxyEnabled(_settings->value(_settingsGroupPath + "/" + _settingsProxyEnabled, _enabledProxy).toBool());
+        setProxyServerAddress(_settings->value(_settingsGroupPath + "/" + _settingsProxyAddress, _proxyServerAddress).toString());
+        setProxyServerPort(_settings->value(_settingsGroupPath + "/" + _settingsProxyPort, _proxyServerPort).toInt());
     }
 
     /*MessageAuthor a = MessageAuthor::createFromYouTube(
@@ -241,6 +245,81 @@ int ChatHandler::authorMessagesSentCurrent(const QString &channelId) const
 QUrl ChatHandler::authorSizedAvatarUrl(const QString &channelId, int height) const
 {
     return YouTube::createResizedAvatarUrl(_authors.value(channelId).avatarUrl(), height);
+}
+
+void ChatHandler::setProxyEnabled(bool enabled)
+{
+    if (_enabledProxy != enabled)
+    {
+        _enabledProxy = enabled;
+
+        if (_settings)
+        {
+            _settings->setValue(_settingsGroupPath + "/" + _settingsProxyEnabled, enabled);
+        }
+
+        if (_cefApp)
+        {
+            _cefApp->setProxyEnabled(enabled);
+        }
+
+        emit proxyChanged();
+
+        if (_youTube)
+        {
+            _youTube->reconnect();
+        }
+    }
+}
+
+void ChatHandler::setProxyServerAddress(const QString &address)
+{
+    if (_proxyServerAddress != address)
+    {
+        _proxyServerAddress = address;
+
+        if (_settings)
+        {
+            _settings->setValue(_settingsGroupPath + "/" + _settingsProxyAddress, address);
+        }
+
+        if (_cefApp)
+        {
+            _cefApp->setProxyServer(address, _proxyServerPort);
+        }
+
+        emit proxyChanged();
+
+        if (_enabledProxy && _youTube)
+        {
+            _youTube->reconnect();
+        }
+    }
+}
+
+void ChatHandler::setProxyServerPort(int port)
+{
+    if (_proxyServerPort != port)
+    {
+        _proxyServerPort = port;
+
+        if (_settings)
+        {
+            _settings->setValue(_settingsGroupPath + "/" + _settingsProxyPort, port);
+        }
+
+        if (_cefApp)
+        {
+            _cefApp->setProxyServer(_proxyServerAddress, port);
+        }
+
+        emit proxyChanged();
+
+        if (_enabledProxy && _youTube)
+        {
+            _youTube->reconnect();
+        }
+    }
 }
 
 YouTube *ChatHandler::youTube() const

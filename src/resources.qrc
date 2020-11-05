@@ -114,5 +114,13 @@
         <file>resources/images/flags/russia.svg</file>
         <file>resources/images/flags/uk.svg</file>
         <file>resources/images/flags/usa.svg</file>
+        <file>resources/images/github.svg</file>
+        <file>resources/images/feedback.svg</file>
+        <file>resources/images/new-release.svg</file>
+        <file>resources/images/boxes.svg</file>
+        <file>resources/images/box-new.svg</file>
+        <file>resources/images/youtube-black.svg</file>
+        <file>resources/images/refresh.svg</file>
+        <file>resources/sound/pivo.mp3</file>
     </qresource>
 </RCC>

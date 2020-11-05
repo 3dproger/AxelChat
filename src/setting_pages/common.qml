@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import AxelChat.QMLUtils 1.0
 import AxelChat.I18n 1.0
+import "../my_components" as MyComponents
 
 ScrollView {
     id: root
@@ -93,25 +94,23 @@ ScrollView {
 
         Switch {
             id: switchClearMessagesOnLinkChange
-            x: 8
-            y: 62
+            x: 10
+            y: 58
             text: qsTr("Clear Messages on Link Change")
 
             Component.onCompleted: {
                 checked = chatHandler.enabledClearMessagesOnLinkChange;
-                //checked = qmlUtils.enabledHardwareGraphicsAccelerator;
             }
 
             onCheckedChanged: {
                 chatHandler.enabledClearMessagesOnLinkChange = checked;
-                //qmlUtils.enabledHardwareGraphicsAccelerator = checked;
             }
         }
 
         Switch {
             id: switchEnabledHardwareGraphicsAccelerator
             x: 8
-            y: 116
+            y: 112
             text: qsTr("Enabled Hardware Graphics Accelerator")
 
             Component.onCompleted: {
@@ -130,7 +129,7 @@ ScrollView {
         Switch {
             id: switchEnableSoundNewMessage
             x: 8
-            y: 170
+            y: 166
             text: qsTr("Enable Sound when New Message Received")
 
             Component.onCompleted: {
@@ -150,12 +149,13 @@ ScrollView {
             anchors.left: parent.left
             anchors.leftMargin: 8
         }
-
     }
 }
 
+
+
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.25}D{i:8}D{i:9}
+    D{i:0;formeditorZoom:0.8999999761581421}
 }
 ##^##*/

@@ -18,22 +18,9 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
-    QCoreApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
-    QCoreApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
-    QCoreApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
-    QCoreApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
-
-    QSettings* settings = new QSettings();
-
-    //QML Utils
-    QMLUtils::declareQml();
-    QMLUtils* qmlUtils = new QMLUtils(settings, "qml_utils");
-
     //CEF
     // Enable High-DPI support on Windows 7 or newer.
-    //CefEnableHighDPISupport();
+    CefEnableHighDPISupport();
 
     void* sandbox_info = nullptr;
 
@@ -71,11 +58,32 @@ int main(int argc, char *argv[])
     // CEF has initialized.
     CefRefPtr<QtCefApp> cefApp = new QtCefApp();
 
+    // Execute the sub-process logic, if any. This will either return immediately for the browser
+    // process or block until the sub-process should exit.
+    int exit_code = CefExecuteProcess(main_args, cefApp.get(), sandbox_info);
+    if (exit_code >= 0) {
+      // The sub-process terminated, exit now.
+      return exit_code;
+    }
+
     // Initialize CEF.
     CefInitialize(main_args, cefSettings, cefApp.get(), sandbox_info);
     CefDoMessageLoopWork();
 
     //Qt
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+    QCoreApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
+    QCoreApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
+    QCoreApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
+    QCoreApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
+
+    QSettings* settings = new QSettings();
+
+    //QML Utils
+    QMLUtils::declareQml();
+    QMLUtils* qmlUtils = new QMLUtils(settings, "qml_utils");
+
     QApplication app(argc, argv);
 
     QSplashScreen* splashScreen = new QSplashScreen(QPixmap(":/icon.ico"));

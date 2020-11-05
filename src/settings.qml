@@ -77,6 +77,10 @@ Window {
                         name: qsTr("YouTube")
                         category: "youtube"
                     }
+                    ListElement {
+                        name: qsTr("Common")
+                        category: "common"
+                    }
                     /*ListElement {
                         name: qsTr("Appearance")
                         category: "appearance"
@@ -92,10 +96,6 @@ Window {
                     ListElement {
                         name: qsTr("Output to Files")
                         category: "output_to_files"
-                    }
-                    ListElement {
-                        name: qsTr("Other")
-                        category: "common"
                     }
                     ListElement {
                         name: qsTr("About AxelChat")
