@@ -121,5 +121,6 @@
         <file>resources/images/box-new.svg</file>
         <file>resources/images/youtube-black.svg</file>
         <file>resources/images/refresh.svg</file>
+        <file>resources/sound/pivo.mp3</file>
     </qresource>
 </RCC>

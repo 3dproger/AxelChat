@@ -74,6 +74,7 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     _actions.append(BotAction::createSoundPlay({"!кончено", "!ofCourse"}, QUrl("qrc:/resources/sound/of_course.mp3")));
     _actions.append(BotAction::createSoundPlay({"!фшха", "!неСмешно2"}, QUrl("qrc:/resources/sound/nuzhdiki.mp3")));
     _actions.append(BotAction::createSoundPlay({"!здоровоОтец", "!здаровоОтец", "!здороваОтец", "!здароваОтец"}, QUrl("qrc:/resources/sound/great_father.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!пиво", "!pivo", "!beer"}, QUrl("qrc:/resources/sound/pivo.mp3")));
 
     _actions.append(BotAction::createSoundPlay({"!факт", "!этоФакт"}, QUrl("qrc:/resources/sound/2nd_channel/2nd Channel-Это факт.mp3")));
     _actions.append(BotAction::createSoundPlay({"!гудлак", "!321GoodLuck"}, QUrl("qrc:/resources/sound/2nd_channel/2nd Channel-3-2-1 - Good Luck-kissvk.com.mp3")));
