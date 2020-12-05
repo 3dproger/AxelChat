@@ -46,6 +46,40 @@
     </message>
 </context>
 <context>
+    <name>OutputToFile</name>
+    <message>
+        <location filename="outputtofile.cpp" line="232"/>
+        <source>Broadcast URL: %1</source>
+        <translation>Ссылка на трансляцию: %1</translation>
+    </message>
+    <message>
+        <location filename="outputtofile.cpp" line="233"/>
+        <location filename="outputtofile.cpp" line="241"/>
+        <source>Messages count: %1</source>
+        <translation>Количество сообщейний: %1</translation>
+    </message>
+    <message>
+        <location filename="outputtofile.cpp" line="234"/>
+        <source>Participants count: %1</source>
+        <translation>Количество участников: %1</translation>
+    </message>
+    <message>
+        <location filename="outputtofile.cpp" line="236"/>
+        <source>Participants:</source>
+        <translation>Участники:</translation>
+    </message>
+    <message>
+        <location filename="outputtofile.cpp" line="240"/>
+        <source>Channel: %1</source>
+        <translation>Канал: %1</translation>
+    </message>
+    <message>
+        <location filename="outputtofile.cpp" line="245"/>
+        <source>Messages:</source>
+        <translation>Сообщения:</translation>
+    </message>
+</context>
+<context>
     <name>QTranslator</name>
     <message>
         <location filename="chatmessage.cpp" line="53"/>
@@ -348,44 +382,60 @@
 <context>
     <name>outputtofile</name>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="29"/>
         <source>Enable Output to File</source>
-        <translation>Включить вывод в файл</translation>
+        <translation type="vanished">Включить вывод в файл</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/outputtofile.qml" line="37"/>
+        <source>Failed to save!</source>
+        <translation>Не удалось сохранить!</translation>
     </message>
     <message>
         <location filename="setting_pages/outputtofile.qml" line="48"/>
+        <source>Enable Output to ini-file</source>
+        <translation>Включить вывод в ini-файл</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/outputtofile.qml" line="67"/>
         <source>Folder where to save:</source>
         <translation>Папка, где будет сохранено:</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="64"/>
+        <location filename="setting_pages/outputtofile.qml" line="83"/>
         <source>Folder where to save...</source>
         <translation>Папка, где сохранять...</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="80"/>
+        <location filename="setting_pages/outputtofile.qml" line="99"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="95"/>
+        <location filename="setting_pages/outputtofile.qml" line="114"/>
         <source>Please select a folder</source>
         <translation>Пожалуйста, выберите папку</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="107"/>
+        <location filename="setting_pages/outputtofile.qml" line="126"/>
         <source>Reset</source>
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="120"/>
+        <location filename="setting_pages/outputtofile.qml" line="139"/>
         <source>Show in Explorer</source>
         <translation>Показать в Проводнике</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="187"/>
+        <location filename="setting_pages/outputtofile.qml" line="206"/>
         <source>Codec:</source>
         <translation>Кодировка:</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/outputtofile.qml" line="27"/>
+        <location filename="setting_pages/outputtofile.qml" line="217"/>
+        <location filename="setting_pages/outputtofile.qml" line="227"/>
+        <source>Export to txt</source>
+        <translation>Экспорт в txt</translation>
     </message>
 </context>
 <context>

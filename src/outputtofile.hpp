@@ -36,8 +36,15 @@ public slots:
     QList<QString> codecs() const;
     void setCodec(const QString& codec);
     QString codec() const;
+    bool exportToTxt(const QString& filePath);
 
 private:
+    struct AuthorInfo{
+        QString name;
+        QString youtubeUrl;
+        int messagesCount = 0;
+    };
+
     void reinitIni();
     void writeStartupInfo();
     void writeYoutubeInfo();

@@ -177,6 +177,81 @@ QString OutputToFile::codec() const
     return _codec;
 }
 
+bool OutputToFile::exportToTxt(const QString &filePath)
+{
+    QString normalizedFilePath = filePath;
+    if (normalizedFilePath.startsWith("file:///", Qt::CaseInsensitive))
+    {
+        normalizedFilePath.remove(0, 8);
+    }
+
+    QFile file(normalizedFilePath);
+
+    if (!file.open(QIODevice::OpenModeFlag::ReadWrite | QIODevice::OpenModeFlag::Text))
+    {
+        qDebug() << file.errorString();
+        return false;
+    }
+
+    QByteArray data;
+
+    if (_iniMessages)
+    {
+        const int messagesCount = _iniMessages->value("statistic/count").toInt();
+
+        QMap<QString, AuthorInfo> authors;//id, author
+
+        QByteArray messagesData;
+
+        for (int i = 0; i < messagesCount; i++)
+        {
+            const QString authorName  = _iniMessages->value(QString("%1/author").arg(i)).toString();
+            const QString authorId    = _iniMessages->value(QString("%1/author_channel_id").arg(i)).toString();
+            const QString messageText = _iniMessages->value(QString("%1/message").arg(i)).toString();
+
+            if (!authorId.isEmpty())
+            {
+                if (!authors.contains(authorId))
+                {
+                    AuthorInfo author;
+                    author.messagesCount = 1;
+                    author.name = authorName;
+                    author.youtubeUrl = QString("https://www.youtube.com/channel/%1").arg(authorId);
+
+                    authors.insert(authorId, author);
+                }
+                else
+                {
+                    authors[authorId].messagesCount++;
+                }
+            }
+
+            messagesData.append(QString("\n%1\n%2\n").arg(authorName).arg(messageText).toUtf8());
+        }
+
+        data.append(tr("Broadcast URL: %1").arg(_youTubeInfo.broadcastShortUrl.toString()).toUtf8() + "\n");
+        data.append(tr("Messages count: %1").arg(messagesCount).toUtf8() + "\n");
+        data.append(tr("Participants count: %1").arg(authors.count()).toUtf8() + "\n");
+        data.append("==============================\n");
+        data.append(tr("Participants:").toUtf8() + "\n");
+        for (const AuthorInfo& authorInfo : authors)
+        {
+            data.append(QString("\n%1\n").arg(authorInfo.name).toUtf8());
+            data.append(tr("Channel: %1").arg(authorInfo.youtubeUrl).toUtf8() + "\n");
+            data.append(tr("Messages count: %1").arg(authorInfo.messagesCount).toUtf8() + "\n");
+        }
+
+        data.append("==============================\n");
+        data.append(tr("Messages:").toUtf8() + "\n");
+        data.append(messagesData);
+    }
+
+    file.write(data);
+    file.close();
+
+    return true;
+}
+
 void OutputToFile::reinitIni()
 {
     //Messages

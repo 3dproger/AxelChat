@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Dialogs 1.2
 import "../my_components" as MyComponents
@@ -22,11 +22,30 @@ ScrollView {
         width:  Math.max(root.width, root.contentWidth)
         height: Math.max(root.height, root.contentHeight)
 
+        Dialog {
+            id: dialogMain
+            title: qsTr("Export to txt");
+            //anchors.centerIn: parent
+            //modal: true
+            standardButtons: Dialog.Ok
+
+            contentItem: Rectangle {
+                color: "lightskyblue"
+                implicitWidth: 400
+                implicitHeight: 100
+                Text {
+                    text: qsTr("Failed to save!")
+                    color: "navy"
+                    anchors.centerIn: parent
+                }
+            }
+        }
+
         Switch {
             id: switchEnable
             y: 8
             height: 48
-            text: qsTr("Enable Output to File")
+            text: qsTr("Enable Output to ini-file")
             anchors.left: parent.left
             anchors.right: comboBoxLanguage.left
             anchors.rightMargin: 8
@@ -192,11 +211,36 @@ ScrollView {
             anchors.leftMargin: 8
         }
 
+        Button {
+            id: buttonExportToTxt
+            x: 8
+            text: qsTr("Export to txt")
+            anchors.top: comboBoxCodecs.bottom
+            anchors.topMargin: 6
+
+            onClicked: {
+                fileDialogExportTxt.open();
+            }
+
+            FileDialog {
+                id: fileDialogExportTxt
+                title: qsTr("Export to txt")
+                selectExisting: false
+                nameFilters: [ "TXT (*.txt)", "All files (*)" ]
+                //folder: outputToFile.
+                onAccepted: {
+                    if (!outputToFile.exportToTxt(fileUrl.toString()))
+                    {
+                        dialogMain.open();
+                    }
+                }
+            }
+        }
     }
 }
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:480}D{i:2}D{i:3}D{i:4}D{i:9}
+    D{i:0;autoSize:true;height:480;width:480}D{i:2}D{i:3}D{i:4}D{i:9}D{i:12}
 }
 ##^##*/
