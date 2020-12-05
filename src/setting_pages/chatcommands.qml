@@ -8,6 +8,8 @@ ScrollView {
     contentHeight: 480
     contentWidth: 480
 
+    property var allCommandsWindow;
+
     Item {
         id: element1
         width:  Math.max(root.width, root.contentWidth)
@@ -104,19 +106,18 @@ ScrollView {
         }
 
         Button {
-            id: button
-            x: -615
-            y: 104
-            text: qsTr("Button")
-        }
-
-        Button {
             id: buttonAllCommands
             x: 8
             y: 288
             text: qsTr("All Commands")
             onClicked: {
+                if (typeof(allCommandsWindow) == "undefined")
+                {
+                    var component = Qt.createComponent("qrc:/setting_pages/all_commands_window.qml")
+                    allCommandsWindow = component.createObject(root)
+                }
 
+                allCommandsWindow.show()
             }
         }
     }

@@ -36,6 +36,7 @@ public slots:
     void setVolume(int volume);
     void processMessage(const ChatMessage& message);
     void execute(BotAction& action);
+    QString commandsText() const;
 
 private slots:
     void onMediaPlayerError(QMediaPlayer::Error error);

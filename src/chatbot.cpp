@@ -127,35 +127,13 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
 
     _actions.append(BotAction::createSoundPlay({"!suspense1", "!саспенс1", "!суспенс1", "!suspens1", "!saspense1", "!saspens1", "!psycho"}, QUrl("qrc:/resources/sound/psycho.mp3")));
     _actions.append(BotAction::createSoundPlay({"!suspense2", "!саспенс2", "!суспенс2", "!suspens2", "!saspense2", "!saspens2", "!барабаннаяДробь"}, QUrl("qrc:/resources/sound/saspens.mp3")));
+
+
+
     // !факт !этоФакт
     // !Гудлак !МыГГ !gman (it's time to choose) !shaokan (you will never win)
 
     //ToDo: добавить: !ура,  !боль,  !позабавимся,  !обмыть,  !твари, !отец, !Holyshit, !gameover, !lol, !пиво, !clear, !go, !negative, !победа, !rtrKakTak, !rtrGlavnoe, !дошик, !фиаско2, !zapab, !rtrZaruinil, !rtrZloyBoss, !rtrNadejda, !rtrЁКЛМН, !rtrNevezenie, !GoBen4, !jivi, !rtrPobedaBoss, !rtrBezuprechno, !rtrZlieBossi
-
-    /*qDebug("Команды:");
-    for (int i = 0; i < _actions.count(); ++i)
-    {
-        const BotAction* action = _actions.at(i);
-
-        QString s;
-
-        for (int j = 0; j < action->_keywords.count(); ++j)
-        {
-            const QString& keyword = action->_keywords.at(j);
-
-            s += keyword;
-
-            if (j < action->_keywords.count() - 1)
-            {
-                s += " = ";
-            }
-        }
-
-        if (!s.isEmpty())
-        {
-            qDebug(s.toUtf8());
-        }
-    }*/
 }
 
 int ChatBot::volume() const
@@ -257,6 +235,31 @@ void ChatBot::execute(BotAction &action)
         action._active = false;
         action._inactivityTimer.start(action._inactivityPeriod);
     }
+}
+
+QString ChatBot::commandsText() const
+{
+    QString s;
+
+    for (int i = 0; i < _actions.count(); ++i)
+    {
+        const BotAction* action = _actions.at(i);
+        for (int j = 0; j < action->_keywords.count(); ++j)
+        {
+            const QString& keyword = action->_keywords.at(j);
+
+            s += keyword;
+
+            if (j < action->_keywords.count() - 1)
+            {
+                s += " = ";
+            }
+        }
+
+        s += "\n";
+    }
+
+    return s;
 }
 
 void ChatBot::onMediaPlayerError(QMediaPlayer::Error error)
