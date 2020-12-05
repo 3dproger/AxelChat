@@ -122,5 +122,20 @@
         <file>resources/images/youtube-black.svg</file>
         <file>resources/images/refresh.svg</file>
         <file>resources/sound/pivo.mp3</file>
+        <file>resources/sound/накосячил.mp3</file>
+        <file>resources/sound/vot_eto_povorot.mp3</file>
+        <file>resources/sound/chto-eto.mp3</file>
+        <file>resources/sound/mk-fight.mp3</file>
+        <file>resources/sound/drujko-ne-budu.mp3</file>
+        <file>resources/sound/ne-tochno.mp3</file>
+        <file>resources/sound/mk-round1.mp3</file>
+        <file>resources/sound/mk-round2.mp3</file>
+        <file>resources/sound/mk-round3.mp3</file>
+        <file>resources/sound/mk-toasty.mp3</file>
+        <file>resources/sound/astalavista.mp3</file>
+        <file>resources/sound/eurobeat.mp3</file>
+        <file>resources/sound/saxophone.mp3</file>
+        <file>resources/sound/fly.mp3</file>
+        <file>resources/sound/saspens.mp3</file>
     </qresource>
 </RCC>

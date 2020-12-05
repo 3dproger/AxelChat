@@ -18,18 +18,15 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     //ToDo: перенести в редактор
     //Встроенные голосовые команды
     _actions.append(BotAction::createSoundPlay({"!cj"}, QUrl("qrc:/resources/sound/cj.wav")));
-    _actions.append(BotAction::createSoundPlay({"!dejavu", "!deja-vu", "!дежавю", "!дежа-вю", "!дежаву", "!дежа-ву", "!дэжаву", "!дэжавю"}, QUrl("qrc:/resources/sound/deja-vu.mp3")));
     _actions.append(BotAction::createSoundPlay({"!фиаско", "!fiasko", "!fiasco"}, QUrl("qrc:/resources/sound/fiasko.mp3")));
     _actions.append(BotAction::createSoundPlay({"!финал", "!final"}, QUrl("qrc:/resources/sound/final.mp3")));
     _actions.append(BotAction::createSoundPlay({"!firstblood", "!перваякровь"}, QUrl("qrc:/resources/sound/firstblood.mp3")));
     _actions.append(BotAction::createSoundPlay({"!гэндальф", "!гендальф", "!гэндалф", "!гендалф", "!gandalf", "!gendalf"}, QUrl("qrc:/resources/sound/gandalf_shallnotpass.mp3")));
-    _actions.append(BotAction::createSoundPlay({"!газ", "!гас", "!gas", "!gaz"}, QUrl("qrc:/resources/sound/gas.mp3")));
     _actions.append(BotAction::createSoundPlay({"!run", "!ран", "!беги"}, QUrl("qrc:/resources/sound/run.mp3")));
     _actions.append(BotAction::createSoundPlay({"!грусть", "!грустно", "!скрипка", "!sad"}, QUrl("qrc:/resources/sound/sad-violin.mp3")));
     _actions.append(BotAction::createSoundPlay({"!тромбон"}, QUrl("qrc:/resources/sound/sad_trombone.mp3")));
     _actions.append(BotAction::createSoundPlay({"!вау", "!воу", "!wow"}, QUrl("qrc:/resources/sound/wow.mp3")));
     _actions.append(BotAction::createSoundPlay({"!xp", "!хр"}, QUrl("qrc:/resources/sound/xp.mp3")));
-
     _actions.append(BotAction::createSoundPlay({"!cforce", "!contraforce"}, QUrl("qrc:/resources/sound/sfx_bill_v5.mp3")));
     _actions.append(BotAction::createSoundPlay({"!аплодисментыМужику"}, QUrl("qrc:/resources/sound/ben_applause.mp3")));
     _actions.append(BotAction::createSoundPlay({"!lockAndLoad", "!chcLockAndLoad"}, QUrl("qrc:/resources/sound/chc_lock_and_load.wav")));
@@ -42,7 +39,6 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     _actions.append(BotAction::createSoundPlay({"!пчАвтомобиль"}, QUrl("qrc:/resources/sound/pch_avtomobil.mp3")));
     _actions.append(BotAction::createSoundPlay({"!пчМимо"}, QUrl("qrc:/resources/sound/pch_mimo.mp3")));
     _actions.append(BotAction::createSoundPlay({"!пчПобеда"}, QUrl("qrc:/resources/sound/pch_winner.mp3")));
-
     _actions.append(BotAction::createSoundPlay({"!аплодисменты"}, QUrl("qrc:/resources/sound/applause.mp3")));
     _actions.append(BotAction::createSoundPlay({"!airhorn"}, QUrl("qrc:/resources/sound/airhorn.mp3")));
     _actions.append(BotAction::createSoundPlay({"!badumts"}, QUrl("qrc:/resources/sound/budum_tss.mp3")));
@@ -50,8 +46,6 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     _actions.append(BotAction::createSoundPlay({"!неСмешно"}, QUrl("qrc:/resources/sound/crickets.mp3")));
     _actions.append(BotAction::createSoundPlay({"!doIt", "!justDoIt"}, QUrl("qrc:/resources/sound/do_it.mp3")));
     _actions.append(BotAction::createSoundPlay({"!неожиданно", "!неожидано"}, QUrl("qrc:/resources/sound/dramatic.mp3")));
-    _actions.append(BotAction::createSoundPlay({"!фаталити"}, QUrl("qrc:/resources/sound/fatality.mp3")));
-    _actions.append(BotAction::createSoundPlay({"!finishhim"}, QUrl("qrc:/resources/sound/finishhim.mp3")));
     _actions.append(BotAction::createSoundPlay({"!missionComplited"}, QUrl("qrc:/resources/sound/gta-sa-done.mp3")));
     _actions.append(BotAction::createSoundPlay({"!хаха"}, QUrl("qrc:/resources/sound/ha-ha.mp3")));
     _actions.append(BotAction::createSoundPlay({"!hadouken"}, QUrl("qrc:/resources/sound/hadouken.mp3")));
@@ -59,7 +53,6 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     _actions.append(BotAction::createSoundPlay({"!nooo"}, QUrl("qrc:/resources/sound/nooo.mp3")));
     _actions.append(BotAction::createSoundPlay({"!omaewamou"}, QUrl("qrc:/resources/sound/omaewamou.mp3")));
     _actions.append(BotAction::createSoundPlay({"!omaewamou2"}, QUrl("qrc:/resources/sound/omaewamou2.mp3")));
-    _actions.append(BotAction::createSoundPlay({"!psycho"}, QUrl("qrc:/resources/sound/psycho.mp3")));
     _actions.append(BotAction::createSoundPlay({"!грусть2"}, QUrl("qrc:/resources/sound/sadaffleck.mp3")));
     _actions.append(BotAction::createSoundPlay({"!toBeContinued"}, QUrl("qrc:/resources/sound/to_be_continued.mp3")));
     _actions.append(BotAction::createSoundPlay({"!tuturu"}, QUrl("qrc:/resources/sound/tuturu.mp3")));
@@ -109,6 +102,31 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     _actions.append(BotAction::createSoundPlay({"!быстроТыПоел"}, QUrl("qrc:/resources/sound/2nd_channel/2nd Channel-Да быстро ты поел-kissvk.com.mp3")));
     _actions.append(BotAction::createSoundPlay({"!скрытаяРеклама"}, QUrl("qrc:/resources/sound/2nd_channel/2nd Channel-Скрытая реклама.mp3")));
 
+    _actions.append(BotAction::createSoundPlay({"!вотЭтоПоворот"}, QUrl("qrc:/resources/sound/vot_eto_povorot.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!накосячил", "!косяк"}, QUrl("qrc:/resources/sound/накосячил.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!чтоЭто", "!чувакЧтоЭто", "!wat", "!what"}, QUrl("qrc:/resources/sound/chto-eto.mp3")));
+
+    _actions.append(BotAction::createSoundPlay({"!mkFatality", "!фаталити", "!мкФаталити", "!fatality"}, QUrl("qrc:/resources/sound/fatality.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!mkFinishhim", "!finishhim"}, QUrl("qrc:/resources/sound/finishhim.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!mkFight", "!fight", "!бой", "!вбой"}, QUrl("qrc:/resources/sound/mk-fight.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!mkToasty", "!toasty"}, QUrl("qrc:/resources/sound/mk-toasty.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!mkRound1", "!round1", "раунд1", "!мкРаунд1"}, QUrl("qrc:/resources/sound/mk-round1.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!mkRound2", "!round2", "раунд2", "!мкРаунд2"}, QUrl("qrc:/resources/sound/mk-round2.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!mkRound3", "!round3", "раунд3", "!мкРаунд3"}, QUrl("qrc:/resources/sound/mk-round3.mp3")));
+
+    _actions.append(BotAction::createSoundPlay({"!дружкоНеБуду", "!дружко"}, QUrl("qrc:/resources/sound/drujko-ne-budu.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!неТочно", "!ноЭтоНеТочно", "!брб"}, QUrl("qrc:/resources/sound/ne-tochno.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!astalavista", "!hastaLaVista", "!асталависта"}, QUrl("qrc:/resources/sound/astalavista.mp3")));
+
+    _actions.append(BotAction::createSoundPlay({"!initial1", "!initialD1", "!eurobeat1", "!евробит1", "!dejavu", "!deja-vu", "!дежавю", "!дежа-вю", "!дежаву", "!дежа-ву", "!дэжаву", "!дэжавю"}, QUrl("qrc:/resources/sound/deja-vu.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!initial2", "!initialD2", "!eurobeat2", "!евробит2", "!газ", "!гас", "!gas", "!gaz"}, QUrl("qrc:/resources/sound/gas.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!initial3", "!initialD3", "!eurobeat3", "!евробит3", "!90s", "!90е"}, QUrl("qrc:/resources/sound/eurobeat.mp3")));
+
+    _actions.append(BotAction::createSoundPlay({"!saxophone", "!saxophon", "!саксофон"}, QUrl("qrc:/resources/sound/saxophone.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!fly", "!ICanFly"}, QUrl("qrc:/resources/sound/fly.mp3")));
+
+    _actions.append(BotAction::createSoundPlay({"!suspense1", "!саспенс1", "!суспенс1", "!suspens1", "!saspense1", "!saspens1", "!psycho"}, QUrl("qrc:/resources/sound/psycho.mp3")));
+    _actions.append(BotAction::createSoundPlay({"!suspense2", "!саспенс2", "!суспенс2", "!suspens2", "!saspense2", "!saspens2", "!барабаннаяДробь"}, QUrl("qrc:/resources/sound/saspens.mp3")));
     // !факт !этоФакт
     // !Гудлак !МыГГ !gman (it's time to choose) !shaokan (you will never win)
 
@@ -129,7 +147,7 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
 
             if (j < action->_keywords.count() - 1)
             {
-                s += ", ";
+                s += " = ";
             }
         }
 
