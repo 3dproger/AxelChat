@@ -102,6 +102,23 @@ ScrollView {
                 sendTestMessage();
             }
         }
+
+        Button {
+            id: button
+            x: -615
+            y: 104
+            text: qsTr("Button")
+        }
+
+        Button {
+            id: buttonAllCommands
+            x: 8
+            y: 288
+            text: qsTr("All Commands")
+            onClicked: {
+
+            }
+        }
     }
 
     function sendTestMessage(){
@@ -113,8 +130,4 @@ ScrollView {
     }
 }
 
-/*##^##
-Designer {
-    D{i:4;anchors_width:624;anchors_x:8}D{i:5;anchors_width:449;anchors_x:8}D{i:6;anchors_x:437}
-}
-##^##*/
+
