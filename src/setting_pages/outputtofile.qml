@@ -28,9 +28,9 @@ ScrollView {
             height: 48
             text: qsTr("Enable Output to File")
             anchors.left: parent.left
-            anchors.leftMargin: 8
-            anchors.right: parent.right
+            anchors.right: comboBoxLanguage.left
             anchors.rightMargin: 8
+            anchors.leftMargin: 8
 
             Component.onCompleted: {
                 checked = outputToFile.enabled;
@@ -124,12 +124,79 @@ ScrollView {
             }
         }
 
+        ComboBox {
+            id: comboBoxCodecs
+            anchors.left: element2.right
+            anchors.leftMargin: 8
+            anchors.top: buttonShowInExplorer.bottom
+            anchors.topMargin: 6
+            model: ListModel {
+                id: model
+            }
+
+            Component.onCompleted: {
+                var currentCodec = outputToFile.codec();
+                //console.log(currentCodec);
+
+                var codecs = outputToFile.codecs();
+                var i;
+                for (i = 0; i < codecs.length; i++)
+                {
+                    model.append({text: codecs[i]});
+
+                    if (currentCodec === codecs[i])
+                    {
+                        currentIndex = i;
+                    }
+                }
+            }
+
+            onCurrentValueChanged: {
+                outputToFile.setCodec(currentText);
+            }
+
+            property bool enableForEditing: false
+            width: 250
+
+            //x: 352
+            /*Component.onCompleted: {
+                if (i18n.language == "ru")
+                    currentIndex = 1;
+                else
+                    currentIndex = 0;
+                enableForEditing = true;
+            }
+
+            onCurrentIndexChanged: {
+                if (!enableForEditing)
+                {
+                    return;
+                }
+
+                if (currentIndex == 0)
+                    i18n.setLanguage("C");
+                if (currentIndex == 1)
+                    i18n.setLanguage("ru");
+            }*/
+        }
+
+        Text {
+            id: element2
+            y: 208
+            height: 26
+            text: qsTr("Codec:")
+            anchors.left: parent.left
+            //anchors.right: parent.right
+            font.pixelSize: 20
+            anchors.rightMargin: 383
+            anchors.leftMargin: 8
+        }
+
     }
 }
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:480}D{i:2;anchors_width:624;anchors_x:8}D{i:3;anchors_width:624;anchors_x:8}
-D{i:4;anchors_width:624;anchors_x:8}
+    D{i:0;autoSize:true;height:480;width:480}D{i:2}D{i:3}D{i:4}D{i:9}
 }
 ##^##*/

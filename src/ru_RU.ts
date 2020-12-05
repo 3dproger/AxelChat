@@ -382,6 +382,11 @@
         <source>Show in Explorer</source>
         <translation>Показать в Проводнике</translation>
     </message>
+    <message>
+        <location filename="setting_pages/outputtofile.qml" line="187"/>
+        <source>Codec:</source>
+        <translation>Кодировка:</translation>
+    </message>
 </context>
 <context>
     <name>settings</name>

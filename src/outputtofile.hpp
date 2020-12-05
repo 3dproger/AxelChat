@@ -33,6 +33,9 @@ public slots:
     void setOutputFolder(const QString &outputFolder);
     void onMessagesReceived(const ChatMessage& message, const MessageAuthor& author);
     Q_INVOKABLE void showInExplorer();
+    QList<QString> codecs() const;
+    void setCodec(const QString& codec);
+    QString codec() const;
 
 private:
     void reinitIni();
@@ -51,6 +54,9 @@ private:
 
     const QString _settingsKeyEnabled          = "enabled";
     const QString _settingsKeyOutputFolder     = "output_folder";
+    const QString _settingsKeyCodec            = "codec";
+
+    QString _codec = "UTF-8";
 
     YouTubeInfo _youTubeInfo;
 

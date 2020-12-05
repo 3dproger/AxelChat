@@ -5,6 +5,7 @@
 #include <QDesktopServices>
 #include <QTimeZone>
 #include <QDir>
+#include <QTextCodec>
 
 OutputToFile::OutputToFile(QSettings *settings, const QString &settingsGroupPath, QObject *parent) : QObject(parent)
 {
@@ -19,6 +20,8 @@ OutputToFile::OutputToFile(QSettings *settings, const QString &settingsGroupPath
 
         setOutputFolder(_settings->value(_settingsGroupPath + "/" + _settingsKeyOutputFolder,
                 standardOutputFolder()).toString());
+
+        setCodec(_settings->value(_settingsGroupPath + "/" + _settingsKeyCodec).toString());
     }
 }
 
@@ -141,6 +144,39 @@ void OutputToFile::showInExplorer()
     QDesktopServices::openUrl(QUrl::fromLocalFile(_outputFolder));
 }
 
+QList<QString> OutputToFile::codecs() const
+{
+    /*QList<QByteArray> codecsBA = QTextCodec::availableCodecs();
+    QList<QString> codecsString;
+    for (const QByteArray& codec : codecsBA)
+    {
+        codecsString.append(codec);
+    }
+    return codecsString;*/
+
+    return {
+        "UTF-8",
+        "windows-1251"
+    };
+}
+
+void OutputToFile::setCodec(const QString &codec)
+{
+    _codec = codec;
+
+    reinitIni();
+
+    if (_settings)
+    {
+        _settings->setValue(_settingsGroupPath + "/" + _settingsKeyCodec, codec);
+    }
+}
+
+QString OutputToFile::codec() const
+{
+    return _codec;
+}
+
 void OutputToFile::reinitIni()
 {
     //Messages
@@ -169,7 +205,7 @@ void OutputToFile::reinitIni()
         }
 
         _iniMessages = new QSettings(_broadcastFolder + "/messages.ini", QSettings::IniFormat, this);
-        _iniMessages->setIniCodec("UTF-8");
+        _iniMessages->setIniCodec(_codec.toUtf8());
 
         _iniMessagesCount = _iniMessages->value("statistic/count", 0).toInt();
     }
@@ -183,7 +219,7 @@ void OutputToFile::reinitIni()
     }
 
     _iniCurrent = new QSettings(_outputFolder + "/current.ini", QSettings::IniFormat, this);
-    _iniCurrent->setIniCodec("UTF-8");
+    _iniCurrent->setIniCodec(_codec.toUtf8());
 
     if (_enabled)
     {
