@@ -175,10 +175,8 @@ QUrl YouTube::createResizedAvatarUrl(const QUrl &sourceAvatarUrl, int imageHeigh
 {
     //qDebug("Source URL: " + sourceAvatarUrl.toString().toUtf8());
 
-    //Source: https://yt3.ggpht.com/-S6Q2MDo9stg/AAAAAAAAAAI/AAAAAAAAAAA/TtVz7JalFEc/s64-c-k-no-mo-rj-c0xffffff/photo.jpg
-    //Result: 6
+    //example: https://yt3.ggpht.com/ytc/AAUvwngFVeI2l6JADC9wxZbdGK1fu382MwOtp6bYWA=s3200-c-k-c0x00ffffff-no-rj
 
-    //https://yt3.ggpht.com/-NP7w1OMmdlg/AAAAAAAAAAI/AAAAAAAAAAA/-RNBD05bfT4/s64-c-k-no-mo-rj-c0xffffff/photo.jpg
     QString source = sourceAvatarUrl.toString().trimmed();
     source.replace('\\', '/');
     if (source.back() == '/')
@@ -193,24 +191,23 @@ QUrl YouTube::createResizedAvatarUrl(const QUrl &sourceAvatarUrl, int imageHeigh
         return sourceAvatarUrl;
     }
 
-    if (!parts.last().startsWith("photo", Qt::CaseInsensitive))
-    {
-        qDebug() << Q_FUNC_INFO << ": !parts.last().startsWith(\"photo\", Qt::CaseInsensitive)";
-        return sourceAvatarUrl;
-    }
+    //qDebug("Before URL: " + sourceAvatarUrl.toString().toUtf8());
 
-    QString targetPart = parts[parts.count() - 2].toString();
-    QRegExp rx("^s(\\d+).*", Qt::CaseInsensitive);
+    QString targetPart = parts[parts.count() - 1].toString();
+    QRegExp rx(".*s(\\d+).*", Qt::CaseInsensitive);
     rx.setMinimal(false);
-    if (rx.indexIn(targetPart) != -1)
+    if (rx.lastIndexIn(targetPart) != -1)
     {
+        //qDebug("Regexp matched: '" + rx.cap(1).toUtf8() + "'");
+        //qDebug(QString("Regexp matched position: %1").arg(rx.pos()).toUtf8());
+
         targetPart.remove(rx.pos() + 1, rx.cap(1).length());
         targetPart.insert(rx.pos() + 1, QString("%1").arg(imageHeight));
 
         QString newUrlStr;
         for (int i = 0; i < parts.count(); ++i)
         {
-            if (i != parts.count() - 2)
+            if (i != parts.count() - 1)
             {
                 newUrlStr += parts[i].toString();
             }
