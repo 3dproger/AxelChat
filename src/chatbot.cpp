@@ -30,7 +30,7 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     _actions.append(BotAction::createSoundPlay({"!cforce", "!contraforce"}, QUrl("qrc:/resources/sound/sfx_bill_v5.mp3")));
     _actions.append(BotAction::createSoundPlay({"!аплодисментыМужику"}, QUrl("qrc:/resources/sound/ben_applause.mp3")));
     _actions.append(BotAction::createSoundPlay({"!lockAndLoad", "!chcLockAndLoad"}, QUrl("qrc:/resources/sound/chc_lock_and_load.wav")));
-    _actions.append(BotAction::createSoundPlay({"!фура", "!fura", "!фураБольшая", "!furaBig", "!bigFura"}, QUrl("qrc:/resources/sound/fura_big.ogg")));
+    _actions.append(BotAction::createSoundPlay({"!фура", "!fura", "!фураБольшая", "!furaBig", "!bigFura"}, QUrl("qrc:/resources/sound/fura_big.mp3")));
     _actions.append(BotAction::createSoundPlay({"!ps", "!ps1", "!playstation", "!playstation1", "!sony", "!плойка"}, QUrl("qrc:/resources/sound/playstation.mp3")));
     _actions.append(BotAction::createSoundPlay({"!viknickLol", "!викникЛол", "!викникСмех", "!викник"}, QUrl("qrc:/resources/sound/viknick_smeh.wav")));
     _actions.append(BotAction::createSoundPlay({"!чкгВолчок", "!chgkVolchok"}, QUrl("qrc:/resources/sound/chgk_volchok.mp3")));

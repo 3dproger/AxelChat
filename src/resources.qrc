@@ -23,7 +23,6 @@
         <file>resources/sound/sfx_bill_v5.mp3</file>
         <file>resources/images/download-button.svg</file>
         <file>resources/sound/applause.mp3</file>
-        <file>resources/sound/fura_big.ogg</file>
         <file>resources/sound/chc_lock_and_load.wav</file>
         <file>resources/sound/playstation.mp3</file>
         <file>resources/sound/viknick_smeh.wav</file>
@@ -137,5 +136,6 @@
         <file>resources/sound/saxophone.mp3</file>
         <file>resources/sound/fly.mp3</file>
         <file>resources/sound/saspens.mp3</file>
+        <file>resources/sound/fura_big.mp3</file>
     </qresource>
 </RCC>
