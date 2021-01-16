@@ -20,6 +20,7 @@ HEADERS += \
     chathandler.hpp \
     chatmessage.hpp \
     clipboardqml.hpp \
+    commandseditor.h \
     githubapi.hpp \
     i18n.hpp \
     outputtofile.hpp \
@@ -35,6 +36,7 @@ SOURCES += \
         chathandler.cpp \
         chatmessage.cpp \
         clipboardqml.cpp \
+        commandseditor.cpp \
         githubapi.cpp \
         i18n.cpp \
         main.cpp \
@@ -106,3 +108,6 @@ QMAKE_CXXFLAGS_DEBUG += /MTd
 
 win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.lib
 else:win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.a
+
+FORMS += \
+    commandseditor.ui

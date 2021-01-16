@@ -23,6 +23,39 @@
     </message>
 </context>
 <context>
+    <name>CommandsEditor</name>
+    <message>
+        <location filename="commandseditor.ui" line="14"/>
+        <source>Commands Editor</source>
+        <translation>Редактор команд</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.ui" line="22"/>
+        <source>Create</source>
+        <translation>Создать</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.ui" line="36"/>
+        <source>Execute</source>
+        <translation>Запустить</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.ui" line="43"/>
+        <source>Edit</source>
+        <translation>Изменить</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.ui" line="50"/>
+        <source>Disable</source>
+        <translation>Выключить</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.ui" line="64"/>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
     <name>MyTextField</name>
     <message>
         <location filename="my_components/MyTextField.qml" line="52"/>
@@ -288,9 +321,14 @@
         <translation>Отправить</translation>
     </message>
     <message>
-        <location filename="setting_pages/chatcommands.qml" line="112"/>
+        <location filename="setting_pages/chatcommands.qml" line="111"/>
         <source>All Commands</source>
         <translation>Все команды</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/chatcommands.qml" line="129"/>
+        <source>Commands Editor</source>
+        <translation>Редактор команд</translation>
     </message>
 </context>
 <context>

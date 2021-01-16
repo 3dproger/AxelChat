@@ -24,6 +24,12 @@ Window {
         property alias window_height: root.height;
     }
 
+    onVisibleChanged: {
+        if (!visible)
+        {
+            commandsEditor.close();
+        }
+    }
 
     /*Material.theme: Material.Dark
     Material.accent :     "#03A9F4"

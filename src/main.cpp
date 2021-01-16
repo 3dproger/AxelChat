@@ -15,6 +15,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QQmlContext>
+#include "commandseditor.h"
 
 int main(int argc, char *argv[])
 {
@@ -131,6 +132,10 @@ int main(int argc, char *argv[])
     ClipboardQml::declareQml();
     ClipboardQml* clipboard = new ClipboardQml(&engine);
 
+    //Commands Editor Window
+    CommandsEditor::declareQml();
+    CommandsEditor* commandsEditor = new CommandsEditor();
+
     engine.rootContext()->setContextProperty("i18n",               i18n);
     engine.rootContext()->setContextProperty("chatHandler",        chatHandler);
     engine.rootContext()->setContextProperty("youTube",            chatHandler->youTube());
@@ -140,6 +145,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("clipboard",          clipboard);
     engine.rootContext()->setContextProperty("qmlUtils",           qmlUtils);
     engine.rootContext()->setContextProperty("messagesModel",      chatHandler->messagesModel());
+    engine.rootContext()->setContextProperty("commandsEditor",     commandsEditor);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
