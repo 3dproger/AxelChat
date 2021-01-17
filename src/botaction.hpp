@@ -7,6 +7,7 @@
 #include <QAbstractListModel>
 #include <QQmlEngine>
 #include <QJsonObject>
+#include <QSoundEffect>
 
 class ChatBot;
 
@@ -75,28 +76,7 @@ private:
     int _inactivityPeriod = DEFAULT_INACTIVITY_TIME;
     QTimer _inactivityTimer;
     bool _active = true;
+
+    QSoundEffect* _soundEffect = nullptr;
 };
 
-class BotActionsModel : public QAbstractListModel
-{
-    Q_OBJECT
-public:
-    BotActionsModel(QObject *parent = 0);
-
-    enum BotActionRoles {
-        Valid = Qt::UserRole + 1,
-        Keywords,
-        CaseSensitive
-    };
-
-    QHash<int, QByteArray> roleNames() const override {
-        return _roleNames;
-    }
-
-    int rowCount(const QModelIndex &parent) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-
-private:
-    static const QHash<int, QByteArray> _roleNames;
-    QList<QVariant*> _data;//*data
-};

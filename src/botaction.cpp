@@ -97,50 +97,6 @@ BotAction::ActionType BotAction::typeFromJson(const QString &type)
     return ActionType::Unknown;
 }
 
-const QHash<int, QByteArray> BotActionsModel::_roleNames = QHash<int, QByteArray>{
-    {Valid ,            "valid"},
-    {Keywords ,         "keywords"},
-    {CaseSensitive ,    "caseSensitive"}
-};
-
-int BotActionsModel::rowCount(const QModelIndex &parent) const
-{
-    if (parent.isValid()) {
-        return 0;
-    }
-
-    return _data.count();
-}
-
-QVariant BotActionsModel::data(const QModelIndex &index, int role) const
-{
-    if (!index.isValid()) {
-        return QVariant();
-    }
-
-    if (index.row() >= _data.size())
-    {
-        return QVariant();
-    }
-
-    /*const QVariant* data = _data.value(index.row());
-
-    const BotAction& action = qvariant_cast<BotAction>(*data);
-
-    switch (role) {
-    case Valid:
-        return action.valid();
-    case Keywords:
-        return action.keywords();
-    case CaseSensitive:
-        return action.caseSensitive();
-    default:
-        return QVariant();
-    }*/
-
-    return QVariant();
-}
-
 QJsonObject BotAction::toJson() const
 {
     QJsonObject rootObject;
