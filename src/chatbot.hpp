@@ -1,8 +1,6 @@
 #ifndef CHATBOT_HPP
 #define CHATBOT_HPP
 
-#include <QObject>
-#include <QMediaPlayer>
 #include <QSettings>
 #include "chatmessage.hpp"
 #include "botaction.hpp"
@@ -45,15 +43,9 @@ public slots:
     void execute(BotAction& action);
     QString commandsText() const;
 
-private slots:
-    void onMediaPlayerError(QMediaPlayer::Error error);
-    void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
-
 private:
     void saveCommands();
     void loadCommands();
-
-    QMediaPlayer* _mediaPlayer = new QMediaPlayer(this, QMediaPlayer::LowLatency);
 
     QString _settingsGroupPath = "chat_bot";
     QSettings*  _settings = nullptr;
@@ -65,6 +57,8 @@ private:
     QList<BotAction*> _actions;
 
     bool _enabledSound = false;
+
+    int _volume = 100;
 };
 
 #endif // CHATBOT_HPP

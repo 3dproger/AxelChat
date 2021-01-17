@@ -13,15 +13,10 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
 
     if (_settings)
     {
-        setVolume(_settings->value(_settingsGroupPath + "/" + _settingsKeyVolume, 10).toInt());
+        setVolume(_settings->value(_settingsGroupPath + "/" + _settingsKeyVolume, _volume).toInt());
 
         setEnabledSound(_settings->value(_settingsGroupPath + "/" + _settingsKeyEnabledSound, false).toBool());
     }
-
-    connect(_mediaPlayer, SIGNAL(error(QMediaPlayer::Error)),                    this, SLOT(onMediaPlayerError(QMediaPlayer::Error)));
-    connect(_mediaPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
-
-
 
     /*
     //ToDo: перенести в редактор
@@ -141,7 +136,7 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
 
 int ChatBot::volume() const
 {
-    return _mediaPlayer->volume();
+    return _volume;
 }
 
 bool ChatBot::enabledSound() const
@@ -251,9 +246,9 @@ void ChatBot::executeAction(int pos)
 
 void ChatBot::setVolume(int volume)
 {
-    if (_mediaPlayer->volume() != volume)
+    if (_volume != volume)
     {
-        _mediaPlayer->setVolume(volume);
+        _volume = volume;
 
         if (_settings)
         {
@@ -310,11 +305,14 @@ void ChatBot::execute(BotAction &action)
     {
         if (_enabledSound)
         {
-            //_mediaPlayer->setMedia(action._soundUrl);
-            //_mediaPlayer->play();
             QSound::play(action._soundUrl.toString());
             qDebug() << "Playing" << action._soundUrl.toString();
         }
+    }
+        break;
+    case BotAction::ActionType::Unknown:
+    {
+        qDebug() << "unknown action type";
     }
         break;
     }
@@ -349,16 +347,6 @@ QString ChatBot::commandsText() const
     }
 
     return s;
-}
-
-void ChatBot::onMediaPlayerError(QMediaPlayer::Error error)
-{
-    qDebug() << "QMediaPlayer error:" << error;
-}
-
-void ChatBot::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
-{
-    qDebug() << "QMediaPlayer status:" << status;
 }
 
 QStringList keysInGroup(QSettings& settings, const QString& path)
