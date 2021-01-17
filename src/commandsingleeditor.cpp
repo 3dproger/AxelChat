@@ -140,48 +140,35 @@ void CommandSingleEditor::on_pushButtonDone_clicked()
         }
     }
 
-    if (_createNew)
+    if (!_chatBot)
     {
-        if (_chatBot)
-        {
-            BotAction *newAction = BotAction::createSoundPlay(
-                        keywords,
-                        fileName,
-                        ui->checkBoxCaseSensitivity->isChecked());
+        qDebug() << "!_chatBot";
+        return;
+    }
 
-            if (ui->checkBoxChangeInactivePeriod->isChecked())
-            {
-                newAction->setExclusiveInactivityPeriod(true);
-                newAction->setInactivityPeriod(ui->spinBoxCooldown->value());
-            }
-            else
-            {
-                newAction->setExclusiveInactivityPeriod(false);
-                newAction->setInactivityPeriod(BotAction::DEFAULT_INACTIVITY_TIME);
-            }
+    BotAction *newAction = BotAction::createSoundPlay(
+                keywords,
+                fileName,
+                ui->checkBoxCaseSensitivity->isChecked());
 
-            _chatBot->addAction(newAction);
-        }
-        else
-        {
-            qDebug() << "!_chatBot";
-        }
+    if (ui->checkBoxChangeInactivePeriod->isChecked())
+    {
+        newAction->setExclusiveInactivityPeriod(true);
+        newAction->setInactivityPeriod(ui->spinBoxCooldown->value());
     }
     else
     {
-        if (_chatBot)
-        {
-            BotAction *newAction = BotAction::createSoundPlay(
-                        keywords,
-                        fileName,
-                        ui->checkBoxCaseSensitivity->isChecked());
+        newAction->setExclusiveInactivityPeriod(false);
+        newAction->setInactivityPeriod(BotAction::DEFAULT_INACTIVITY_TIME);
+    }
 
-            _chatBot->rewriteAction(_editingActionNum, newAction);
-        }
-        else
-        {
-            qDebug() << "!_chatBot";
-        }
+    if (_createNew)
+    {
+        _chatBot->addAction(newAction);
+    }
+    else
+    {
+        _chatBot->rewriteAction(_editingActionNum, newAction);
     }
 
     emit commandsChanged();
