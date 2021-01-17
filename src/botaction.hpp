@@ -29,7 +29,7 @@ public:
     static BotAction* fromJson(const QJsonObject& object);
 
     static BotAction* createSoundPlay(QStringList keywords,
-                                      QUrl soundUrl,
+                                      QString soundFile,
                                       bool caseSensitive = false);
     bool caseSensitive() const;
 
@@ -51,7 +51,9 @@ public:
 
     ActionType type() const;
 
-    QUrl soundUrl() const;
+    QString soundFile() const;
+
+    std::shared_ptr<QSoundEffect> soundEffect();
 
 protected:
 
@@ -77,6 +79,6 @@ private:
     QTimer _inactivityTimer;
     bool _active = true;
 
-    QSoundEffect* _soundEffect = nullptr;
+    std::shared_ptr<QSoundEffect> _soundEffect;
 };
 

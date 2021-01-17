@@ -1,5 +1,4 @@
 #include "chatbot.hpp"
-#include <QSound>
 #include <QSoundEffect>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -191,8 +190,17 @@ void ChatBot::execute(BotAction &action)
     {
         if (_enabledSound)
         {
-            QSound::play(action._soundUrl.toString());
-            qDebug() << "Playing" << action._soundUrl.toString();
+            std::shared_ptr<QSoundEffect> soundEffect = action.soundEffect();
+            if (soundEffect)
+            {
+                qDebug() << "Playing" << soundEffect->source().toString();
+                soundEffect->setVolume(_volume / 100.0);
+                soundEffect->play();
+            }
+            else
+            {
+                qDebug() << "Failed to play sound: sound effect is not exists";
+            }
         }
     }
         break;

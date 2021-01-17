@@ -53,8 +53,11 @@ void CommandSingleEditor::setCommand(BotAction *action, int pos)
 
     switch (action->type()) {
     case BotAction::ActionType::SoundPlay:
-        ui->lineEditSoundFile->setText(action->soundUrl().toString());
+        ui->lineEditSoundFile->setText(action->soundFile());
         ui->comboBoxActionType->setCurrentIndex(0);
+        break;
+    case BotAction::ActionType::Unknown:
+        qDebug() << "action type is unknown";
         break;
     }
 }
@@ -131,7 +134,7 @@ void CommandSingleEditor::on_pushButtonDone_clicked()
         {
             BotAction *newAction = BotAction::createSoundPlay(
                         keywords,
-                        QUrl(fileName),
+                        fileName,
                         ui->checkBoxCaseSensitivity->isChecked());
 
             _chatBot->addAction(newAction);
@@ -147,7 +150,7 @@ void CommandSingleEditor::on_pushButtonDone_clicked()
         {
             BotAction *newAction = BotAction::createSoundPlay(
                         keywords,
-                        QUrl(fileName),
+                        fileName,
                         ui->checkBoxCaseSensitivity->isChecked());
 
             _chatBot->rewriteAction(_editingActionNum, newAction);

@@ -95,46 +95,46 @@
         <translation>Изменение команды</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="105"/>
-        <location filename="commandsingleeditor.cpp" line="112"/>
-        <location filename="commandsingleeditor.cpp" line="192"/>
+        <location filename="commandsingleeditor.cpp" line="108"/>
+        <location filename="commandsingleeditor.cpp" line="115"/>
+        <location filename="commandsingleeditor.cpp" line="195"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="105"/>
+        <location filename="commandsingleeditor.cpp" line="108"/>
         <source>No keywords specified</source>
         <translation>Не указаны ключевые слова</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="112"/>
-        <location filename="commandsingleeditor.cpp" line="193"/>
+        <location filename="commandsingleeditor.cpp" line="115"/>
+        <location filename="commandsingleeditor.cpp" line="196"/>
         <source>Sound file not specified</source>
         <translation>Звуковой файл не указан</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="120"/>
-        <location filename="commandsingleeditor.cpp" line="201"/>
+        <location filename="commandsingleeditor.cpp" line="123"/>
+        <location filename="commandsingleeditor.cpp" line="204"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="121"/>
+        <location filename="commandsingleeditor.cpp" line="124"/>
         <source>File &quot;%1&quot; not found. Save command anyway?</source>
         <translation>Файл &quot;%1&quot; не найен. Всё равно сохранить команду?</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="174"/>
+        <location filename="commandsingleeditor.cpp" line="177"/>
         <source>Sound File Openning...</source>
         <translation>Открытие звукового файла...</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="176"/>
+        <location filename="commandsingleeditor.cpp" line="179"/>
         <source>WAV File</source>
         <translation>WAV-файл</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="176"/>
+        <location filename="commandsingleeditor.cpp" line="179"/>
         <source>All Files</source>
         <translation>Все файлы</translation>
     </message>
@@ -147,7 +147,7 @@
         <translation type="vanished">ВСе файлы (*)</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="202"/>
+        <location filename="commandsingleeditor.cpp" line="205"/>
         <source>File &quot;%1&quot; not found</source>
         <translation>Файл &quot;%1&quot; не найден</translation>
     </message>
@@ -189,27 +189,32 @@
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="commandseditor.cpp" line="39"/>
+        <location filename="commandseditor.cpp" line="40"/>
         <source>Keywords</source>
         <translation>Ключ. слова</translation>
     </message>
     <message>
-        <location filename="commandseditor.cpp" line="40"/>
+        <location filename="commandseditor.cpp" line="41"/>
         <source>Action</source>
         <translation>Действие</translation>
     </message>
     <message>
-        <location filename="commandseditor.cpp" line="71"/>
+        <location filename="commandseditor.cpp" line="72"/>
         <source>Sound: %1</source>
         <translation>Звук: %1</translation>
     </message>
     <message>
-        <location filename="commandseditor.cpp" line="126"/>
+        <location filename="commandseditor.cpp" line="75"/>
+        <source>Error</source>
+        <translation type="unfinished">Ошибка</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.cpp" line="130"/>
         <source>Deletion</source>
         <translation>Удаление</translation>
     </message>
     <message>
-        <location filename="commandseditor.cpp" line="127"/>
+        <location filename="commandseditor.cpp" line="131"/>
         <source>Are you sure you want to delete the command?</source>
         <translation>Вы уверены, что хотите удалить команду?</translation>
     </message>

@@ -19,9 +19,20 @@ BotAction::BotAction()
 
 }
 
-QUrl BotAction::soundUrl() const
+std::shared_ptr<QSoundEffect> BotAction::soundEffect()
 {
-    return _soundUrl;
+    if (!_soundEffect)
+    {
+        _soundEffect = std::shared_ptr<QSoundEffect>(new QSoundEffect());
+        _soundEffect->setSource(_soundUrl);
+    }
+
+    return _soundEffect;
+}
+
+QString BotAction::soundFile() const
+{
+    return _soundUrl.toLocalFile();
 }
 
 BotAction::ActionType BotAction::type() const
@@ -30,14 +41,14 @@ BotAction::ActionType BotAction::type() const
 }
 
 BotAction *BotAction::createSoundPlay(QStringList keywords,
-                                      QUrl soundUrl,
+                                      QString soundFile,
                                       bool caseSensitive)
 {
     BotAction* action      = new BotAction();
 
     action->_valid         = true;
     action->_keywords      = keywords;
-    action->_soundUrl      = soundUrl;
+    action->_soundUrl      = QUrl::fromLocalFile(soundFile);
     action->_caseSensitive = caseSensitive;
 
     connect(&action->_inactivityTimer, &QTimer::timeout, action, &BotAction::onTimeout);
@@ -110,7 +121,7 @@ QJsonObject BotAction::toJson() const
     actionObject.insert(JSON_VAR_ACTION_TYPE, typeToJson(_type));
     switch (_type) {
     case ActionType::SoundPlay:
-        actionObject.insert(JSON_VAR_SOUND_URL, _soundUrl.toString());
+        actionObject.insert(JSON_VAR_SOUND_URL, _soundUrl.toLocalFile());
         break;
     case ActionType::Unknown:
         qDebug() << "unknown action type";
@@ -153,8 +164,8 @@ BotAction *BotAction::fromJson(const QJsonObject &object)
     switch (type) {
     case ActionType::SoundPlay:
     {
-        const QUrl& soundUrl = QUrl(actionObject.value(JSON_VAR_SOUND_URL).toString());
-        action = BotAction::createSoundPlay(keywords, soundUrl, caseSensitive);
+        const QString& soundFile = actionObject.value(JSON_VAR_SOUND_URL).toString();
+        action = BotAction::createSoundPlay(keywords, soundFile, caseSensitive);
         break;
     }
     case BotAction::Unknown:
