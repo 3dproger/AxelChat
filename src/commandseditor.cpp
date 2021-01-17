@@ -112,14 +112,14 @@ void CommandsEditor::on_tableWidgetCommands_itemSelectionChanged()
     {
         ui->pushButtonEdit->setEnabled(true);
         ui->pushButtonExecute->setEnabled(true);
-        ui->pushButtonEnableDisable->setEnabled(true); // ToDo:
+        ui->pushButtonEnableDisable->setEnabled(true);
         ui->pushButtonDelete->setEnabled(true);
     }
     else
     {
         ui->pushButtonEdit->setEnabled(false);
         ui->pushButtonExecute->setEnabled(false);
-        ui->pushButtonEnableDisable->setEnabled(false); // ToDo:
+        ui->pushButtonEnableDisable->setEnabled(false);
         ui->pushButtonDelete->setEnabled(false);
     }
 }

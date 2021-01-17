@@ -26,6 +26,8 @@ void CommandSingleEditor::setCommand(BotAction *action, int pos)
     ui->comboBoxActionType->setCurrentIndex(0);
     ui->checkBoxCaseSensitivity->setChecked(false);
     ui->lineEditSoundFile->setText("");
+    ui->checkBoxChangeInactivePeriod->setChecked(false);
+    on_checkBoxChangeInactivePeriod_stateChanged(0);
 
     if (!action)
     {
@@ -50,6 +52,16 @@ void CommandSingleEditor::setCommand(BotAction *action, int pos)
     ui->plainTextEditKeywords->setPlainText(keywordsString);
 
     ui->checkBoxCaseSensitivity->setChecked(action->caseSensitive());
+
+    ui->checkBoxChangeInactivePeriod->setChecked(action->exclusiveInactivityPeriod());
+    if (action->exclusiveInactivityPeriod())
+    {
+        ui->spinBoxCooldown->setValue(action->inactivityPeriod());
+    }
+    else
+    {
+        ui->spinBoxCooldown->setValue(BotAction::DEFAULT_INACTIVITY_TIME);
+    }
 
     switch (action->type()) {
     case BotAction::ActionType::SoundPlay:
@@ -137,6 +149,17 @@ void CommandSingleEditor::on_pushButtonDone_clicked()
                         fileName,
                         ui->checkBoxCaseSensitivity->isChecked());
 
+            if (ui->checkBoxChangeInactivePeriod->isChecked())
+            {
+                newAction->setExclusiveInactivityPeriod(true);
+                newAction->setInactivityPeriod(ui->spinBoxCooldown->value());
+            }
+            else
+            {
+                newAction->setExclusiveInactivityPeriod(false);
+                newAction->setInactivityPeriod(BotAction::DEFAULT_INACTIVITY_TIME);
+            }
+
             _chatBot->addAction(newAction);
         }
         else
@@ -207,4 +230,16 @@ void CommandSingleEditor::on_toolButtonSoundPlay_clicked()
     }
 
     QSound::play(fileName);
+}
+
+void CommandSingleEditor::on_checkBoxChangeInactivePeriod_stateChanged(int arg1)
+{
+    Q_UNUSED(arg1);
+    const bool checked = ui->checkBoxChangeInactivePeriod->isChecked();
+    ui->labelCooldown->setEnabled(checked);
+    ui->spinBoxCooldown->setEnabled(checked);
+    if (!checked)
+    {
+        ui->spinBoxCooldown->setValue(BotAction::DEFAULT_INACTIVITY_TIME);
+    }
 }

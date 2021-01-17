@@ -32,6 +32,8 @@ private slots:
 
     void on_toolButtonSoundPlay_clicked();
 
+    void on_checkBoxChangeInactivePeriod_stateChanged(int arg1);
+
 private:
     Ui::CommandSingleEditor *ui;
     ChatBot* _chatBot = nullptr;

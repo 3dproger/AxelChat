@@ -5,6 +5,7 @@
 namespace {
 static const QString JSON_VAR_KEYWORDS = "keywords";
 static const QString JSON_VAR_CASE_SENSITIVE = "case_sensitive";
+static const QString JSON_VAR_EXCLUSIVE_INACTIVITY_PERIOD = "exclusive_inactivity_period";
 static const QString JSON_VAR_INACTIVITY_PERIOD = "inactivity_period";
 static const QString JSON_VAR_ACTION = "action";
 static const QString JSON_VAR_ACTION_TYPE = "type";
@@ -17,6 +18,16 @@ static const QString JSON_ACTION_TYPE_UNKNOWN = "unknown";
 BotAction::BotAction()
 {
 
+}
+
+bool BotAction::exclusiveInactivityPeriod() const
+{
+    return _exclusiveInactivityPeriod;
+}
+
+void BotAction::setExclusiveInactivityPeriod(bool exclusiveInactivityPeriod)
+{
+    _exclusiveInactivityPeriod = exclusiveInactivityPeriod;
 }
 
 std::shared_ptr<QSoundEffect> BotAction::soundEffect()
@@ -114,6 +125,7 @@ QJsonObject BotAction::toJson() const
 
     rootObject.insert(JSON_VAR_KEYWORDS, QJsonArray::fromStringList(_keywords));
     rootObject.insert(JSON_VAR_CASE_SENSITIVE, _caseSensitive);
+    rootObject.insert(JSON_VAR_EXCLUSIVE_INACTIVITY_PERIOD, _exclusiveInactivityPeriod);
     rootObject.insert(JSON_VAR_INACTIVITY_PERIOD, _inactivityPeriod);
 
     QJsonObject actionObject;
@@ -155,6 +167,7 @@ BotAction *BotAction::fromJson(const QJsonObject &object)
     }
 
     const bool caseSensitive = object.value(JSON_VAR_CASE_SENSITIVE).toBool(false);
+    const bool exclusiveInactivityPeriod = object.value(JSON_VAR_EXCLUSIVE_INACTIVITY_PERIOD).toBool(false);
     const int inactivityPeriod = object.value(JSON_VAR_INACTIVITY_PERIOD).toInt(DEFAULT_INACTIVITY_TIME);
 
     const QJsonObject& actionObject = object.value(JSON_VAR_ACTION).toObject();
@@ -173,6 +186,12 @@ BotAction *BotAction::fromJson(const QJsonObject &object)
         qDebug() << "unknown action type";
         break;
     }
+    }
+
+    if (action)
+    {
+        action->_exclusiveInactivityPeriod = exclusiveInactivityPeriod;
+        action->_inactivityPeriod = inactivityPeriod;
     }
 
     return action;

@@ -22,7 +22,7 @@ public:
     };
     Q_ENUMS(ActionType)
 
-    static const int DEFAULT_INACTIVITY_TIME = 60000;
+    static const int DEFAULT_INACTIVITY_TIME = 10;
 
     QJsonObject toJson() const;
 
@@ -31,6 +31,7 @@ public:
     static BotAction* createSoundPlay(QStringList keywords,
                                       QString soundFile,
                                       bool caseSensitive = false);
+
     bool caseSensitive() const;
 
     QStringList keywords() const;
@@ -55,6 +56,9 @@ public:
 
     std::shared_ptr<QSoundEffect> soundEffect();
 
+    bool exclusiveInactivityPeriod() const;
+    void setExclusiveInactivityPeriod(bool exclusiveInactivityPeriod);
+
 protected:
 
 private slots:
@@ -75,6 +79,7 @@ private:
     ActionType _type = ActionType::SoundPlay;
     QUrl _soundUrl;
 
+    bool _exclusiveInactivityPeriod = false;
     int _inactivityPeriod = DEFAULT_INACTIVITY_TIME;
     QTimer _inactivityTimer;
     bool _active = true;

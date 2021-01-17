@@ -214,7 +214,21 @@ void ChatBot::execute(BotAction &action)
     if (action._inactivityPeriod > 0)
     {
         action._active = false;
-        action._inactivityTimer.start(action._inactivityPeriod);
+        if (action.exclusiveInactivityPeriod())
+        {
+            if (action._inactivityPeriod > 0)
+            {
+                action._inactivityTimer.start(action._inactivityPeriod * 1000);
+            }
+            else
+            {
+                action._active = true;
+            }
+        }
+        else
+        {
+            action._inactivityTimer.start(BotAction::DEFAULT_INACTIVITY_TIME * 1000);
+        }
     }
 }
 
