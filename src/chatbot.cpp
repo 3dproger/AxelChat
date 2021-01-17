@@ -1,10 +1,15 @@
 #include "chatbot.hpp"
 #include <QSound>
+#include <QJsonObject>
+#include <QJsonArray>
 
-ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *parent) : QObject(parent)
+ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *parent)
+    : QObject(parent)
+    , _settingsGroupPath(settingsGroup)
+    , _settings(settings)
+
 {
-    _settingsGroupPath = settingsGroup;
-    _settings = settings;
+    loadCommands();
 
     if (_settings)
     {
@@ -15,6 +20,8 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
 
     connect(_mediaPlayer, SIGNAL(error(QMediaPlayer::Error)),                    this, SLOT(onMediaPlayerError(QMediaPlayer::Error)));
     connect(_mediaPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
+
+
 
     /*
     //ToDo: перенести в редактор
@@ -157,6 +164,11 @@ void ChatBot::setEnabledSound(bool enabledSound)
     }
 }
 
+QList<BotAction *> ChatBot::actions() const
+{
+    return _actions;
+}
+
 void ChatBot::addAction(BotAction *action)
 {
     if (!action)
@@ -165,7 +177,14 @@ void ChatBot::addAction(BotAction *action)
         return;
     }
 
+    if (!_settings)
+    {
+        qDebug() << "!_settings";
+        return;
+    }
+
     _actions.append(action);
+    saveCommands();
 }
 
 void ChatBot::rewriteAction(int pos, BotAction *action)
@@ -189,6 +208,8 @@ void ChatBot::rewriteAction(int pos, BotAction *action)
     }
 
     _actions[pos] = action;
+
+    saveCommands();
 }
 
 void ChatBot::deleteAction(int pos)
@@ -207,6 +228,8 @@ void ChatBot::deleteAction(int pos)
 
     delete _actions[pos];
     _actions.removeAt(pos);
+
+    saveCommands();
 }
 
 void ChatBot::executeAction(int pos)
@@ -336,5 +359,91 @@ void ChatBot::onMediaPlayerError(QMediaPlayer::Error error)
 void ChatBot::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
     qDebug() << "QMediaPlayer status:" << status;
+}
+
+QStringList keysInGroup(QSettings& settings, const QString& path)
+{
+    int depth = 0;
+    QString group;
+    for (int i = 0; i < path.count(); ++i)
+    {
+        const QChar& c = path[i];
+
+        if (c == '/')
+        {
+            settings.beginGroup(group);
+            group.clear();
+            depth++;
+        }
+        else
+        {
+            group += c;
+        }
+    }
+
+    if (!group.isEmpty())
+    {
+        settings.beginGroup(group);
+        group.clear();
+        depth++;
+    }
+
+    const QStringList& keys = settings.allKeys();
+
+    for (int i = 0; i < depth; ++i)
+    {
+        settings.endGroup();
+    }
+
+    return keys;
+}
+
+void ChatBot::saveCommands()
+{
+    if (!_settings)
+    {
+        qDebug() << "!_settings";
+        return;
+    }
+
+    for (int i = 0; i < _actions.count(); ++i)
+    {
+        BotAction* action = _actions[i];
+        _settings->setValue(_settingsGroupPath + "/" + _settingsGroupActions + QString("/%1").arg(i),
+                            action->toJson());
+    }
+
+    const QStringList& keysToRemove = keysInGroup(*_settings, _settingsGroupPath + "/" + _settingsGroupActions);
+
+    for (int i = _actions.count(); i < keysToRemove.count(); ++i)
+    {
+        _settings->remove(_settingsGroupPath + "/" + _settingsGroupActions + "/" + keysToRemove[i]);
+    }
+}
+
+void ChatBot::loadCommands()
+{
+    if (!_settings)
+    {
+        qDebug() << "!_settings";
+        return;
+    }
+
+    const QStringList& commandsGroups = keysInGroup(*_settings, _settingsGroupPath + "/" + _settingsGroupActions);
+
+    for (const QString& commandGroup : commandsGroups)
+    {        const QJsonObject& object = _settings->value(_settingsGroupPath + "/" + _settingsGroupActions + "/" + commandGroup,
+                         QJsonObject())
+                .toJsonObject();
+
+        if (!object.isEmpty())
+        {
+            BotAction* action = BotAction::fromJson(object);
+            if (action)
+            {
+                _actions.append(action);
+            }
+        }
+    }
 }
 

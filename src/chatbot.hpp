@@ -28,10 +28,7 @@ public:
         BotAction::declareQML();
     }
 
-    QList<BotAction*> actions() const
-    {
-        return _actions;
-    }
+    QList<BotAction*> actions() const;
 
     void addAction(BotAction* action);
     void rewriteAction(int pos, BotAction* action);
@@ -53,15 +50,19 @@ private slots:
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
 
 private:
-    QMediaPlayer* _mediaPlayer = new QMediaPlayer(this, QMediaPlayer::LowLatency);
+    void saveCommands();
+    void loadCommands();
 
-    QList<BotAction*> _actions;
+    QMediaPlayer* _mediaPlayer = new QMediaPlayer(this, QMediaPlayer::LowLatency);
 
     QString _settingsGroupPath = "chat_bot";
     QSettings*  _settings = nullptr;
 
     const QString _settingsKeyVolume = "volume";
     const QString _settingsKeyEnabledSound = "enabledSound";
+    const QString _settingsGroupActions = "actions";
+
+    QList<BotAction*> _actions;
 
     bool _enabledSound = false;
 };

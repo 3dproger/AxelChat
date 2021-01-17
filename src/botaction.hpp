@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QAbstractListModel>
 #include <QQmlEngine>
+#include <QJsonObject>
 
 class ChatBot;
 
@@ -14,10 +15,17 @@ class BotAction : public QObject
     Q_OBJECT
 public:
     enum ActionType {
-        SoundPlay
+        SoundPlay,
         //ToDo: добавить новый функционал
+        Unknown
     };
     Q_ENUMS(ActionType)
+
+    static const int DEFAULT_INACTIVITY_TIME = 60000;
+
+    QJsonObject toJson() const;
+
+    static BotAction* fromJson(const QJsonObject& object);
 
     static BotAction* createSoundPlay(QStringList keywords,
                                       QUrl soundUrl,
@@ -50,6 +58,9 @@ private slots:
     void onTimeout();
 
 private:
+    static QString typeToJson(const ActionType& type);
+    static ActionType typeFromJson(const QString& type);
+
     BotAction();
 
     friend class ChatBot;
@@ -61,7 +72,7 @@ private:
     ActionType _type = ActionType::SoundPlay;
     QUrl _soundUrl;
 
-    int _inactivityPeriod = 60000;
+    int _inactivityPeriod = DEFAULT_INACTIVITY_TIME;
     QTimer _inactivityTimer;
     bool _active = true;
 };
