@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>/svg/ic-filter</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic-filter" fill-rule="nonzero" fill="#4A4A4A">
+            <path d="M11,10.5509339 L11,16.9970707 C11,17.2928223 11.207798,17.7935844 11.4130188,17.9988053 L13,19.5857864 L13,10.5509339 L20.3698007,4 L3.63019932,4 L11,10.5509339 Z M1.83190604,5.07742699 C0.321647288,3.73497476 0.96559378,2 2.991155,2 L21.008845,2 C23.0323052,2 23.6720784,3.74055197 22.168094,5.07742699 L15,11.4490661 L15,21.0044225 C15,22.4466969 13.6079047,23.0221183 12.5869812,22.0011947 L9.99880527,19.4130188 C9.41883664,18.8330502 9,17.8237164 9,16.9970707 L9,11.4490661 L1.83190604,5.07742699 Z" id="Rectangle"></path>
+        </g>
+    </g>
+</svg>

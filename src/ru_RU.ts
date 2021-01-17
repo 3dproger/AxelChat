@@ -23,6 +23,136 @@
     </message>
 </context>
 <context>
+    <name>CommandSingleEditor</name>
+    <message>
+        <location filename="commandsingleeditor.ui" line="14"/>
+        <location filename="commandsingleeditor.cpp" line="24"/>
+        <source>Command Creating</source>
+        <translation>Создание команды</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="27"/>
+        <source>Condition</source>
+        <translation>Условие</translation>
+    </message>
+    <message>
+        <source>Keywords:</source>
+        <translation type="vanished">Ключевые слова:</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="33"/>
+        <source>Keywords (write each keyword on a new line):</source>
+        <translation>Ключевые слова (каждое ключевое слово пишите в новой строке):</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="56"/>
+        <source>Case Sensitivity</source>
+        <translation>Чувствит. к регистру</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="64"/>
+        <source>Action</source>
+        <translation>Действие</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="70"/>
+        <source>Action Type:</source>
+        <translation>Тип действия:</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="78"/>
+        <source>Sound Play</source>
+        <translation>Звук</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="102"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Browse File&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Найти файл&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="116"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Play Sound&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Воспроизвести звук&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="130"/>
+        <source>Sound File...</source>
+        <translation>Файл звука...</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="182"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.ui" line="189"/>
+        <source>Done</source>
+        <translation>Готово</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="37"/>
+        <source>Command Editing</source>
+        <translation>Изменение команды</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="105"/>
+        <location filename="commandsingleeditor.cpp" line="112"/>
+        <location filename="commandsingleeditor.cpp" line="192"/>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="105"/>
+        <source>No keywords specified</source>
+        <translation>Не указаны ключевые слова</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="112"/>
+        <location filename="commandsingleeditor.cpp" line="193"/>
+        <source>Sound file not specified</source>
+        <translation>Звуковой файл не указан</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="120"/>
+        <location filename="commandsingleeditor.cpp" line="201"/>
+        <source>Warning</source>
+        <translation>Предупреждение</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="121"/>
+        <source>File &quot;%1&quot; not found. Save command anyway?</source>
+        <translation>Файл &quot;%1&quot; не найен. Всё равно сохранить команду?</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="174"/>
+        <source>Sound File Openning...</source>
+        <translation>Открытие звукового файла...</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="176"/>
+        <source>WAV File</source>
+        <translation>WAV-файл</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="176"/>
+        <source>All Files</source>
+        <translation>Все файлы</translation>
+    </message>
+    <message>
+        <source>WAV Sounds (*.wav)</source>
+        <translation type="vanished">WAV звук (*.wav)</translation>
+    </message>
+    <message>
+        <source>All Files (*)</source>
+        <translation type="vanished">ВСе файлы (*)</translation>
+    </message>
+    <message>
+        <location filename="commandsingleeditor.cpp" line="202"/>
+        <source>File &quot;%1&quot; not found</source>
+        <translation>Файл &quot;%1&quot; не найден</translation>
+    </message>
+</context>
+<context>
     <name>CommandsEditor</name>
     <message>
         <location filename="commandseditor.ui" line="14"/>
@@ -35,7 +165,7 @@
         <translation>Создать</translation>
     </message>
     <message>
-        <location filename="commandseditor.ui" line="36"/>
+        <location filename="commandseditor.ui" line="54"/>
         <source>Execute</source>
         <translation>Запустить</translation>
     </message>
@@ -45,14 +175,43 @@
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="commandseditor.ui" line="50"/>
-        <source>Disable</source>
-        <translation>Выключить</translation>
+        <location filename="commandseditor.ui" line="65"/>
+        <source>Enabled</source>
+        <translation>Включено</translation>
     </message>
     <message>
-        <location filename="commandseditor.ui" line="64"/>
+        <source>Disable</source>
+        <translation type="vanished">Выключить</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.ui" line="76"/>
         <source>Delete</source>
         <translation>Удалить</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.cpp" line="39"/>
+        <source>Keywords</source>
+        <translation>Ключ. слова</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.cpp" line="40"/>
+        <source>Action</source>
+        <translation>Действие</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.cpp" line="71"/>
+        <source>Sound: %1</source>
+        <translation>Звук: %1</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.cpp" line="126"/>
+        <source>Deletion</source>
+        <translation>Удаление</translation>
+    </message>
+    <message>
+        <location filename="commandseditor.cpp" line="127"/>
+        <source>Are you sure you want to delete the command?</source>
+        <translation>Вы уверены, что хотите удалить команду?</translation>
     </message>
 </context>
 <context>
@@ -484,7 +643,7 @@
         <translation>Настройки AxelChat</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="77"/>
+        <location filename="settings.qml" line="83"/>
         <source>YouTube</source>
         <translation></translation>
     </message>
@@ -497,17 +656,17 @@
         <translation type="vanished">Участники</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="81"/>
+        <location filename="settings.qml" line="87"/>
         <source>Common</source>
         <translation>Общее</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="93"/>
+        <location filename="settings.qml" line="99"/>
         <source>Chat Commands</source>
         <translation>Команды чата</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="97"/>
+        <location filename="settings.qml" line="103"/>
         <source>Output to Files</source>
         <translation>Вывод в файл</translation>
     </message>
@@ -516,7 +675,7 @@
         <translation type="vanished">Прочее</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="101"/>
+        <location filename="settings.qml" line="107"/>
         <source>About AxelChat</source>
         <translation>Об AxelChat</translation>
     </message>

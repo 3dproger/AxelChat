@@ -28,6 +28,16 @@ public:
         BotAction::declareQML();
     }
 
+    QList<BotAction*> actions() const
+    {
+        return _actions;
+    }
+
+    void addAction(BotAction* action);
+    void rewriteAction(int pos, BotAction* action);
+    void deleteAction(int pos);
+    void executeAction(int pos);
+
 signals:
     void volumeChanged();
     void enabledSoundChanged();

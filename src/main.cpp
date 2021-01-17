@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
 
     //Commands Editor Window
     CommandsEditor::declareQml();
-    CommandsEditor* commandsEditor = new CommandsEditor();
+    CommandsEditor* commandsEditor = new CommandsEditor(chatHandler->bot());
 
     engine.rootContext()->setContextProperty("i18n",               i18n);
     engine.rootContext()->setContextProperty("chatHandler",        chatHandler);

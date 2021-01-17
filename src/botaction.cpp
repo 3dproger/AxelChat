@@ -6,6 +6,16 @@ BotAction::BotAction()
 
 }
 
+QUrl BotAction::soundUrl() const
+{
+    return _soundUrl;
+}
+
+BotAction::ActionType BotAction::type() const
+{
+    return _type;
+}
+
 BotAction *BotAction::createSoundPlay(QStringList keywords,
                                       QUrl soundUrl,
                                       bool caseSensitive)

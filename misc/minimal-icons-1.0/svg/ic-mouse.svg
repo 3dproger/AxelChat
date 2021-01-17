@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>/svg/ic-mouse</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic-mouse" fill-rule="nonzero" fill="#4A4A4A">
+            <path d="M7,8.99668583 L7,8.99668583 L7,15.0033142 C7,17.7584215 9.23857625,20 12,20 L12,20 C14.7558048,20 17,17.7629076 17,15.0033142 L17,8.99668583 C17,6.24157855 14.7614237,4 12,4 L12,4 C9.24419519,4 7,6.23709245 7,8.99668583 L7,8.99668583 Z M5,8.99668583 L5,8.99668583 C5,5.13381601 8.13832882,2 12,2 C15.8644245,2 19,5.13544039 19,8.99668583 L19,15.0033142 C19,18.866184 15.8616712,22 12,22 C8.13557548,22 5,18.8645596 5,15.0033142 L5,8.99668583 Z M11,6.99895656 C11,6.44724809 11.4438648,6 12,6 L12,6 C12.5522847,6 13,6.44266033 13,6.99895656 L13,8.00104344 C13,8.55275191 12.5561352,9 12,9 L12,9 C11.4477153,9 11,8.55733967 11,8.00104344 L11,6.99895656 Z" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>

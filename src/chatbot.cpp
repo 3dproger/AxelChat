@@ -1,4 +1,5 @@
 #include "chatbot.hpp"
+#include <QSound>
 
 ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *parent) : QObject(parent)
 {
@@ -15,6 +16,7 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     connect(_mediaPlayer, SIGNAL(error(QMediaPlayer::Error)),                    this, SLOT(onMediaPlayerError(QMediaPlayer::Error)));
     connect(_mediaPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
 
+    /*
     //ToDo: перенести в редактор
     //Встроенные голосовые команды
     _actions.append(BotAction::createSoundPlay({"!cj"}, QUrl("qrc:/resources/sound/cj.wav")));
@@ -127,13 +129,7 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
 
     _actions.append(BotAction::createSoundPlay({"!suspense1", "!саспенс1", "!суспенс1", "!suspens1", "!saspense1", "!saspens1", "!psycho"}, QUrl("qrc:/resources/sound/psycho.mp3")));
     _actions.append(BotAction::createSoundPlay({"!suspense2", "!саспенс2", "!суспенс2", "!suspens2", "!saspense2", "!saspens2", "!барабаннаяДробь"}, QUrl("qrc:/resources/sound/saspens.mp3")));
-
-
-
-    // !факт !этоФакт
-    // !Гудлак !МыГГ !gman (it's time to choose) !shaokan (you will never win)
-
-    //ToDo: добавить: !ура,  !боль,  !позабавимся,  !обмыть,  !твари, !отец, !Holyshit, !gameover, !lol, !пиво, !clear, !go, !negative, !победа, !rtrKakTak, !rtrGlavnoe, !дошик, !фиаско2, !zapab, !rtrZaruinil, !rtrZloyBoss, !rtrNadejda, !rtrЁКЛМН, !rtrNevezenie, !GoBen4, !jivi, !rtrPobedaBoss, !rtrBezuprechno, !rtrZlieBossi
+    */
 }
 
 int ChatBot::volume() const
@@ -159,6 +155,75 @@ void ChatBot::setEnabledSound(bool enabledSound)
 
         emit enabledSoundChanged();
     }
+}
+
+void ChatBot::addAction(BotAction *action)
+{
+    if (!action)
+    {
+        qDebug() << "!action";
+        return;
+    }
+
+    _actions.append(action);
+}
+
+void ChatBot::rewriteAction(int pos, BotAction *action)
+{
+    if (!action)
+    {
+        qDebug() << "!action";
+        return;
+    }
+
+    if (pos < 0)
+    {
+        qDebug() << "pos < 0";
+        return;
+    }
+
+    if (pos >= _actions.count())
+    {
+        qDebug() << "pos >= _actions.count()";
+        return;
+    }
+
+    _actions[pos] = action;
+}
+
+void ChatBot::deleteAction(int pos)
+{
+    if (pos < 0)
+    {
+        qDebug() << "pos < 0";
+        return;
+    }
+
+    if (pos >= _actions.count())
+    {
+        qDebug() << "pos >= _actions.count()";
+        return;
+    }
+
+    delete _actions[pos];
+    _actions.removeAt(pos);
+}
+
+void ChatBot::executeAction(int pos)
+{
+    if (pos < 0)
+    {
+        qDebug() << "pos < 0";
+        return;
+    }
+
+    if (pos >= _actions.count())
+    {
+        qDebug() << "pos >= _actions.count()";
+        return;
+    }
+
+    execute(*_actions[pos]);
 }
 
 void ChatBot::setVolume(int volume)
@@ -222,8 +287,9 @@ void ChatBot::execute(BotAction &action)
     {
         if (_enabledSound)
         {
-            _mediaPlayer->setMedia(action._soundUrl);
-            _mediaPlayer->play();
+            //_mediaPlayer->setMedia(action._soundUrl);
+            //_mediaPlayer->play();
+            QSound::play(action._soundUrl.toString());
             qDebug() << "Playing" << action._soundUrl.toString();
         }
     }

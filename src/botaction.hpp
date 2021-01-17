@@ -40,6 +40,10 @@ public:
                                      1, 0, "BotAction", "Type cannot be created in QML");
     }
 
+    ActionType type() const;
+
+    QUrl soundUrl() const;
+
 protected:
 
 private slots:

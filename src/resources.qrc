@@ -6,102 +6,15 @@
         <file>resources/images/axelchat.svg</file>
         <file>resources/images/axelchat-rounded.svg</file>
         <file>resources/images/youtube-rounded.svg</file>
-        <file>resources/sound/sad_trombone.mp3</file>
-        <file>resources/sound/fiasko.mp3</file>
-        <file>resources/sound/firstblood.mp3</file>
-        <file>resources/sound/deja-vu.mp3</file>
-        <file>resources/sound/final.mp3</file>
-        <file>resources/sound/gandalf_shallnotpass.mp3</file>
-        <file>resources/sound/gas.mp3</file>
-        <file>resources/sound/run.mp3</file>
-        <file>resources/sound/sad-violin.mp3</file>
-        <file>resources/sound/wow.mp3</file>
-        <file>resources/sound/xp.mp3</file>
-        <file>resources/sound/cj.wav</file>
         <file>resources/images/king.svg</file>
         <file>resources/images/tool.svg</file>
-        <file>resources/sound/sfx_bill_v5.mp3</file>
         <file>resources/images/download-button.svg</file>
-        <file>resources/sound/applause.mp3</file>
-        <file>resources/sound/chc_lock_and_load.wav</file>
-        <file>resources/sound/playstation.mp3</file>
-        <file>resources/sound/viknick_smeh.wav</file>
-        <file>resources/sound/pch_60_seconds.mp3</file>
-        <file>resources/sound/pch_avtomobil.mp3</file>
-        <file>resources/sound/pch_baraban.mp3</file>
-        <file>resources/sound/pch_mimo.mp3</file>
-        <file>resources/sound/chgk_volchok.mp3</file>
-        <file>resources/sound/chgk_yashik.mp3</file>
-        <file>resources/sound/pch_winner.mp3</file>
-        <file>resources/sound/airhorn.mp3</file>
-        <file>resources/sound/budum_tss.mp3</file>
-        <file>resources/sound/cant-touch-this.mp3</file>
-        <file>resources/sound/crickets.mp3</file>
-        <file>resources/sound/do_it.mp3</file>
-        <file>resources/sound/dramatic.mp3</file>
-        <file>resources/sound/fatality.mp3</file>
-        <file>resources/sound/finishhim.mp3</file>
-        <file>resources/sound/hadouken.mp3</file>
-        <file>resources/sound/ha-ha.mp3</file>
-        <file>resources/sound/monsterkill.mp3</file>
-        <file>resources/sound/nooo.mp3</file>
-        <file>resources/sound/psycho.mp3</file>
-        <file>resources/sound/sadaffleck.mp3</file>
-        <file>resources/sound/to_be_continued.mp3</file>
-        <file>resources/sound/tuturu.mp3</file>
-        <file>resources/sound/wc_cool.mp3</file>
-        <file>resources/sound/wc_good.mp3</file>
-        <file>resources/sound/wc_lie_down.mp3</file>
-        <file>resources/sound/wc_notime.mp3</file>
-        <file>resources/sound/wc_what_are_you.mp3</file>
-        <file>resources/sound/what-are-you-doing-in-my-swamp.mp3</file>
-        <file>resources/sound/x-files.mp3</file>
-        <file>resources/sound/gta-sa-done.mp3</file>
-        <file>resources/sound/omaewamou.mp3</file>
-        <file>resources/sound/omaewamou2.mp3</file>
-        <file>resources/sound/ben_applause.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-3-2-1 - Good Luck-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Анонимных неалкоголиков сборище-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Вернуть в семью Артура-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Вот таким нетривиальным способом-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Доступ запрещён - Всем БАН. До Свидания-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Из измерения X возвращается-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Кто-то там играет в Тетрис-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Максим подтверди - Подтверждаю-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Меня чуть не засосало-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Мы оказывается разрабатываем TNU4-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Не удаляйте мне интернет на компьютере-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Ни пуха ни Good Luck-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Ну не надо меня доставать-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Ну не судьба-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Пожалуйста не баньте-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Пожалуйста. Я не хочу думать об этом-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Полный турболёт-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Понятно всё с тобой. Ничем ты не поможешь мне-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Рисовать - это изврат-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Сейчас так ХОП-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Скинь скринь скринъ-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Теперь я потерял жизнь-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Терминатор забеременел Робокопом-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Чёрт. Нет. Почему. Я не хочу-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Что надо чикса-бикса-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Я тебя в интернете забаню-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel- Бань себя сам-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Gin Chin Good Luck.mp3</file>
-        <file>resources/sound/gg.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Да быстро ты поел-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Меня Терминатор домогался-kissvk.com.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Скрытая реклама.mp3</file>
-        <file>resources/sound/of_course.mp3</file>
-        <file>resources/sound/2nd_channel/2nd Channel-Это факт.mp3</file>
         <file>icon.ico</file>
         <file>resources/images/search.svg</file>
         <file>resources/images/settings.svg</file>
         <file>resources/images/user.svg</file>
-        <file>resources/sound/nuzhdiki.mp3</file>
         <file>resources/images/flask.svg</file>
         <file>resources/images/flask2.svg</file>
-        <file>resources/sound/great_father.mp3</file>
         <file>resources/images/clipboard-paste-button.svg</file>
         <file>resources/images/copy-content.svg</file>
         <file>resources/images/cut-content-button.svg</file>
@@ -120,22 +33,14 @@
         <file>resources/images/box-new.svg</file>
         <file>resources/images/youtube-black.svg</file>
         <file>resources/images/refresh.svg</file>
-        <file>resources/sound/pivo.mp3</file>
-        <file>resources/sound/накосячил.mp3</file>
-        <file>resources/sound/vot_eto_povorot.mp3</file>
-        <file>resources/sound/chto-eto.mp3</file>
-        <file>resources/sound/mk-fight.mp3</file>
-        <file>resources/sound/drujko-ne-budu.mp3</file>
-        <file>resources/sound/ne-tochno.mp3</file>
-        <file>resources/sound/mk-round1.mp3</file>
-        <file>resources/sound/mk-round2.mp3</file>
-        <file>resources/sound/mk-round3.mp3</file>
-        <file>resources/sound/mk-toasty.mp3</file>
-        <file>resources/sound/astalavista.mp3</file>
-        <file>resources/sound/eurobeat.mp3</file>
-        <file>resources/sound/saxophone.mp3</file>
-        <file>resources/sound/fly.mp3</file>
-        <file>resources/sound/saspens.mp3</file>
-        <file>resources/sound/fura_big.mp3</file>
+        <file>resources/images/ic-add.png</file>
+        <file>resources/images/ic-play.png</file>
+        <file>resources/images/ic-sound.png</file>
+        <file>resources/images/ic-sound-mute.png</file>
+        <file>resources/images/ic-switch-off.png</file>
+        <file>resources/images/ic-switch-on.png</file>
+        <file>resources/images/ic-trash.png</file>
+        <file>resources/images/ic-write.png</file>
+        <file>resources/images/ic-folder.png</file>
     </qresource>
 </RCC>

@@ -21,6 +21,7 @@ HEADERS += \
     chatmessage.hpp \
     clipboardqml.hpp \
     commandseditor.h \
+    commandsingleeditor.h \
     githubapi.hpp \
     i18n.hpp \
     outputtofile.hpp \
@@ -37,6 +38,7 @@ SOURCES += \
         chatmessage.cpp \
         clipboardqml.cpp \
         commandseditor.cpp \
+        commandsingleeditor.cpp \
         githubapi.cpp \
         i18n.cpp \
         main.cpp \
@@ -110,4 +112,5 @@ win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libc
 else:win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.a
 
 FORMS += \
-    commandseditor.ui
+    commandseditor.ui \
+    commandsingleeditor.ui
