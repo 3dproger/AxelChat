@@ -16,12 +16,14 @@ OutputToFile::OutputToFile(QSettings *settings, const QString &settingsGroupPath
 
     if (_settings)
     {
-        setEnabled(_settings->value(_settingsGroupPath + "/" + _settingsKeyEnabled, false).toBool());
+        setEnabled(_settings->value(_settingsGroupPath + "/" + _settingsKeyEnabled,
+                                    false).toBool());
 
         setOutputFolder(_settings->value(_settingsGroupPath + "/" + _settingsKeyOutputFolder,
                 standardOutputFolder()).toString());
 
-        setCodec(_settings->value(_settingsGroupPath + "/" + _settingsKeyCodec).toString());
+        setCodec(_settings->value(_settingsGroupPath + "/" + _settingsKeyCodec,
+                                  _codec).toString());
     }
 }
 

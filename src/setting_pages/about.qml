@@ -244,7 +244,9 @@ ScrollView {
             }
             else if (updateChecker.replyState === UpdateChecker.LatestVersionYouHave)
             {
-                noNewVersionsDialog.title = qsTr("You are using the most current version!");
+                noNewVersionsDialog.title = qsTr("You are using the most current version!\n\nCurrent version: %1\nLatest version available: %2")
+                    .arg(Qt.application.version)
+                    .arg(updateChecker.lastVersionName);
                 noNewVersionsDialog.open();
 
             }

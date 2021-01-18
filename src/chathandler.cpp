@@ -94,7 +94,7 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
 {
     if (_enabledSoundNewMessage && !messages.empty())
     {
-        _soundDefaultNewMessage->play();
+        playNewMessageSound();
     }
 
     for (const MessageAuthor& author : authors)
@@ -148,6 +148,18 @@ void ChatHandler::sendTestMessage(const QString &text)
 {
     const ChatMessage& message = ChatMessage::createTestMessage(text);
     onReadyRead({message}, {message.author()});
+}
+
+void ChatHandler::playNewMessageSound()
+{
+    if (_soundDefaultNewMessage)
+    {
+        _soundDefaultNewMessage->play();
+    }
+    else
+    {
+        qDebug() << "sound not exists";
+    }
 }
 
 void ChatHandler::onConnectedYouTube(QString broadcastId)

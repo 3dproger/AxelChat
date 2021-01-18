@@ -2,7 +2,7 @@
 #include "shared_library_interface.hpp"
 #else
 #include <QApplication>
-#include "constants.hpp"
+#include "applicationinfo.hpp"
 #include <QQmlApplicationEngine>
 #include <QSplashScreen>
 #include "chathandler.hpp"
@@ -15,6 +15,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QQmlContext>
+#include "commandseditor.h"
 
 int main(int argc, char *argv[])
 {
@@ -73,10 +74,10 @@ int main(int argc, char *argv[])
     //Qt
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QCoreApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
-    QCoreApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
-    QCoreApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
-    QCoreApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
+    QCoreApplication::setApplicationName   (APP_INFO_PRODUCTNAME_STR);
+    QCoreApplication::setOrganizationName  (APP_INFO_COMPANYNAME_STR);
+    QCoreApplication::setOrganizationDomain(APP_INFO_COMPANYDOMAIN_STR);
+    QCoreApplication::setApplicationVersion(APP_INFO_PRODUCTVERSION_STR);
 
     QSettings* settings = new QSettings();
 
@@ -131,6 +132,10 @@ int main(int argc, char *argv[])
     ClipboardQml::declareQml();
     ClipboardQml* clipboard = new ClipboardQml(&engine);
 
+    //Commands Editor Window
+    CommandsEditor::declareQml();
+    CommandsEditor* commandsEditor = new CommandsEditor(chatHandler->bot());
+
     engine.rootContext()->setContextProperty("i18n",               i18n);
     engine.rootContext()->setContextProperty("chatHandler",        chatHandler);
     engine.rootContext()->setContextProperty("youTube",            chatHandler->youTube());
@@ -140,6 +145,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("clipboard",          clipboard);
     engine.rootContext()->setContextProperty("qmlUtils",           qmlUtils);
     engine.rootContext()->setContextProperty("messagesModel",      chatHandler->messagesModel());
+    engine.rootContext()->setContextProperty("commandsEditor",     commandsEditor);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

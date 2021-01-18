@@ -50,11 +50,11 @@ ScrollView {
             anchors.leftMargin: 8
 
             Component.onCompleted: {
-                checked = chatBot.enabledSound;
+                checked = chatBot.enabledCommands;
             }
 
             onCheckedChanged: {
-                chatBot.enabledSound = checked;
+                chatBot.enabledCommands = checked;
             }
         }
 
@@ -107,9 +107,10 @@ ScrollView {
 
         Button {
             id: buttonAllCommands
-            x: 8
             y: 288
             text: qsTr("All Commands")
+            anchors.left: buttonCommandsEditor.right
+            anchors.leftMargin: 6
             onClicked: {
                 if (typeof(allCommandsWindow) == "undefined")
                 {
@@ -118,6 +119,16 @@ ScrollView {
                 }
 
                 allCommandsWindow.show()
+            }
+        }
+
+        Button {
+            id: buttonCommandsEditor
+            x: 8
+            y: 288
+            text: qsTr("Commands Editor")
+            onClicked: {
+                commandsEditor.open();
             }
         }
     }

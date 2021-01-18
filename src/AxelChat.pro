@@ -14,19 +14,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 HEADERS += \
+    applicationinfo.hpp \
     botaction.hpp \
     cef.hpp \
     chatbot.hpp \
     chathandler.hpp \
     chatmessage.hpp \
     clipboardqml.hpp \
+    commandseditor.h \
+    commandsingleeditor.h \
     githubapi.hpp \
     i18n.hpp \
     outputtofile.hpp \
     qmlutils.hpp \
     types.hpp \
-    youtube.hpp \
-    constants.hpp
+    youtube.hpp
 
 SOURCES += \
         botaction.cpp \
@@ -35,6 +37,8 @@ SOURCES += \
         chathandler.cpp \
         chatmessage.cpp \
         clipboardqml.cpp \
+        commandseditor.cpp \
+        commandsingleeditor.cpp \
         githubapi.cpp \
         i18n.cpp \
         main.cpp \
@@ -106,3 +110,7 @@ QMAKE_CXXFLAGS_DEBUG += /MTd
 
 win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.lib
 else:win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.a
+
+FORMS += \
+    commandseditor.ui \
+    commandsingleeditor.ui

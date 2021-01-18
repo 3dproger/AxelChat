@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>/svg/ic-bookmark</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic-bookmark" fill-rule="nonzero" fill="#4A4A4A">
+            <path d="M8,5.0668978 L8,19.3731486 C8,19.941628 8.36506292,20.1248408 8.81539086,19.7902975 L12,17 L15.2162698,19.7755895 C15.6425929,20.1130949 16,19.9380769 16,19.3731486 L16,5.0668978 C16,4.49841841 15.5536144,4.04400464 15.0029699,4.04400464 L8.99703014,4.04400464 C8.45303631,4.04400464 8,4.50196951 8,5.0668978 Z M9.99133444,21.4436549 C8.22681708,22.7544941 6,21.6219673 6,19.3731486 L6,5.0668978 C6,3.37509867 7.34650615,2 8.99703014,2 L15.0029699,2 C16.6600295,2 18,3.37143278 18,5.0668978 L18,19.3731486 C18,21.6295049 15.7380165,22.7741545 13.9914998,21.3914971 L12,19.8853381 L9.99133444,21.4436549 Z" id="Rectangle-2"></path>
+        </g>
+    </g>
+</svg>
