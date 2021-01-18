@@ -2,7 +2,7 @@
 #include "shared_library_interface.hpp"
 #else
 #include <QApplication>
-#include "constants.hpp"
+#include "applicationinfo.hpp"
 #include <QQmlApplicationEngine>
 #include <QSplashScreen>
 #include "chathandler.hpp"
@@ -74,10 +74,10 @@ int main(int argc, char *argv[])
     //Qt
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QCoreApplication::setApplicationName   (AxelChat::APPLICATION_NAME);
-    QCoreApplication::setOrganizationName  (AxelChat::ORGANIZATION_NAME);
-    QCoreApplication::setOrganizationDomain(AxelChat::ORGANIZATION_DOMAIN);
-    QCoreApplication::setApplicationVersion(AxelChat::APPLICATION_VERSION);
+    QCoreApplication::setApplicationName   (APP_INFO_PRODUCTNAME_STR);
+    QCoreApplication::setOrganizationName  (APP_INFO_COMPANYNAME_STR);
+    QCoreApplication::setOrganizationDomain(APP_INFO_COMPANYDOMAIN_STR);
+    QCoreApplication::setApplicationVersion(APP_INFO_PRODUCTVERSION_STR);
 
     QSettings* settings = new QSettings();
 
