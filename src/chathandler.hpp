@@ -62,6 +62,7 @@ signals:
 public slots:
     void onReadyRead(const QList<ChatMessage>& messages, const QList<MessageAuthor>& authors);
     void sendTestMessage(const QString& text);
+    void playNewMessageSound();
 
 private slots:
     void onConnectedYouTube(QString broadcastId);
@@ -85,7 +86,7 @@ private:
     bool _enabledClearMessagesOnLinkChange = false;
     const QString _settingsEnabledSoundNewMessage = "enabledSoundNewMessage";
     const QString _settingsEnabledClearMessagesOnLinkChange = "enabledClearMessagesOnLinkChange";
-    QSound* _soundDefaultNewMessage = new QSound(":/resources/sound/ui/beep1.wav", this);
+    std::unique_ptr<QSound> _soundDefaultNewMessage = std::unique_ptr<QSound>(new QSound(":/resources/sound/ui/beep1.wav"));
 
     bool _enabledProxy = false;
     const QString _settingsProxyEnabled = "proxyEnabled";

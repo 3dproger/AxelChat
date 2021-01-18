@@ -139,6 +139,13 @@ ScrollView {
             onCheckedChanged: {
                 chatHandler.enabledSoundNewMessage = checked;
             }
+
+            onClicked: {
+                if (checked)
+                {
+                    chatHandler.playNewMessageSound();
+                }
+            }
         }
 
         Label {
