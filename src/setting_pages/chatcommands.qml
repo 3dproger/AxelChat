@@ -50,11 +50,11 @@ ScrollView {
             anchors.leftMargin: 8
 
             Component.onCompleted: {
-                checked = chatBot.enabledSound;
+                checked = chatBot.enabledCommands;
             }
 
             onCheckedChanged: {
-                chatBot.enabledSound = checked;
+                chatBot.enabledCommands = checked;
             }
         }
 

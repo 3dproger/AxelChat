@@ -15,7 +15,7 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     {
         setVolume(_settings->value(_settingsGroupPath + "/" + _settingsKeyVolume, _volume).toInt());
 
-        setEnabledSound(_settings->value(_settingsGroupPath + "/" + _settingsKeyEnabledSound, false).toBool());
+        setEnabledCommands(_settings->value(_settingsGroupPath + "/" + _settingsKeyEnabledCommands, false).toBool());
     }
 }
 
@@ -24,23 +24,23 @@ int ChatBot::volume() const
     return _volume;
 }
 
-bool ChatBot::enabledSound() const
+bool ChatBot::enabledCommands() const
 {
-    return _enabledSound;
+    return _enabledCommands;
 }
 
-void ChatBot::setEnabledSound(bool enabledSound)
+void ChatBot::setEnabledCommands(bool enabledCommands)
 {
-    if (_enabledSound != enabledSound)
+    if (_enabledCommands != enabledCommands)
     {
-        _enabledSound = enabledSound;
+        _enabledCommands = enabledCommands;
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyEnabledSound, enabledSound);
+            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyEnabledCommands, enabledCommands);
         }
 
-        emit enabledSoundChanged();
+        emit enabledCommandsChanged();
     }
 }
 
@@ -178,6 +178,12 @@ void ChatBot::processMessage(const ChatMessage &message)
 
 void ChatBot::execute(BotAction &action)
 {
+    if (!_enabledCommands)
+    {
+        qDebug() << "commands is disabled!";
+        return;
+    }
+
     if (!action._active)
     {
         qDebug() << "The period of inactivity has not yet passed";
@@ -188,19 +194,16 @@ void ChatBot::execute(BotAction &action)
     {
     case BotAction::ActionType::SoundPlay:
     {
-        if (_enabledSound)
+        std::shared_ptr<QSoundEffect> soundEffect = action.soundEffect();
+        if (soundEffect)
         {
-            std::shared_ptr<QSoundEffect> soundEffect = action.soundEffect();
-            if (soundEffect)
-            {
-                qDebug() << "Playing" << soundEffect->source().toString();
-                soundEffect->setVolume(_volume / 100.0);
-                soundEffect->play();
-            }
-            else
-            {
-                qDebug() << "Failed to play sound: sound effect is not exists";
-            }
+            qDebug() << "Playing" << soundEffect->source().toString();
+            soundEffect->setVolume(_volume / 100.0);
+            soundEffect->play();
+        }
+        else
+        {
+            qDebug() << "Failed to play sound: sound effect is not exists";
         }
     }
         break;

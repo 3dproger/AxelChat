@@ -9,14 +9,14 @@ class ChatBot : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged())
-    Q_PROPERTY(bool enabledSound READ enabledSound WRITE setEnabledSound NOTIFY enabledSoundChanged())
+    Q_PROPERTY(bool enabledCommands READ enabledCommands WRITE setEnabledCommands NOTIFY enabledCommandsChanged())
 
 public:
     explicit ChatBot(QSettings* settings, const QString& settingsGroup, QObject *parent = nullptr);
 
     int volume() const;
-    bool enabledSound() const;
-    void setEnabledSound(bool enabledSound);
+    bool enabledCommands() const;
+    void setEnabledCommands(bool enabledCommands);
 
     static void declareQml()
     {
@@ -35,7 +35,7 @@ public:
 
 signals:
     void volumeChanged();
-    void enabledSoundChanged();
+    void enabledCommandsChanged();
 
 public slots:
     void setVolume(int volume);
@@ -51,12 +51,12 @@ private:
     QSettings*  _settings = nullptr;
 
     const QString _settingsKeyVolume = "volume";
-    const QString _settingsKeyEnabledSound = "enabledSound";
+    const QString _settingsKeyEnabledCommands = "enabled_commands";
     const QString _settingsGroupActions = "actions";
 
     QList<BotAction*> _actions;
 
-    bool _enabledSound = false;
+    bool _enabledCommands = false;
 
     int _volume = 100;
 };
