@@ -12,12 +12,12 @@
         <translation type="vanished">Тестовое сообщение</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="155"/>
+        <location filename="chathandler.cpp" line="167"/>
         <source>YouTube connected: %1</source>
         <translation>YouTube подключён: %1</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="162"/>
+        <location filename="chathandler.cpp" line="174"/>
         <source>YouTube disconnected: %1</source>
         <translation>YouTube отключён: %1</translation>
     </message>
@@ -50,59 +50,59 @@
         <translation>Чувствит. к регистру</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="65"/>
-        <location filename="commandsingleeditor.ui" line="78"/>
-        <location filename="commandsingleeditor.ui" line="88"/>
+        <location filename="commandsingleeditor.ui" line="72"/>
+        <location filename="commandsingleeditor.ui" line="85"/>
+        <location filename="commandsingleeditor.ui" line="95"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The time during which the command cannot be run after the last run&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Время, в течении которого команду нельзя будет запустить после последнего запуска&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="68"/>
+        <location filename="commandsingleeditor.ui" line="75"/>
         <source>Inactive Period (seconds):</source>
         <translation>Неактивный период (секунды):</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="91"/>
+        <location filename="commandsingleeditor.ui" line="98"/>
         <source>Change Inactive Period</source>
         <translation>Изменить неактивный период</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="101"/>
+        <location filename="commandsingleeditor.ui" line="108"/>
         <source>Action</source>
         <translation>Действие</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="107"/>
+        <location filename="commandsingleeditor.ui" line="114"/>
         <source>Action Type:</source>
         <translation>Тип действия:</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="115"/>
+        <location filename="commandsingleeditor.ui" line="122"/>
         <source>Sound Play</source>
         <translation>Звук</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="139"/>
+        <location filename="commandsingleeditor.ui" line="146"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Browse File&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Найти файл&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="153"/>
+        <location filename="commandsingleeditor.ui" line="160"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Play Sound&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Воспроизвести звук&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="167"/>
+        <location filename="commandsingleeditor.ui" line="174"/>
         <source>Sound File...</source>
         <translation>Файл звука...</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="219"/>
+        <location filename="commandsingleeditor.ui" line="226"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.ui" line="226"/>
+        <location filename="commandsingleeditor.ui" line="233"/>
         <source>Done</source>
         <translation>Готово</translation>
     </message>
@@ -112,46 +112,46 @@
         <translation>Изменение команды</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="113"/>
         <location filename="commandsingleeditor.cpp" line="120"/>
-        <location filename="commandsingleeditor.cpp" line="209"/>
+        <location filename="commandsingleeditor.cpp" line="127"/>
+        <location filename="commandsingleeditor.cpp" line="205"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="113"/>
+        <location filename="commandsingleeditor.cpp" line="120"/>
         <source>No keywords specified</source>
         <translation>Не указаны ключевые слова</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="120"/>
-        <location filename="commandsingleeditor.cpp" line="210"/>
+        <location filename="commandsingleeditor.cpp" line="127"/>
+        <location filename="commandsingleeditor.cpp" line="206"/>
         <source>Sound file not specified</source>
         <translation>Звуковой файл не указан</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="128"/>
-        <location filename="commandsingleeditor.cpp" line="218"/>
+        <location filename="commandsingleeditor.cpp" line="135"/>
+        <location filename="commandsingleeditor.cpp" line="214"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="129"/>
+        <location filename="commandsingleeditor.cpp" line="136"/>
         <source>File &quot;%1&quot; not found. Save command anyway?</source>
         <translation>Файл &quot;%1&quot; не найен. Всё равно сохранить команду?</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="191"/>
+        <location filename="commandsingleeditor.cpp" line="187"/>
         <source>Sound File Openning...</source>
         <translation>Открытие звукового файла...</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="193"/>
+        <location filename="commandsingleeditor.cpp" line="189"/>
         <source>WAV File</source>
         <translation>WAV-файл</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="193"/>
+        <location filename="commandsingleeditor.cpp" line="189"/>
         <source>All Files</source>
         <translation>Все файлы</translation>
     </message>
@@ -164,7 +164,7 @@
         <translation type="vanished">ВСе файлы (*)</translation>
     </message>
     <message>
-        <location filename="commandsingleeditor.cpp" line="219"/>
+        <location filename="commandsingleeditor.cpp" line="215"/>
         <source>File &quot;%1&quot; not found</source>
         <translation>Файл &quot;%1&quot; не найден</translation>
     </message>
@@ -262,33 +262,33 @@
 <context>
     <name>OutputToFile</name>
     <message>
-        <location filename="outputtofile.cpp" line="232"/>
+        <location filename="outputtofile.cpp" line="234"/>
         <source>Broadcast URL: %1</source>
         <translation>Ссылка на трансляцию: %1</translation>
     </message>
     <message>
-        <location filename="outputtofile.cpp" line="233"/>
-        <location filename="outputtofile.cpp" line="241"/>
+        <location filename="outputtofile.cpp" line="235"/>
+        <location filename="outputtofile.cpp" line="243"/>
         <source>Messages count: %1</source>
         <translation>Количество сообщейний: %1</translation>
     </message>
     <message>
-        <location filename="outputtofile.cpp" line="234"/>
+        <location filename="outputtofile.cpp" line="236"/>
         <source>Participants count: %1</source>
         <translation>Количество участников: %1</translation>
     </message>
     <message>
-        <location filename="outputtofile.cpp" line="236"/>
+        <location filename="outputtofile.cpp" line="238"/>
         <source>Participants:</source>
         <translation>Участники:</translation>
     </message>
     <message>
-        <location filename="outputtofile.cpp" line="240"/>
+        <location filename="outputtofile.cpp" line="242"/>
         <source>Channel: %1</source>
         <translation>Канал: %1</translation>
     </message>
     <message>
-        <location filename="outputtofile.cpp" line="245"/>
+        <location filename="outputtofile.cpp" line="247"/>
         <source>Messages:</source>
         <translation>Сообщения:</translation>
     </message>
@@ -305,17 +305,25 @@
     <name>about</name>
     <message>
         <location filename="setting_pages/about.qml" line="247"/>
-        <source>You are using the most current version!</source>
-        <oldsource>You are using the latest version!</oldsource>
-        <translation>Вы используете наиболее актуальную версию!</translation>
+        <source>You are using the most current version!
+
+Current version: %1
+Latest version available: %2</source>
+        <oldsource>You are using the most current version!
+Current version: %1
+Latest version available: %2</oldsource>
+        <translation>Вы используете наиболее актуальную версию!
+
+Текущая версия: %1
+Последняя доступная версия: %2</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="253"/>
+        <location filename="setting_pages/about.qml" line="255"/>
         <source>Failed to connect to server. Check your internet connection!</source>
         <translation>Не удалось подключиться к серверу. Проверьте подключение к интернету!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="258"/>
+        <location filename="setting_pages/about.qml" line="260"/>
         <source>Request limits exceeded! Please try again later</source>
         <translation>Превышен лимит запросов! Пожалуйста, повторите попытку  позже</translation>
     </message>
@@ -557,7 +565,7 @@
         <translation>Включить звук при получении нового сообщения</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="147"/>
+        <location filename="setting_pages/common.qml" line="154"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
