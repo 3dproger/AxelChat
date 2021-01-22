@@ -27,6 +27,12 @@ HEADERS += \
     i18n.hpp \
     outputtofile.hpp \
     qmlutils.hpp \
+    settingspageabout.h \
+    settingspagecommands.h \
+    settingspagecommon.h \
+    settingspageoutputtofile.h \
+    settingspageyoutube.h \
+    settingswindow.h \
     types.hpp \
     youtube.hpp
 
@@ -44,6 +50,12 @@ SOURCES += \
         main.cpp \
         outputtofile.cpp \
         qmlutils.cpp \
+        settingspageabout.cpp \
+        settingspagecommands.cpp \
+        settingspagecommon.cpp \
+        settingspageoutputtofile.cpp \
+        settingspageyoutube.cpp \
+        settingswindow.cpp \
         youtube.cpp
 
 RESOURCES += qml.qrc \
@@ -113,4 +125,10 @@ else:win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef
 
 FORMS += \
     commandseditor.ui \
-    commandsingleeditor.ui
+    commandsingleeditor.ui \
+    settingspageabout.ui \
+    settingspagecommands.ui \
+    settingspagecommon.ui \
+    settingspageoutputtofile.ui \
+    settingspageyoutube.ui \
+    settingswindow.ui

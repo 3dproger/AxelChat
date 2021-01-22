@@ -75,6 +75,8 @@ ApplicationWindow {
             }
 
             settingsWindow.show()
+
+            settingsWindowQtWidgets.show();
         }
 
         onWheel: {

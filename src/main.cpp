@@ -16,6 +16,7 @@
 #include <QDir>
 #include <QQmlContext>
 #include "commandseditor.h"
+#include "settingswindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -132,6 +133,10 @@ int main(int argc, char *argv[])
     ClipboardQml::declareQml();
     ClipboardQml* clipboard = new ClipboardQml(&engine);
 
+    //Settings Window
+    SettingsWindow::declareQml();
+    SettingsWindow* settingsWindow = new SettingsWindow();
+
     //Commands Editor Window
     CommandsEditor::declareQml();
     CommandsEditor* commandsEditor = new CommandsEditor(chatHandler->bot());
@@ -146,6 +151,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("qmlUtils",           qmlUtils);
     engine.rootContext()->setContextProperty("messagesModel",      chatHandler->messagesModel());
     engine.rootContext()->setContextProperty("commandsEditor",     commandsEditor);
+    engine.rootContext()->setContextProperty("settingsWindowQtWidgets",     settingsWindow);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
