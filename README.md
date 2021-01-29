@@ -14,8 +14,8 @@ A program for adding interactivity to live broadcasts and communication with vie
   <br> 1.2 In tab ```Language Packs``` enable only English beacuse there may be encoding problems in displaying compiler messages when in other languages
   <br> 1.3 After installation, you do not need to run Visual Studio
 2. Download Open Source Qt online installer (sign-up or login required during installing): https://www.qt.io/download-qt-installer or you can also find the offline installers but this is not the recommended way.
-3. Run Qt installer and login
-4. <br> In page ```Selection of Components``` you need enabled components:
+3. Run Qt installer and login/sign-up
+4. In page ```Selection of Components``` you need enabled components:
     * Qt / Qt 5.15.x / MSVC 2019 64-bit
     * Developer and Designer Tools / Qt Creator x.x.x CDB Debugger Support
     * Developer and Designer Tools / Debugging Tools for Windows
