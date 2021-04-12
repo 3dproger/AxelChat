@@ -25,7 +25,7 @@ public:
 
     MessageAuthor() { };
 
-    inline bool valid() const;
+    bool valid() const;
     inline QString channelId() const
     {
         return _channelId;

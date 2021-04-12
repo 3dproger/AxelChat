@@ -1,4 +1,5 @@
 #include "outputtofile.hpp"
+#include "youtube.hpp"
 #include <QStandardPaths>
 #include <QGuiApplication>
 #include <QTextCodec>
@@ -138,7 +139,7 @@ void OutputToFile::onMessagesReceived(const ChatMessage &message, const MessageA
             _iniMessages->setValue("statistic/count", _iniMessagesCount);
         }
 
-        saveAuthor(author);
+        saveAuthor(message, author);
     }
 }
 
@@ -345,7 +346,71 @@ void OutputToFile::setYouTubeInfo(const YouTubeInfo &youTubeCurrent)
     reinitIni();
 }
 
-void OutputToFile::saveAuthor(const MessageAuthor& author)
+void OutputToFile::saveAuthor(const ChatMessage& message, const MessageAuthor& author)
 {
-    const QString folder = _outputFolder + "/authors/" + author.channelId();
+    if (author.channelId().isEmpty())
+    {
+        qDebug() << Q_FUNC_INFO << "ignore, channel id is empty";
+        return;
+    }
+
+    if (_broadcastFolder.isEmpty())
+    {
+        qDebug() << Q_FUNC_INFO << "ignore, broadcast folder is empty";
+        return;
+    }
+
+    QString folder = _broadcastFolder + "/authors";
+
+    switch (author.type()){
+    case MessageAuthor::AuthorType::YouTubeAuthorType:
+        folder += "/youtube/" + author.channelId();
+        break;
+
+    case MessageAuthor::AuthorType::TwitchAuthorType:
+        folder += "/twitch/" + author.channelId();
+        break;
+
+    case MessageAuthor::AuthorType::SoftwareAuthorType:
+    case MessageAuthor::AuthorType::TestAuthorType:
+        return;
+
+    case MessageAuthor::AuthorType::UnknownAuthorType:
+        qDebug() << Q_FUNC_INFO << "ignore, unknown author type";
+        return;
+
+    default:
+        qDebug() << Q_FUNC_INFO << "ignore, unsupported author type";
+        return;
+    }
+
+    QSettings* authorSettings = new QSettings(folder + "/info.ini", QSettings::IniFormat, this);
+
+    authorSettings->beginGroup("author_info");
+    authorSettings->setValue("name", author.name());
+    authorSettings->setValue("page_url", author.pageUrl().toString());
+
+    if (author.type())
+    {
+        authorSettings->setValue("avatar_url", YouTube::createResizedAvatarUrl(author.avatarUrl(), 720).toString());
+    }
+    else
+    {
+        authorSettings->setValue("avatar_url", author.avatarUrl().toString());
+    }
+
+    authorSettings->endGroup();
+
+
+    authorSettings->beginGroup("last_message");
+    authorSettings->setValue("text", message.text());
+    authorSettings->setValue("time", QString("%1:%2:%3.%4")
+                             .arg(message.publishedAt().time().hour(),   2, 10, QChar('0'))
+                             .arg(message.publishedAt().time().minute(), 2, 10, QChar('0'))
+                             .arg(message.publishedAt().time().second(), 2, 10, QChar('0'))
+                             .arg(message.publishedAt().time().msec(),   3, 10, QChar('0')));
+    authorSettings->endGroup();
+
+    authorSettings->sync();
+    delete authorSettings;
 }
