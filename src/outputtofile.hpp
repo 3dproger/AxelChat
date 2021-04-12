@@ -45,6 +45,8 @@ private:
         int messagesCount = 0;
     };
 
+    void saveAuthor(const MessageAuthor& author);
+
     void reinitIni();
     void writeStartupInfo();
     void writeYoutubeInfo();

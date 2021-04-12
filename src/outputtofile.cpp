@@ -100,10 +100,9 @@ void OutputToFile::resetSettings()
 
 void OutputToFile::onMessagesReceived(const ChatMessage &message, const MessageAuthor& author)
 {
-    //if (message.wherefrom.trimmed().toLower() == "software")
-    if (message.type() == ChatMessage::Type::Unknown ||
-        message.type() == ChatMessage::Type::SoftwareNotification ||
-        message.type() == ChatMessage::Type::TestMessage)
+    if (message.authorType() == MessageAuthor::AuthorType::UnknownAuthorType ||
+        message.authorType() == MessageAuthor::AuthorType::SoftwareAuthorType ||
+        message.authorType() == MessageAuthor::AuthorType::TestAuthorType)
     {
         return;
     }
@@ -138,6 +137,8 @@ void OutputToFile::onMessagesReceived(const ChatMessage &message, const MessageA
 
             _iniMessages->setValue("statistic/count", _iniMessagesCount);
         }
+
+        saveAuthor(author);
     }
 }
 
@@ -342,4 +343,9 @@ void OutputToFile::setYouTubeInfo(const YouTubeInfo &youTubeCurrent)
     _youTubeInfo = youTubeCurrent;
 
     reinitIni();
+}
+
+void OutputToFile::saveAuthor(const MessageAuthor& author)
+{
+    const QString folder = _outputFolder + "/authors/" + author.channelId();
 }

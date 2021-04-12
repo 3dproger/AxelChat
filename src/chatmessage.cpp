@@ -25,6 +25,7 @@ MessageAuthor MessageAuthor::createFromYouTube(
     author._isChatOwner = isChatOwner;
     author._isChatSponsor = isChatSponsor;
     author._isChatModerator = isChatModerator;
+    author._type = AuthorType::YouTubeAuthorType;
 
     return author;
 }
@@ -37,6 +38,7 @@ const MessageAuthor& MessageAuthor::softwareAuthor()
         _softwareAuthor._channelId = "____" + QCoreApplication::applicationName() + "____";
         _softwareAuthor._name = QCoreApplication::applicationName();
         _softwareAuthor._avatarUrl = QUrl("qrc:/resources/images/axelchat-rounded.svg");
+        _softwareAuthor._type = AuthorType::SoftwareAuthorType;
 
         //_softwareAuthor._customBadgeUrl = QUrl("qrc:/resources/images/axelchat.svg");
     }
@@ -52,6 +54,7 @@ const MessageAuthor& MessageAuthor::testMessageAuthor()
         _testMessageAuthor._channelId = "____TEST_MESSAGE____";
         _testMessageAuthor._name = QTranslator::tr("Test Message");
         _testMessageAuthor._avatarUrl = QUrl("qrc:/resources/images/flask.svg");
+        _softwareAuthor._type = AuthorType::TestAuthorType;
 
         //_testMessageAuthor._customBadgeUrl = QUrl("qrc:/resources/images/axelchat.svg");
     }
@@ -79,7 +82,6 @@ ChatMessage ChatMessage::createFromYouTube(const QString& text,
     message._id          = id;
     message._publishedAt = publishedAt;
     message._receivedAt  = receivedAt;
-    message._type        = Type::YouTube;
     message._author      = author;
 
     return message;
@@ -106,7 +108,6 @@ ChatMessage ChatMessage::createSoftwareNotification(const QString &text)
     message._id          = QUuid::createUuid().toString(QUuid::Id128);//ToDo: отказать вовсе того, чтобы id был обязателен
     message._publishedAt = QDateTime::currentDateTime();
     message._receivedAt  = QDateTime::currentDateTime();
-    message._type        = Type::SoftwareNotification;
     message._author      = MessageAuthor::softwareAuthor();
 
     return message;
@@ -121,7 +122,6 @@ ChatMessage ChatMessage::createTestMessage(const QString &text)
     message._id          = QUuid::createUuid().toString(QUuid::Id128);//ToDo: отказать вовсе того, чтобы id был обязателен
     message._publishedAt = QDateTime::currentDateTime();
     message._receivedAt  = QDateTime::currentDateTime();
-    message._type        = Type::TestMessage;
     message._author      = MessageAuthor::testMessageAuthor();
 
     return message;
@@ -494,7 +494,7 @@ QVariant ChatMessagesModel::dataByRole(const ChatMessage &message, int role)
     case MessageText:
         return message.text();
     case MessageType:
-        return message.type();
+        return message.authorType();
     case MessagePublishedAt:
         return message.publishedAt();
     case MessageReceivedAt:

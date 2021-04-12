@@ -10,6 +10,17 @@ class ChatMessage;
 class MessageAuthor{
     Q_GADGET
 public:
+    enum AuthorType
+    {
+        UnknownAuthorType,
+        SoftwareAuthorType,
+        TestAuthorType,
+
+        YouTubeAuthorType,
+        TwitchAuthorType
+    };
+    Q_ENUM(AuthorType)
+
     friend class ChatHandler;
 
     MessageAuthor() { };
@@ -58,6 +69,11 @@ public:
         return _messagesSentCurrent;
     }
 
+    inline AuthorType type() const
+    {
+        return _type;
+    }
+
     static MessageAuthor createFromYouTube(const QString& name,
                                            const QString& channelId,
                                            const QUrl& avatarUrl,
@@ -92,6 +108,7 @@ private:
     bool _isChatModerator = false;
     bool _isDonation      = false;
     int _messagesSentCurrent = 0;
+    AuthorType _type = AuthorType::UnknownAuthorType;
 
     static MessageAuthor _softwareAuthor;
     static MessageAuthor _testMessageAuthor;
@@ -104,16 +121,6 @@ class ChatMessage{
 public:
     friend class ChatMessagesModel;
     ChatMessage() { }
-
-    enum Type
-    {
-        Unknown,
-        SoftwareNotification,
-        TestMessage,
-        YouTube,
-        Twitch
-    };
-    Q_ENUMS(Type)
 
     static ChatMessage createFromYouTube(const QString& text,
                               const QString& id,
@@ -143,9 +150,9 @@ public:
     {
         return _isDeleterItem;
     }
-    inline Type type() const
+    inline MessageAuthor::AuthorType authorType() const
     {
-        return _type;
+        return _author.type();
     }
     inline QDateTime publishedAt() const
     {
@@ -192,8 +199,6 @@ private:
 
     mutable bool _isBotCommand = false;
     bool _isDeleterItem = false;
-
-    Type _type = Type::Unknown;
 
     QDateTime _publishedAt;
     QDateTime _receivedAt;
