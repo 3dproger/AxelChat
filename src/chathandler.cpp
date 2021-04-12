@@ -1,5 +1,6 @@
 #include "chathandler.hpp"
 #include <QDebug>
+#include <QThreadPool>
 
 ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroup, QObject *parent)
     : QObject(parent), _cefApp(cefApp)
@@ -18,8 +19,9 @@ ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const 
     //Output to file
     _outputToFile = new OutputToFile(settings, _settingsGroupPath + "/output_to_file");
 
-    connect(this, &ChatHandler::messagesReceived,
-            _outputToFile, &OutputToFile::onMessagesReceived);
+    QThreadPool::globalInstance()->start(_outputToFile);
+
+    connect(this, &ChatHandler::messagesReceived, _outputToFile, &OutputToFile::onMessagesReceived);
 
     //YouTube
     _youTube = new YouTube(_outputToFile, settings, _cefApp, _settingsGroupPath + "/youtube");

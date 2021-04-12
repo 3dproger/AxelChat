@@ -39,6 +39,36 @@ OutputToFile::~OutputToFile()
     }
 }
 
+void OutputToFile::run()
+{
+    QQueue<QPair<ChatMessage, MessageAuthor>> buffer;
+
+    while (!_stopThread)
+    {
+        _mutex.lock();
+        _waitCondition.wait(&_mutex);
+
+        while (!_queueForSave.isEmpty())
+        {
+            buffer.enqueue(_queueForSave.dequeue());
+        }
+
+        _mutex.unlock();
+
+        while (!buffer.empty())
+        {
+            const QPair<ChatMessage, MessageAuthor> item = buffer.dequeue();
+            saveAuthor(item.first, item.second);
+        }
+    }
+}
+
+void OutputToFile::stopThread()
+{
+    QMutexLocker locker(&_mutex);
+    _stopThread = true;
+}
+
 bool OutputToFile::enabled() const
 {
     return _enabled;
@@ -139,7 +169,10 @@ void OutputToFile::onMessagesReceived(const ChatMessage &message, const MessageA
             _iniMessages->setValue("statistic/count", _iniMessagesCount);
         }
 
-        saveAuthor(message, author);
+        //_mutex.lock();
+        _waitCondition.wakeAll();
+        _queueForSave.enqueue({message, author});
+        //_mutex.unlock();
     }
 }
 

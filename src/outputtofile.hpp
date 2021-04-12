@@ -1,12 +1,16 @@
 #ifndef OUTPUTTOFILE_HPP
 #define OUTPUTTOFILE_HPP
 
-#include <QObject>
-#include <QSettings>
 #include "chatmessage.hpp"
 #include "types.hpp"
+#include <QObject>
+#include <QSettings>
+#include <QRunnable>
+#include <QWaitCondition>
+#include <QMutex>
+#include <QQueue>
 
-class OutputToFile : public QObject
+class OutputToFile : public QObject, public QRunnable
 {
     Q_OBJECT
     Q_PROPERTY(QString outputFolderPath READ outputFolder WRITE setOutputFolder NOTIFY outputFolderChanged)
@@ -16,6 +20,9 @@ class OutputToFile : public QObject
 public:
     explicit OutputToFile(QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
     ~OutputToFile();
+
+    void run();
+    void stopThread();
 
     bool enabled() const;
     void setEnabled(bool enabled);
@@ -72,6 +79,12 @@ private:
     QString _broadcastFolder;
 
     const QDateTime _startupDateTime = QDateTime::currentDateTime();
+
+    QQueue<QPair<ChatMessage, MessageAuthor>> _queueForSave;
+
+    bool _stopThread = false;
+    QWaitCondition _waitCondition;
+    QMutex _mutex;
 };
 
 #endif // OUTPUTTOFILE_HPP
