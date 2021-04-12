@@ -66,6 +66,7 @@ void OutputToFile::run()
 void OutputToFile::stopThread()
 {
     QMutexLocker locker(&_mutex);
+    _waitCondition.wakeAll();
     _stopThread = true;
 }
 

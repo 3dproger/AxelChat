@@ -18,7 +18,7 @@ ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const 
 
     //Output to file
     _outputToFile = new OutputToFile(settings, _settingsGroupPath + "/output_to_file");
-
+    _outputToFile->setAutoDelete(false);
     QThreadPool::globalInstance()->start(_outputToFile);
 
     connect(this, &ChatHandler::messagesReceived, _outputToFile, &OutputToFile::onMessagesReceived);
@@ -161,6 +161,14 @@ void ChatHandler::playNewMessageSound()
     else
     {
         qDebug() << "sound not exists";
+    }
+}
+
+void ChatHandler::onLastWindowClosed()
+{
+    if (_outputToFile)
+    {
+        _outputToFile->stopThread();
     }
 }
 

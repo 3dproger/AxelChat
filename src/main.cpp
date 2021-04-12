@@ -115,6 +115,8 @@ int main(int argc, char *argv[])
     ChatHandler* chatHandler = new ChatHandler(settings, cefApp, "chat_handler");
     settings->setParent(chatHandler);
 
+    QObject::connect(&app, &QApplication::lastWindowClosed, chatHandler, &ChatHandler::onLastWindowClosed);
+
     qRegisterMetaType<size_t>("size_t");
     qRegisterMetaType<std::shared_ptr<QByteArray>>("std::shared_ptr<QByteArray>");
     QObject::connect(cefApp, &QtCefApp::dataReceived, chatHandler->youTube(), &YouTube::onDataReceived);

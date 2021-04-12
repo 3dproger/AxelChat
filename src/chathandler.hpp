@@ -63,6 +63,7 @@ public slots:
     void onReadyRead(const QList<ChatMessage>& messages, const QList<MessageAuthor>& authors);
     void sendTestMessage(const QString& text);
     void playNewMessageSound();
+    void onLastWindowClosed();
 
 private slots:
     void onConnectedYouTube(QString broadcastId);
