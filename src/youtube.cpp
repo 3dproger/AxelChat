@@ -345,12 +345,23 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
         return;
     }
 
-    QList<ChatMessage> messages;
-    QList<MessageAuthor> authors;
+    if (data->startsWith("<!DOCTYPE html>"))
+    {
+        parseHTML(data);
+        return;
+    }
 
     const QJsonDocument& jsonDocument = QJsonDocument::fromJson(*data);
 
-    if (jsonDocument.isObject() && !_youtubeInfo.broadcastConnected && !_youtubeInfo.broadcastId.isEmpty())
+    QJsonObject liveChatContinuation = jsonDocument.object().value("continuationContents").toObject().value("liveChatContinuation").toObject();
+
+    const QJsonArray actionsArray = liveChatContinuation.value("actions").toArray();
+    parseActionsArray(actionsArray, *data);
+}
+
+void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
+{
+    if (!_youtubeInfo.broadcastConnected && !_youtubeInfo.broadcastId.isEmpty())
     {
         qDebug(QString("YouTube connected: %1")
                .arg(_youtubeInfo.broadcastId).toUtf8());
@@ -364,11 +375,10 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
         emit connectedChanged();
     }
 
-    QJsonObject liveChatContinuation = jsonDocument.object().value("continuationContents").toObject().value("liveChatContinuation").toObject();
+    QList<ChatMessage> messages;
+    QList<MessageAuthor> authors;
 
-    QJsonArray actionsJson = liveChatContinuation.value("actions").toArray();
-
-    foreach (const QJsonValue& actionJson, actionsJson)
+    foreach (const QJsonValue& actionJson, array)
     {
         bool valid = false;
         bool isDeleter = false;
@@ -499,7 +509,7 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
                         }
                         else
                         {
-                            printData(Q_FUNC_INFO + QString(": Unknown json structure of object \"%1\"").arg("liveChatAuthorBadgeRenderer"), *data);
+                            printData(Q_FUNC_INFO + QString(": Unknown json structure of object \"%1\"").arg("liveChatAuthorBadgeRenderer"), data);
                         }
                     }
                 }
@@ -557,15 +567,20 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
         }
         else if (actionObject.contains("replaceChatItemAction"))
         {
-            printData(Q_FUNC_INFO + QString(": object \"replaceChatItemAction\" not support"), *data);
+            printData(Q_FUNC_INFO + QString(": object \"replaceChatItemAction\" not support"), data);
         }
         else if (actionObject.contains("addLiveChatTickerItemAction"))
         {
-            printData(Q_FUNC_INFO + QString(": object \"addLiveChatTickerItemAction\" not support"), *data);
+            printData(Q_FUNC_INFO + QString(": object \"addLiveChatTickerItemAction\" not support"), data);
+        }
+        else if (actionObject.contains("addBannerToLiveChatCommand"))
+        {
+            printData(Q_FUNC_INFO + QString(": object \"addBannerToLiveChatCommand\" not support"), data);
         }
         else
         {
-            printData(Q_FUNC_INFO + QString(": unknown json structure of array \"%1\"").arg("actions"), *data);
+            QJsonDocument doc(actionObject);
+            printData(Q_FUNC_INFO + QString(": unknown json structure of array \"%1\"").arg("actions"), doc.toJson());
         }
 
         if (valid)
@@ -605,4 +620,68 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
     emit readyRead(messages, authors);
 
     emit stateChanged();
+}
+
+void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
+{
+    if (!rawData)
+    {
+        return;
+    }
+
+    const int start = rawData->indexOf("\"actions\":[");
+    if (start == -1)
+    {
+        qDebug() << Q_FUNC_INFO << ": not found actions";
+        return;
+    }
+
+    QByteArray& data = rawData->remove(0, start + 10);
+
+    //ToDo: учитывать символы [ и ] в кавычках
+    int brackets = 0;
+    bool insideQuotes = false;
+    for (int i = 0; i < data.length(); ++i)
+    {
+        if (!insideQuotes)
+        {
+            if (data[i] == '[')
+            {
+                brackets++;
+            }
+            else if  (data[i] == ']')
+            {
+                brackets--;
+            }
+            else if (data[i] == '\"')
+            {
+                insideQuotes = true;
+            }
+
+            if (brackets == 0)
+            {
+                data = data.remove(i + 1, data.length());
+                break;
+            }
+        }
+        else
+        {
+            const bool prevIsBackslash = i > 0 && data[i - 1] == '\\';
+            if (data[i] == '\"' && !prevIsBackslash)
+            {
+                insideQuotes = false;
+            }
+        }
+    }
+
+    const QJsonDocument jsonDocument = QJsonDocument::fromJson(data);
+    if (jsonDocument.isArray())
+    {
+        const QJsonArray actionsArray = jsonDocument.array();
+        parseActionsArray(actionsArray, data);
+    }
+    else
+    {
+        printData(Q_FUNC_INFO + QString(": document is not array"), data);
+    }
 }

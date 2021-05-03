@@ -92,10 +92,18 @@ public:
         Q_UNUSED(request);
         Q_UNUSED(response);
 
-        if (request && QString::fromStdWString(request->GetURL().ToWString()).contains("get_live_chat"))
+        if (request)
         {
-            _interceptor->ReInit(request->GetIdentifier());
-            return _interceptor;
+            if (QString::fromStdWString(request->GetURL().ToWString()).contains("get_live_chat"))
+            {
+                _interceptor->ReInit(request->GetIdentifier());
+                return _interceptor;
+            }
+            else if (request->GetResourceType() == RT_MAIN_FRAME)
+            {
+                _interceptor->ReInit(request->GetIdentifier());
+                return _interceptor;
+            }
         }
 
         return nullptr;
