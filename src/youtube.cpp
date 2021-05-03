@@ -294,8 +294,11 @@ void YouTube::setLink(QString link)
 
         if (!_youtubeInfo.broadcastId.isEmpty())
         {
-            _youtubeInfo.broadcastChatUrl = QUrl(QString("https://www.youtube.com/live_chat?v=%1")
-                    .arg(_youtubeInfo.broadcastId));
+            _youtubeInfo.broadcastChatUrl = QUrl(QString("https://www.youtube.com/watch?v=%1")
+                                .arg(_youtubeInfo.broadcastId));
+
+            /*_youtubeInfo.broadcastChatUrl = QUrl(QString("https://www.youtube.com/live_chat?v=%1")
+                    .arg(_youtubeInfo.broadcastId));*/
 
             _youtubeInfo.broadcastShortUrl = QUrl(QString("https://youtu.be/%1")
                                  .arg(_youtubeInfo.broadcastId));
@@ -351,12 +354,27 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
         return;
     }
 
-    const QJsonDocument& jsonDocument = QJsonDocument::fromJson(*data);
+    const QJsonDocument jsonDocument = QJsonDocument::fromJson(*data);
+    const QJsonObject liveChatContinuation = jsonDocument.object().value("continuationContents").toObject().value("liveChatContinuation").toObject();
+    const QJsonValue actions = liveChatContinuation.value("actions");
+    if (actions.isArray())
+    {
+        parseActionsArray(actions.toArray(), *data);
+        return;
+    }
 
-    QJsonObject liveChatContinuation = jsonDocument.object().value("continuationContents").toObject().value("liveChatContinuation").toObject();
+    if (data->startsWith("{\n  \"responseContext\":"))
+    {
+        return;
+    }
 
-    const QJsonArray actionsArray = liveChatContinuation.value("actions").toArray();
-    parseActionsArray(actionsArray, *data);
+    QByteArray snap = data->left(128);
+    if (data->size() > snap.size())
+    {
+        snap += "...";
+    }
+
+    printData(Q_FUNC_INFO + QString(": unknown data type"), snap);
 }
 
 void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
