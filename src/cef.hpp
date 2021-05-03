@@ -94,14 +94,11 @@ public:
 
         if (request)
         {
-            //qDebug() << request->GetResourceType() << ", " << request->GetURL().ToWString();
+            const QString url = QString::fromStdWString(request->GetURL().ToWString());
 
-            if (QString::fromStdWString(request->GetURL().ToWString()).contains("get_live_chat"))
-            {
-                _interceptor->ReInit(request->GetIdentifier());
-                return _interceptor;
-            }
-            else if (request->GetResourceType() == RT_MAIN_FRAME || request->GetResourceType() == RT_SUB_FRAME)
+            //qDebug() << request->GetResourceType() << ", " << url;
+
+            if (url.contains("get_live_chat") /*|| url.contains("updated_metadata")*/ || request->GetResourceType() == RT_MAIN_FRAME || request->GetResourceType() == RT_SUB_FRAME)
             {
                 _interceptor->ReInit(request->GetIdentifier());
                 return _interceptor;

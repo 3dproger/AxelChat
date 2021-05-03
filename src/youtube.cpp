@@ -295,11 +295,8 @@ void YouTube::setLink(QString link)
 
         if (!_youtubeInfo.broadcastId.isEmpty())
         {
-            _youtubeInfo.broadcastChatUrl = QUrl(QString("https://www.youtube.com/watch?v=%1")
-                                .arg(_youtubeInfo.broadcastId));
-
-            /*_youtubeInfo.broadcastChatUrl = QUrl(QString("https://www.youtube.com/live_chat?v=%1")
-                    .arg(_youtubeInfo.broadcastId));*/
+            _youtubeInfo.broadcastChatUrl = QUrl(QString("https://www.youtube.com/live_chat?v=%1")
+                    .arg(_youtubeInfo.broadcastId));
 
             _youtubeInfo.broadcastShortUrl = QUrl(QString("https://youtu.be/%1")
                                  .arg(_youtubeInfo.broadcastId));
@@ -333,6 +330,7 @@ void YouTube::setLink(QString link)
 
         if (_cefApp)
         {
+            //_cefApp->setUrl(_youtubeInfo.broadcastLongUrl.toString());
             _cefApp->setUrl(_youtubeInfo.broadcastChatUrl.toString());
         }
 
@@ -366,6 +364,13 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
 
     if (data->startsWith("{\n  \"responseContext\":"))
     {
+        /*QFile file("debug_example.json");
+        if (file.open(QFile::OpenModeFlag::WriteOnly | QFile::OpenModeFlag::Text))
+        {
+            file.write(*data);
+            file.close();
+        }*/
+
         return;
     }
 
@@ -708,6 +713,7 @@ void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
     if (jsonDocument.isArray())
     {
         const QJsonArray actionsArray = jsonDocument.array();
+        qDebug() << "array size = " << actionsArray.size();
         parseActionsArray(actionsArray, data);
     }
     else
