@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QUrlQuery>
+#include <QFile>
 
 YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath, QObject *parent)
     : QObject(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath), _cefApp(cefApp)
@@ -348,7 +349,7 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
         return;
     }
 
-    if (data->startsWith("<!DOCTYPE html>"))
+    if (data->toUpper().startsWith("<!DOCTYPE HTML>"))
     {
         parseHTML(data);
         return;
@@ -585,15 +586,19 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
         }
         else if (actionObject.contains("replaceChatItemAction"))
         {
-            printData(Q_FUNC_INFO + QString(": object \"replaceChatItemAction\" not support"), data);
+            qDebug() << Q_FUNC_INFO << QString(": object \"replaceChatItemAction\" not supported yet");
         }
         else if (actionObject.contains("addLiveChatTickerItemAction"))
         {
-            printData(Q_FUNC_INFO + QString(": object \"addLiveChatTickerItemAction\" not support"), data);
+            qDebug() << Q_FUNC_INFO << QString(": object \"addLiveChatTickerItemAction\" not supported yet");
         }
         else if (actionObject.contains("addBannerToLiveChatCommand"))
         {
-            printData(Q_FUNC_INFO + QString(": object \"addBannerToLiveChatCommand\" not support"), data);
+            qDebug() << Q_FUNC_INFO << QString(": object \"addBannerToLiveChatCommand\" not supported yet");
+        }
+        else if (actionObject.contains("addToPlaylistCommand") || actionObject.contains("clickTrackingParams"))
+        {
+            // it probably doesn't need to be maintained
         }
         else
         {
@@ -646,6 +651,13 @@ void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
     {
         return;
     }
+
+    /*QFile file("debug.html");
+    if (file.open(QFile::OpenModeFlag::WriteOnly | QFile::OpenModeFlag::Text))
+    {
+        file.write(*rawData);
+        file.close();
+    }*/
 
     const int start = rawData->indexOf("\"actions\":[");
     if (start == -1)
