@@ -713,7 +713,7 @@ void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
     if (jsonDocument.isArray())
     {
         const QJsonArray actionsArray = jsonDocument.array();
-        qDebug() << "array size = " << actionsArray.size();
+        //qDebug() << "array size = " << actionsArray.size();
         parseActionsArray(actionsArray, data);
     }
     else
