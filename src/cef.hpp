@@ -8,8 +8,39 @@
 #include "include/cef_client.h"
 #include "include/cef_urlrequest.h"
 #include <list>
-
 #include <QDebug>
+
+namespace
+{
+
+QString convertResourceTypeToQString(CefRequest::ResourceType type)
+{
+    switch(type)
+    {
+        case RT_MAIN_FRAME:         return "RT_MAIN_FRAME";
+        case RT_SUB_FRAME:          return "RT_SUB_FRAME";
+        case RT_STYLESHEET:         return "RT_STYLESHEET";
+        case RT_SCRIPT:             return "RT_SCRIPT";
+        case RT_IMAGE:              return "RT_IMAGE";
+        case RT_FONT_RESOURCE:      return "RT_FONT_RESOURCE";
+        case RT_SUB_RESOURCE:       return "RT_SUB_RESOURCE";
+        case RT_OBJECT:             return "RT_OBJECT";
+        case RT_MEDIA:              return "RT_MEDIA";
+        case RT_WORKER:             return "RT_WORKER";
+        case RT_SHARED_WORKER:      return "RT_SHARED_WORKER";
+        case RT_PREFETCH:           return "RT_PREFETCH";
+        case RT_FAVICON:            return "RT_FAVICON";
+        case RT_XHR:                return "RT_XHR";
+        case RT_PING:               return "RT_PING";
+        case RT_SERVICE_WORKER:     return "RT_SERVICE_WORKER";
+        case RT_CSP_REPORT:         return "RT_CSP_REPORT";
+        case RT_PLUGIN_RESOURCE:    return "RT_PLUGIN_RESOURCE";
+    }
+
+    return "<unknown>";
+}
+
+}
 
 class QtCefApp;
 
@@ -92,10 +123,23 @@ public:
         Q_UNUSED(request);
         Q_UNUSED(response);
 
-        if (request && QString::fromStdWString(request->GetURL().ToWString()).contains("get_live_chat"))
+        if (request)
         {
-            _interceptor->ReInit(request->GetIdentifier());
-            return _interceptor;
+            const QString url = QString::fromStdWString(request->GetURL().ToWString());
+
+            /*QString type = convertResourceTypeToQString(request->GetResourceType());
+            for (int i = type.size(); i < 20; ++i)
+            {
+                type += " ";
+            }
+
+            qDebug() << type  << ": " << url;*/
+
+            if (url.contains("get_live_chat") /*|| url.contains("updated_metadata")*/ || request->GetResourceType() == RT_MAIN_FRAME || request->GetResourceType() == RT_SUB_FRAME)
+            {
+                _interceptor->ReInit(request->GetIdentifier());
+                return _interceptor;
+            }
         }
 
         return nullptr;
