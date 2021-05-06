@@ -1,4 +1,4 @@
-QT += widgets gui quick multimedia
+QT += widgets gui quick multimedia sql
 
 CONFIG += c++11
 
@@ -23,6 +23,7 @@ HEADERS += \
     clipboardqml.hpp \
     commandseditor.h \
     commandsingleeditor.h \
+    database.h \
     githubapi.hpp \
     i18n.hpp \
     outputtofile.hpp \
@@ -39,6 +40,7 @@ SOURCES += \
         clipboardqml.cpp \
         commandseditor.cpp \
         commandsingleeditor.cpp \
+        database.cpp \
         githubapi.cpp \
         i18n.cpp \
         main.cpp \

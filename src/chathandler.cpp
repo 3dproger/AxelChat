@@ -21,6 +21,9 @@ ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const 
     connect(this, &ChatHandler::messagesReceived,
             _outputToFile, &OutputToFile::onMessagesReceived);
 
+    //DataBase
+    _dataBase = new DataBase();
+
     //YouTube
     _youTube = new YouTube(_outputToFile, settings, _cefApp, _settingsGroupPath + "/youtube");
 
@@ -80,6 +83,12 @@ ChatHandler::~ChatHandler()
     {
         delete _outputToFile;
         _outputToFile = nullptr;
+    }
+
+    if (_dataBase)
+    {
+        delete _dataBase;
+        _dataBase = nullptr;
     }
 }
 
@@ -141,6 +150,11 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
 
             message.printMessageInfo("Raw new message:");
         }
+
+        if (_dataBase)
+        {
+            _dataBase->addYouTubeMessage(message);
+        }
     }
 }
 
@@ -165,8 +179,14 @@ void ChatHandler::playNewMessageSound()
 void ChatHandler::onConnectedYouTube(QString broadcastId)
 {
     chatNotification(tr("YouTube connected: %1").arg(broadcastId));
+
     _connectedSome = true;
     emit connectedSomeChanged();
+
+    if (_dataBase && _youTube)
+    {
+        _dataBase->addYouTubeBroadcast(broadcastId, _youTube->broadcastShortUrl().toString(), QDateTime::currentDateTime());
+    }
 }
 
 void ChatHandler::onDisconnectedYouTube(QString broadcastId)
@@ -342,4 +362,9 @@ YouTube *ChatHandler::youTube() const
 OutputToFile *ChatHandler::outputToFile() const
 {
     return _outputToFile;
+}
+
+DataBase* ChatHandler::dataBase() const
+{
+    return _dataBase;
 }

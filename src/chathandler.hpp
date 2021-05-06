@@ -7,6 +7,7 @@
 #include "types.hpp"
 #include "youtube.hpp"
 #include "outputtofile.hpp"
+#include "database.h"
 #include "chatbot.hpp"
 #include <QSound>
 #include "cef.hpp"
@@ -30,6 +31,7 @@ public:
     //bool removeChatMessageAction(int index);
 
     OutputToFile *outputToFile() const;
+    DataBase* dataBase() const;
     YouTube *youTube() const;
     ChatBot *bot() const;
     ChatMessagesModel* messagesModel();
@@ -80,6 +82,7 @@ private:
     CefRefPtr<QtCefApp> _cefApp             = nullptr;
     YouTube* _youTube = nullptr;
     OutputToFile* _outputToFile             = nullptr;
+    DataBase* _dataBase                     = nullptr;
     ChatBot* _bot                           = nullptr;
 
     bool _enabledSoundNewMessage = false;

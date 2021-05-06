@@ -155,9 +155,9 @@ public:
     {
         return _receivedAt;
     }
-    inline MessageAuthor author() const
+    inline MessageAuthor& author() const
     {
-        return _author;
+        return const_cast<MessageAuthor&>(_author);
     }
     inline void setIsBotCommand(bool isBotCommand) const
     {
