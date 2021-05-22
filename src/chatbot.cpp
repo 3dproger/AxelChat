@@ -16,18 +16,15 @@ ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *par
     {
         setVolume(_settings->value(_settingsGroupPath + "/" + _settingsKeyVolume, _volume).toInt());
 
-        setEnabledCommands(_settings->value(_settingsGroupPath + "/" + _settingsKeyEnabledCommands, false).toBool());
+        setEnabledCommands(_settings->value(_settingsGroupPath + "/" + _settingsKeyEnabledCommands, _enabledCommands).toBool());
+
+        setIncludeBuiltInCommands(_settings->value(_settingsGroupPath + "/" + _settingsKeyIncludeBuiltInCommands, _includeBuiltInCommands).toBool());
     }
 }
 
 int ChatBot::volume() const
 {
     return _volume;
-}
-
-bool ChatBot::enabledCommands() const
-{
-    return _enabledCommands;
 }
 
 void ChatBot::setEnabledCommands(bool enabledCommands)
@@ -42,6 +39,21 @@ void ChatBot::setEnabledCommands(bool enabledCommands)
         }
 
         emit enabledCommandsChanged();
+    }
+}
+
+void ChatBot::setIncludeBuiltInCommands(bool includeBuiltInCommands)
+{
+    if (_includeBuiltInCommands != includeBuiltInCommands)
+    {
+        _includeBuiltInCommands = includeBuiltInCommands;
+
+        if (_settings)
+        {
+            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyIncludeBuiltInCommands, includeBuiltInCommands);
+        }
+
+        emit includedBuiltInCommandsChanged();
     }
 }
 
@@ -156,7 +168,7 @@ void ChatBot::processMessage(const ChatMessage &message)
         }
     }
 
-    if (_enabledBuiltInCommands)
+    if (_includeBuiltInCommands)
     {
         for (BotAction* action : _builtInActions)
         {
@@ -261,12 +273,14 @@ QString ChatBot::commandsText() const
 {
     QString text;
 
+    text += "=================== " + tr("Custom commands") + " ===================\n";
+
     for (int i = 0; i < _actions.count(); ++i)
     {
         addLineToCommandsText(text, _actions.at(i));
     }
 
-    text += "=================== " + tr("AxelChat built-in commands") + " ===================\n";
+    text += "=================== " + tr("Built-in commands") + " ===================\n";
 
     for (int i = 0; i < _builtInActions.count(); ++i)
     {

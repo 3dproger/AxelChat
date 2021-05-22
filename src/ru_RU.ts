@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>ChatBot</name>
+    <message>
+        <location filename="chatbot.cpp" line="276"/>
+        <source>Custom commands</source>
+        <translation>Пользовательские команды</translation>
+    </message>
+    <message>
+        <location filename="chatbot.cpp" line="283"/>
+        <source>Built-in commands</source>
+        <translation>Встроенные команды</translation>
+    </message>
+</context>
+<context>
     <name>ChatHandler</name>
     <message>
         <source>%1 User</source>
@@ -216,22 +229,22 @@
         <translation>Действие</translation>
     </message>
     <message>
-        <location filename="commandseditor.cpp" line="72"/>
+        <location filename="commandseditor.cpp" line="74"/>
         <source>Sound: %1</source>
         <translation>Звук: %1</translation>
     </message>
     <message>
-        <location filename="commandseditor.cpp" line="75"/>
+        <location filename="commandseditor.cpp" line="77"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="commandseditor.cpp" line="130"/>
+        <location filename="commandseditor.cpp" line="132"/>
         <source>Deletion</source>
         <translation>Удаление</translation>
     </message>
     <message>
-        <location filename="commandseditor.cpp" line="131"/>
+        <location filename="commandseditor.cpp" line="133"/>
         <source>Are you sure you want to delete the command?</source>
         <translation>Вы уверены, что хотите удалить команду?</translation>
     </message>
@@ -304,7 +317,7 @@
 <context>
     <name>about</name>
     <message>
-        <location filename="setting_pages/about.qml" line="269"/>
+        <location filename="setting_pages/about.qml" line="294"/>
         <source>You are using the most current version!
 
 Current version: %1
@@ -318,74 +331,74 @@ Latest version available: %2</oldsource>
 Последняя доступная версия: %2</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="277"/>
+        <location filename="setting_pages/about.qml" line="302"/>
         <source>Failed to connect to server. Check your internet connection!</source>
         <translation>Не удалось подключиться к серверу. Проверьте подключение к интернету!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="282"/>
+        <location filename="setting_pages/about.qml" line="307"/>
         <source>Request limits exceeded! Please try again later</source>
         <translation>Превышен лимит запросов! Пожалуйста, повторите попытку  позже</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="62"/>
+        <location filename="setting_pages/about.qml" line="67"/>
         <source>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020-2021</source>
         <oldsource>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020</oldsource>
         <translation>Александр &apos;Axel_k&apos; Кирсанов (c) 2020-2021</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="48"/>
+        <location filename="setting_pages/about.qml" line="52"/>
         <source>32-bit Build</source>
         <translation>32-битная сборка</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="50"/>
+        <location filename="setting_pages/about.qml" line="54"/>
         <source>64-bit Build</source>
         <translation>64-битная сборка</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="52"/>
+        <location filename="setting_pages/about.qml" line="56"/>
         <source>Build Architecture: %1</source>
         <oldsource>Build Architecture: </oldsource>
         <translation>Архитектура сборки: %1</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="77"/>
+        <location filename="setting_pages/about.qml" line="83"/>
         <source>YouTube Channel</source>
         <translation>YouTube канал</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="118"/>
+        <location filename="setting_pages/about.qml" line="126"/>
         <source>Check for Updates</source>
         <translation>Проверить обновления</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="154"/>
+        <location filename="setting_pages/about.qml" line="164"/>
         <source>subscribe</source>
         <translation>подпишись</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="165"/>
+        <location filename="setting_pages/about.qml" line="176"/>
         <source>Forum (Discussions)</source>
         <translation>Форум (Discussions)</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="177"/>
+        <location filename="setting_pages/about.qml" line="197"/>
         <source>Releases</source>
         <translation>Релизы</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="191"/>
+        <location filename="setting_pages/about.qml" line="211"/>
         <source>Source Code</source>
         <translation>Исходный код</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="231"/>
+        <location filename="setting_pages/about.qml" line="252"/>
         <source>License</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="243"/>
+        <location filename="setting_pages/about.qml" line="264"/>
         <source>Complaints and suggestions (Issues)</source>
         <oldsource>Complaints and suggestions  (Issues)</oldsource>
         <translation>Жалобы и предложения (Issues)</translation>
@@ -395,13 +408,13 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Жалобы и предложения</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="203"/>
+        <location filename="setting_pages/about.qml" line="223"/>
         <source>AxelChat is a free and open source software to help you manage live chat and add interactivity to your live streams</source>
         <oldsource>AxelChat is a free and open source software to help you manage live chat and add interactivity to your streams</oldsource>
         <translation>AxelChat — это бесплатная программа с открытым исходным кодом, помогающая в работе с чатом прямых трансляций и добавляющая интерактивность Вашим live-стримам</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="216"/>
+        <location filename="setting_pages/about.qml" line="237"/>
         <source>GitHub</source>
         <translation></translation>
     </message>
@@ -534,6 +547,11 @@ Latest version available: %2</oldsource>
         <source>Commands Editor</source>
         <translation>Редактор команд</translation>
     </message>
+    <message>
+        <location filename="setting_pages/chatcommands.qml" line="139"/>
+        <source>Include Built-in Sound Commands</source>
+        <translation>Использовать встроенные звуковые команды</translation>
+    </message>
 </context>
 <context>
     <name>common</name>
@@ -628,54 +646,54 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Включить вывод в файл</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="37"/>
+        <location filename="setting_pages/outputtofile.qml" line="38"/>
         <source>Failed to save!</source>
         <translation>Не удалось сохранить!</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="48"/>
+        <location filename="setting_pages/outputtofile.qml" line="50"/>
         <source>Enable Output to ini-file</source>
         <translation>Включить вывод в ini-файл</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="67"/>
+        <location filename="setting_pages/outputtofile.qml" line="69"/>
         <source>Folder where to save:</source>
         <translation>Папка, где будет сохранено:</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="83"/>
+        <location filename="setting_pages/outputtofile.qml" line="86"/>
         <source>Folder where to save...</source>
         <translation>Папка, где сохранять...</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="99"/>
+        <location filename="setting_pages/outputtofile.qml" line="102"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="114"/>
+        <location filename="setting_pages/outputtofile.qml" line="117"/>
         <source>Please select a folder</source>
         <translation>Пожалуйста, выберите папку</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="126"/>
+        <location filename="setting_pages/outputtofile.qml" line="129"/>
         <source>Reset</source>
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="139"/>
+        <location filename="setting_pages/outputtofile.qml" line="142"/>
         <source>Show in Explorer</source>
         <translation>Показать в Проводнике</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="206"/>
+        <location filename="setting_pages/outputtofile.qml" line="209"/>
         <source>Codec:</source>
         <translation>Кодировка:</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="27"/>
-        <location filename="setting_pages/outputtofile.qml" line="217"/>
-        <location filename="setting_pages/outputtofile.qml" line="227"/>
+        <location filename="setting_pages/outputtofile.qml" line="28"/>
+        <location filename="setting_pages/outputtofile.qml" line="221"/>
+        <location filename="setting_pages/outputtofile.qml" line="231"/>
         <source>Export to txt</source>
         <translation>Экспорт в txt</translation>
     </message>
@@ -688,7 +706,7 @@ Latest version available: %2</oldsource>
         <translation>Настройки AxelChat</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="83"/>
+        <location filename="settings.qml" line="88"/>
         <source>YouTube</source>
         <translation></translation>
     </message>
@@ -701,17 +719,17 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Участники</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="87"/>
+        <location filename="settings.qml" line="92"/>
         <source>Common</source>
         <translation>Общее</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="99"/>
+        <location filename="settings.qml" line="104"/>
         <source>Chat Commands</source>
         <translation>Команды чата</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="103"/>
+        <location filename="settings.qml" line="108"/>
         <source>Output to Files</source>
         <translation>Вывод в файл</translation>
     </message>
@@ -720,7 +738,7 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Прочее</translation>
     </message>
     <message>
-        <location filename="settings.qml" line="107"/>
+        <location filename="settings.qml" line="112"/>
         <source>About AxelChat</source>
         <translation>Об AxelChat</translation>
     </message>
@@ -761,22 +779,22 @@ Latest version available: %2</oldsource>
 <context>
     <name>youtube</name>
     <message>
-        <location filename="setting_pages/youtube.qml" line="24"/>
+        <location filename="setting_pages/youtube.qml" line="23"/>
         <source>Broadcast link or ID:</source>
         <translation>Ссылка или ID трансляции:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="41"/>
+        <location filename="setting_pages/youtube.qml" line="40"/>
         <source>Paste the broadcast link or ID here...</source>
         <translation>Вставьте ссылку или ID трансляции здесь...</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="61"/>
+        <location filename="setting_pages/youtube.qml" line="60"/>
         <source>Proxy</source>
         <translation>Прокси</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="82"/>
+        <location filename="setting_pages/youtube.qml" line="81"/>
         <source>Proxy Server IP</source>
         <translation>IP прокси-сервера</translation>
     </message>
@@ -791,24 +809,24 @@ Latest version available: %2</oldsource>
         <translation>ID трансляции:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="170"/>
+        <location filename="setting_pages/youtube.qml" line="171"/>
         <source>Broadcast:</source>
         <oldsource>Broadcast URL:</oldsource>
         <translation>Трансляция:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="191"/>
+        <location filename="setting_pages/youtube.qml" line="193"/>
         <source>Chat:</source>
         <oldsource>Chat URL:</oldsource>
         <translation>Чат:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="212"/>
+        <location filename="setting_pages/youtube.qml" line="215"/>
         <source>YouTube</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="245"/>
+        <location filename="setting_pages/youtube.qml" line="249"/>
         <source>Control Panel:</source>
         <translation>Панель управления:</translation>
     </message>
@@ -817,27 +835,27 @@ Latest version available: %2</oldsource>
         <translation type="vanished">URL панели управления:</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="255"/>
+        <location filename="setting_pages/youtube.qml" line="260"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="582"/>
+        <location filename="setting_pages/youtube.qml" line="587"/>
         <source>Link or broadcast ID is not specified</source>
         <translation>Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="586"/>
+        <location filename="setting_pages/youtube.qml" line="591"/>
         <source>Incorrect link or broadcast ID specified</source>
         <translation>Указана неверная ссылка или ID трансляции</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="591"/>
+        <location filename="setting_pages/youtube.qml" line="596"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="595"/>
+        <location filename="setting_pages/youtube.qml" line="600"/>
         <source>Successfully Connected!</source>
         <translation>Успешно подключено!</translation>
     </message>
@@ -846,25 +864,25 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Вырезать</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="277"/>
-        <location filename="setting_pages/youtube.qml" line="301"/>
-        <location filename="setting_pages/youtube.qml" line="410"/>
-        <location filename="setting_pages/youtube.qml" line="435"/>
-        <location filename="setting_pages/youtube.qml" line="460"/>
-        <location filename="setting_pages/youtube.qml" line="485"/>
+        <location filename="setting_pages/youtube.qml" line="282"/>
+        <location filename="setting_pages/youtube.qml" line="306"/>
+        <location filename="setting_pages/youtube.qml" line="415"/>
+        <location filename="setting_pages/youtube.qml" line="440"/>
+        <location filename="setting_pages/youtube.qml" line="465"/>
+        <location filename="setting_pages/youtube.qml" line="490"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="291"/>
+        <location filename="setting_pages/youtube.qml" line="296"/>
         <source>Copied!</source>
         <translation>Скопировано!</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="312"/>
-        <location filename="setting_pages/youtube.qml" line="341"/>
-        <location filename="setting_pages/youtube.qml" line="364"/>
-        <location filename="setting_pages/youtube.qml" line="387"/>
+        <location filename="setting_pages/youtube.qml" line="317"/>
+        <location filename="setting_pages/youtube.qml" line="346"/>
+        <location filename="setting_pages/youtube.qml" line="369"/>
+        <location filename="setting_pages/youtube.qml" line="392"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>

@@ -18,7 +18,7 @@ ScrollView {
         Dial {
             id: dialBotVolume
             x: 8
-            y: 87
+            y: 140
             from: 1
             stepSize: 5
             to: 100
@@ -35,7 +35,7 @@ ScrollView {
         Label {
             id: element
             x: 8
-            y: 62
+            y: 116
             text: qsTr("Volume: %1 %").arg(chatBot.volume)
         }
 
@@ -60,7 +60,7 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textFieldTestMessage
-            y: 239
+            y: 271
             height: 43
             anchors.leftMargin: 8
             anchors.left: parent.left
@@ -75,20 +75,20 @@ ScrollView {
 
         Label {
             id: label
-            y: 24
+            y: 271
             height: 17
             text: qsTr("Send test message:")
             anchors.right: parent.right
-            anchors.rightMargin: 8
+            anchors.rightMargin: 10
             anchors.left: textFieldTestMessage.left
-            anchors.leftMargin: 0
+            anchors.leftMargin: -2
             anchors.bottom: textFieldTestMessage.top
-            anchors.bottomMargin: 8
+            anchors.bottomMargin: 6
         }
 
         Button {
             id: buttonSendTestMessage
-            x: 463
+            x: 303
             y: 312
             width: 169
             height: 48
@@ -107,7 +107,7 @@ ScrollView {
 
         Button {
             id: buttonAllCommands
-            y: 288
+            y: 320
             text: qsTr("All Commands")
             anchors.left: buttonCommandsEditor.right
             anchors.leftMargin: 6
@@ -125,10 +125,29 @@ ScrollView {
         Button {
             id: buttonCommandsEditor
             x: 8
-            y: 288
+            y: 320
             text: qsTr("Commands Editor")
             onClicked: {
                 commandsEditor.open();
+            }
+        }
+
+        Switch {
+            id: switchIncludeBuiltInSoundCommands
+            y: 62
+            height: 48
+            text: qsTr("Include Built-in Sound Commands")
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 8
+            anchors.rightMargin: 8
+
+            Component.onCompleted: {
+                checked = chatBot.includeBuiltInCommands;
+            }
+
+            onCheckedChanged: {
+                chatBot.includeBuiltInCommands = checked;
             }
         }
     }
