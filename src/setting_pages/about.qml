@@ -59,7 +59,7 @@ ScrollView {
             id: element
             y: 352
             height: 24
-            text: qsTr("Alexander 'Axel_k' Kirsanov (c) 2020")
+            text: qsTr("Alexander 'Axel_k' Kirsanov (c) 2020-2021")
             anchors.right: parent.right
             anchors.rightMargin: 8
             anchors.left: parent.left
@@ -159,10 +159,24 @@ ScrollView {
         }
 
         Button {
+            id: buttonDiscussions
+            x: 10
+            y: 62
+            text: qsTr("Forum (Discussions)")
+            icon.source: "qrc:/resources/images/feedback.svg"
+
+            onClicked: {
+                Qt.openUrlExternally("https://github.com/3dproger/AxelChat/discussions");
+            }
+        }
+
+        Button {
             id: buttonReleases
-            x: 8
-            y: 116
+            x: 521
+            y: 62
             text: qsTr("Releases")
+            anchors.right: parent.right
+            anchors.rightMargin: 8
             icon.source: "qrc:/resources/images/new-release.svg"
 
             onClicked: {
@@ -172,25 +186,13 @@ ScrollView {
 
         Button {
             id: buttonSource
-            x: 9
-            y: 62
+            x: 10
+            y: 116
             text: qsTr("Source Code")
             icon.source: "qrc:/resources/images/github.svg"
 
             onClicked: {
                 Qt.openUrlExternally("https://github.com/3dproger/AxelChat");
-            }
-        }
-
-        Button {
-            id: buttonComplaintsAndSuggestions
-            x: 9
-            y: 8
-            text: qsTr("Complaints and Suggestions")
-            icon.source: "qrc:/resources/images/feedback.svg"
-
-            onClicked: {
-                Qt.openUrlExternally("https://github.com/3dproger/AxelChat/issues");
             }
         }
 
@@ -219,6 +221,30 @@ ScrollView {
 
             onClicked: {
                 Qt.openUrlExternally("https://github.com/3dproger");
+            }
+        }
+
+        Button {
+            id: buttonLicense
+            x: 10
+            y: 170
+            text: qsTr("License")
+            //icon.source: "qrc:/resources/images/feedback.svg"
+
+            onClicked: {
+                Qt.openUrlExternally("https://github.com/3dproger/AxelChat/blob/master/LICENSE");
+            }
+        }
+
+        Button {
+            id: buttonIssues
+            x: 8
+            y: 8
+            text: qsTr("Complaints and suggestions (Issues)")
+            icon.source: "qrc:/resources/images/feedback.svg"
+
+            onClicked: {
+                Qt.openUrlExternally("https://github.com/3dproger/AxelChat/issues");
             }
         }
     }
@@ -266,7 +292,7 @@ ScrollView {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:1.100000023841858;height:480;width:640}D{i:11}
-D{i:18}
+    D{i:0;autoSize:true;formeditorZoom:1.100000023841858;height:480;width:640}D{i:19}
+D{i:20}
 }
 ##^##*/

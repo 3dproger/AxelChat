@@ -304,7 +304,7 @@
 <context>
     <name>about</name>
     <message>
-        <location filename="setting_pages/about.qml" line="247"/>
+        <location filename="setting_pages/about.qml" line="269"/>
         <source>You are using the most current version!
 
 Current version: %1
@@ -318,20 +318,20 @@ Latest version available: %2</oldsource>
 Последняя доступная версия: %2</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="255"/>
+        <location filename="setting_pages/about.qml" line="277"/>
         <source>Failed to connect to server. Check your internet connection!</source>
         <translation>Не удалось подключиться к серверу. Проверьте подключение к интернету!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="260"/>
+        <location filename="setting_pages/about.qml" line="282"/>
         <source>Request limits exceeded! Please try again later</source>
         <translation>Превышен лимит запросов! Пожалуйста, повторите попытку  позже</translation>
     </message>
     <message>
         <location filename="setting_pages/about.qml" line="62"/>
-        <source>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020</source>
-        <oldsource>Alexander Kirsanov (Axel_k) (c) 2020</oldsource>
-        <translation>Александр &apos;Axel_k&apos; Кирсанов (c) 2020</translation>
+        <source>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020-2021</source>
+        <oldsource>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020</oldsource>
+        <translation>Александр &apos;Axel_k&apos; Кирсанов (c) 2020-2021</translation>
     </message>
     <message>
         <location filename="setting_pages/about.qml" line="48"/>
@@ -366,27 +366,42 @@ Latest version available: %2</oldsource>
     </message>
     <message>
         <location filename="setting_pages/about.qml" line="165"/>
+        <source>Forum (Discussions)</source>
+        <translation>Форум (Discussions)</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="177"/>
         <source>Releases</source>
         <translation>Релизы</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="177"/>
+        <location filename="setting_pages/about.qml" line="191"/>
         <source>Source Code</source>
         <translation>Исходный код</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="189"/>
-        <source>Complaints and Suggestions</source>
-        <translation>Жалобы и предложения</translation>
+        <location filename="setting_pages/about.qml" line="231"/>
+        <source>License</source>
+        <translation>Лицензия</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="201"/>
+        <location filename="setting_pages/about.qml" line="243"/>
+        <source>Complaints and suggestions (Issues)</source>
+        <oldsource>Complaints and suggestions  (Issues)</oldsource>
+        <translation>Жалобы и предложения (Issues)</translation>
+    </message>
+    <message>
+        <source>Complaints and Suggestions</source>
+        <translation type="vanished">Жалобы и предложения</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="203"/>
         <source>AxelChat is a free and open source software to help you manage live chat and add interactivity to your live streams</source>
         <oldsource>AxelChat is a free and open source software to help you manage live chat and add interactivity to your streams</oldsource>
         <translation>AxelChat — это бесплатная программа с открытым исходным кодом, помогающая в работе с чатом прямых трансляций и добавляющая интерактивность Вашим live-стримам</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="214"/>
+        <location filename="setting_pages/about.qml" line="216"/>
         <source>GitHub</source>
         <translation></translation>
     </message>
