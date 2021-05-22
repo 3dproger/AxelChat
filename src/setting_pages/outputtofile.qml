@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.12
 import QtQuick.Dialogs 1.2
 import "../my_components" as MyComponents
 
@@ -35,8 +36,9 @@ ScrollView {
                 implicitHeight: 100
                 Text {
                     text: qsTr("Failed to save!")
-                    color: "navy"
+                    color: Material.foreground
                     anchors.centerIn: parent
+
                 }
             }
         }
@@ -70,6 +72,7 @@ ScrollView {
             anchors.right: parent.right
             anchors.rightMargin: 8
             font.pixelSize: 20
+            color: Material.foreground
         }
 
         MyComponents.MyTextField {
@@ -209,6 +212,7 @@ ScrollView {
             font.pixelSize: 20
             anchors.rightMargin: 383
             anchors.leftMargin: 8
+            color: Material.foreground
         }
 
         Button {

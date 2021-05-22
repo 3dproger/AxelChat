@@ -18,6 +18,11 @@ Window {
            Qt.WindowTitleHint |
            Qt.WindowCloseButtonHint
 
+    Material.theme: Material.Dark
+    Material.accent: "#03A9F4"
+    Material.foreground: "#FFFFFF"
+    color: "#000000"
+
     Settings {
         category: "settings_window"
         property alias window_width:  root.width;

@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
 import AxelChat.UpdateChecker 1.0
 import AxelChat.QMLUtils 1.0
 
@@ -8,6 +9,7 @@ ScrollView {
     clip: true
     contentHeight: 480
     contentWidth: 640
+
     Item {
         id: element5
         width:  Math.max(root.width,  root.contentWidth)
@@ -27,6 +29,7 @@ ScrollView {
             anchors.left: textApplicationName.right
             anchors.leftMargin: 6
             font.pixelSize: 20
+            color: Material.foreground
         }
 
         Text {
@@ -37,6 +40,7 @@ ScrollView {
             text: Qt.application.name
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: 24
+            color: Material.foreground
         }
 
         Text {
@@ -53,6 +57,7 @@ ScrollView {
             }
             font.pixelSize: 12
             anchors.horizontalCenter: textApplicationName.horizontalCenter
+            color: Material.foreground
         }
 
         Text {
@@ -66,6 +71,7 @@ ScrollView {
             anchors.leftMargin: 8
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 20
+            color: Material.foreground
         }
 
         Button {
@@ -109,6 +115,8 @@ ScrollView {
             onLinkActivated: {
                 Qt.openUrlExternally(link)
             }
+
+            color: Material.foreground
         }
 
         Button {
@@ -135,6 +143,7 @@ ScrollView {
             anchors.rightMargin: 6
             font.pixelSize: 20
             anchors.topMargin: -38
+            color: Material.foreground
         }
 
         Text {
@@ -145,6 +154,7 @@ ScrollView {
             anchors.right: buttonCheckUpdates.left
             anchors.rightMargin: 6
             font.pixelSize: 20
+            color: Material.foreground
         }
 
         Text {
@@ -156,6 +166,7 @@ ScrollView {
             anchors.horizontalCenter: element1.horizontalCenter
             anchors.bottom: element1.top
             font.pixelSize: 12
+            color: Material.foreground
         }
 
         Button {
@@ -164,6 +175,15 @@ ScrollView {
             y: 62
             text: qsTr("Forum (Discussions)")
             icon.source: "qrc:/resources/images/feedback.svg"
+
+            //Material.background: "#ffffff"
+            //Material.foreground: "#c51a4a"
+
+            //Material.background: "#003760"
+            //Material.foreground: "#03A9F4"
+
+            //Material.background: "#03A9F4"
+            //Material.foreground: "#FFFFFF"
 
             onClicked: {
                 Qt.openUrlExternally("https://github.com/3dproger/AxelChat/discussions");
@@ -208,6 +228,7 @@ ScrollView {
             wrapMode: Text.WordWrap
             anchors.rightMargin: 8
             anchors.leftMargin: 8
+            color: Material.foreground
         }
 
         Button {

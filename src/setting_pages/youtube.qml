@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.12
 import "../my_components" as MyComponents
 import AxelChat.YouTube 1.0
 
@@ -8,8 +9,6 @@ ScrollView {
     clip: true
     contentHeight: 480
     contentWidth: 640
-
-    property color accentColor: "#ff0000"
 
     Item {
         id: element1
@@ -20,13 +19,13 @@ ScrollView {
             id: element
             y: 57
             height: 26
-            color: accentColor
+            color: "#FF0000"
             text: qsTr("Broadcast link or ID:")
             anchors.left: parent.left
             anchors.leftMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 8
-            styleColor: "#000000"
+            //styleColor: "#000000"
             font.bold: false
             style: Text.Normal
             font.weight: Font.Bold
@@ -100,6 +99,7 @@ ScrollView {
             anchors.verticalCenter: textFieldProxyServerAddress.verticalCenter
             anchors.left: textFieldProxyServerAddress.right
             anchors.leftMargin: 6
+            color: Material.foreground
         }
 
         MyComponents.MyTextField {
@@ -147,6 +147,7 @@ ScrollView {
             y: 227
             text: qsTr("Broadcast ID:")
             font.pixelSize: 15
+            color: Material.foreground
         }
 
         MyComponents.MyTextField {
@@ -169,6 +170,7 @@ ScrollView {
             y: 276
             text: qsTr("Broadcast:")
             font.pixelSize: 15
+            color: Material.foreground
         }
 
         MyComponents.MyTextField {
@@ -190,6 +192,7 @@ ScrollView {
             y: 380
             text: qsTr("Chat:")
             font.pixelSize: 15
+            color: Material.foreground
         }
 
         MyComponents.MyTextField {
@@ -212,6 +215,7 @@ ScrollView {
             text: qsTr("YouTube")
             font.bold: true
             font.pixelSize: 25
+            color: Material.foreground
         }
 
         Image {
@@ -244,6 +248,7 @@ ScrollView {
             y: 329
             text: qsTr("Control Panel:")
             font.pixelSize: 15
+            color: Material.foreground
         }
 
         Button {
