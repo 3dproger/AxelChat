@@ -657,13 +657,6 @@ void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
         return;
     }
 
-    /*QFile file("debug.html");
-    if (file.open(QFile::OpenModeFlag::WriteOnly | QFile::OpenModeFlag::Text))
-    {
-        file.write(*rawData);
-        file.close();
-    }*/
-
     const int start = rawData->indexOf("\"actions\":[");
     if (start == -1)
     {
@@ -672,41 +665,10 @@ void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
     }
 
     QByteArray& data = rawData->remove(0, start + 10);
-
-    //ToDo: учитывать символы [ и ] в кавычках
-    int brackets = 0;
-    bool insideQuotes = false;
-    for (int i = 0; i < data.length(); ++i)
+    const int pos = data.lastIndexOf(",\"actionPanel\"");
+    if (pos != -1)
     {
-        if (!insideQuotes)
-        {
-            if (data[i] == '[')
-            {
-                brackets++;
-            }
-            else if  (data[i] == ']')
-            {
-                brackets--;
-            }
-            else if (data[i] == '\"')
-            {
-                insideQuotes = true;
-            }
-
-            if (brackets == 0)
-            {
-                data = data.remove(i + 1, data.length());
-                break;
-            }
-        }
-        else
-        {
-            const bool prevIsBackslash = i > 0 && data[i - 1] == '\\';
-            if (data[i] == '\"' && !prevIsBackslash)
-            {
-                insideQuotes = false;
-            }
-        }
+        data = data.remove(pos, data.length());
     }
 
     const QJsonDocument jsonDocument = QJsonDocument::fromJson(data);
@@ -719,5 +681,12 @@ void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
     else
     {
         printData(Q_FUNC_INFO + QString(": document is not array"), data);
+        QFile file("failed_to_parse.json");
+        if (file.open(QFile::OpenModeFlag::WriteOnly | QFile::OpenModeFlag::Text))
+        {
+            file.write(*rawData);
+            file.close();
+            qDebug() << "Saved to" << file.fileName();
+        }
     }
 }
