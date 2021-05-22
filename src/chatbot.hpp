@@ -29,9 +29,10 @@ public:
     QList<BotAction*> actions() const;
 
     void addAction(BotAction* action);
-    void rewriteAction(int pos, BotAction* action);
-    void deleteAction(int pos);
-    void executeAction(int pos);
+    void rewriteAction(int index, BotAction* action);
+    void deleteAction(int index);
+    void executeAction(int index);
+    Q_INVOKABLE QString commandsText() const;
 
 signals:
     void volumeChanged();
@@ -41,11 +42,15 @@ public slots:
     void setVolume(int volume);
     void processMessage(const ChatMessage& message);
     void execute(BotAction& action);
-    QString commandsText() const;
 
 private:
+    bool canExecute(BotAction& action, const ChatMessage &message);
+    void initBuiltinCommands();
     void saveCommands();
     void loadCommands();
+
+    void addLineToCommandsText(QString& text, const BotAction* action) const;
+
 
     QString _settingsGroupPath = "chat_bot";
     QSettings*  _settings = nullptr;
@@ -55,8 +60,10 @@ private:
     const QString _settingsGroupActions = "actions";
 
     QList<BotAction*> _actions;
+    QList<BotAction*> _builtInActions;
 
     bool _enabledCommands = false;
+    bool _enabledBuiltInCommands = true;
 
     int _volume = 100;
 };

@@ -51,16 +51,20 @@ BotAction::ActionType BotAction::type() const
     return _type;
 }
 
-BotAction *BotAction::createSoundPlay(QStringList keywords,
-                                      QString soundFile,
-                                      bool caseSensitive)
+BotAction *BotAction::createSoundPlay(const QStringList& keywords, const QString& soundFile, bool caseSensitive)
+{
+    return createSoundPlay(keywords, QUrl::fromLocalFile(soundFile), caseSensitive);
+}
+
+BotAction *BotAction::createSoundPlay(const QStringList& keywords, const QUrl& soundUrl, bool caseSensitive)
 {
     BotAction* action      = new BotAction();
 
-    action->_valid         = true;
-    action->_keywords      = keywords;
-    action->_soundUrl      = QUrl::fromLocalFile(soundFile);
-    action->_caseSensitive = caseSensitive;
+    action->_valid          = true;
+    action->_keywords       = keywords;
+    action->_soundUrl       = soundUrl;
+    action->_caseSensitive  = caseSensitive;
+
 
     connect(&action->_inactivityTimer, &QTimer::timeout, action, &BotAction::onTimeout);
 

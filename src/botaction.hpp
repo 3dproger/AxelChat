@@ -28,9 +28,8 @@ public:
 
     static BotAction* fromJson(const QJsonObject& object);
 
-    static BotAction* createSoundPlay(QStringList keywords,
-                                      QString soundFile,
-                                      bool caseSensitive = false);
+    static BotAction* createSoundPlay(const QStringList& keywords, const QString& soundFile, bool caseSensitive = false);
+    static BotAction* createSoundPlay(const QStringList& keywords, const QUrl& soundUrl, bool caseSensitive = false);
 
     bool caseSensitive() const;
 

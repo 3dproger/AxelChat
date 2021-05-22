@@ -47,10 +47,12 @@ void CommandsEditor::updateCommands()
     }
 
     const QList<BotAction*>& actions = _chatBot->actions();
-    for (int anum = 0; anum < actions.count(); ++anum)
+
+    for (int i = 0; i < actions.count(); ++i)
     {
-        const BotAction* action = actions.at(anum);
-        ui->tableWidgetCommands->insertRow(anum);
+        const BotAction* action = actions.at(i);
+
+        ui->tableWidgetCommands->insertRow(i);
 
         QString keywordString;
         const QStringList& keywords = action->keywords();
@@ -63,7 +65,7 @@ void CommandsEditor::updateCommands()
                 keywordString += ", ";
             }
         }
-        ui->tableWidgetCommands->setItem(anum, 0, new QTableWidgetItem(keywordString));
+        ui->tableWidgetCommands->setItem(i, 0, new QTableWidgetItem(keywordString));
 
         QString actionString;
 
@@ -76,7 +78,7 @@ void CommandsEditor::updateCommands()
             break;
         }
 
-        ui->tableWidgetCommands->setItem(anum, 1, new QTableWidgetItem(actionString));
+        ui->tableWidgetCommands->setItem(i, 1, new QTableWidgetItem(actionString));
     }
 
     on_tableWidgetCommands_itemSelectionChanged();
