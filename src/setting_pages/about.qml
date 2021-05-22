@@ -44,9 +44,9 @@ ScrollView {
             x: 309
             y: 119
             text:  {
-                if (qmlUtils.buildCpuArchitecture == "i386")
+                if (qmlUtils.buildCpuArchitecture === "i386")
                     return qsTr("32-bit Build");
-                else if (qmlUtils.buildCpuArchitecture == "x86_64")
+                else if (qmlUtils.buildCpuArchitecture === "x86_64")
                     return qsTr("64-bit Build");
                 else
                     return qsTr("Build Architecture: %1").arg(qmlUtils.buildCpuArchitecture);
