@@ -7,7 +7,6 @@
 #include <QAbstractListModel>
 #include <QQmlEngine>
 #include <QJsonObject>
-#include <QSoundEffect>
 
 class ChatBot;
 
@@ -51,9 +50,7 @@ public:
 
     ActionType type() const;
 
-    QString soundFile() const;
-
-    std::shared_ptr<QSoundEffect> soundEffect();
+    QUrl soundUrl() const { return _soundUrl; }
 
     bool exclusiveInactivityPeriod() const;
     void setExclusiveInactivityPeriod(bool exclusiveInactivityPeriod);
@@ -82,7 +79,5 @@ private:
     int _inactivityPeriod = DEFAULT_INACTIVITY_TIME;
     QTimer _inactivityTimer;
     bool _active = true;
-
-    std::shared_ptr<QSoundEffect> _soundEffect;
 };
 

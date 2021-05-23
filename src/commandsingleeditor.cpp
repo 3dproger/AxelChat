@@ -65,7 +65,7 @@ void CommandSingleEditor::setCommand(BotAction *action, int pos)
 
     switch (action->type()) {
     case BotAction::ActionType::SoundPlay:
-        ui->lineEditSoundFile->setText(action->soundFile());
+        ui->lineEditSoundFile->setText(action->soundUrl().toLocalFile());
         ui->comboBoxActionType->setCurrentIndex(0);
         break;
     case BotAction::ActionType::Unknown:

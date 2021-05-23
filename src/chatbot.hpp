@@ -2,6 +2,7 @@
 #define CHATBOT_HPP
 
 #include <QSettings>
+#include <QMediaPlayer>
 #include "chatmessage.hpp"
 #include "botaction.hpp"
 
@@ -73,6 +74,8 @@ private:
     bool _includeBuiltInCommands = true;
 
     int _volume = 100;
+
+    QMediaPlayer _player;
 };
 
 #endif // CHATBOT_HPP

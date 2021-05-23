@@ -4,14 +4,19 @@
 <context>
     <name>ChatBot</name>
     <message>
-        <location filename="chatbot.cpp" line="276"/>
+        <location filename="chatbot.cpp" line="272"/>
         <source>Custom commands</source>
         <translation>Пользовательские команды</translation>
     </message>
     <message>
-        <location filename="chatbot.cpp" line="283"/>
+        <location filename="chatbot.cpp" line="279"/>
         <source>Built-in commands</source>
         <translation>Встроенные команды</translation>
+    </message>
+    <message>
+        <location filename="chatbot.cpp" line="290"/>
+        <source>2nd Channel Edition</source>
+        <translation></translation>
     </message>
 </context>
 <context>

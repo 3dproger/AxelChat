@@ -2,6 +2,7 @@
 #include <QSoundEffect>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QMediaContent>
 
 ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *parent)
     : QObject(parent)
@@ -147,6 +148,7 @@ void ChatBot::setVolume(int volume)
     if (_volume != volume)
     {
         _volume = volume;
+        _player.setVolume(volume);
 
         if (_settings)
         {
@@ -228,17 +230,11 @@ void ChatBot::execute(BotAction &action)
     {
     case BotAction::ActionType::SoundPlay:
     {
-        std::shared_ptr<QSoundEffect> soundEffect = action.soundEffect();
-        if (soundEffect)
-        {
-            qDebug() << "Playing" << soundEffect->source().toString();
-            soundEffect->setVolume(_volume / 100.0);
-            soundEffect->play();
-        }
-        else
-        {
-            qDebug() << "Failed to play sound: sound effect is not exists";
-        }
+        qDebug() << "Playing" << action.soundUrl().toString();
+
+        _player.setVolume(_volume);
+        _player.setMedia(QMediaContent(action.soundUrl()));
+        _player.play();
     }
         break;
     case BotAction::ActionType::Unknown:
@@ -280,11 +276,26 @@ QString ChatBot::commandsText() const
         addLineToCommandsText(text, _actions.at(i));
     }
 
-    text += "=================== " + tr("Built-in commands") + " ===================\n";
+    text += "\n=================== " + tr("Built-in commands") + " ===================\n";
 
     for (int i = 0; i < _builtInActions.count(); ++i)
     {
-        addLineToCommandsText(text, _builtInActions.at(i));
+        BotAction* action = _builtInActions.at(i);
+        if (!action->soundUrl().toString().contains("2nd_channel"))
+        {
+            addLineToCommandsText(text, action);
+        }
+    }
+
+    text += "\n=================== " + tr("2nd Channel Edition") + " ===================\n";
+
+    for (int i = 0; i < _builtInActions.count(); ++i)
+    {
+        BotAction* action = _builtInActions.at(i);
+        if (action->soundUrl().toString().contains("2nd_channel"))
+        {
+            addLineToCommandsText(text, action);
+        }
     }
 
     return text;
@@ -358,22 +369,17 @@ void ChatBot::initBuiltinCommands()
     _builtInActions.append(BotAction::createSoundPlay({"!вау", "!воу", "!wow"}, QUrl("qrc:/resources/sound/commands/wow.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!xp", "!хр"}, QUrl("qrc:/resources/sound/commands/xp.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!cforce", "!contraforce"}, QUrl("qrc:/resources/sound/commands/sfx_bill_v5.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!аплодисментыМужику"}, QUrl("qrc:/resources/sound/commands/ben_applause.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!БенАплодисменты", "!БэнАплодисменты", "!БенФантом", "!БэнФантом", "!аплодисментыМужику"}, QUrl("qrc:/resources/sound/commands/ben_applause.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!lockAndLoad", "!chcLockAndLoad"}, QUrl("qrc:/resources/sound/commands/chc_lock_and_load.wav")));
     _builtInActions.append(BotAction::createSoundPlay({"!фура", "!fura", "!фураБольшая", "!fura", "!furaBig", "!bigFura"}, QUrl("qrc:/resources/sound/commands/fura_big.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!ps", "!ps1", "!playstation", "!playstation1", "!sony", "!плойка"}, QUrl("qrc:/resources/sound/commands/playstation.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!viknickLol", "!викникЛол", "!викникСмех", "!викник"}, QUrl("qrc:/resources/sound/commands/viknick_smeh.wav")));
     _builtInActions.append(BotAction::createSoundPlay({"!чкгВолчок", "!chgkVolchok"}, QUrl("qrc:/resources/sound/commands/chgk_volchok.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!чкгЧёрныйЯщик", "!чкгЧерныйЯщик", "!chgkBlackBox"}, QUrl("qrc:/resources/sound/commands/chgk_yashik.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!пчПодумай"}, QUrl("qrc:/resources/sound/commands/pch_60_seconds.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!пчАвтомобиль"}, QUrl("qrc:/resources/sound/commands/pch_avtomobil.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!пчМимо"}, QUrl("qrc:/resources/sound/commands/pch_mimo.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!пчПобеда"}, QUrl("qrc:/resources/sound/commands/pch_winner.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!аплодисменты"}, QUrl("qrc:/resources/sound/commands/applause.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!airhorn"}, QUrl("qrc:/resources/sound/commands/airhorn.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!badumts"}, QUrl("qrc:/resources/sound/commands/budum_tss.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!mchummer"}, QUrl("qrc:/resources/sound/commands/cant-touch-this.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!неСмешно"}, QUrl("qrc:/resources/sound/commands/crickets.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!сверчки", "!неСмешно"}, QUrl("qrc:/resources/sound/commands/crickets.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!doIt", "!justDoIt"}, QUrl("qrc:/resources/sound/commands/do_it.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!неожиданно", "!неожидано"}, QUrl("qrc:/resources/sound/commands/dramatic.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!missionComplited"}, QUrl("qrc:/resources/sound/commands/gta-sa-done.mp3")));
@@ -391,15 +397,38 @@ void ChatBot::initBuiltinCommands()
     _builtInActions.append(BotAction::createSoundPlay({"!полежу", "!пойдуПолежу"}, QUrl("qrc:/resources/sound/commands/wc_lie_down.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!noTime"}, QUrl("qrc:/resources/sound/commands/wc_notime.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!чемТыЗанимаешься"}, QUrl("qrc:/resources/sound/commands/wc_what_are_you.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!чемТыЗанимаешься2"}, QUrl("qrc:/resources/sound/commands/what-are-you-doing-in-my-swamp.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!xfiles", "!x-files"}, QUrl("qrc:/resources/sound/commands/x-files.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!ГГ", "!GG"}, QUrl("qrc:/resources/sound/commands/gg.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!кончено", "!ofCourse"}, QUrl("qrc:/resources/sound/commands/of_course.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!фшха", "!неСмешно2"}, QUrl("qrc:/resources/sound/commands/nuzhdiki.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!здоровоОтец", "!здаровоОтец", "!здороваОтец", "!здароваОтец"}, QUrl("qrc:/resources/sound/commands/great_father.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!пиво", "!pivo", "!beer"}, QUrl("qrc:/resources/sound/commands/pivo.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!вотЭтоПоворот"}, QUrl("qrc:/resources/sound/commands/vot_eto_povorot.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!накосячил", "!косяк"}, QUrl("qrc:/resources/sound/commands/накосячил.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!чтоЭто", "!чувакЧтоЭто", "!wat", "!what"}, QUrl("qrc:/resources/sound/commands/chto-eto.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!mkFatality", "!фаталити", "!мкФаталити", "!fatality"}, QUrl("qrc:/resources/sound/commands/fatality.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!mkFinishhim", "!finishhim"}, QUrl("qrc:/resources/sound/commands/finishhim.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!mkFight", "!fight", "!бой", "!вбой"}, QUrl("qrc:/resources/sound/commands/mk-fight.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!mkToasty", "!toasty"}, QUrl("qrc:/resources/sound/commands/mk-toasty.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!mkRound1", "!round1", "раунд1", "!мкРаунд1"}, QUrl("qrc:/resources/sound/commands/mk-round1.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!mkRound2", "!round2", "раунд2", "!мкРаунд2"}, QUrl("qrc:/resources/sound/commands/mk-round2.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!mkRound3", "!round3", "раунд3", "!мкРаунд3"}, QUrl("qrc:/resources/sound/commands/mk-round3.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!дружкоНеБуду", "!дружко"}, QUrl("qrc:/resources/sound/commands/drujko-ne-budu.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!неТочно", "!ноЭтоНеТочно", "!брб"}, QUrl("qrc:/resources/sound/commands/ne-tochno.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!astalavista", "!hastaLaVista", "!асталависта"}, QUrl("qrc:/resources/sound/commands/astalavista.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!initial1", "!initialD1", "!eurobeat1", "!евробит1", "!dejavu", "!deja-vu", "!дежавю", "!дежа-вю", "!дежаву", "!дежа-ву", "!дэжаву", "!дэжавю"}, QUrl("qrc:/resources/sound/commands/deja-vu.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!initial2", "!initialD2", "!eurobeat2", "!евробит2", "!газ", "!гас", "!gas", "!gaz"}, QUrl("qrc:/resources/sound/commands/gas.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!initial3", "!initialD3", "!eurobeat3", "!евробит3", "!90s", "!90е"}, QUrl("qrc:/resources/sound/commands/eurobeat.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!saxophone", "!saxophon", "!саксофон"}, QUrl("qrc:/resources/sound/commands/saxophone.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!fly", "!ICanFly"}, QUrl("qrc:/resources/sound/commands/fly.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!suspense1", "!саспенс1", "!суспенс1", "!suspens1", "!saspense1", "!saspens1", "!psycho"}, QUrl("qrc:/resources/sound/commands/psycho.mp3")));
+    _builtInActions.append(BotAction::createSoundPlay({"!suspense2", "!саспенс2", "!суспенс2", "!suspens2", "!saspense2", "!saspens2", "!барабаннаяДробь"}, QUrl("qrc:/resources/sound/commands/saspens.mp3")));
+
+    // !МыГГ !gman (it's time to choose) !shaokan (you will never win)
+    //ToDo: добавить: !ура,  !боль,  !позабавимся,  !обмыть,  !твари, !gameover, !lol, !пиво, !clear, !go, !negative, !победа, !rtrKakTak, !rtrGlavnoe, !дошик, !фиаско2, !zapab, !rtrZaruinil, !rtrZloyBoss, !rtrNadejda, !rtrЁКЛМН, !rtrNevezenie, !GoBen4, !jivi, !rtrPobedaBoss, !rtrBezuprechno, !rtrZlieBossi
 
     // by 2nd channel
+    _builtInActions.append(BotAction::createSoundPlay({"!viknickLol", "!викникЛол", "!викникСмех", "!викник"}, QUrl("qrc:/resources/sound/commands/2nd_channel/2nd Channel-Викник смех.wav")));
     _builtInActions.append(BotAction::createSoundPlay({"!факт", "!этоФакт"}, QUrl("qrc:/resources/sound/commands/2nd_channel/2nd Channel-Это факт.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!гудлак", "!321GoodLuck"}, QUrl("qrc:/resources/sound/commands/2nd_channel/2nd Channel-3-2-1 - Good Luck-kissvk.com.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!гудлак2"}, QUrl("qrc:/resources/sound/commands/2nd_channel/2nd Channel-Gin Chin Good Luck.mp3")));
@@ -432,38 +461,6 @@ void ChatBot::initBuiltinCommands()
     _builtInActions.append(BotAction::createSoundPlay({"!терминаторДомогался"}, QUrl("qrc:/resources/sound/commands/2nd_channel/2nd Channel-Меня Терминатор домогался-kissvk.com.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!быстроТыПоел"}, QUrl("qrc:/resources/sound/commands/2nd_channel/2nd Channel-Да быстро ты поел-kissvk.com.mp3")));
     _builtInActions.append(BotAction::createSoundPlay({"!скрытаяРеклама"}, QUrl("qrc:/resources/sound/commands/2nd_channel/2nd Channel-Скрытая реклама.mp3")));
-
-    _builtInActions.append(BotAction::createSoundPlay({"!вотЭтоПоворот"}, QUrl("qrc:/resources/sound/commands/vot_eto_povorot.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!накосячил", "!косяк"}, QUrl("qrc:/resources/sound/commands/накосячил.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!чтоЭто", "!чувакЧтоЭто", "!wat", "!what"}, QUrl("qrc:/resources/sound/commands/chto-eto.mp3")));
-
-    _builtInActions.append(BotAction::createSoundPlay({"!mkFatality", "!фаталити", "!мкФаталити", "!fatality"}, QUrl("qrc:/resources/sound/commands/fatality.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!mkFinishhim", "!finishhim"}, QUrl("qrc:/resources/sound/commands/finishhim.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!mkFight", "!fight", "!бой", "!вбой"}, QUrl("qrc:/resources/sound/commands/mk-fight.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!mkToasty", "!toasty"}, QUrl("qrc:/resources/sound/commands/mk-toasty.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!mkRound1", "!round1", "раунд1", "!мкРаунд1"}, QUrl("qrc:/resources/sound/commands/mk-round1.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!mkRound2", "!round2", "раунд2", "!мкРаунд2"}, QUrl("qrc:/resources/sound/commands/mk-round2.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!mkRound3", "!round3", "раунд3", "!мкРаунд3"}, QUrl("qrc:/resources/sound/commands/mk-round3.mp3")));
-
-    _builtInActions.append(BotAction::createSoundPlay({"!дружкоНеБуду", "!дружко"}, QUrl("qrc:/resources/sound/commands/drujko-ne-budu.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!неТочно", "!ноЭтоНеТочно", "!брб"}, QUrl("qrc:/resources/sound/commands/ne-tochno.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!astalavista", "!hastaLaVista", "!асталависта"}, QUrl("qrc:/resources/sound/commands/astalavista.mp3")));
-
-    _builtInActions.append(BotAction::createSoundPlay({"!initial1", "!initialD1", "!eurobeat1", "!евробит1", "!dejavu", "!deja-vu", "!дежавю", "!дежа-вю", "!дежаву", "!дежа-ву", "!дэжаву", "!дэжавю"}, QUrl("qrc:/resources/sound/commands/deja-vu.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!initial2", "!initialD2", "!eurobeat2", "!евробит2", "!газ", "!гас", "!gas", "!gaz"}, QUrl("qrc:/resources/sound/commands/gas.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!initial3", "!initialD3", "!eurobeat3", "!евробит3", "!90s", "!90е"}, QUrl("qrc:/resources/sound/commands/eurobeat.mp3")));
-
-    _builtInActions.append(BotAction::createSoundPlay({"!saxophone", "!saxophon", "!саксофон"}, QUrl("qrc:/resources/sound/commands/saxophone.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!fly", "!ICanFly"}, QUrl("qrc:/resources/sound/commands/fly.mp3")));
-
-    _builtInActions.append(BotAction::createSoundPlay({"!suspense1", "!саспенс1", "!суспенс1", "!suspens1", "!saspense1", "!saspens1", "!psycho"}, QUrl("qrc:/resources/sound/commands/psycho.mp3")));
-    _builtInActions.append(BotAction::createSoundPlay({"!suspense2", "!саспенс2", "!суспенс2", "!suspens2", "!saspense2", "!saspens2", "!барабаннаяДробь"}, QUrl("qrc:/resources/sound/commands/saspens.mp3")));
-
-
-
-    // !МыГГ !gman (it's time to choose) !shaokan (you will never win)
-
-    //ToDo: добавить: !ура,  !боль,  !позабавимся,  !обмыть,  !твари, !gameover, !lol, !пиво, !clear, !go, !negative, !победа, !rtrKakTak, !rtrGlavnoe, !дошик, !фиаско2, !zapab, !rtrZaruinil, !rtrZloyBoss, !rtrNadejda, !rtrЁКЛМН, !rtrNevezenie, !GoBen4, !jivi, !rtrPobedaBoss, !rtrBezuprechno, !rtrZlieBossi
 }
 
 void ChatBot::saveCommands()

@@ -71,7 +71,7 @@ void CommandsEditor::updateCommands()
 
         switch (action->type()) {
         case BotAction::ActionType::SoundPlay:
-            actionString = tr("Sound: %1").arg(action->soundFile());
+            actionString = tr("Sound: %1").arg(action->soundUrl().toLocalFile());
             break;
         case BotAction::ActionType::Unknown:
             actionString = tr("Error");

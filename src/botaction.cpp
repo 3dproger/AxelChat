@@ -30,22 +30,6 @@ void BotAction::setExclusiveInactivityPeriod(bool exclusiveInactivityPeriod)
     _exclusiveInactivityPeriod = exclusiveInactivityPeriod;
 }
 
-std::shared_ptr<QSoundEffect> BotAction::soundEffect()
-{
-    if (!_soundEffect)
-    {
-        _soundEffect = std::shared_ptr<QSoundEffect>(new QSoundEffect());
-        _soundEffect->setSource(_soundUrl);
-    }
-
-    return _soundEffect;
-}
-
-QString BotAction::soundFile() const
-{
-    return _soundUrl.toLocalFile();
-}
-
 BotAction::ActionType BotAction::type() const
 {
     return _type;
