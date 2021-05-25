@@ -7,7 +7,7 @@
 #include <QFile>
 
 YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath, QObject *parent)
-    : QObject(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath), _cefApp(cefApp)
+    : AbstractChatService(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath), _cefApp(cefApp)
 {
     if (!_cefApp)
     {

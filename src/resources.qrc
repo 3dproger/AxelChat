@@ -140,5 +140,6 @@
         <file>resources/sound/commands/2nd_channel/2nd Channel-Что надо чикса-бикса-kissvk.com.mp3</file>
         <file>resources/sound/commands/2nd_channel/2nd Channel-Это факт.mp3</file>
         <file>resources/sound/commands/2nd_channel/2nd Channel-Я тебя в интернете забаню-kissvk.com.mp3</file>
+        <file>resources/images/twitch-round.svg</file>
     </qresource>
 </RCC>

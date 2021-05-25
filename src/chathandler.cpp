@@ -28,10 +28,22 @@ ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const 
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
 
     connect(_youTube, SIGNAL(connected(QString)),
-                     this, SLOT(onConnectedYouTube(QString)));
+                     this, SLOT(onConnected(QString)));
 
     connect(_youTube, SIGNAL(disconnected(QString)),
-            this, SLOT(onDisconnectedYouTube(QString)));
+            this, SLOT(onDisconnected(QString)));
+
+    //Twitch
+    _twitch = new Twitch(settings, _settingsGroupPath + "/twitch");
+
+    connect(_twitch, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
+                     this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
+
+    connect(_twitch, SIGNAL(connected(QString)),
+                     this, SLOT(onConnected(QString)));
+
+    connect(_twitch, SIGNAL(disconnected(QString)),
+            this, SLOT(onDisconnected(QString)));
 
     if (_settings)
     {
@@ -68,6 +80,12 @@ ChatHandler::~ChatHandler()
     {
         delete _youTube;
         _youTube = nullptr;
+    }
+
+    if (_twitch)
+    {
+        delete _twitch;
+        _twitch = nullptr;
     }
 
     if (_bot)
@@ -162,17 +180,45 @@ void ChatHandler::playNewMessageSound()
     }
 }
 
-void ChatHandler::onConnectedYouTube(QString broadcastId)
+void ChatHandler::onConnected(QString name)
 {
-    chatNotification(tr("YouTube connected: %1").arg(broadcastId));
-    _connectedSome = true;
+    {
+        YouTube* youTube = dynamic_cast<YouTube*>(sender());
+        if (youTube)
+        {
+            chatNotification(tr("YouTube connected: %1").arg(name));
+        }
+    }
+
+    {
+        Twitch* twitch = dynamic_cast<Twitch*>(sender());
+        if (twitch)
+        {
+            chatNotification(tr("Twitch connected: %1").arg(name));
+        }
+    }
+
     emit connectedSomeChanged();
 }
 
-void ChatHandler::onDisconnectedYouTube(QString broadcastId)
+void ChatHandler::onDisconnected(QString name)
 {
-    chatNotification(tr("YouTube disconnected: %1").arg(broadcastId));
-    _connectedSome = false;
+    {
+        YouTube* youTube = dynamic_cast<YouTube*>(sender());
+        if (youTube)
+        {
+            chatNotification(tr("YouTube disconnected: %1").arg(name));
+        }
+    }
+
+    {
+        Twitch* twitch = dynamic_cast<Twitch*>(sender());
+        if (twitch)
+        {
+            chatNotification(tr("Twitch disconnected: %1").arg(name));
+        }
+    }
+
 
     if (_enabledClearMessagesOnLinkChange)
     {
@@ -206,6 +252,9 @@ void ChatHandler::declareQml()
     qmlRegisterUncreatableType<YouTube> ("AxelChat.YouTube",
                                                     1, 0, "YouTube", "Type cannot be created in QML");
 
+    qmlRegisterUncreatableType<Twitch> ("AxelChat.Twitch",
+                                                    1, 0, "Twitch", "Type cannot be created in QML");
+
     qmlRegisterUncreatableType<OutputToFile> ("AxelChat.OutputToFile",
                                               1, 0, "OutputToFile", "Type cannot be created in QML");
 
@@ -216,7 +265,7 @@ void ChatHandler::declareQml()
 
 bool ChatHandler::isConnectedSome()
 {
-    return _connectedSome;
+    return _youTube->isConnected() || _twitch->isConnected();
 }
 
 void ChatHandler::setEnabledSoundNewMessage(bool enabled)
@@ -334,9 +383,14 @@ void ChatHandler::setProxyServerPort(int port)
     }
 }
 
-YouTube *ChatHandler::youTube() const
+YouTube* ChatHandler::youTube() const
 {
     return _youTube;
+}
+
+Twitch* ChatHandler::twitch() const
+{
+    return _twitch;
 }
 
 OutputToFile *ChatHandler::outputToFile() const

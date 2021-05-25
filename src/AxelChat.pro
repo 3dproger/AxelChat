@@ -1,4 +1,4 @@
-QT += widgets gui quick multimedia
+QT += widgets gui quick multimedia websockets
 
 CONFIG += c++11
 
@@ -14,6 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 HEADERS += \
+    abstractchatservice.hpp \
     applicationinfo.hpp \
     botaction.hpp \
     cef.hpp \
@@ -27,6 +28,7 @@ HEADERS += \
     i18n.hpp \
     outputtofile.hpp \
     qmlutils.hpp \
+    twitch.hpp \
     types.hpp \
     youtube.hpp
 
@@ -44,6 +46,7 @@ SOURCES += \
         main.cpp \
         outputtofile.cpp \
         qmlutils.cpp \
+        twitch.cpp \
         youtube.cpp
 
 RESOURCES += qml.qrc \

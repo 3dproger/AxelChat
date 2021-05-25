@@ -3,6 +3,14 @@
 #include <QUuid>
 #include <QTranslator>
 
+namespace
+{
+
+static const QUrl YouTubeDefaultAvatarUrl   = QUrl("qrc:/resources/images/youtube-rounded.svg");
+static const QUrl TwitchDefaultAvatarUrl    = QUrl("qrc:/resources/images/twitch-round.svg");
+
+}
+
 MessageAuthor MessageAuthor::createFromYouTube(
         const QString &name,
         const QString &channelId,
@@ -25,6 +33,19 @@ MessageAuthor MessageAuthor::createFromYouTube(
     author._isChatOwner = isChatOwner;
     author._isChatSponsor = isChatSponsor;
     author._isChatModerator = isChatModerator;
+
+    return author;
+}
+
+MessageAuthor MessageAuthor::createFromTwitch(const QString &name, const QString &channelId)
+{
+    MessageAuthor author;
+
+    author._valid = true;
+    author._name = name;
+    author._channelId = channelId;
+    author._pageUrl = QUrl(QString("https://www.twitch.tv/%1").arg(channelId));
+    author._avatarUrl = TwitchDefaultAvatarUrl;//ToDo: нужно получать реальный аватар
 
     return author;
 }
@@ -80,6 +101,21 @@ ChatMessage ChatMessage::createFromYouTube(const QString& text,
     message._publishedAt = publishedAt;
     message._receivedAt  = receivedAt;
     message._type        = Type::YouTube;
+    message._author      = author;
+
+    return message;
+}
+
+ChatMessage ChatMessage::createFromTwitch(const QString &text, const QDateTime &receivedAt, const MessageAuthor &author)
+{
+    ChatMessage message = ChatMessage();
+
+    message._valid = true;
+    message._text        = text;
+    message._id          = QUuid::createUuid().toString(QUuid::Id128);//ToDo: отказать вовсе того, чтобы id был обязателен
+    message._publishedAt = receivedAt;//ToDo: возможно, это нужно исправить
+    message._receivedAt  = receivedAt;
+    message._type        = Type::Twitch;
     message._author      = author;
 
     return message;

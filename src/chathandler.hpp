@@ -10,6 +10,7 @@
 #include "chatbot.hpp"
 #include <QSound>
 #include "cef.hpp"
+#include "twitch.hpp"
 
 class ChatHandler : public QObject
 {
@@ -31,6 +32,7 @@ public:
 
     OutputToFile *outputToFile() const;
     YouTube *youTube() const;
+    Twitch* twitch() const;
     ChatBot *bot() const;
     ChatMessagesModel* messagesModel();
 
@@ -65,8 +67,8 @@ public slots:
     void playNewMessageSound();
 
 private slots:
-    void onConnectedYouTube(QString broadcastId);
-    void onDisconnectedYouTube(QString broadcastId);
+    void onConnected(QString name);
+    void onDisconnected(QString name);
 
 private:
     void chatNotification(const QString& text);
@@ -78,7 +80,8 @@ private:
     QSettings*    _settings                 = nullptr;
 
     CefRefPtr<QtCefApp> _cefApp             = nullptr;
-    YouTube* _youTube = nullptr;
+    YouTube* _youTube                       = nullptr;
+    Twitch* _twitch                         = nullptr;
     OutputToFile* _outputToFile             = nullptr;
     ChatBot* _bot                           = nullptr;
 
@@ -94,8 +97,6 @@ private:
     const QString _settingsProxyAddress = "proxyServerAddress";
     int _proxyServerPort = -1;
     const QString _settingsProxyPort    = "proxyServerPort";
-
-    bool _connectedSome = false;
 };
 
 #endif // CHATMESSAGEHANDLER_HPP

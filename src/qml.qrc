@@ -17,5 +17,6 @@
         <file>my_components/RoundMouseArea.qml</file>
         <file>author_info_window.qml</file>
         <file>setting_pages/all_commands_window.qml</file>
+        <file>setting_pages/twitch.qml</file>
     </qresource>
 </RCC>
