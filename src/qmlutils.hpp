@@ -12,7 +12,8 @@ class QMLUtils : public QObject
                WRITE setEnabledHardwareGraphicsAccelerator
                NOTIFY enabledHardwareGraphicsAcceleratorChanged)
     Q_PROPERTY(QString buildCpuArchitecture
-               READ buildCpuArchitecture)
+               READ buildCpuArchitecture
+               CONSTANT)
 public:
     explicit QMLUtils(QSettings* settings, const QString& settingsGroup, QObject *parent = nullptr);
     static void declareQml();

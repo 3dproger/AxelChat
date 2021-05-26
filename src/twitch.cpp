@@ -79,9 +79,9 @@ bool Twitch::isConnected() const
 QUrl Twitch::requesGetAOuthTokenUrl() const
 {
     return QUrl("https://id.twitch.tv/oauth2/authorize?client_id=" + ApplicationClientID
-                + "&redirect_uri=" + RedirectUri
-                + "&response_type=token+id_token"
-                + "&scope=openid+chat:read");
+                        + "&redirect_uri=" + RedirectUri
+                        + "&response_type=token"
+                        + "&scope=openid+chat:read");
 }
 
 QUrl Twitch::chatUrl() const
