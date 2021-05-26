@@ -30,24 +30,37 @@
         <translation type="vanished">Тестовое сообщение</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="189"/>
         <source>YouTube connected: %1</source>
-        <translation>YouTube подключён: %1</translation>
+        <translation type="vanished">YouTube подключён: %1</translation>
+    </message>
+    <message>
+        <location filename="chathandler.cpp" line="190"/>
+        <source>YouTube connected</source>
+        <translation>YouTube подключён</translation>
     </message>
     <message>
         <location filename="chathandler.cpp" line="197"/>
-        <source>Twitch connected: %1</source>
-        <translation>Twitch подключён: %1</translation>
+        <source>Twitch connected</source>
+        <oldsource>Twitch connected: %1</oldsource>
+        <translation>Twitch подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="210"/>
+        <location filename="chathandler.cpp" line="217"/>
+        <source>YouTube disconnected</source>
+        <translation>YouTube отключён</translation>
+    </message>
+    <message>
+        <location filename="chathandler.cpp" line="224"/>
+        <source>Twitch disconnected</source>
+        <translation>Twitch отключён</translation>
+    </message>
+    <message>
         <source>YouTube disconnected: %1</source>
-        <translation>YouTube отключён: %1</translation>
+        <translation type="vanished">YouTube отключён: %1</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="218"/>
         <source>Twitch disconnected: %1</source>
-        <translation>Twitch отключён: %1</translation>
+        <translation type="vanished">Twitch отключён: %1</translation>
     </message>
 </context>
 <context>
@@ -621,25 +634,27 @@ Latest version available: %2</oldsource>
 <context>
     <name>main</name>
     <message>
-        <location filename="main.qml" line="620"/>
         <source>Connecting to %1</source>
-        <translation>Подключение к %1</translation>
+        <translation type="vanished">Подключение к %1</translation>
     </message>
     <message>
-        <location filename="main.qml" line="627"/>
         <source>Link or broadcast ID is not specified</source>
-        <translation>Ссылка или ID трансляции не указана</translation>
+        <translation type="vanished">Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="main.qml" line="631"/>
+        <location filename="main.qml" line="635"/>
+        <source>Nothing connected</source>
+        <translation>Ничего не подключено</translation>
+    </message>
+    <message>
+        <location filename="main.qml" line="639"/>
         <source>Right click on the window to open the settings</source>
         <translation>Кликните правой кнопкой мыши по окну, чтобы открыть настройки</translation>
     </message>
     <message>
-        <location filename="main.qml" line="637"/>
         <source>Incorrect link or broadcast ID specified</source>
         <oldsource>Incorrect link or broadcast ID entered</oldsource>
-        <translation>Указана неверная ссылка или ID трансляции</translation>
+        <translation type="vanished">Указана неверная ссылка или ID трансляции</translation>
     </message>
     <message>
         <source>Link or broadcast ID not entered. Right mouse click to open settings window</source>
@@ -671,44 +686,44 @@ Latest version available: %2</oldsource>
         <translation>Включить вывод в ini-файл</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="69"/>
+        <location filename="setting_pages/outputtofile.qml" line="68"/>
         <source>Folder where to save:</source>
         <translation>Папка, где будет сохранено:</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="86"/>
+        <location filename="setting_pages/outputtofile.qml" line="85"/>
         <source>Folder where to save...</source>
         <translation>Папка, где сохранять...</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="102"/>
+        <location filename="setting_pages/outputtofile.qml" line="101"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="117"/>
+        <location filename="setting_pages/outputtofile.qml" line="116"/>
         <source>Please select a folder</source>
         <translation>Пожалуйста, выберите папку</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="129"/>
+        <location filename="setting_pages/outputtofile.qml" line="128"/>
         <source>Reset</source>
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="142"/>
+        <location filename="setting_pages/outputtofile.qml" line="141"/>
         <source>Show in Explorer</source>
         <translation>Показать в Проводнике</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="209"/>
+        <location filename="setting_pages/outputtofile.qml" line="208"/>
         <source>Codec:</source>
         <translation>Кодировка:</translation>
     </message>
     <message>
         <location filename="setting_pages/outputtofile.qml" line="28"/>
-        <location filename="setting_pages/outputtofile.qml" line="221"/>
-        <location filename="setting_pages/outputtofile.qml" line="231"/>
+        <location filename="setting_pages/outputtofile.qml" line="220"/>
+        <location filename="setting_pages/outputtofile.qml" line="230"/>
         <source>Export to txt</source>
         <translation>Экспорт в txt</translation>
     </message>
@@ -786,30 +801,30 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Вставьте ссылку на другой канал или название канала сюда...</translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="190"/>
+        <location filename="setting_pages/twitch.qml" line="213"/>
         <source>Broadcast:</source>
         <translation>Трансляция:</translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="212"/>
+        <location filename="setting_pages/twitch.qml" line="235"/>
         <source>Chat:</source>
         <translation>Чат:</translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="234"/>
+        <location filename="setting_pages/twitch.qml" line="257"/>
         <source>Twitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="269"/>
+        <location filename="setting_pages/twitch.qml" line="292"/>
         <source>Control Panel:</source>
         <translation>Панель управления:</translation>
     </message>
     <message>
         <location filename="setting_pages/twitch.qml" line="118"/>
         <location filename="setting_pages/twitch.qml" line="148"/>
-        <location filename="setting_pages/twitch.qml" line="280"/>
         <location filename="setting_pages/twitch.qml" line="303"/>
+        <location filename="setting_pages/twitch.qml" line="326"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
@@ -820,15 +835,16 @@ Latest version available: %2</oldsource>
     </message>
     <message>
         <location filename="setting_pages/twitch.qml" line="59"/>
+        <location filename="setting_pages/twitch.qml" line="192"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
         <location filename="setting_pages/twitch.qml" line="82"/>
         <location filename="setting_pages/twitch.qml" line="107"/>
-        <location filename="setting_pages/twitch.qml" line="326"/>
-        <location filename="setting_pages/twitch.qml" line="351"/>
-        <location filename="setting_pages/twitch.qml" line="376"/>
+        <location filename="setting_pages/twitch.qml" line="349"/>
+        <location filename="setting_pages/twitch.qml" line="374"/>
+        <location filename="setting_pages/twitch.qml" line="399"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
@@ -838,32 +854,40 @@ Latest version available: %2</oldsource>
         <translation>Скопировано!</translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="473"/>
+        <location filename="setting_pages/twitch.qml" line="496"/>
+        <source>Link or channel name is not specified</source>
+        <translation>Ссылка или название канала не указано</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/twitch.qml" line="500"/>
+        <source>Incorrect link or channel name specified</source>
+        <translation>Указана некорректная ссылка или название канала</translation>
+    </message>
+    <message>
         <source>Link or broadcast ID is not specified</source>
-        <translation type="unfinished">Ссылка или ID трансляции не указана</translation>
+        <translation type="obsolete">Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="477"/>
         <source>Incorrect link or broadcast ID specified</source>
-        <translation type="unfinished">Указана неверная ссылка или ID трансляции</translation>
+        <translation type="obsolete">Указана неверная ссылка или ID трансляции</translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="482"/>
+        <location filename="setting_pages/twitch.qml" line="505"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="486"/>
+        <location filename="setting_pages/twitch.qml" line="509"/>
         <source>Successfully Connected!</source>
         <translation>Успешно подключено!</translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="496"/>
+        <location filename="setting_pages/twitch.qml" line="519"/>
         <source>OAuth token:</source>
         <translation>OAuth-токен:</translation>
     </message>
     <message>
-        <location filename="setting_pages/twitch.qml" line="509"/>
+        <location filename="setting_pages/twitch.qml" line="532"/>
         <source>Get token</source>
         <translation>Получить токен</translation>
     </message>
@@ -973,22 +997,22 @@ Latest version available: %2</oldsource>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="584"/>
+        <location filename="setting_pages/youtube.qml" line="573"/>
         <source>Link or broadcast ID is not specified</source>
         <translation>Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="588"/>
+        <location filename="setting_pages/youtube.qml" line="577"/>
         <source>Incorrect link or broadcast ID specified</source>
         <translation>Указана неверная ссылка или ID трансляции</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="593"/>
+        <location filename="setting_pages/youtube.qml" line="582"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="597"/>
+        <location filename="setting_pages/youtube.qml" line="586"/>
         <source>Successfully Connected!</source>
         <translation>Успешно подключено!</translation>
     </message>
@@ -998,24 +1022,22 @@ Latest version available: %2</oldsource>
     </message>
     <message>
         <location filename="setting_pages/youtube.qml" line="277"/>
-        <location filename="setting_pages/youtube.qml" line="302"/>
-        <location filename="setting_pages/youtube.qml" line="412"/>
-        <location filename="setting_pages/youtube.qml" line="437"/>
-        <location filename="setting_pages/youtube.qml" line="462"/>
-        <location filename="setting_pages/youtube.qml" line="487"/>
+        <location filename="setting_pages/youtube.qml" line="401"/>
+        <location filename="setting_pages/youtube.qml" line="426"/>
+        <location filename="setting_pages/youtube.qml" line="451"/>
+        <location filename="setting_pages/youtube.qml" line="476"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="292"/>
         <source>Copied!</source>
-        <translation>Скопировано!</translation>
+        <translation type="vanished">Скопировано!</translation>
     </message>
     <message>
-        <location filename="setting_pages/youtube.qml" line="313"/>
-        <location filename="setting_pages/youtube.qml" line="343"/>
-        <location filename="setting_pages/youtube.qml" line="366"/>
-        <location filename="setting_pages/youtube.qml" line="389"/>
+        <location filename="setting_pages/youtube.qml" line="302"/>
+        <location filename="setting_pages/youtube.qml" line="332"/>
+        <location filename="setting_pages/youtube.qml" line="355"/>
+        <location filename="setting_pages/youtube.qml" line="378"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>

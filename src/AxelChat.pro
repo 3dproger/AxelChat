@@ -50,7 +50,6 @@ SOURCES += \
         youtube.cpp
 
 RESOURCES += qml.qrc \
-    my_components/InteractiveWait/InteractiveWait.qrc \
     resources.qrc \
     translations.qrc
 

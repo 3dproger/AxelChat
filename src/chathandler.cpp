@@ -182,43 +182,54 @@ void ChatHandler::playNewMessageSound()
 
 void ChatHandler::onConnected(QString name)
 {
+    QString text;
+
+    YouTube* youTube = dynamic_cast<YouTube*>(sender());
+    if (youTube)
     {
-        YouTube* youTube = dynamic_cast<YouTube*>(sender());
-        if (youTube)
-        {
-            chatNotification(tr("YouTube connected: %1").arg(name));
-        }
+        text = tr("YouTube connected");
+
     }
 
+    Twitch* twitch = dynamic_cast<Twitch*>(sender());
+    if (twitch)
     {
-        Twitch* twitch = dynamic_cast<Twitch*>(sender());
-        if (twitch)
-        {
-            chatNotification(tr("Twitch connected: %1").arg(name));
-        }
+        text = tr("Twitch connected");
     }
+
+    if (!name.isEmpty())
+    {
+        text += ": " + name;
+    }
+
+    chatNotification(text);
 
     emit connectedSomeChanged();
 }
 
 void ChatHandler::onDisconnected(QString name)
 {
+    QString text;
+
+    YouTube* youTube = dynamic_cast<YouTube*>(sender());
+    if (youTube)
     {
-        YouTube* youTube = dynamic_cast<YouTube*>(sender());
-        if (youTube)
-        {
-            chatNotification(tr("YouTube disconnected: %1").arg(name));
-        }
+        text = tr("YouTube disconnected");
+
     }
 
+    Twitch* twitch = dynamic_cast<Twitch*>(sender());
+    if (twitch)
     {
-        Twitch* twitch = dynamic_cast<Twitch*>(sender());
-        if (twitch)
-        {
-            chatNotification(tr("Twitch disconnected: %1").arg(name));
-        }
+        text = tr("Twitch disconnected");
     }
 
+    if (!name.isEmpty())
+    {
+        text += ": " + name;
+    }
+
+    chatNotification(text);
 
     if (_enabledClearMessagesOnLinkChange)
     {
