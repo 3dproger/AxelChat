@@ -10,9 +10,9 @@ class AbstractChatService : public QObject
 
 public:
     enum ConnectionStateType {
-        NotConnected = Qt::UserRole + 1,
-        Connecting,
-        Connected
+        NotConnected = 10,
+        Connecting = 20,
+        Connected = 30
     };
     Q_ENUM(ConnectionStateType)
 
@@ -34,7 +34,7 @@ public:
     virtual QUrl broadcastUrl() const { return QString(); }
 
     virtual ConnectionStateType connectionStateType() const = 0;
-    virtual QString stateDescription() const { return QString(); }
+    virtual QString stateDescription() const  = 0;
 
     static void declareQML()
     {
@@ -47,7 +47,6 @@ public:
 signals:
     void linkChanged();
     void stateChanged();
-    void connectedChanged();
     void readyRead(const QList<ChatMessage>& messages, const QList<MessageAuthor>& authors);
     void connected(QString name);
     void disconnected(QString name);

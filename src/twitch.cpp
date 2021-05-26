@@ -28,8 +28,14 @@ Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *p
 
     QObject::connect(&_socket, &QWebSocket::textMessageReceived, this, &Twitch::onIRCMessage);
 
-    QObject::connect(&_socket, &QWebSocket::connected, this, [=](){
+    QObject::connect(&_socket, &QWebSocket::connected, this, [=]() {
         qDebug() << "Twitch WebSocket connected" << _info.channelName;
+
+        if (_info.connected)
+        {
+            _info.connected = false;
+            emit stateChanged();
+        }
 
         _socket.sendTextMessage(QString("PASS oauth:") + _info.oauthToken);
         _socket.sendTextMessage(QString("NICK ") + _info.channelName);
@@ -44,7 +50,7 @@ Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *p
         {
             _info.connected = false;
             emit disconnected(_info.channelName);
-            emit connectedChanged();
+            emit stateChanged();
         }
     });
 
@@ -83,6 +89,33 @@ AbstractChatService::ConnectionStateType Twitch::connectionStateType() const
     }
 
     return AbstractChatService::ConnectionStateType::NotConnected;
+}
+
+QString Twitch::stateDescription() const
+{
+    switch (connectionStateType()) {
+    case ConnectionStateType::NotConnected:
+        if (_info.channelName.isEmpty())
+        {
+            return tr("Channel not specified");
+        }
+
+        if (_info.oauthToken.isEmpty())
+        {
+            return tr("OAuth token not specified");
+        }
+
+        return tr("Not connected");
+
+    case ConnectionStateType::Connecting:
+        return tr("Connecting...");
+
+    case ConnectionStateType::Connected:
+        return tr("Successfully connected!");
+
+    }
+
+    return "<unknown_state>";
 }
 
 QUrl Twitch::requesGetAOuthTokenUrl() const
@@ -126,11 +159,6 @@ QUrl Twitch::broadcastUrl() const
 bool Twitch::isChannelNameUserSpecified() const
 {
     return _info.userSpecifiedChannel.trimmed() == _info.channelName.trimmed() && !_info.userSpecifiedChannel.isEmpty();
-}
-
-void Twitch::extractOAuthTokenFromUrl(const QUrl &url)
-{
-    //https://localhost/#access_token=8esldyawj3599z5bhqy7o742xhbfvx&id_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEifQ.eyJhdWQiOiJjeDVyZ3NpdmM2MmlvMmtrNzl5ZjZlaXZoaHdpdWkiLCJleHAiOjE2MjE5OTM5NTcsImlhdCI6MTYyMTk5MzA1NywiaXNzIjoiaHR0cHM6Ly9pZC50d2l0Y2gudHYvb2F1dGgyIiwic3ViIjoiMjE1NjAxNjgyIiwiYXRfaGFzaCI6Il8taDUtLVpFUFJkcmFZc2pWZUZFV3ciLCJhenAiOiJjeDVyZ3NpdmM2MmlvMmtrNzl5ZjZlaXZoaHdpdWkiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJBeGUxX2sifQ.QwYuUV0KoFeK7P5hq5bEWj4l7rk8iHXm8vBTKIxFh6DAGn93boszdo0syAdU983qB7p4rifaiuV9iTU_gGf4ywG1nbk0DWenIHBTxqSBpBubhc77CWRmFSDe94FVWtep5Me8QBjvwb2HJoVHugWZBJ8NLDxQUbZOzSNzq3rCtooZFRKc3xBenN5mukgsG1sTXFqJOcgKlYMgJBJwuga6d-skHEYYekyjuudEAWli9llIHvcI-6AGcoMg5upcxOMTkDGYGEXHXjZH0dRI6cNHpBN6F93Ffhut5LhEQZhKAaGI32sV8MY_mP4ag-faqoS6WgrHtg1PURI18h9WVNk45A&scope=openid+chat%253Aread&token_type=bearer
 }
 
 void Twitch::setUserSpecifiedChannel(QString userChannel)
@@ -203,7 +231,7 @@ void Twitch::reInitSocket()
     if (_info.connected)
     {
         _info.connected = false;
-        emit connectedChanged();
+        emit stateChanged();
     }
 
     if (!_info.channelName.isEmpty())
@@ -239,7 +267,7 @@ void Twitch::onIRCMessage(const QString &rawData)
         {
             _info.connected = true;
             emit connected(_info.channelName);
-            emit connectedChanged();
+            emit stateChanged();
         }
 
         if (rawMessage.startsWith(":" + TwitchIRCHost))

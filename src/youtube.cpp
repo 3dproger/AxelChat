@@ -24,7 +24,7 @@ YouTube::~YouTube()
 {
     _info.broadcastConnected = false;
     emit disconnected(_info.broadcastId);
-    emit connectedChanged();
+    emit stateChanged();
 
     if (_outputToFile)
     {
@@ -245,6 +245,33 @@ AbstractChatService::ConnectionStateType YouTube::connectionStateType() const
     return AbstractChatService::ConnectionStateType::NotConnected;
 }
 
+QString YouTube::stateDescription() const
+{
+    switch (connectionStateType()) {
+    case ConnectionStateType::NotConnected:
+        if (_info.userSpecified.isEmpty())
+        {
+            return tr("Broadcast not specified");
+        }
+
+        if (_info.broadcastId.isEmpty())
+        {
+            return tr("The broadcast is not correct");
+        }
+
+        return tr("Not connected");
+
+    case ConnectionStateType::Connecting:
+        return tr("Connecting...");
+
+    case ConnectionStateType::Connected:
+        return tr("Successfully connected!");
+
+    }
+
+    return "<unknown_state>";
+}
+
 int YouTube::messagesReceived() const
 {
     return _messagesReceived;
@@ -261,11 +288,7 @@ void YouTube::setLink(QString link)
 
         _info = YouTubeInfo();
 
-        if (_info.broadcastConnected)
-        {
-            _info.broadcastConnected = false;
-            emit connectedChanged();
-        }
+        _info.broadcastConnected = false;
 
         _info.userSpecified = link;
         _info.broadcastId = extractBroadcastId(link);
@@ -315,6 +338,8 @@ void YouTube::setLink(QString link)
 
         emit linkChanged();
     }
+
+    emit stateChanged();
 }
 
 void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
@@ -373,7 +398,7 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
         }
 
         emit connected(_info.broadcastId);
-        emit connectedChanged();
+        emit stateChanged();
     }
 
     QList<ChatMessage> messages;

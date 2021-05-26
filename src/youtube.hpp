@@ -22,6 +22,7 @@ public:
     bool isBroadcastIdUserSpecified() const;
     void reconnect();
     ConnectionStateType connectionStateType() const override;
+    QString stateDescription() const override;
     QString broadcastId() const;
     QString userSpecifiedLink() const;
     QUrl broadcastUrl() const override;

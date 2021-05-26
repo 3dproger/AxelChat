@@ -419,29 +419,7 @@ ScrollView {
         BusyIndicator {
             id: busyIndicator
             y: 4
-            visible: twitch.connectionStateType === AbstractChatService.Connecting
-
-            /*{
-                if (twitch.broadcastUrl.length === 0)
-                {
-                    if (twitch.userSpecifiedChannel.trim().length === 0)
-                    {
-                        return false
-                    }
-                    else
-                    {
-                        return false
-                    }
-                }
-                else if (twitch.connectionStateType === AbstractChatService.Connecting)
-                {
-                    return true
-                }
-                else
-                {
-                    return false
-                }
-            }*/
+            visible: twitch.connectionStateType === 20 // ToDo: need refactoring
             height: 50
             width: height
             anchors.verticalCenter: image.verticalCenter
@@ -461,41 +439,17 @@ ScrollView {
             anchors.left: element2.right
             anchors.leftMargin: 12
             source: {
-                console.log(twitch.connectionStateType)
-
-                console.log(AbstractChatService.Connected)
-
-                if (twitch.connectionStateType === AbstractChatService.NotConnected)
+                if (twitch.connectionStateType === 10) // ToDo: need refactoring
                 {
                     return "qrc:/resources/images/alert1.svg"
                 }
-                else if (twitch.connectionStateType === AbstractChatService.Connected)
+                else if (twitch.connectionStateType === 30) // ToDo: need refactoring
                 {
                     return "qrc:/resources/images/tick.svg"
                 }
+
+                return "";
             }
-
-            /*{
-                if (twitch.broadcastUrl.length === 0)
-                {
-                    if (twitch.userSpecifiedChannel.trim().length === 0)
-                    {
-                        return "qrc:/resources/images/alert1.svg"
-                    }
-                    else
-                    {
-                        return "qrc:/resources/images/alert1.svg"
-                    }
-                }
-                else if (!twitch.connected)
-                {
-                    return "qrc:/resources/images/alert1.svg"
-                }
-                else
-                {
-                    return "qrc:/resources/images/tick.svg"
-                }
-            }*/
         }
 
         Label {
@@ -506,27 +460,7 @@ ScrollView {
             font.pointSize: 14
             x: 241
             y: 20
-            text: {
-                if (twitch.broadcastUrl.length === 0)
-                {
-                    if (twitch.userSpecifiedChannel.trim().length === 0)
-                    {
-                        return qsTr("Link or channel name is not specified");
-                    }
-                    else
-                    {
-                        return qsTr("Incorrect link or channel name specified");
-                    }
-                }
-                else if (!twitch.connected)
-                {
-                    return qsTr("Connecting...");
-                }
-                else
-                {
-                    return qsTr("Successfully Connected!");
-                }
-            }
+            text: twitch.stateDescription
         }
 
         Text {

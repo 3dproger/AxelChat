@@ -495,27 +495,7 @@ ScrollView {
         BusyIndicator {
             id: busyIndicator
             y: 4
-            visible: {
-                if (youTube.broadcastId.length === 0)
-                {
-                    if (youTube.userSpecifiedLink.trim().length === 0)
-                    {
-                        return false
-                    }
-                    else
-                    {
-                        return false
-                    }
-                }
-                else if (!youTube.connected)
-                {
-                    return true
-                }
-                else
-                {
-                    return false
-                }
-            }
+            visible: youTube.connectionStateType === 20 // ToDo: need refactoring
             height: 50
             width: height
             anchors.verticalCenter: image.verticalCenter
@@ -535,25 +515,16 @@ ScrollView {
             anchors.left: element2.right
             anchors.leftMargin: 12
             source: {
-                if (youTube.broadcastId.length === 0)
-                {
-                    if (youTube.userSpecifiedLink.trim().length === 0)
-                    {
-                        return "qrc:/resources/images/alert1.svg"
-                    }
-                    else
-                    {
-                        return "qrc:/resources/images/alert1.svg"
-                    }
-                }
-                else if (!youTube.connected)
+                if (youTube.connectionStateType === 10) // ToDo: need refactoring
                 {
                     return "qrc:/resources/images/alert1.svg"
                 }
-                else
+                else if (youTube.connectionStateType === 30) // ToDo: need refactoring
                 {
                     return "qrc:/resources/images/tick.svg"
                 }
+
+                return "";
             }
         }
 
@@ -565,27 +536,7 @@ ScrollView {
             font.pointSize: 14
             x: 241
             y: 20
-            text: {
-                if (youTube.broadcastId.length === 0)
-                {
-                    if (youTube.userSpecifiedLink.trim().length === 0)
-                    {
-                        return qsTr("Link or broadcast ID is not specified");
-                    }
-                    else
-                    {
-                        return qsTr("Incorrect link or broadcast ID specified");
-                    }
-                }
-                else if (!youTube.connected)
-                {
-                    return qsTr("Connecting...");
-                }
-                else
-                {
-                    return qsTr("Successfully Connected!");
-                }
-            }
+            text: youTube.stateDescription
         }
     }
 }

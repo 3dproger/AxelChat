@@ -19,6 +19,7 @@ public:
     explicit Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
     ~Twitch();
     ConnectionStateType connectionStateType() const override;
+    QString stateDescription() const override;
     QUrl requesGetAOuthTokenUrl() const;
     QUrl chatUrl() const override;
     QUrl controlPanelUrl() const override;
@@ -27,8 +28,6 @@ public:
     bool isChannelNameUserSpecified() const;
     QString oauthToken() const { return _info.oauthToken; }
     QString userSpecifiedChannel() const { return _info.userSpecifiedChannel; }
-
-    void extractOAuthTokenFromUrl(const QUrl& url);
 
 signals:
 
