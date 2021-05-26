@@ -28,11 +28,13 @@ public:
     QString oauthToken() const { return _info.oauthToken; }
     QString userSpecifiedChannel() const { return _info.userSpecifiedChannel; }
 
+    void extractOAuthTokenFromUrl(const QUrl& url);
+
 signals:
 
 public slots:
-    void setOAuthToken(QString token);
     void setUserSpecifiedChannel(QString userChannel);
+    void setOAuthToken(QString token);
 
 private slots:
     void onIRCMessage(const QString& rawData);
