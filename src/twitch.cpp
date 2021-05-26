@@ -255,6 +255,8 @@ void Twitch::onIRCMessage(const QString &rawData)
             continue;
         }
 
+        //:ryknowe1!ryknowe1@ryknowe1.tmi.twitch.tv PRIVMSG #arcus :haven't seen it recently
+
         const MessageAuthor author = MessageAuthor::createFromTwitch(authorName, authorName);
         authors.append(author);
 
@@ -262,8 +264,6 @@ void Twitch::onIRCMessage(const QString &rawData)
         messages.append(message);
 
         //qDebug() << authorName << ":" << messageText;
-
-        //:ryknowe1!ryknowe1@ryknowe1.tmi.twitch.tv PRIVMSG #arcus :haven't seen it recently
     }
 
     if (!messages.isEmpty())

@@ -35,7 +35,7 @@ TextField {
         Menu {
             id: contextMenu
             MenuItem {
-                enabled: !readOnly && selectedText.length != 0
+                enabled: !readOnly && selectedText.length != 0 && echoMode != TextInput.Password
                 text: qsTr("Cut")
                 icon.source: "qrc:/resources/images/cut-content-button.svg"
                 onTriggered: {
@@ -44,7 +44,7 @@ TextField {
                 }
             }
             MenuItem {
-                enabled: selectedText.length != 0
+                enabled: selectedText.length != 0 && echoMode != TextInput.Password
                 text: qsTr("Copy")
                 icon.source: "qrc:/resources/images/copy-content.svg"
                 onTriggered: {
@@ -53,7 +53,7 @@ TextField {
                 }
             }
             MenuItem {
-                enabled: !readOnly && clipboard.text.length != 0
+                enabled: !readOnly && clipboard.text.length !== 0
                 text: qsTr("Paste")
                 icon.source: "qrc:/resources/images/clipboard-paste-button.svg"
                 onTriggered: {

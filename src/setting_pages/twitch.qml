@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQml 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.12
 import "../my_components" as MyComponents
@@ -64,7 +65,7 @@ ScrollView {
             icon.source: "qrc:/resources/images/clipboard-paste-button.svg"
 
             onClicked: {
-                if (clipboard.text.length != 0)
+                if (clipboard.text.length !== 0)
                 {
                     textFieldUserSpecifiedLink.text = clipboard.text;
                     textFieldUserSpecifiedLink.deselect();
@@ -93,6 +94,17 @@ ScrollView {
                     textFieldUserSpecifiedLink.selectAll();
                     Qt.callLater(forceActiveFocus);
                     Qt.callLater(textFieldUserSpecifiedLink.forceActiveFocus);
+                    buttonCopyUserSpecifiedLink.text = qsTr("Copied!");
+                    buttonCopyUserSpecifiedLinkTimer.restart();
+                    buttonCopyUserSpecifiedLinkTimer.running = true;
+                }
+            }
+
+            Timer {
+                id: buttonCopyUserSpecifiedLinkTimer
+                interval: 5000
+                onTriggered: {
+                    buttonCopyUserSpecifiedLink.text = qsTr("Copy")
                 }
             }
         }
@@ -115,7 +127,7 @@ ScrollView {
             onClicked: {
                 if (textFieldUserSpecifiedLink.text.length != 0)
                 {
-                    if (twitch.isChannelNameUserSpecified)
+                    if (youTube.isBroadcastIdUserSpecified)
                     {
                         Qt.openUrlExternally(textBroadcastURL.text)
                     }
@@ -159,8 +171,8 @@ ScrollView {
             selectByMouse: true
             anchors.left: element3.right
             anchors.leftMargin: 8
-            anchors.right: buttonGetOAuthToken.left
-            anchors.rightMargin: 8
+            anchors.right: buttonPasteOAuthToken.left
+            anchors.rightMargin: 6
 
             Component.onCompleted: {
                 text = twitch.oauthToken
@@ -168,6 +180,29 @@ ScrollView {
 
             onTextChanged: {
                 twitch.oauthToken = text
+            }
+        }
+
+        Button {
+            id: buttonPasteOAuthToken
+            x: 498
+            y: 113
+            //width: 39
+            height: 39
+            text: qsTr("Paste")
+            anchors.right: buttonGetOAuthToken.left
+            flat: true
+            anchors.rightMargin: 6
+            icon.source: "qrc:/resources/images/clipboard-paste-button.svg"
+            font.pointSize: 8
+            display: AbstractButton.TextBesideIcon//IconOnly
+
+            onClicked: {
+                if (clipboard.text.length !== 0)
+                {
+                    textFieldOAuthToken.text = clipboard.text;
+                    textFieldOAuthToken.deselect();
+                }
             }
         }
 
@@ -504,3 +539,9 @@ ScrollView {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:1.1}D{i:28}
+}
+##^##*/
