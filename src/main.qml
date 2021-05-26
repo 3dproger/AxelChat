@@ -498,7 +498,7 @@ ApplicationWindow {
                 id: avatarImage
 
                 rounded: messageType != ChatMessage.SoftwareNotification &&
-                         messageType != ChatMessage.TestMessage
+                         messageType != ChatMessage.TestMessage;
 
                 height: 32
                 width: 32
@@ -583,9 +583,9 @@ ApplicationWindow {
         forcedImage: {
             textZZZ.visible = false;
 
-            if (youTube.broadcastId.length == 0)
+            if (youTube.broadcastId.length === 0)
             {
-                if (youTube.userSpecifiedLink.trim().length == 0)
+                if (youTube.userSpecifiedLink.trim().length === 0)
                 {
                     textZZZ.visible = true;
                     return "qrc:/gifs/sleeping_200_transparent.gif";
@@ -615,14 +615,14 @@ ApplicationWindow {
         wrapMode: Text.Wrap
         function getConnectionWaitText()
         {
-            if (youTube.broadcastId.length != 0)
+            if (youTube.broadcastId.length !== 0)
             {
                 return qsTr("Connecting to %1").arg(youTube.broadcastId) +
                         "\n\n" + "(^=◕ᴥ◕=^)";
             }
             else
             {
-                if (youTube.userSpecifiedLink.trim().length == 0)
+                if (youTube.userSpecifiedLink.trim().length === 0)
                 {
                     var s = qsTr("Link or broadcast ID is not specified");
 

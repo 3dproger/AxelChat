@@ -36,7 +36,7 @@ ScrollView {
             placeholderText: qsTr("Paste the broadcast link or ID here...")
             selectByMouse: true
             anchors.left: element.right
-            anchors.leftMargin: 4
+            anchors.leftMargin: 10
             anchors.right: buttonPasteUserSpecifiedLink.left
             anchors.rightMargin: 4
 
