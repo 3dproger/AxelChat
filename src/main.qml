@@ -253,6 +253,8 @@ ApplicationWindow {
 
         root.authorInfoWindow.close();
 
+        root.authorInfoWindow.messageType = messageType;
+
         root.authorInfoWindow.authorChannelId = authorChannelId;
         root.authorInfoWindow.authorName      = authorName;
         root.authorInfoWindow.authorAvatarUrl = authorAvatarUrl;
