@@ -89,6 +89,10 @@ Window {
                         category: "youtube"
                     }
                     ListElement {
+                        name: qsTr("Twitch")
+                        category: "twitch"
+                    }
+                    ListElement {
                         name: qsTr("Common")
                         category: "common"
                     }
@@ -161,6 +165,10 @@ Window {
                     if (currentItem.category === "youtube")
                     {
                         stackViewCategories.replace("setting_pages/youtube.qml")
+                    }
+                    else if (currentItem.category === "twitch")
+                    {
+                        stackViewCategories.replace("setting_pages/twitch.qml");
                     }
                     else if (currentItem.category === "common")
                     {

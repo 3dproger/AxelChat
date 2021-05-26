@@ -49,7 +49,6 @@ ScrollView {
             height: 48
             text: qsTr("Enable Output to ini-file")
             anchors.left: parent.left
-            anchors.right: comboBoxLanguage.left
             anchors.rightMargin: 8
             anchors.leftMargin: 8
 

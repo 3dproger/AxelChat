@@ -1,0 +1,55 @@
+#ifndef TWITCH_HPP
+#define TWITCH_HPP
+
+#include "types.hpp"
+#include "abstractchatservice.hpp"
+#include <QSettings>
+#include <QWebSocket>
+#include <QTimer>
+
+class Twitch : public AbstractChatService
+{
+    Q_OBJECT
+    Q_PROPERTY(QUrl     requesGetAOuthTokenUrl      READ requesGetAOuthTokenUrl     CONSTANT)
+    Q_PROPERTY(QString  oauthToken                  READ oauthToken                 WRITE setOAuthToken                 NOTIFY linkChanged)
+    Q_PROPERTY(QString  userSpecifiedChannel        READ userSpecifiedChannel       WRITE setUserSpecifiedChannel       NOTIFY linkChanged)
+    Q_PROPERTY(bool     isChannelNameUserSpecified  READ isChannelNameUserSpecified CONSTANT)
+
+public:
+    explicit Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
+    ~Twitch();
+    ConnectionStateType connectionStateType() const override;
+    QString stateDescription() const override;
+    QUrl requesGetAOuthTokenUrl() const;
+    QUrl chatUrl() const override;
+    QUrl controlPanelUrl() const override;
+    QUrl broadcastUrl() const override;
+
+    bool isChannelNameUserSpecified() const;
+    QString oauthToken() const { return _info.oauthToken; }
+    QString userSpecifiedChannel() const { return _info.userSpecifiedChannel; }
+
+signals:
+
+public slots:
+    void setUserSpecifiedChannel(QString userChannel);
+    void setOAuthToken(QString token);
+
+private slots:
+    void onIRCMessage(const QString& rawData);
+    void timeoutReconnect();
+
+private:
+    void reInitSocket();
+
+    QSettings* _settings = nullptr;
+    QString _settingsGroupPath;
+
+    QWebSocket _socket;
+
+    TwitchInfo _info;
+
+    QTimer _timerReconnect;
+};
+
+#endif // TWITCH_HPP

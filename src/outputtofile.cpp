@@ -74,8 +74,10 @@ QString OutputToFile::outputFolder() const
     return _outputFolder;
 }
 
-void OutputToFile::setOutputFolder(const QString &outputFolder)
+void OutputToFile::setOutputFolder(QString outputFolder)
 {
+    outputFolder = outputFolder.trimmed();
+
     if (_outputFolder != outputFolder)
     {
         _outputFolder = outputFolder;
@@ -162,8 +164,10 @@ QList<QString> OutputToFile::codecs() const
     };
 }
 
-void OutputToFile::setCodec(const QString &codec)
+void OutputToFile::setCodec(QString codec)
 {
+    codec = codec.trimmed();
+
     _codec = codec;
 
     reinitIni();
@@ -179,8 +183,10 @@ QString OutputToFile::codec() const
     return _codec;
 }
 
-bool OutputToFile::exportToTxt(const QString &filePath)
+bool OutputToFile::exportToTxt(QString filePath)
 {
+    filePath = filePath.trimmed();
+
     QString normalizedFilePath = filePath;
     if (normalizedFilePath.startsWith("file:///", Qt::CaseInsensitive))
     {

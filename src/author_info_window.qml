@@ -6,6 +6,7 @@ import QtQuick.Controls.Material 2.12
 import "my_components" as MyComponents
 import AxelChat.MessageAuthor 1.0
 import AxelChat.ChatHandler 1.0
+import AxelChat.ChatMessage 1.0
 
 Window {
     id: rootWindow
@@ -18,15 +19,17 @@ Window {
     Material.foreground : "#03A9F4"
     Material.primary :    "#03A9F4"
 
-    property var authorName: "";
+    property var messageType;
+    property string authorName: "";
     property var authorChannelId;
     property var authorAvatarUrl;
     property var authorPageUrl;
     property var authorCustomBadgeUrl;
-    property var authorChatModerator: false;
-    property var authorIsChatOwner:   false;
-    property var authorChatSponsor:   false;
-    property var authorIsVerified:    false;
+    property bool authorChatModerator: false;
+    property bool authorIsChatOwner:   false;
+    property bool authorChatSponsor:   false;
+    property bool authorIsVerified:    false;
+
 
     flags: Qt.Dialog |
            Qt.CustomizeWindowHint |
@@ -171,6 +174,8 @@ Window {
                 icon.source: "qrc:/resources/images/forward-arrow.svg"
                 highlighted: false
                 flat: true
+                enabled: messageType !== ChatMessage.Twitch
+
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.NoButton

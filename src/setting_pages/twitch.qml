@@ -1,8 +1,10 @@
 import QtQuick 2.15
+import QtQml 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.12
 import "../my_components" as MyComponents
-import AxelChat.YouTube 1.0
+import AxelChat.Twitch 1.0
+import AxelChat.AbstractChatService 1.0
 
 ScrollView {
     id: root
@@ -20,9 +22,10 @@ ScrollView {
             y: 68
             height: 26
             color: Material.accentColor
-            text: qsTr("Broadcast:")
+            text: qsTr("Channel:")
             anchors.left: parent.left
             anchors.leftMargin: 8
+            //styleColor: "#000000"
             font.bold: false
             style: Text.Normal
             font.weight: Font.Bold
@@ -31,219 +34,22 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textFieldUserSpecifiedLink
-            y: 59
+            y: 60
             height: 43
-            placeholderText: qsTr("Paste the broadcast link or ID here...")
+            placeholderText: qsTr("Paste the link or channel name here...")
             selectByMouse: true
             anchors.left: element.right
             anchors.leftMargin: 10
             anchors.right: buttonPasteUserSpecifiedLink.left
-            anchors.rightMargin: 4
+            anchors.rightMargin: 6
 
             Component.onCompleted: {
-                text = youTube.userSpecifiedLink
+                text = twitch.userSpecifiedChannel
             }
 
             onTextChanged: {
-                youTube.userSpecifiedLink = text
+                twitch.userSpecifiedChannel = text
             }
-        }
-
-        Switch {
-            id: switchEnableProxy
-            x: 8
-            y: 105
-            text: qsTr("Proxy")
-
-            Component.onCompleted: {
-                checked = chatHandler.proxyEnabled;
-            }
-
-            onCheckedChanged: {
-                chatHandler.proxyEnabled = checked;
-            }
-        }
-
-        MyComponents.MyTextField {
-            id: textFieldProxyServerAddress
-            anchors.left: switchEnableProxy.right
-            anchors.verticalCenterOffset: 0
-            anchors.leftMargin: 0
-            maximumLength: 15
-            y: 162
-            width: 150
-            height: 43
-            anchors.verticalCenter: switchEnableProxy.verticalCenter
-            placeholderText: qsTr("Proxy Server IP")
-            validator: RegExpValidator {
-                regExp:  /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){0,3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
-           }
-
-            Component.onCompleted: {
-                text = chatHandler.proxyServerAddress
-            }
-
-            onTextChanged: {
-                chatHandler.proxyServerAddress = text
-            }
-        }
-
-        Text {
-            id: text1
-            y: 80
-            text: ":";
-            anchors.verticalCenter: textFieldProxyServerAddress.verticalCenter
-            anchors.left: textFieldProxyServerAddress.right
-            anchors.leftMargin: 6
-            color: Material.foreground
-        }
-
-        MyComponents.MyTextField {
-            id: textFieldProxyServerPort
-            anchors.left: text1.right
-            anchors.leftMargin: 6
-            maximumLength: 5
-            y: 65
-            width: 60
-            height: 43
-            anchors.verticalCenter: text1.verticalCenter
-            placeholderText: qsTr("Port")
-            validator: RegExpValidator {
-                regExp:  /^[0-9]{1,5}$/
-            }
-
-            Component.onCompleted: {
-                var port = chatHandler.proxyServerPort;
-                if (port !== -1)
-                {
-                    text = port;
-                }
-                else
-                {
-                    text = "";
-                }
-            }
-
-            onTextChanged: {
-                if (text == "")
-                {
-                    chatHandler.proxyServerPort = -1;
-                }
-                else
-                {
-                    chatHandler.proxyServerPort = text;
-                }
-            }
-        }
-
-        Text {
-            id: element3
-            x: 8
-            y: 165
-            text: qsTr("Broadcast ID:")
-            font.pixelSize: 15
-            color: Material.foreground
-        }
-
-        MyComponents.MyTextField {
-            id: textBroadcastId
-            y: 151
-            height: 46
-            text: youTube.broadcastId
-            anchors.right: buttonCopyBroadcastId.left
-            anchors.rightMargin: 4
-            anchors.left: element3.right
-            anchors.leftMargin: 6
-            selectByMouse: true
-            readOnly: true
-            horizontalAlignment: Text.AlignLeft
-        }
-
-        Text {
-            id: element4
-            x: 8
-            y: 214
-            text: qsTr("Broadcast:")
-            font.pixelSize: 15
-            color: Material.foreground
-        }
-
-        MyComponents.MyTextField {
-            id: textBroadcastURL
-            y: 200
-            height: 46
-            text: youTube.broadcastUrl
-            anchors.left: element4.right
-            anchors.leftMargin: 6
-            anchors.right: buttonCopyBroadcastUrl.left
-            anchors.rightMargin: 4
-            readOnly: true
-            selectByMouse: true
-        }
-
-        Text {
-            id: element5
-            x: 8
-            y: 318
-            text: qsTr("Chat:")
-            font.pixelSize: 15
-            color: Material.foreground
-        }
-
-        MyComponents.MyTextField {
-            id: textChatURL
-            y: 304
-            height: 46
-            text: youTube.chatUrl
-            anchors.left: element5.right
-            anchors.leftMargin: 17
-            anchors.right: buttonCopyChatUrl.left
-            anchors.rightMargin: 8
-            readOnly: true
-            selectByMouse: true
-        }
-
-        Text {
-            id: element2
-            x: 63
-            y: 15
-            text: qsTr("YouTube")
-            font.bold: true
-            font.pixelSize: 25
-            color: Material.foreground
-        }
-
-        Image {
-            id: image
-            x: 8
-            y: 13
-            mipmap: true
-            width: 49
-            height: 30
-            source: "qrc:/resources/images/youtube-icon.svg"
-            fillMode: Image.PreserveAspectFit
-        }
-
-        MyComponents.MyTextField {
-            id: textControlPanelURL
-            y: 252
-            height: 46
-            text: youTube.controlPanelUrl
-            anchors.left: element6.right
-            anchors.leftMargin: 8
-            anchors.right: buttonCopyControlPanelCopy.left
-            anchors.rightMargin: 4
-            readOnly: true
-            selectByMouse: true
-        }
-
-        Text {
-            id: element6
-            x: 8
-            y: 267
-            text: qsTr("Control Panel:")
-            font.pixelSize: 15
-            color: Material.foreground
         }
 
         Button {
@@ -289,6 +95,17 @@ ScrollView {
                     textFieldUserSpecifiedLink.selectAll();
                     Qt.callLater(forceActiveFocus);
                     Qt.callLater(textFieldUserSpecifiedLink.forceActiveFocus);
+                    buttonCopyUserSpecifiedLink.text = qsTr("Copied!");
+                    buttonCopyUserSpecifiedLinkTimer.restart();
+                    buttonCopyUserSpecifiedLinkTimer.running = true;
+                }
+            }
+
+            Timer {
+                id: buttonCopyUserSpecifiedLinkTimer
+                interval: 5000
+                onTriggered: {
+                    buttonCopyUserSpecifiedLink.text = qsTr("Copy")
                 }
             }
         }
@@ -325,14 +142,14 @@ ScrollView {
 
         Button {
             id: buttonOpenBroadcastUrl
-            x: 593
-            y: 204
+            x: 595
+            y: 167
             width: 39
             height: 39
             text: qsTr("Open")
             display: AbstractButton.IconOnly
             anchors.right: parent.right
-            anchors.rightMargin: 8
+            anchors.rightMargin: 6
             flat: true
             highlighted: true
             font.pointSize: 8
@@ -346,10 +163,142 @@ ScrollView {
             }
         }
 
+        MyComponents.MyTextField {
+            id: textFieldOAuthToken
+            y: 111
+            height: 43
+            placeholderText: qsTr("Paste OAuth token here...")
+            echoMode: TextInput.Password
+            selectByMouse: true
+            anchors.left: element3.right
+            anchors.leftMargin: 8
+            anchors.right: buttonPasteOAuthToken.left
+            anchors.rightMargin: 6
+
+            Component.onCompleted: {
+                text = twitch.oauthToken
+            }
+
+            onTextChanged: {
+                twitch.oauthToken = text
+            }
+        }
+
+        Button {
+            id: buttonPasteOAuthToken
+            x: 498
+            y: 113
+            //width: 39
+            height: 39
+            text: qsTr("Paste")
+            anchors.right: buttonGetOAuthToken.left
+            flat: true
+            anchors.rightMargin: 6
+            icon.source: "qrc:/resources/images/clipboard-paste-button.svg"
+            font.pointSize: 8
+            display: AbstractButton.TextBesideIcon//IconOnly
+
+            onClicked: {
+                if (clipboard.text.length !== 0)
+                {
+                    textFieldOAuthToken.text = clipboard.text;
+                    textFieldOAuthToken.deselect();
+                }
+            }
+        }
+
+        Text {
+            id: element4
+            x: 8
+            y: 177
+            text: qsTr("Broadcast:")
+            font.pixelSize: 15
+            color: Material.foreground
+        }
+
+        MyComponents.MyTextField {
+            id: textBroadcastURL
+            y: 163
+            height: 46
+            text: twitch.broadcastUrl
+            anchors.left: element4.right
+            anchors.leftMargin: 6
+            anchors.right: buttonCopyBroadcastUrl.left
+            anchors.rightMargin: 4
+            readOnly: true
+            selectByMouse: true
+        }
+
+        Text {
+            id: element5
+            x: 8
+            y: 281
+            text: qsTr("Chat:")
+            font.pixelSize: 15
+            color: Material.foreground
+        }
+
+        MyComponents.MyTextField {
+            id: textChatURL
+            y: 267
+            height: 46
+            text: twitch.chatUrl
+            anchors.left: element5.right
+            anchors.leftMargin: 17
+            anchors.right: buttonCopyChatUrl.left
+            anchors.rightMargin: 8
+            readOnly: true
+            selectByMouse: true
+        }
+
+        Text {
+            id: element2
+            x: 63
+            y: 15
+            text: qsTr("Twitch")
+            font.bold: true
+            font.pixelSize: 25
+            color: Material.foreground
+        }
+
+        Image {
+            id: image
+            x: 8
+            y: 9
+            mipmap: true
+            width: 49
+            height: 42
+            source: "../resources/images/twitch-round.svg"
+            sourceSize.height: 67
+            fillMode: Image.PreserveAspectFit
+        }
+
+        MyComponents.MyTextField {
+            id: textControlPanelURL
+            y: 215
+            height: 46
+            text: twitch.controlPanelUrl
+            anchors.left: element6.right
+            anchors.leftMargin: 8
+            anchors.right: buttonCopyControlPanelCopy.left
+            anchors.rightMargin: 4
+            readOnly: true
+            selectByMouse: true
+        }
+
+        Text {
+            id: element6
+            x: 8
+            y: 230
+            text: qsTr("Control Panel:")
+            font.pixelSize: 15
+            color: Material.foreground
+        }
+
         Button {
             id: buttonOpenControlPanelUrl
             x: 593
-            y: 256
+            y: 219
             width: 39
             height: 39
             text: qsTr("Open")
@@ -372,7 +321,7 @@ ScrollView {
         Button {
             id: buttonOpenChatUrl
             x: 595
-            y: 308
+            y: 271
             width: 39
             height: 39
             text: qsTr("Open")
@@ -395,7 +344,7 @@ ScrollView {
         Button {
             id: buttonCopyBroadcastUrl
             x: 550
-            y: 204
+            y: 167
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -420,7 +369,7 @@ ScrollView {
         Button {
             id: buttonCopyControlPanelCopy
             x: 550
-            y: 256
+            y: 219
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -445,7 +394,7 @@ ScrollView {
         Button {
             id: buttonCopyChatUrl
             x: 552
-            y: 308
+            y: 271
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -467,35 +416,10 @@ ScrollView {
             }
         }
 
-        Button {
-            id: buttonCopyBroadcastId
-            x: 550
-            y: 155
-            width: 39
-            height: 39
-            text: qsTr("Copy")
-            display: AbstractButton.IconOnly
-            flat: true
-            anchors.right: parent.right
-            anchors.rightMargin: 51
-            font.pointSize: 8
-            icon.source: "qrc:/resources/images/copy-content.svg"
-
-            onClicked: {
-                if (textBroadcastId.text.length != 0)
-                {
-                    clipboard.text = textBroadcastId.text;
-                    textBroadcastId.selectAll();
-                    Qt.callLater(forceActiveFocus);
-                    Qt.callLater(textBroadcastId.forceActiveFocus);
-                }
-            }
-        }
-
         BusyIndicator {
             id: busyIndicator
             y: 4
-            visible: youTube.connectionStateType === 20 // ToDo: need refactoring
+            visible: twitch.connectionStateType === 20 // ToDo: need refactoring
             height: 50
             width: height
             anchors.verticalCenter: image.verticalCenter
@@ -515,11 +439,11 @@ ScrollView {
             anchors.left: element2.right
             anchors.leftMargin: 12
             source: {
-                if (youTube.connectionStateType === 10) // ToDo: need refactoring
+                if (twitch.connectionStateType === 10) // ToDo: need refactoring
                 {
                     return "qrc:/resources/images/alert1.svg"
                 }
-                else if (youTube.connectionStateType === 30) // ToDo: need refactoring
+                else if (twitch.connectionStateType === 30) // ToDo: need refactoring
                 {
                     return "qrc:/resources/images/tick.svg"
                 }
@@ -536,13 +460,40 @@ ScrollView {
             font.pointSize: 14
             x: 241
             y: 20
-            text: youTube.stateDescription
+            text: twitch.stateDescription
+        }
+
+        Text {
+            id: element3
+            y: 120
+            height: 26
+            color: Material.accentColor
+            text: qsTr("OAuth token:")
+            anchors.left: parent.left
+            font.pixelSize: 20
+            font.bold: false
+            font.weight: Font.Bold
+            style: Text.Normal
+            anchors.leftMargin: 8
+        }
+
+        Button {
+            id: buttonGetOAuthToken
+            x: 543
+            y: 109
+            text: qsTr("Get token")
+            anchors.right: parent.right
+            anchors.rightMargin: 8
+
+            onClicked: {
+                Qt.openUrlExternally(twitch.requesGetAOuthTokenUrl);
+            }
         }
     }
 }
 
-
-
-
-
-
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:1.1}D{i:28}
+}
+##^##*/

@@ -349,7 +349,15 @@ void QtCefApp::setUrl(const QString &url)
 
     if (_browser)
     {
-        _browser->GetMainFrame()->LoadURL(_url);
+        // ToDo: url is not reset in main frame if empty
+        if (!_url.empty())
+        {
+            _browser->GetMainFrame()->LoadURL(_url);
+        }
+        else
+        {
+            _browser->GetMainFrame()->LoadURL("about:blank");
+        }
     }
     else
     {

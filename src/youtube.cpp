@@ -7,7 +7,7 @@
 #include <QFile>
 
 YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath, QObject *parent)
-    : QObject(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath), _cefApp(cefApp)
+    : AbstractChatService(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath), _cefApp(cefApp)
 {
     if (!_cefApp)
     {
@@ -22,51 +22,19 @@ YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCe
 
 YouTube::~YouTube()
 {
-    _youtubeInfo.broadcastConnected = false;
-    emit disconnected(_youtubeInfo.broadcastId);
-    emit connectedChanged();
+    _info.broadcastConnected = false;
+    emit disconnected(_info.broadcastId);
+    emit stateChanged();
 
     if (_outputToFile)
     {
-        _outputToFile->setYouTubeInfo(_youtubeInfo);
+        _outputToFile->setYouTubeInfo(_info);
     }
 }
 
 QString YouTube::extractBroadcastId(const QString &link) const
 {
-    QString withoutHttpsWWW = link;
-
-    // \ ->/
-    withoutHttpsWWW = withoutHttpsWWW.replace('\\', '/');
-
-    //https:// http://
-    if (withoutHttpsWWW.startsWith("https://"))
-    {
-        withoutHttpsWWW = withoutHttpsWWW.mid(8);
-    }
-    else if (withoutHttpsWWW.startsWith("http://"))
-    {
-        withoutHttpsWWW = withoutHttpsWWW.mid(7);
-    }
-
-    //www.
-    if (withoutHttpsWWW.startsWith("www."))
-    {
-        withoutHttpsWWW = withoutHttpsWWW.mid(4);
-    }
-
-    // remove last '/'
-    if (withoutHttpsWWW.endsWith("/"))
-    {
-        withoutHttpsWWW = withoutHttpsWWW.left(withoutHttpsWWW.lastIndexOf('/'));
-    }
-
-    //?
-    QString withoutQuery = withoutHttpsWWW;
-    if (withoutHttpsWWW.contains('?'))
-    {
-        withoutQuery = withoutHttpsWWW.left(withoutHttpsWWW.indexOf('?'));
-    }
+    const QString simpleUrl = simplifyUrl(link);
 
     const QUrlQuery& urlQuery = QUrlQuery(QUrl(link).query());
 
@@ -79,7 +47,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^youtu.be/([^/]*)$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1)
+        if (rx.indexIn(simpleUrl) != -1)
         {
             broadcastId = rx.cap(1);
         }
@@ -89,7 +57,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/video/([^/]*)/livestreaming$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1)
+        if (rx.indexIn(simpleUrl) != -1)
         {
             broadcastId = rx.cap(2);
         }
@@ -100,7 +68,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/video/([^/]*)$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1)
+        if (rx.indexIn(simpleUrl) != -1)
         {
             broadcastId = rx.cap(2);
         }
@@ -111,7 +79,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/watch/([^/]*)$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1)
+        if (rx.indexIn(simpleUrl) != -1)
         {
             broadcastId = rx.cap(2);
         }
@@ -122,7 +90,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/live_chat$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1 && !vParameter.isEmpty())
+        if (rx.indexIn(simpleUrl) != -1 && !vParameter.isEmpty())
         {
             broadcastId = vParameter;
         }
@@ -133,7 +101,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/watch$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1 && !vParameter.isEmpty())
+        if (rx.indexIn(simpleUrl) != -1 && !vParameter.isEmpty())
         {
             broadcastId = vParameter;
         }
@@ -144,9 +112,9 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^[a-zA-Z0-9_\\-]+$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutHttpsWWW) != -1)
+        if (rx.indexIn(link) != -1)
         {
-            broadcastId = withoutHttpsWWW;
+            broadcastId = link;
         }
     }
 
@@ -164,12 +132,12 @@ void YouTube::printData(const QString &tag, const QByteArray& data)
 
 QUrl YouTube::chatUrl() const
 {
-    return _youtubeInfo.broadcastChatUrl;
+    return _info.broadcastChatUrl;
 }
 
 QUrl YouTube::controlPanelUrl() const
 {
-    return _youtubeInfo.controlPanelUrl;
+    return _info.controlPanelUrl;
 }
 
 QUrl YouTube::createResizedAvatarUrl(const QUrl &sourceAvatarUrl, int imageHeight)
@@ -233,39 +201,75 @@ QUrl YouTube::createResizedAvatarUrl(const QUrl &sourceAvatarUrl, int imageHeigh
 
 QUrl YouTube::broadcastLongUrl() const
 {
-    return _youtubeInfo.broadcastLongUrl;
+    return _info.broadcastLongUrl;
 }
 
 QString YouTube::userSpecifiedLink() const
 {
-    return _youtubeInfo.userSpecified;
+    return _info.userSpecified;
 }
 
-QUrl YouTube::broadcastShortUrl() const
+QUrl YouTube::broadcastUrl() const
 {
-    return _youtubeInfo.broadcastShortUrl;
+    return _info.broadcastShortUrl;
 }
 
 QString YouTube::broadcastId() const
 {
-    return _youtubeInfo.broadcastId;
-}
-
-bool YouTube::isConnected() const
-{
-    return _youtubeInfo.broadcastConnected;
+    return _info.broadcastId;
 }
 
 bool YouTube::isBroadcastIdUserSpecified() const
 {
-    return _youtubeInfo.userSpecified.trimmed() == _youtubeInfo.broadcastId.trimmed() && !_youtubeInfo.userSpecified.isEmpty();
+    return _info.userSpecified.trimmed() == _info.broadcastId.trimmed() && !_info.userSpecified.isEmpty();
 }
 
 void YouTube::reconnect()
 {
-    const QString link = _youtubeInfo.userSpecified;
+    const QString link = _info.userSpecified;
     setLink("");
     setLink(link);
+}
+
+AbstractChatService::ConnectionStateType YouTube::connectionStateType() const
+{
+    if (_info.broadcastConnected)
+    {
+        return AbstractChatService::ConnectionStateType::Connected;
+    }
+    else if (!_info.broadcastId.isEmpty())
+    {
+        return AbstractChatService::ConnectionStateType::Connecting;
+    }
+
+    return AbstractChatService::ConnectionStateType::NotConnected;
+}
+
+QString YouTube::stateDescription() const
+{
+    switch (connectionStateType()) {
+    case ConnectionStateType::NotConnected:
+        if (_info.userSpecified.isEmpty())
+        {
+            return tr("Broadcast not specified");
+        }
+
+        if (_info.broadcastId.isEmpty())
+        {
+            return tr("The broadcast is not correct");
+        }
+
+        return tr("Not connected");
+
+    case ConnectionStateType::Connecting:
+        return tr("Connecting...");
+
+    case ConnectionStateType::Connected:
+        return tr("Successfully connected!");
+
+    }
+
+    return "<unknown_state>";
 }
 
 int YouTube::messagesReceived() const
@@ -277,40 +281,36 @@ void YouTube::setLink(QString link)
 {
     link = link.trimmed();
 
-    if (_youtubeInfo.userSpecified != link)
+    if (_info.userSpecified != link)
     {
-        bool preConnected = _youtubeInfo.broadcastConnected;
-        QString preBroadcastId = _youtubeInfo.broadcastId;
+        bool preConnected = _info.broadcastConnected;
+        QString preBroadcastId = _info.broadcastId;
 
-        _youtubeInfo = YouTubeInfo();
+        _info = YouTubeInfo();
 
-        if (_youtubeInfo.broadcastConnected)
+        _info.broadcastConnected = false;
+
+        _info.userSpecified = link;
+        _info.broadcastId = extractBroadcastId(link);
+
+        if (!_info.broadcastId.isEmpty())
         {
-            _youtubeInfo.broadcastConnected = false;
-            emit connectedChanged();
-        }
+            _info.broadcastChatUrl = QUrl(QString("https://www.youtube.com/live_chat?v=%1")
+                    .arg(_info.broadcastId));
 
-        _youtubeInfo.userSpecified = link;
-        _youtubeInfo.broadcastId = extractBroadcastId(link);
+            _info.broadcastShortUrl = QUrl(QString("https://youtu.be/%1")
+                                 .arg(_info.broadcastId));
 
-        if (!_youtubeInfo.broadcastId.isEmpty())
-        {
-            _youtubeInfo.broadcastChatUrl = QUrl(QString("https://www.youtube.com/live_chat?v=%1")
-                    .arg(_youtubeInfo.broadcastId));
+            _info.broadcastLongUrl = QUrl(QString("https://www.youtube.com/watch?v=%1")
+                                 .arg(_info.broadcastId));
 
-            _youtubeInfo.broadcastShortUrl = QUrl(QString("https://youtu.be/%1")
-                                 .arg(_youtubeInfo.broadcastId));
-
-            _youtubeInfo.broadcastLongUrl = QUrl(QString("https://www.youtube.com/watch?v=%1")
-                                 .arg(_youtubeInfo.broadcastId));
-
-            _youtubeInfo.controlPanelUrl = QUrl(QString("https://studio.youtube.com/video/%1/livestreaming")
-                                                         .arg(_youtubeInfo.broadcastId));
+            _info.controlPanelUrl = QUrl(QString("https://studio.youtube.com/video/%1/livestreaming")
+                                                         .arg(_info.broadcastId));
         }
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyUserSpecifiedLink, _youtubeInfo.userSpecified);
+            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyUserSpecifiedLink, _info.userSpecified);
         }
 
         if (preConnected && !preBroadcastId.isEmpty())
@@ -320,7 +320,7 @@ void YouTube::setLink(QString link)
 
         if (_outputToFile)
         {
-            _outputToFile->setYouTubeInfo(_youtubeInfo);
+            _outputToFile->setYouTubeInfo(_info);
         }
 
         /*qDebug() << "User Specified Link" << _youtubeInfo.userSpecified;
@@ -331,13 +331,15 @@ void YouTube::setLink(QString link)
         if (_cefApp)
         {
             //_cefApp->setUrl(_youtubeInfo.broadcastLongUrl.toString());
-            _cefApp->setUrl(_youtubeInfo.broadcastChatUrl.toString());
+            _cefApp->setUrl(_info.broadcastChatUrl.toString());
         }
 
         //_webPage.load(QUrl(_youtubeInfo.broadcastChatUrl));
 
         emit linkChanged();
     }
+
+    emit stateChanged();
 }
 
 void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
@@ -385,18 +387,18 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
 
 void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
 {
-    if (!_youtubeInfo.broadcastConnected && !_youtubeInfo.broadcastId.isEmpty())
+    if (!_info.broadcastConnected && !_info.broadcastId.isEmpty())
     {
         qDebug(QString("YouTube connected: %1")
-               .arg(_youtubeInfo.broadcastId).toUtf8());
-        _youtubeInfo.broadcastConnected = true;
+               .arg(_info.broadcastId).toUtf8());
+        _info.broadcastConnected = true;
         if (_outputToFile)
         {
-            _outputToFile->setYouTubeInfo(_youtubeInfo);
+            _outputToFile->setYouTubeInfo(_info);
         }
 
-        emit connected(_youtubeInfo.broadcastId);
-        emit connectedChanged();
+        emit connected(_info.broadcastId);
+        emit stateChanged();
     }
 
     QList<ChatMessage> messages;

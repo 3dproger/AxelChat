@@ -1,47 +1,35 @@
 #ifndef YOUTUBEINTERCEPTOR_HPP
 #define YOUTUBEINTERCEPTOR_HPP
 
-#include <QObject>
-#include "types.hpp"
-#include <QSettings>
 #include "outputtofile.hpp"
 #include "cef.hpp"
+#include "abstractchatservice.hpp"
+#include <QSettings>
 
-class YouTube : public QObject
+class YouTube : public AbstractChatService
 {
     Q_OBJECT
-    Q_PROPERTY(QString userSpecifiedLink          READ userSpecifiedLink WRITE setLink NOTIFY linkChanged)
-    Q_PROPERTY(QString broadcastId                READ broadcastId                     NOTIFY linkChanged)
-    Q_PROPERTY(QUrl    broadcastShortUrl          READ broadcastShortUrl               NOTIFY linkChanged)
-    Q_PROPERTY(QUrl    broadcastLongUrl           READ broadcastLongUrl                NOTIFY linkChanged)
-    Q_PROPERTY(QUrl    chatUrl                    READ chatUrl                         NOTIFY linkChanged)
-    Q_PROPERTY(QUrl    controlPanelUrl            READ controlPanelUrl                 NOTIFY linkChanged)
-    Q_PROPERTY(bool    connected                  READ isConnected                     NOTIFY connectedChanged)
-    Q_PROPERTY(bool    isBroadcastIdUserSpecified READ isBroadcastIdUserSpecified)
+    Q_PROPERTY(QString userSpecifiedLink            READ userSpecifiedLink WRITE setLink    NOTIFY linkChanged)
+    Q_PROPERTY(QString broadcastId                  READ broadcastId                        NOTIFY linkChanged)
+    Q_PROPERTY(QUrl    broadcastLongUrl             READ broadcastLongUrl                   NOTIFY linkChanged)
+    Q_PROPERTY(bool    isBroadcastIdUserSpecified   READ isBroadcastIdUserSpecified         CONSTANT)
 
 public:
     explicit YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
     ~YouTube();
     int messagesReceived() const;
-    bool isConnected() const;
+
     bool isBroadcastIdUserSpecified() const;
     void reconnect();
-
+    ConnectionStateType connectionStateType() const override;
+    QString stateDescription() const override;
     QString broadcastId() const;
     QString userSpecifiedLink() const;
-    QUrl broadcastShortUrl() const;
+    QUrl broadcastUrl() const override;
     QUrl broadcastLongUrl() const;
-    QUrl chatUrl() const;
-    QUrl controlPanelUrl() const;
+    QUrl chatUrl() const override;
+    QUrl controlPanelUrl() const override;
     Q_INVOKABLE static QUrl createResizedAvatarUrl(const QUrl& sourceAvatarUrl, int imageHeight);
-
-signals:
-    void stateChanged();
-    void connectedChanged();
-    void readyRead(const QList<ChatMessage>& messages, const QList<MessageAuthor>& authors);
-    void linkChanged();
-    void connected(QString broadcastId);
-    void disconnected(QString broadcastId);
 
 public slots:
     void setLink(QString link);
@@ -60,7 +48,7 @@ private:
 
     CefRefPtr<QtCefApp> _cefApp = nullptr;
 
-    YouTubeInfo _youtubeInfo;
+    YouTubeInfo _info;
 
     const QString _settingsKeyUserSpecifiedLink = "user_specified_link";
 

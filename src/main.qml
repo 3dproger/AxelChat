@@ -1,15 +1,14 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.0
 import Qt.labs.settings 1.1
 import AxelChat.ChatHandler 1.0
-import AxelChat.YouTube 1.0
 import AxelChat.UpdateChecker 1.0
 import AxelChat.MessageAuthor 1.0
 import AxelChat.ChatMessage 1.0
 import QtQuick.Window 2.15
 import "my_components" as MyComponents
 import "setting_pages" as SettingPages
-import "my_components/InteractiveWait" as InteractiveWait
 
 ApplicationWindow {
     id: root
@@ -253,6 +252,8 @@ ApplicationWindow {
         root.authorInfoWindow = component.createObject(root);
 
         root.authorInfoWindow.close();
+
+        root.authorInfoWindow.messageType = messageType;
 
         root.authorInfoWindow.authorChannelId = authorChannelId;
         root.authorInfoWindow.authorName      = authorName;
@@ -498,7 +499,7 @@ ApplicationWindow {
                 id: avatarImage
 
                 rounded: messageType != ChatMessage.SoftwareNotification &&
-                         messageType != ChatMessage.TestMessage
+                         messageType != ChatMessage.TestMessage;
 
                 height: 32
                 width: 32
@@ -575,93 +576,80 @@ ApplicationWindow {
         }
     }
 
-    InteractiveWait.InteractiveWait {
-        id: interactiveWait
+    Item {
+        id: waitAnimation
         x: parent.width  / 2 - width  / 2
         y: parent.height / 2 - height / 2
-        mainColor: "#03A9F4"
-        forcedImage: {
-            textZZZ.visible = false;
+        width: 100
+        height: 100
+        visible: !chatHandler.connectedSome && listMessages.count == 0
 
-            if (youTube.broadcastId.length == 0)
-            {
-                if (youTube.userSpecifiedLink.trim().length == 0)
-                {
-                    textZZZ.visible = true;
-                    return "qrc:/gifs/sleeping_200_transparent.gif";
-                }
-                else
-                {
-                    return "qrc:/gifs/confused_200_transparent.gif";
-                }
+        AnimatedImage {
+            id: animatedImage
+            x: 270
+            y: 190
+            anchors.fill: parent
+            playing: true
+            source: "qrc:/resources/images/sleeping_200_transparent.gif"
+            smooth: true
+            antialiasing: true
+            asynchronous: true
+
+            property real imageScaleX: 1.0
+            transform: Scale {
+                xScale: animatedImage.imageScaleX;
+                origin.x: width  / 2;
+                origin.y: height / 2;
             }
-            else
-            {
-                return "";
+        }
+
+        ColorOverlay {
+            width: 100
+            height: 100
+            source: animatedImage
+            smooth: animatedImage.smooth
+            antialiasing: animatedImage.antialiasing
+            color: "#03A9F4"
+            opacity: animatedImage.opacity
+            transform: Scale {
+                xScale: animatedImage.imageScaleX
+                origin.x: width  / 2;
+                origin.y: height / 2;
             }
+        }
+
+        Text {
+            text: "Z z z"
+            color: "#03A9F4"
+            x: animatedImage.x + animatedImage.width - 20
+            anchors.bottom: parent.top
+            font.pointSize: 20
         }
     }
 
     Text {
-        id: textZZZ
-        text: "Z z z"
-        color: "#03A9F4"
-        x: interactiveWait.x + interactiveWait.width - 20
-        anchors.bottom: interactiveWait.top
-        font.pointSize: 20
-    }
+        text: {
+            var s = qsTr("Nothing connected");
 
-    Text {
+            if (typeof(root.settingsWindow) == "undefined" || !root.settingsWindow.visible)
+            {
+               s += "\n\n" + qsTr("Right click on the window to open the settings");
+            }
+
+            s += "\n\n" + "(^=◕ᴥ◕=^)";
+
+            return s;
+        }
+
+        color: "#03A9F4"
         wrapMode: Text.Wrap
-        function getConnectionWaitText()
-        {
-            if (youTube.broadcastId.length != 0)
-            {
-                return qsTr("Connecting to %1").arg(youTube.broadcastId) +
-                        "\n\n" + "(^=◕ᴥ◕=^)";
-            }
-            else
-            {
-                if (youTube.userSpecifiedLink.trim().length == 0)
-                {
-                    var s = qsTr("Link or broadcast ID is not specified");
-
-                    if (typeof(root.settingsWindow) == "undefined" || !root.settingsWindow.visible)
-                    {
-                       s += "\n\n" + qsTr("Right click on the window to open the settings");
-                    }
-                    return s;
-                }
-                else
-                {
-                    return qsTr("Incorrect link or broadcast ID specified") //+ "\n\n" + "(╮°-°)╮┳━━┳ ( ╯°□°)╯ ┻━━┻"
-                }
-            }
-        }
-
-        text: getConnectionWaitText()
-        color: "#03A9F4"
         font.pointSize: 12
         horizontalAlignment: Text.AlignHCenter
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.top: interactiveWait.bottom
+        anchors.top: waitAnimation.bottom
         anchors.topMargin: 20
-        visible: !chatHandler.connectedSome
-    }
-
-    Connections {
-        target: chatHandler
-        function onConnectedSomeChanged() {
-            if (chatHandler.connectedSome)
-            {
-                interactiveWait.hide()
-            }
-            else
-            {
-                interactiveWait.show()
-            }
-        }
+        visible: !chatHandler.connectedSome && listMessages.count == 0
     }
 }
 

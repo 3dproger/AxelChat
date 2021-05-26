@@ -67,6 +67,9 @@ public:
                                            const bool isChatSponsor,
                                            const bool isChatModerator);
 
+    static MessageAuthor createFromTwitch(const QString& name,
+                                          const QString& channelId);
+
     static const MessageAuthor& softwareAuthor();
     static const MessageAuthor& testMessageAuthor();
 
@@ -113,11 +116,15 @@ public:
         YouTube,
         Twitch
     };
-    Q_ENUMS(Type)
+    Q_ENUM(Type)
 
     static ChatMessage createFromYouTube(const QString& text,
                               const QString& id,
                               const QDateTime& publishedAt,
+                              const QDateTime& receivedAt,
+                              const MessageAuthor& author);
+
+    static ChatMessage createFromTwitch(const QString& text,
                               const QDateTime& receivedAt,
                               const MessageAuthor& author);
 

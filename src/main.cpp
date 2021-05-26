@@ -16,6 +16,7 @@
 #include <QDir>
 #include <QQmlContext>
 #include "commandseditor.h"
+#include "twitch.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -139,6 +140,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("i18n",               i18n);
     engine.rootContext()->setContextProperty("chatHandler",        chatHandler);
     engine.rootContext()->setContextProperty("youTube",            chatHandler->youTube());
+    engine.rootContext()->setContextProperty("twitch",             chatHandler->twitch());
     engine.rootContext()->setContextProperty("outputToFile",       chatHandler->outputToFile());
     engine.rootContext()->setContextProperty("chatBot",            chatHandler->bot());
     engine.rootContext()->setContextProperty("updateChecker",      github);
