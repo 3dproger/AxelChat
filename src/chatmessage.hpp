@@ -116,7 +116,7 @@ public:
         YouTube,
         Twitch
     };
-    Q_ENUMS(Type)
+    Q_ENUM(Type)
 
     static ChatMessage createFromYouTube(const QString& text,
                               const QString& id,

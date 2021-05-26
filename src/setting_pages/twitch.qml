@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.12
 import "../my_components" as MyComponents
 import AxelChat.Twitch 1.0
+import AxelChat.AbstractChatService 1.0
 
 ScrollView {
     id: root
@@ -418,7 +419,9 @@ ScrollView {
         BusyIndicator {
             id: busyIndicator
             y: 4
-            visible: {
+            visible: twitch.connectionStateType === AbstractChatService.Connecting
+
+            /*{
                 if (twitch.broadcastUrl.length === 0)
                 {
                     if (twitch.userSpecifiedChannel.trim().length === 0)
@@ -430,7 +433,7 @@ ScrollView {
                         return false
                     }
                 }
-                else if (!twitch.connected)
+                else if (twitch.connectionStateType === AbstractChatService.Connecting)
                 {
                     return true
                 }
@@ -438,7 +441,7 @@ ScrollView {
                 {
                     return false
                 }
-            }
+            }*/
             height: 50
             width: height
             anchors.verticalCenter: image.verticalCenter
@@ -458,6 +461,21 @@ ScrollView {
             anchors.left: element2.right
             anchors.leftMargin: 12
             source: {
+                console.log(twitch.connectionStateType)
+
+                console.log(AbstractChatService.Connected)
+
+                if (twitch.connectionStateType === AbstractChatService.NotConnected)
+                {
+                    return "qrc:/resources/images/alert1.svg"
+                }
+                else if (twitch.connectionStateType === AbstractChatService.Connected)
+                {
+                    return "qrc:/resources/images/tick.svg"
+                }
+            }
+
+            /*{
                 if (twitch.broadcastUrl.length === 0)
                 {
                     if (twitch.userSpecifiedChannel.trim().length === 0)
@@ -477,7 +495,7 @@ ScrollView {
                 {
                     return "qrc:/resources/images/tick.svg"
                 }
-            }
+            }*/
         }
 
         Label {

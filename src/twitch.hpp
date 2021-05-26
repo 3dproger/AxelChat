@@ -18,7 +18,7 @@ class Twitch : public AbstractChatService
 public:
     explicit Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
     ~Twitch();
-    bool isConnected() const override;
+    ConnectionStateType connectionStateType() const override;
     QUrl requesGetAOuthTokenUrl() const;
     QUrl chatUrl() const override;
     QUrl controlPanelUrl() const override;

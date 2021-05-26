@@ -257,6 +257,8 @@ ChatMessagesModel* ChatHandler::messagesModel()
 
 void ChatHandler::declareQml()
 {
+    AbstractChatService::declareQML();
+
     qmlRegisterUncreatableType<ChatHandler> ("AxelChat.ChatHandler",
                                              1, 0, "ChatHandler", "Type cannot be created in QML");
 
@@ -276,7 +278,7 @@ void ChatHandler::declareQml()
 
 bool ChatHandler::isConnectedSome()
 {
-    return _youTube->isConnected() || _twitch->isConnected();
+    return _youTube->connectionStateType() == AbstractChatService::ConnectionStateType::Connected || _twitch->connectionStateType() == AbstractChatService::ConnectionStateType::Connected;
 }
 
 void ChatHandler::setEnabledSoundNewMessage(bool enabled)

@@ -9,7 +9,7 @@ namespace
 {
 
 static const QString ApplicationClientID = "cx5rgsivc62io2kk79yf6eivhhwiui";
-static const QString RedirectUri = "https://localhost";
+static const QString RedirectUri = "https://twitchapps.com/tmi/";//"https://localhost";
 static const QString TwitchIRCHost = "tmi.twitch.tv";
 
 static const QString SettingsKeyOAuthToken = "oauth_token";
@@ -71,9 +71,18 @@ Twitch::~Twitch()
     _socket.close();
 }
 
-bool Twitch::isConnected() const
+AbstractChatService::ConnectionStateType Twitch::connectionStateType() const
 {
-    return _info.connected;
+    if (_info.connected)
+    {
+        return AbstractChatService::ConnectionStateType::Connected;
+    }
+    else if (!_info.oauthToken.isEmpty() && !_info.channelName.isEmpty())
+    {
+        return AbstractChatService::ConnectionStateType::Connecting;
+    }
+
+    return AbstractChatService::ConnectionStateType::NotConnected;
 }
 
 QUrl Twitch::requesGetAOuthTokenUrl() const
@@ -145,6 +154,11 @@ void Twitch::setUserSpecifiedChannel(QString userChannel)
 
 void Twitch::setOAuthToken(QString token)
 {
+    if (token.startsWith("oauth:", Qt::CaseSensitivity::CaseInsensitive))
+    {
+        token = token.mid(6);
+    }
+
     if (_info.oauthToken != token)
     {
         _info.oauthToken = token;

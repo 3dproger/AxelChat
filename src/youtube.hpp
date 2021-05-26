@@ -21,7 +21,7 @@ public:
 
     bool isBroadcastIdUserSpecified() const;
     void reconnect();
-    bool isConnected() const override;
+    ConnectionStateType connectionStateType() const override;
     QString broadcastId() const;
     QString userSpecifiedLink() const;
     QUrl broadcastUrl() const override;
@@ -47,7 +47,7 @@ private:
 
     CefRefPtr<QtCefApp> _cefApp = nullptr;
 
-    YouTubeInfo _youtubeInfo;
+    YouTubeInfo _info;
 
     const QString _settingsKeyUserSpecifiedLink = "user_specified_link";
 
