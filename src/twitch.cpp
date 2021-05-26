@@ -12,6 +12,9 @@ static const QString ApplicationClientID = "cx5rgsivc62io2kk79yf6eivhhwiui";
 static const QString RedirectUri = "https://localhost";
 static const QString TwitchIRCHost = "tmi.twitch.tv";
 
+static const QString SettingsKeyOAuthToken = "oauth_token";
+static const QString SettingsKeyUserSpecifiedChannel = "user_specified_channel";
+
 }
 
 Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *parent)
@@ -19,9 +22,6 @@ Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *p
   , _settings(settings)
   , _settingsGroupPath(settingsGroupPath)
 {
-    _info.oauthToken = "v6hnsio2s478ovrwi6y66jje8ccpak";
-    _info.userSpecifiedChannel = "https://www.twitch.tv/saltybet";
-
     QObject::connect(&_socket, &QWebSocket::stateChanged, this, [=](QAbstractSocket::SocketState state){
         //qDebug() << "Twitch WebSocket state changed:" << state;
     });
@@ -56,6 +56,14 @@ Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *p
 
     QObject::connect(&_timerReconnect, &QTimer::timeout, this, &Twitch::timeoutReconnect);
     _timerReconnect.start(2000);
+
+    if (_settings)
+    {
+        const QString token = QString::fromUtf8(QByteArray::fromBase64(_settings->value(_settingsGroupPath + "/" + SettingsKeyOAuthToken).toByteArray()));
+        setOAuthToken(token);
+
+        setUserSpecifiedChannel(_settings->value(_settingsGroupPath + "/" + SettingsKeyUserSpecifiedChannel).toString());
+    }
 }
 
 Twitch::~Twitch()
@@ -116,6 +124,12 @@ void Twitch::setOAuthToken(QString token)
     if (_info.oauthToken != token)
     {
         _info.oauthToken = token;
+
+        if (_settings)
+        {
+            _settings->setValue(_settingsGroupPath + "/" + SettingsKeyOAuthToken, _info.oauthToken.toUtf8().toBase64());
+        }
+
         reInitSocket();
 
         emit linkChanged();
@@ -129,6 +143,12 @@ void Twitch::setUserSpecifiedChannel(QString userChannel)
     if (_info.userSpecifiedChannel != userChannel)
     {
         _info.userSpecifiedChannel = userChannel;
+
+        if (_settings)
+        {
+            _settings->setValue(_settingsGroupPath + "/" + SettingsKeyUserSpecifiedChannel, _info.userSpecifiedChannel);
+        }
+
         reInitSocket();
 
         emit linkChanged();
