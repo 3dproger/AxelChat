@@ -34,39 +34,7 @@ YouTube::~YouTube()
 
 QString YouTube::extractBroadcastId(const QString &link) const
 {
-    QString withoutHttpsWWW = link;
-
-    // \ ->/
-    withoutHttpsWWW = withoutHttpsWWW.replace('\\', '/');
-
-    //https:// http://
-    if (withoutHttpsWWW.startsWith("https://"))
-    {
-        withoutHttpsWWW = withoutHttpsWWW.mid(8);
-    }
-    else if (withoutHttpsWWW.startsWith("http://"))
-    {
-        withoutHttpsWWW = withoutHttpsWWW.mid(7);
-    }
-
-    //www.
-    if (withoutHttpsWWW.startsWith("www."))
-    {
-        withoutHttpsWWW = withoutHttpsWWW.mid(4);
-    }
-
-    // remove last '/'
-    if (withoutHttpsWWW.endsWith("/"))
-    {
-        withoutHttpsWWW = withoutHttpsWWW.left(withoutHttpsWWW.lastIndexOf('/'));
-    }
-
-    //?
-    QString withoutQuery = withoutHttpsWWW;
-    if (withoutHttpsWWW.contains('?'))
-    {
-        withoutQuery = withoutHttpsWWW.left(withoutHttpsWWW.indexOf('?'));
-    }
+    const QString simpleUrl = simplifyUrl(link);
 
     const QUrlQuery& urlQuery = QUrlQuery(QUrl(link).query());
 
@@ -79,7 +47,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^youtu.be/([^/]*)$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1)
+        if (rx.indexIn(simpleUrl) != -1)
         {
             broadcastId = rx.cap(1);
         }
@@ -89,7 +57,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/video/([^/]*)/livestreaming$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1)
+        if (rx.indexIn(simpleUrl) != -1)
         {
             broadcastId = rx.cap(2);
         }
@@ -100,7 +68,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/video/([^/]*)$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1)
+        if (rx.indexIn(simpleUrl) != -1)
         {
             broadcastId = rx.cap(2);
         }
@@ -111,7 +79,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/watch/([^/]*)$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1)
+        if (rx.indexIn(simpleUrl) != -1)
         {
             broadcastId = rx.cap(2);
         }
@@ -122,7 +90,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/live_chat$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1 && !vParameter.isEmpty())
+        if (rx.indexIn(simpleUrl) != -1 && !vParameter.isEmpty())
         {
             broadcastId = vParameter;
         }
@@ -133,7 +101,7 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^(studio\\.)?youtube.com/watch$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutQuery) != -1 && !vParameter.isEmpty())
+        if (rx.indexIn(simpleUrl) != -1 && !vParameter.isEmpty())
         {
             broadcastId = vParameter;
         }
@@ -144,9 +112,9 @@ QString YouTube::extractBroadcastId(const QString &link) const
     if (broadcastId.isEmpty())
     {
         rx = QRegExp("^[a-zA-Z0-9_\\-]+$", Qt::CaseInsensitive);
-        if (rx.indexIn(withoutHttpsWWW) != -1)
+        if (rx.indexIn(link) != -1)
         {
-            broadcastId = withoutHttpsWWW;
+            broadcastId = link;
         }
     }
 
@@ -241,7 +209,7 @@ QString YouTube::userSpecifiedLink() const
     return _youtubeInfo.userSpecified;
 }
 
-QUrl YouTube::broadcastShortUrl() const
+QUrl YouTube::broadcastUrl() const
 {
     return _youtubeInfo.broadcastShortUrl;
 }

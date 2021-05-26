@@ -333,8 +333,10 @@ void ChatHandler::setProxyEnabled(bool enabled)
     }
 }
 
-void ChatHandler::setProxyServerAddress(const QString &address)
+void ChatHandler::setProxyServerAddress(QString address)
 {
+    address = address.trimmed();
+
     if (_proxyServerAddress != address)
     {
         _proxyServerAddress = address;

@@ -17,15 +17,12 @@ ScrollView {
 
         Text {
             id: element
-            y: 57
+            y: 68
             height: 26
-            color: "#FF0000"
-            text: qsTr("Broadcast link or ID:")
+            color: Material.accentColor
+            text: qsTr("Broadcast:")
             anchors.left: parent.left
             anchors.leftMargin: 8
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-            //styleColor: "#000000"
             font.bold: false
             style: Text.Normal
             font.weight: Font.Bold
@@ -34,15 +31,14 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textFieldUserSpecifiedLink
-            y: 108
+            y: 59
             height: 43
-            autoTrim: true
             placeholderText: qsTr("Paste the broadcast link or ID here...")
             selectByMouse: true
-            anchors.left: parent.left
-            anchors.leftMargin: 8
-            anchors.right: parent.right
-            anchors.rightMargin: 8
+            anchors.left: element.right
+            anchors.leftMargin: 4
+            anchors.right: buttonPasteUserSpecifiedLink.left
+            anchors.rightMargin: 4
 
             Component.onCompleted: {
                 text = youTube.userSpecifiedLink
@@ -56,7 +52,7 @@ ScrollView {
         Switch {
             id: switchEnableProxy
             x: 8
-            y: 159
+            y: 105
             text: qsTr("Proxy")
 
             Component.onCompleted: {
@@ -71,9 +67,9 @@ ScrollView {
         MyComponents.MyTextField {
             id: textFieldProxyServerAddress
             anchors.left: switchEnableProxy.right
+            anchors.verticalCenterOffset: 0
             anchors.leftMargin: 0
             maximumLength: 15
-            autoTrim: true
             y: 162
             width: 150
             height: 43
@@ -107,7 +103,6 @@ ScrollView {
             anchors.left: text1.right
             anchors.leftMargin: 6
             maximumLength: 5
-            autoTrim: true
             y: 65
             width: 60
             height: 43
@@ -144,7 +139,7 @@ ScrollView {
         Text {
             id: element3
             x: 8
-            y: 227
+            y: 165
             text: qsTr("Broadcast ID:")
             font.pixelSize: 15
             color: Material.foreground
@@ -152,7 +147,7 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textBroadcastId
-            y: 213
+            y: 151
             height: 46
             text: youTube.broadcastId
             anchors.right: buttonCopyBroadcastId.left
@@ -167,7 +162,7 @@ ScrollView {
         Text {
             id: element4
             x: 8
-            y: 276
+            y: 214
             text: qsTr("Broadcast:")
             font.pixelSize: 15
             color: Material.foreground
@@ -175,9 +170,9 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textBroadcastURL
-            y: 262
+            y: 200
             height: 46
-            text: youTube.broadcastShortUrl
+            text: youTube.broadcastUrl
             anchors.left: element4.right
             anchors.leftMargin: 6
             anchors.right: buttonCopyBroadcastUrl.left
@@ -189,7 +184,7 @@ ScrollView {
         Text {
             id: element5
             x: 8
-            y: 380
+            y: 318
             text: qsTr("Chat:")
             font.pixelSize: 15
             color: Material.foreground
@@ -197,7 +192,7 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textChatURL
-            y: 366
+            y: 304
             height: 46
             text: youTube.chatUrl
             anchors.left: element5.right
@@ -231,7 +226,7 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textControlPanelURL
-            y: 314
+            y: 252
             height: 46
             text: youTube.controlPanelUrl
             anchors.left: element6.right
@@ -245,7 +240,7 @@ ScrollView {
         Text {
             id: element6
             x: 8
-            y: 329
+            y: 267
             text: qsTr("Control Panel:")
             font.pixelSize: 15
             color: Material.foreground
@@ -253,19 +248,19 @@ ScrollView {
 
         Button {
             id: buttonPasteUserSpecifiedLink
-            x: 360
-            y: 51
-            width: 100
+            x: 505
+            y: 61
             height: 39
             text: qsTr("Paste")
             flat: true
             anchors.right: buttonCopyUserSpecifiedLink.left
-            anchors.rightMargin: 6
+            display: AbstractButton.TextBesideIcon
+            anchors.rightMargin: 4
             font.pointSize: 8
             icon.source: "qrc:/resources/images/clipboard-paste-button.svg"
 
             onClicked: {
-                if (clipboard.text.length != 0)
+                if (clipboard.text.length !== 0)
                 {
                     textFieldUserSpecifiedLink.text = clipboard.text;
                     textFieldUserSpecifiedLink.deselect();
@@ -275,14 +270,15 @@ ScrollView {
 
         Button {
             id: buttonCopyUserSpecifiedLink
-            x: 446
-            y: 51
-            width: 120
+            x: 548
+            y: 61
+            width: 39
             height: 39
             text: qsTr("Copy")
             flat: true
             anchors.right: buttonOpenUserSpecifiedLink.left
-            anchors.rightMargin: 6
+            display: AbstractButton.IconOnly
+            anchors.rightMargin: 4
             font.pointSize: 8
             icon.source: "qrc:/resources/images/copy-content.svg"
 
@@ -293,30 +289,20 @@ ScrollView {
                     textFieldUserSpecifiedLink.selectAll();
                     Qt.callLater(forceActiveFocus);
                     Qt.callLater(textFieldUserSpecifiedLink.forceActiveFocus);
-                    buttonCopyUserSpecifiedLink.text = qsTr("Copied!");
-                    buttonCopyUserSpecifiedLinkTimer.restart();
-                    buttonCopyUserSpecifiedLinkTimer.running = true;
-                }
-            }
-
-            Timer {
-                id: buttonCopyUserSpecifiedLinkTimer
-                interval: 5000
-                onTriggered: {
-                    buttonCopyUserSpecifiedLink.text = qsTr("Copy")
                 }
             }
         }
 
         Button {
             id: buttonOpenUserSpecifiedLink
-            x: 568
-            y: 51
-            width: 100
+            x: 593
+            y: 61
+            width: 39
             height: 39
             text: qsTr("Open")
-            anchors.right: textFieldUserSpecifiedLink.right
-            anchors.rightMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 8
+            display: AbstractButton.IconOnly
             highlighted: true
             flat: true
             font.pointSize: 8
@@ -340,7 +326,7 @@ ScrollView {
         Button {
             id: buttonOpenBroadcastUrl
             x: 593
-            y: 266
+            y: 204
             width: 39
             height: 39
             text: qsTr("Open")
@@ -363,7 +349,7 @@ ScrollView {
         Button {
             id: buttonOpenControlPanelUrl
             x: 593
-            y: 318
+            y: 256
             width: 39
             height: 39
             text: qsTr("Open")
@@ -386,7 +372,7 @@ ScrollView {
         Button {
             id: buttonOpenChatUrl
             x: 595
-            y: 370
+            y: 308
             width: 39
             height: 39
             text: qsTr("Open")
@@ -409,7 +395,7 @@ ScrollView {
         Button {
             id: buttonCopyBroadcastUrl
             x: 550
-            y: 266
+            y: 204
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -434,7 +420,7 @@ ScrollView {
         Button {
             id: buttonCopyControlPanelCopy
             x: 550
-            y: 318
+            y: 256
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -459,7 +445,7 @@ ScrollView {
         Button {
             id: buttonCopyChatUrl
             x: 552
-            y: 370
+            y: 308
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -484,7 +470,7 @@ ScrollView {
         Button {
             id: buttonCopyBroadcastId
             x: 550
-            y: 217
+            y: 155
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -510,9 +496,9 @@ ScrollView {
             id: busyIndicator
             y: 4
             visible: {
-                if (youTube.broadcastId.length == 0)
+                if (youTube.broadcastId.length === 0)
                 {
-                    if (youTube.userSpecifiedLink.trim().length == 0)
+                    if (youTube.userSpecifiedLink.trim().length === 0)
                     {
                         return false
                     }
@@ -549,9 +535,9 @@ ScrollView {
             anchors.left: element2.right
             anchors.leftMargin: 12
             source: {
-                if (youTube.broadcastId.length == 0)
+                if (youTube.broadcastId.length === 0)
                 {
-                    if (youTube.userSpecifiedLink.trim().length == 0)
+                    if (youTube.userSpecifiedLink.trim().length === 0)
                     {
                         return "qrc:/resources/images/alert1.svg"
                     }
@@ -580,9 +566,9 @@ ScrollView {
             x: 241
             y: 20
             text: {
-                if (youTube.broadcastId.length == 0)
+                if (youTube.broadcastId.length === 0)
                 {
-                    if (youTube.userSpecifiedLink.trim().length == 0)
+                    if (youTube.userSpecifiedLink.trim().length === 0)
                     {
                         return qsTr("Link or broadcast ID is not specified");
                     }

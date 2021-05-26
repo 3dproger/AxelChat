@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtQml 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.12
 import "../my_components" as MyComponents
@@ -18,10 +17,10 @@ ScrollView {
 
         Text {
             id: element
-            y: 57
+            y: 68
             height: 26
-            color: "#FF0000"
-            text: qsTr("Nick or link to channel:")
+            color: Material.accentColor
+            text: qsTr("Channel:")
             anchors.left: parent.left
             anchors.leftMargin: 8
             //styleColor: "#000000"
@@ -33,31 +32,130 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textFieldUserSpecifiedLink
-            y: 49
+            y: 60
             height: 43
-            autoTrim: true
-            placeholderText: qsTr("Paste the broadcast link or ID here...")
+            placeholderText: qsTr("Paste the link or channel name here...")
             selectByMouse: true
             anchors.left: element.right
-            anchors.leftMargin: 8
-            anchors.right: parent.right
-            anchors.rightMargin: 8
+            anchors.leftMargin: 10
+            anchors.right: buttonPasteUserSpecifiedLink.left
+            anchors.rightMargin: 6
 
             Component.onCompleted: {
-                text = youTube.userSpecifiedLink
+                text = twitch.userSpecifiedChannel
             }
 
             onTextChanged: {
-                youTube.userSpecifiedLink = text
+                twitch.userSpecifiedChannel = text
+            }
+        }
+
+        Button {
+            id: buttonPasteUserSpecifiedLink
+            x: 505
+            y: 61
+            height: 39
+            text: qsTr("Paste")
+            flat: true
+            anchors.right: buttonCopyUserSpecifiedLink.left
+            display: AbstractButton.TextBesideIcon
+            anchors.rightMargin: 4
+            font.pointSize: 8
+            icon.source: "qrc:/resources/images/clipboard-paste-button.svg"
+
+            onClicked: {
+                if (clipboard.text.length != 0)
+                {
+                    textFieldUserSpecifiedLink.text = clipboard.text;
+                    textFieldUserSpecifiedLink.deselect();
+                }
+            }
+        }
+
+        Button {
+            id: buttonCopyUserSpecifiedLink
+            x: 548
+            y: 61
+            width: 39
+            height: 39
+            text: qsTr("Copy")
+            flat: true
+            anchors.right: buttonOpenUserSpecifiedLink.left
+            display: AbstractButton.IconOnly
+            anchors.rightMargin: 4
+            font.pointSize: 8
+            icon.source: "qrc:/resources/images/copy-content.svg"
+
+            onClicked: {
+                if (textFieldUserSpecifiedLink.text.length != 0)
+                {
+                    clipboard.text = textFieldUserSpecifiedLink.text;
+                    textFieldUserSpecifiedLink.selectAll();
+                    Qt.callLater(forceActiveFocus);
+                    Qt.callLater(textFieldUserSpecifiedLink.forceActiveFocus);
+                }
+            }
+        }
+
+        Button {
+            id: buttonOpenUserSpecifiedLink
+            x: 593
+            y: 61
+            width: 39
+            height: 39
+            text: qsTr("Open")
+            anchors.right: parent.right
+            anchors.rightMargin: 8
+            display: AbstractButton.IconOnly
+            highlighted: true
+            flat: true
+            font.pointSize: 8
+            icon.source: "qrc:/resources/images/forward-arrow.svg"
+
+            onClicked: {
+                if (textFieldUserSpecifiedLink.text.length != 0)
+                {
+                    if (twitch.isChannelNameUserSpecified)
+                    {
+                        Qt.openUrlExternally(textBroadcastURL.text)
+                    }
+                    else if (textBroadcastURL.text.length != 0)
+                    {
+                        Qt.openUrlExternally(textFieldUserSpecifiedLink.text)
+                    }
+                }
+            }
+        }
+
+        Button {
+            id: buttonOpenBroadcastUrl
+            x: 595
+            y: 167
+            width: 39
+            height: 39
+            text: qsTr("Open")
+            display: AbstractButton.IconOnly
+            anchors.right: parent.right
+            anchors.rightMargin: 6
+            flat: true
+            highlighted: true
+            font.pointSize: 8
+            icon.source: "qrc:/resources/images/forward-arrow.svg"
+
+            onClicked: {
+                if (textBroadcastURL.text.length != 0)
+                {
+                    Qt.openUrlExternally(textBroadcastURL.text)
+                }
             }
         }
 
         MyComponents.MyTextField {
             id: textFieldOAuthToken
-            y: 98
+            y: 111
             height: 43
-            autoTrim: true
             placeholderText: qsTr("Paste OAuth token here...")
+            echoMode: TextInput.Password
             selectByMouse: true
             anchors.left: element3.right
             anchors.leftMargin: 8
@@ -65,39 +163,18 @@ ScrollView {
             anchors.rightMargin: 8
 
             Component.onCompleted: {
-                text = youTube.userSpecifiedLink
+                text = twitch.oauthToken
             }
 
             onTextChanged: {
-                youTube.userSpecifiedLink = text
-            }
-        }
-
-        MyComponents.MyTextField {
-            id: textFieldChannelToConnect
-            y: 147
-            height: 43
-            autoTrim: true
-            placeholderText: qsTr("Paste channel to connect or leave it blank...")
-            selectByMouse: true
-            anchors.left: element7.right
-            anchors.leftMargin: 8
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-
-            Component.onCompleted: {
-                text = youTube.userSpecifiedLink
-            }
-
-            onTextChanged: {
-                youTube.userSpecifiedLink = text
+                twitch.oauthToken = text
             }
         }
 
         Text {
             id: element4
             x: 8
-            y: 276
+            y: 177
             text: qsTr("Broadcast:")
             font.pixelSize: 15
             color: Material.foreground
@@ -105,9 +182,9 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textBroadcastURL
-            y: 262
+            y: 163
             height: 46
-            text: youTube.broadcastShortUrl
+            text: twitch.broadcastUrl
             anchors.left: element4.right
             anchors.leftMargin: 6
             anchors.right: buttonCopyBroadcastUrl.left
@@ -119,7 +196,7 @@ ScrollView {
         Text {
             id: element5
             x: 8
-            y: 380
+            y: 281
             text: qsTr("Chat:")
             font.pixelSize: 15
             color: Material.foreground
@@ -127,9 +204,9 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textChatURL
-            y: 366
+            y: 267
             height: 46
-            text: youTube.chatUrl
+            text: twitch.chatUrl
             anchors.left: element5.right
             anchors.leftMargin: 17
             anchors.right: buttonCopyChatUrl.left
@@ -162,9 +239,9 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textControlPanelURL
-            y: 314
+            y: 215
             height: 46
-            text: youTube.controlPanelUrl
+            text: twitch.controlPanelUrl
             anchors.left: element6.right
             anchors.leftMargin: 8
             anchors.right: buttonCopyControlPanelCopy.left
@@ -176,39 +253,16 @@ ScrollView {
         Text {
             id: element6
             x: 8
-            y: 329
+            y: 230
             text: qsTr("Control Panel:")
             font.pixelSize: 15
             color: Material.foreground
         }
 
         Button {
-            id: buttonOpenBroadcastUrl
-            x: 593
-            y: 266
-            width: 39
-            height: 39
-            text: qsTr("Open")
-            display: AbstractButton.IconOnly
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-            flat: true
-            highlighted: true
-            font.pointSize: 8
-            icon.source: "qrc:/resources/images/forward-arrow.svg"
-
-            onClicked: {
-                if (textBroadcastURL.text.length != 0)
-                {
-                    Qt.openUrlExternally(textBroadcastURL.text)
-                }
-            }
-        }
-
-        Button {
             id: buttonOpenControlPanelUrl
             x: 593
-            y: 318
+            y: 219
             width: 39
             height: 39
             text: qsTr("Open")
@@ -231,7 +285,7 @@ ScrollView {
         Button {
             id: buttonOpenChatUrl
             x: 595
-            y: 370
+            y: 271
             width: 39
             height: 39
             text: qsTr("Open")
@@ -254,7 +308,7 @@ ScrollView {
         Button {
             id: buttonCopyBroadcastUrl
             x: 550
-            y: 266
+            y: 167
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -279,7 +333,7 @@ ScrollView {
         Button {
             id: buttonCopyControlPanelCopy
             x: 550
-            y: 318
+            y: 219
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -304,7 +358,7 @@ ScrollView {
         Button {
             id: buttonCopyChatUrl
             x: 552
-            y: 370
+            y: 271
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -330,9 +384,9 @@ ScrollView {
             id: busyIndicator
             y: 4
             visible: {
-                if (youTube.broadcastId.length == 0)
+                if (twitch.broadcastUrl.length === 0)
                 {
-                    if (youTube.userSpecifiedLink.trim().length == 0)
+                    if (twitch.userSpecifiedChannel.trim().length === 0)
                     {
                         return false
                     }
@@ -341,7 +395,7 @@ ScrollView {
                         return false
                     }
                 }
-                else if (!youTube.connected)
+                else if (!twitch.connected)
                 {
                     return true
                 }
@@ -369,9 +423,9 @@ ScrollView {
             anchors.left: element2.right
             anchors.leftMargin: 12
             source: {
-                if (youTube.broadcastId.length == 0)
+                if (twitch.broadcastUrl.length === 0)
                 {
-                    if (youTube.userSpecifiedLink.trim().length == 0)
+                    if (twitch.userSpecifiedChannel.trim().length === 0)
                     {
                         return "qrc:/resources/images/alert1.svg"
                     }
@@ -380,7 +434,7 @@ ScrollView {
                         return "qrc:/resources/images/alert1.svg"
                     }
                 }
-                else if (!youTube.connected)
+                else if (!twitch.connected)
                 {
                     return "qrc:/resources/images/alert1.svg"
                 }
@@ -400,18 +454,18 @@ ScrollView {
             x: 241
             y: 20
             text: {
-                if (youTube.broadcastId.length == 0)
+                if (twitch.broadcastUrl.length === 0)
                 {
-                    if (youTube.userSpecifiedLink.trim().length == 0)
+                    if (twitch.userSpecifiedChannel.trim().length === 0)
                     {
-                        return qsTr("Link or broadcast ID is not specified");
+                        return qsTr("Link or channel name is not specified");
                     }
                     else
                     {
-                        return qsTr("Incorrect link or broadcast ID specified");
+                        return qsTr("Incorrect link or channel name specified");
                     }
                 }
-                else if (!youTube.connected)
+                else if (!twitch.connected)
                 {
                     return qsTr("Connecting...");
                 }
@@ -424,9 +478,9 @@ ScrollView {
 
         Text {
             id: element3
-            y: 107
+            y: 120
             height: 26
-            color: "#ff0000"
+            color: Material.accentColor
             text: qsTr("OAuth token:")
             anchors.left: parent.left
             font.pixelSize: 20
@@ -439,30 +493,14 @@ ScrollView {
         Button {
             id: buttonGetOAuthToken
             x: 543
-            y: 96
+            y: 109
             text: qsTr("Get token")
             anchors.right: parent.right
             anchors.rightMargin: 8
-        }
 
-        Text {
-            id: element7
-            y: 156
-            height: 26
-            color: "#ff0000"
-            text: qsTr("Nick or link to connect:")
-            anchors.left: parent.left
-            font.pixelSize: 20
-            font.weight: Font.Bold
-            font.bold: false
-            style: Text.Normal
-            anchors.leftMargin: 8
+            onClicked: {
+                Qt.openUrlExternally(twitch.requesGetAOuthTokenUrl);
+            }
         }
     }
 }
-
-
-
-
-
-

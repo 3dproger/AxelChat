@@ -49,7 +49,7 @@ public:
 
     void setProxyEnabled(bool enabled);
     inline bool proxyEnabled() const { return _enabledProxy; }
-    void setProxyServerAddress(const QString& address);
+    void setProxyServerAddress(QString address);
     inline QString proxyServerAddress() const { return _proxyServerAddress; }
     void setProxyServerPort(int port);
     inline int proxyServerPort() const { return _proxyServerPort; }

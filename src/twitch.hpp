@@ -4,43 +4,51 @@
 #include "types.hpp"
 #include "abstractchatservice.hpp"
 #include <QSettings>
-#include <QNetworkAccessManager>
 #include <QWebSocket>
+#include <QTimer>
 
 class Twitch : public AbstractChatService
 {
     Q_OBJECT
+    Q_PROPERTY(QUrl     requesGetAOuthTokenUrl      READ requesGetAOuthTokenUrl     CONSTANT)
+    Q_PROPERTY(QString  oauthToken                  READ oauthToken                 WRITE setOAuthToken                 NOTIFY linkChanged)
+    Q_PROPERTY(QString  userSpecifiedChannel        READ userSpecifiedChannel       WRITE setUserSpecifiedChannel       NOTIFY linkChanged)
+    Q_PROPERTY(bool     isChannelNameUserSpecified  READ isChannelNameUserSpecified CONSTANT)
+
 public:
     explicit Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
+    ~Twitch();
     bool isConnected() const override;
+    QUrl requesGetAOuthTokenUrl() const;
+    QUrl chatUrl() const override;
+    QUrl controlPanelUrl() const override;
+    QUrl broadcastUrl() const override;
+
+    bool isChannelNameUserSpecified() const;
+    QString oauthToken() const { return _info.oauthToken; }
+    QString userSpecifiedChannel() const { return _info.userSpecifiedChannel; }
 
 signals:
 
 public slots:
     void setOAuthToken(QString token);
-    void setNickOrLink(QString nickOrLink);
-    void setChannelToConnect(QString channelNickOrLink);
+    void setUserSpecifiedChannel(QString userChannel);
 
 private slots:
-    void onReply(QNetworkReply *reply);
     void onIRCMessage(const QString& rawData);
+    void timeoutReconnect();
 
 private:
-    void requestAuthorization();
     void reInitSocket();
 
     QSettings* _settings = nullptr;
     QString _settingsGroupPath;
 
-    QNetworkAccessManager _manager;
-
     QWebSocket _socket;
 
-    bool _isConnected = false;
+    TwitchInfo _info;
 
-    QString _oauthToken = "v6hnsio2s478ovrwi6y66jje8ccpak";
-    QString _nick = "axe1_k";
-    QString _channelToConnect = "axe1_k";//"saltybet";
+    QTimer _timerReconnect;
 };
 
 #endif // TWITCH_HPP

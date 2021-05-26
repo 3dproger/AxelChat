@@ -30,13 +30,13 @@ signals:
     void enabledChanged();
 
 public slots:
-    void setOutputFolder(const QString &outputFolder);
+    void setOutputFolder(QString outputFolder);
     void onMessagesReceived(const ChatMessage& message, const MessageAuthor& author);
     Q_INVOKABLE void showInExplorer();
     QList<QString> codecs() const;
-    void setCodec(const QString& codec);
+    void setCodec(QString codec);
     QString codec() const;
-    bool exportToTxt(const QString& filePath);
+    bool exportToTxt(QString filePath);
 
 private:
     struct AuthorInfo{

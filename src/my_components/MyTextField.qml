@@ -9,22 +9,9 @@ TextField {
     property int selectStart
     property int selectEnd
     property int curPos
-    property bool autoTrim: false
 
     persistentSelection: true
     background.visible: !readOnly
-    onTextChanged: {
-        if (autoTrim)
-        {
-            var preLength = text.length;
-            var atStart = cursorPosition <= 1;
-            text = text.trim();
-            if (atStart && text.length < preLength)
-            {
-                cursorPosition = 0;
-            }
-        }
-    }
 
     onFocusChanged: {
         if (!focus)
