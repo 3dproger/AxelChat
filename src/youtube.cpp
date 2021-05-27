@@ -374,7 +374,7 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
         return;
     }
 
-    if (data->toUpper().startsWith("<!DOCTYPE HTML>"))
+    if (data->toUpper().startsWith("<!DOCTYPE HTML>") || data->toLower().startsWith("<html"))
     {
         parseHTML(data);
         return;
@@ -681,6 +681,11 @@ void YouTube::parseHTML(const std::shared_ptr<const QByteArray> rawData)
     if (!rawData)
     {
         qDebug() << Q_FUNC_INFO << ": !rawData";
+        return;
+    }
+
+    if (rawData->toLower().contains("<title>oops</title>"))
+    {
         return;
     }
 
