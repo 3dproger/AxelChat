@@ -360,8 +360,6 @@ void YouTube::setLink(QString link)
         }
 
         //_webPage.load(QUrl(_youtubeInfo.broadcastChatUrl));
-
-        emit stateChanged();
     }
 
     emit stateChanged();
@@ -669,7 +667,6 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
     }
 
     emit readyRead(messages, authors);
-
     emit stateChanged();
 }
 
