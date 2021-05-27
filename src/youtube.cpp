@@ -675,6 +675,9 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
 
 void YouTube::parseHTML(const std::shared_ptr<const QByteArray> rawData)
 {
+    // ToDo: нужно сделать более стабильный парсинг, потому что из-за небольших изменений в структуре HTML, массив actions может быть не найден
+    // ToDo: задача https://github.com/3dproger/AxelChat/issues/156
+
     if (!rawData)
     {
         qDebug() << Q_FUNC_INFO << ": !rawData";
