@@ -361,7 +361,7 @@ void YouTube::setLink(QString link)
 
         //_webPage.load(QUrl(_youtubeInfo.broadcastChatUrl));
 
-        emit linkChanged();
+        emit stateChanged();
     }
 
     emit stateChanged();

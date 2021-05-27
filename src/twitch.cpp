@@ -176,7 +176,7 @@ void Twitch::setUserSpecifiedChannel(QString userChannel)
 
         reInitSocket();
 
-        emit linkChanged();
+        emit stateChanged();
     }
 }
 
@@ -198,7 +198,7 @@ void Twitch::setOAuthToken(QString token)
 
         reInitSocket();
 
-        emit linkChanged();
+        emit stateChanged();
     }
 }
 

@@ -9,9 +9,9 @@
 class YouTube : public AbstractChatService
 {
     Q_OBJECT
-    Q_PROPERTY(QString userSpecifiedLink            READ userSpecifiedLink WRITE setLink    NOTIFY linkChanged)
-    Q_PROPERTY(QString broadcastId                  READ broadcastId                        NOTIFY linkChanged)
-    Q_PROPERTY(QUrl    broadcastLongUrl             READ broadcastLongUrl                   NOTIFY linkChanged)
+    Q_PROPERTY(QString userSpecifiedLink            READ userSpecifiedLink WRITE setLink    NOTIFY stateChanged)
+    Q_PROPERTY(QString broadcastId                  READ broadcastId                        NOTIFY stateChanged)
+    Q_PROPERTY(QUrl    broadcastLongUrl             READ broadcastLongUrl                   NOTIFY stateChanged)
     Q_PROPERTY(bool    isBroadcastIdUserSpecified   READ isBroadcastIdUserSpecified         CONSTANT)
 
 public:
