@@ -36,7 +36,6 @@ ScrollView {
             y: 60
             height: 43
             placeholderText: qsTr("Paste the link or channel name here...")
-            selectByMouse: true
             anchors.left: element.right
             anchors.leftMargin: 10
             anchors.right: buttonPasteUserSpecifiedLink.left
@@ -168,7 +167,6 @@ ScrollView {
             height: 43
             placeholderText: qsTr("Paste OAuth token here...")
             echoMode: TextInput.Password
-            selectByMouse: true
             anchors.left: element3.right
             anchors.leftMargin: 8
             anchors.right: buttonPasteOAuthToken.left
@@ -225,7 +223,6 @@ ScrollView {
             anchors.right: buttonCopyBroadcastUrl.left
             anchors.rightMargin: 4
             readOnly: true
-            selectByMouse: true
         }
 
         Text {
@@ -247,7 +244,6 @@ ScrollView {
             anchors.right: buttonCopyChatUrl.left
             anchors.rightMargin: 8
             readOnly: true
-            selectByMouse: true
         }
 
         Text {
@@ -282,7 +278,6 @@ ScrollView {
             anchors.right: buttonCopyControlPanelCopy.left
             anchors.rightMargin: 4
             readOnly: true
-            selectByMouse: true
         }
 
         Text {

@@ -358,8 +358,6 @@ void YouTube::setLink(QString link)
             //_cefApp->setUrl(_youtubeInfo.broadcastLongUrl.toString());
             _cefApp->setUrl(_info.broadcastChatUrl.toString());
         }
-
-        //_webPage.load(QUrl(_youtubeInfo.broadcastChatUrl));
     }
 
     emit stateChanged();

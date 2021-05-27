@@ -35,7 +35,6 @@ ScrollView {
             y: 59
             height: 43
             placeholderText: qsTr("Paste the broadcast link or ID here...")
-            selectByMouse: true
             anchors.left: element.right
             anchors.leftMargin: 10
             anchors.right: buttonPasteUserSpecifiedLink.left
@@ -155,7 +154,6 @@ ScrollView {
             anchors.rightMargin: 4
             anchors.left: element3.right
             anchors.leftMargin: 6
-            selectByMouse: true
             readOnly: true
             horizontalAlignment: Text.AlignLeft
         }
@@ -179,7 +177,6 @@ ScrollView {
             anchors.right: buttonCopyBroadcastUrl.left
             anchors.rightMargin: 4
             readOnly: true
-            selectByMouse: true
         }
 
         Text {
@@ -201,7 +198,6 @@ ScrollView {
             anchors.right: buttonCopyChatUrl.left
             anchors.rightMargin: 8
             readOnly: true
-            selectByMouse: true
         }
 
         Text {
@@ -235,7 +231,6 @@ ScrollView {
             anchors.right: buttonCopyControlPanelCopy.left
             anchors.rightMargin: 4
             readOnly: true
-            selectByMouse: true
         }
 
         Text {
