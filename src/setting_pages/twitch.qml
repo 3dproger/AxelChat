@@ -1,10 +1,9 @@
 import QtQuick 2.15
-import QtQml 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.12
 import "../my_components" as MyComponents
-import AxelChat.Twitch 1.0
 import AxelChat.AbstractChatService 1.0
+import AxelChat.Twitch 1.0
 
 ScrollView {
     id: root
