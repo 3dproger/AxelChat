@@ -5,6 +5,31 @@
 #include <QJsonArray>
 #include <QUrlQuery>
 #include <QFile>
+#include <QDir>
+
+namespace
+{
+
+static const QString FolderLogs = "logs_youtube";
+
+void saveFile(const QString& fileName, const QByteArray& data)
+{
+    QDir().mkpath(FolderLogs);
+
+    QFile file(fileName);
+    if (file.open(QFile::OpenModeFlag::WriteOnly | QFile::OpenModeFlag::Text))
+    {
+        file.write(data);
+        file.close();
+        qDebug() << "Saved to" << file.fileName();
+    }
+    else
+    {
+        qDebug() << "Failed to save" << file.fileName();
+    }
+}
+
+}
 
 YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath, QObject *parent)
     : AbstractChatService(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath), _cefApp(cefApp)
@@ -366,15 +391,11 @@ void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
 
     if (data->startsWith("{\n  \"responseContext\":"))
     {
-        /*QFile file("debug_example.json");
-        if (file.open(QFile::OpenModeFlag::WriteOnly | QFile::OpenModeFlag::Text))
-        {
-            file.write(*data);
-            file.close();
-        }*/
-
+        // ignore
         return;
     }
+
+    saveFile(FolderLogs + "/json_is_not_array.json", *data);
 
     QByteArray snap = data->left(128);
     if (data->size() > snap.size())
@@ -652,10 +673,11 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
     emit stateChanged();
 }
 
-void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
+void YouTube::parseHTML(const std::shared_ptr<const QByteArray> rawData)
 {
     if (!rawData)
     {
+        qDebug() << Q_FUNC_INFO << ": !rawData";
         return;
     }
 
@@ -663,10 +685,11 @@ void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
     if (start == -1)
     {
         qDebug() << Q_FUNC_INFO << ": not found actions";
+        saveFile(FolderLogs + "/not_found_actions_from_html_youtube.html", *rawData);
         return;
     }
 
-    QByteArray& data = rawData->remove(0, start + 10);
+    QByteArray data = rawData->mid(start + 10);
     const int pos = data.lastIndexOf(",\"actionPanel\"");
     if (pos != -1)
     {
@@ -683,12 +706,8 @@ void YouTube::parseHTML(std::shared_ptr<QByteArray> rawData)
     else
     {
         printData(Q_FUNC_INFO + QString(": document is not array"), data);
-        QFile file("failed_to_parse.json");
-        if (file.open(QFile::OpenModeFlag::WriteOnly | QFile::OpenModeFlag::Text))
-        {
-            file.write(*rawData);
-            file.close();
-            qDebug() << "Saved to" << file.fileName();
-        }
+
+        saveFile(FolderLogs + "/failed_to_parse_from_html_youtube.html", *rawData);
+        saveFile(FolderLogs + "/failed_to_parse_from_html_youtube.json", data);
     }
 }

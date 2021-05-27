@@ -38,7 +38,7 @@ public slots:
 private:
     QString extractBroadcastId(const QString& link) const;
     void parseActionsArray(const QJsonArray& array, const QByteArray& data);
-    void parseHTML(std::shared_ptr<QByteArray> data);
+    void parseHTML(const std::shared_ptr<const QByteArray> data);
     OutputToFile* _outputToFile = nullptr;
 
     QSettings* _settings = nullptr;
