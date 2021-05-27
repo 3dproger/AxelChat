@@ -48,6 +48,7 @@ private:
     QWebSocket _socket;
 
     TwitchInfo _info;
+    QString _lastConnectedChannelName;
 
     QTimer _timerReconnect;
 };

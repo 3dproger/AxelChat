@@ -49,7 +49,7 @@ Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *p
         if (_info.connected)
         {
             _info.connected = false;
-            emit disconnected(_info.channelName);
+            emit disconnected(_lastConnectedChannelName);
             emit stateChanged();
         }
     });
@@ -266,6 +266,7 @@ void Twitch::onIRCMessage(const QString &rawData)
         if (!_info.connected && rawMessage.startsWith(':') && rawMessage.count(':') == 1 && rawMessage.contains("JOIN #", Qt::CaseSensitivity::CaseInsensitive))
         {
             _info.connected = true;
+            _lastConnectedChannelName = _info.channelName;
             emit connected(_info.channelName);
             emit stateChanged();
         }
