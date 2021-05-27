@@ -1,16 +1,11 @@
 #include "chathandler.hpp"
 #include <QDebug>
 
-ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroup, QObject *parent)
-    : QObject(parent), _cefApp(cefApp)
+ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObject *parent)
+    : QObject(parent)
 {
     _settingsGroupPath = settingsGroup;
     _settings = settings;
-
-    if (!_cefApp)
-    {
-        qWarning() << Q_FUNC_INFO << ": cefApp == nullptr";
-    }
 
     //Bot
     _bot = new ChatBot(settings, _settingsGroupPath + "/chat_bot");
@@ -22,7 +17,7 @@ ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const 
             _outputToFile, &OutputToFile::onMessagesReceived);
 
     //YouTube
-    _youTube = new YouTube(_outputToFile, settings, _cefApp, _settingsGroupPath + "/youtube");
+    _youTube = new YouTube(_outputToFile, settings, _settingsGroupPath + "/youtube");
 
     connect(_youTube, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
@@ -332,11 +327,6 @@ void ChatHandler::setProxyEnabled(bool enabled)
             _settings->setValue(_settingsGroupPath + "/" + _settingsProxyEnabled, enabled);
         }
 
-        if (_cefApp)
-        {
-            _cefApp->setProxyEnabled(enabled);
-        }
-
         emit proxyChanged();
 
         if (_youTube)
@@ -359,11 +349,6 @@ void ChatHandler::setProxyServerAddress(QString address)
             _settings->setValue(_settingsGroupPath + "/" + _settingsProxyAddress, address);
         }
 
-        if (_cefApp)
-        {
-            _cefApp->setProxyServer(address, _proxyServerPort);
-        }
-
         emit proxyChanged();
 
         if (_enabledProxy && _youTube)
@@ -382,11 +367,6 @@ void ChatHandler::setProxyServerPort(int port)
         if (_settings)
         {
             _settings->setValue(_settingsGroupPath + "/" + _settingsProxyPort, port);
-        }
-
-        if (_cefApp)
-        {
-            _cefApp->setProxyServer(_proxyServerAddress, port);
         }
 
         emit proxyChanged();

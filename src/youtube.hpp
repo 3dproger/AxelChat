@@ -2,9 +2,9 @@
 #define YOUTUBEINTERCEPTOR_HPP
 
 #include "outputtofile.hpp"
-#include "cef.hpp"
 #include "abstractchatservice.hpp"
 #include <QSettings>
+#include <memory>
 
 class YouTube : public AbstractChatService
 {
@@ -15,7 +15,7 @@ class YouTube : public AbstractChatService
     Q_PROPERTY(bool    isBroadcastIdUserSpecified   READ isBroadcastIdUserSpecified         CONSTANT)
 
 public:
-    explicit YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
+    explicit YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
     ~YouTube();
     int messagesReceived() const;
 
@@ -45,8 +45,6 @@ private:
     QString _settingsGroupPath;
 
     int _messagesReceived = 0;
-
-    CefRefPtr<QtCefApp> _cefApp = nullptr;
 
     YouTubeInfo _info;
 

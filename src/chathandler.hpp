@@ -1,16 +1,16 @@
 #ifndef CHATMESSAGEHANDLER_HPP
 #define CHATMESSAGEHANDLER_HPP
 
-#include <QSettings>
-#include <QMap>
-#include <QDateTime>
 #include "types.hpp"
 #include "youtube.hpp"
 #include "outputtofile.hpp"
 #include "chatbot.hpp"
-#include <QSound>
-#include "cef.hpp"
 #include "twitch.hpp"
+#include <QSettings>
+#include <QMap>
+#include <QDateTime>
+#include <QSound>
+#include <memory>
 
 class ChatHandler : public QObject
 {
@@ -24,7 +24,7 @@ class ChatHandler : public QObject
     Q_PROPERTY(int     proxyServerPort    READ proxyServerPort    WRITE setProxyServerPort    NOTIFY proxyChanged)
 
 public:
-    explicit ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroup = "chat_handler", QObject *parent = nullptr);
+    explicit ChatHandler(QSettings* settings, const QString& settingsGroup = "chat_handler", QObject *parent = nullptr);
     ~ChatHandler();
     MessageAuthor authorByChannelId(const QString& channelId) const;
 
@@ -79,7 +79,6 @@ private:
     QString _settingsGroupPath;
     QSettings*    _settings                 = nullptr;
 
-    CefRefPtr<QtCefApp> _cefApp             = nullptr;
     YouTube* _youTube                       = nullptr;
     Twitch* _twitch                         = nullptr;
     OutputToFile* _outputToFile             = nullptr;

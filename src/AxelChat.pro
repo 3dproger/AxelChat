@@ -17,7 +17,6 @@ HEADERS += \
     abstractchatservice.hpp \
     applicationinfo.hpp \
     botaction.hpp \
-    cef.hpp \
     chatbot.hpp \
     chathandler.hpp \
     chatmessage.hpp \
@@ -34,7 +33,6 @@ HEADERS += \
 
 SOURCES += \
         botaction.cpp \
-        cef.cpp \
         chatbot.cpp \
         chathandler.cpp \
         chatmessage.cpp \
@@ -57,6 +55,10 @@ TRANSLATIONS += \
     ru_RU.ts
 
 RC_FILE = icon.rc
+
+FORMS += \
+    commandseditor.ui \
+    commandsingleeditor.ui
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -90,7 +92,8 @@ win32: {
             DESTDIR = $$_PRO_FILE_PWD_/../release_win64
         }
 
-        QMAKE_POST_LINK += $$(QTDIR)/bin/windeployqt --release --qmldir $$(QTDIR)/qml $$DESTDIR $$escape_expand(\\n\\t)
+        #QMAKE_POST_LINK += $$(QTDIR)/bin/windeployqt --release --qmldir $$(QTDIR)/qml $$DESTDIR $$escape_expand(\\n\\t) # In Qt 5.15 with --release not working
+        QMAKE_POST_LINK += $$(QTDIR)/bin/windeployqt --qmldir $$(QTDIR)/qml $$DESTDIR $$escape_expand(\\n\\t)
     }
 }
 
@@ -98,21 +101,3 @@ win32: {
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-# CEF
-win32: LIBS += -L$$PWD/../cef/Release/ -llibcef
-
-INCLUDEPATH += $$PWD/../cef
-DEPENDPATH += $$PWD/../cef
-
-win32: LIBS += -L$$PWD/../cef/libcef_dll_wrapper/Release/ -llibcef_dll_wrapper
-
-QMAKE_CXXFLAGS_RELEASE += /MT
-QMAKE_CXXFLAGS_DEBUG += /MTd
-
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.lib
-else:win32-g++: PRE_TARGETDEPS += $$PWD/../cef/libcef_dll_wrapper/Release/libcef_dll_wrapper.a
-
-FORMS += \
-    commandseditor.ui \
-    commandsingleeditor.ui
