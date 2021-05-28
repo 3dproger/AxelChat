@@ -1,6 +1,11 @@
 #include "chathandler.hpp"
 #include <QDebug>
 
+namespace
+{
+
+}
+
 ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObject *parent)
     : QObject(parent)
 {
@@ -149,10 +154,10 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
         }
         else
         {
-            qDebug(QString("%1: ignore message because this id already exists")
+            /*qDebug(QString("%1: ignore message because this id already exists")
                    .arg(Q_FUNC_INFO).toUtf8());
 
-            message.printMessageInfo("Raw new message:");
+            message.printMessageInfo("Raw new message:");*/
         }
     }
 }
@@ -318,6 +323,7 @@ QUrl ChatHandler::authorSizedAvatarUrl(const QString &channelId, int height) con
 
 void ChatHandler::setProxyEnabled(bool enabled)
 {
+
     if (_enabledProxy != enabled)
     {
         _enabledProxy = enabled;

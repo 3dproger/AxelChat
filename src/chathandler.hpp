@@ -10,6 +10,7 @@
 #include <QMap>
 #include <QDateTime>
 #include <QSound>
+#include <QNetworkProxy>
 #include <memory>
 
 class ChatHandler : public QObject
@@ -49,6 +50,7 @@ public:
 
     void setProxyEnabled(bool enabled);
     inline bool proxyEnabled() const { return _enabledProxy; }
+
     void setProxyServerAddress(QString address);
     inline QString proxyServerAddress() const { return _proxyServerAddress; }
     void setProxyServerPort(int port);
@@ -83,6 +85,8 @@ private:
     Twitch* _twitch                         = nullptr;
     OutputToFile* _outputToFile             = nullptr;
     ChatBot* _bot                           = nullptr;
+
+    QNetworkProxy _proxy;
 
     bool _enabledSoundNewMessage = false;
     bool _enabledClearMessagesOnLinkChange = false;

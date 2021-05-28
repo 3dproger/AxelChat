@@ -4,6 +4,9 @@
 #include "outputtofile.hpp"
 #include "abstractchatservice.hpp"
 #include <QSettings>
+#include <QNetworkAccessManager>
+#include <QTimer>
+#include <QNetworkProxy>
 #include <memory>
 
 class YouTube : public AbstractChatService
@@ -19,30 +22,39 @@ public:
     ~YouTube();
     int messagesReceived() const;
 
-    bool isBroadcastIdUserSpecified() const;
-    void reconnect();
-    ConnectionStateType connectionStateType() const override;
-    QString stateDescription() const override;
     QString broadcastId() const;
     QString userSpecifiedLink() const;
+    bool isBroadcastIdUserSpecified() const;
+    void reconnect();
+
+    ConnectionStateType connectionStateType() const override;
+    QString stateDescription() const override;
     QUrl broadcastUrl() const override;
     QUrl broadcastLongUrl() const;
     QUrl chatUrl() const override;
     QUrl controlPanelUrl() const override;
     Q_INVOKABLE static QUrl createResizedAvatarUrl(const QUrl& sourceAvatarUrl, int imageHeight);
 
+    void setProxy(const QNetworkProxy& proxy) override;
+
 public slots:
     void setLink(QString link);
-    void onDataReceived(std::shared_ptr<QByteArray> data);
+
+private slots:
+    void onTimeoutRequestChat();
+    void onReply(QNetworkReply *reply);
 
 private:
     QString extractBroadcastId(const QString& link) const;
     void parseActionsArray(const QJsonArray& array, const QByteArray& data);
-    void parseHTML(const std::shared_ptr<const QByteArray> data);
     OutputToFile* _outputToFile = nullptr;
 
     QSettings* _settings = nullptr;
     QString _settingsGroupPath;
+
+    QTimer _timerRequestChat;
+    QNetworkAccessManager _manager;
+    QNetworkProxy _proxy;
 
     int _messagesReceived = 0;
 

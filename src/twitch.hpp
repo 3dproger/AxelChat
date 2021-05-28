@@ -29,6 +29,8 @@ public:
     QString oauthToken() const { return _info.oauthToken; }
     QString userSpecifiedChannel() const { return _info.userSpecifiedChannel; }
 
+    void setProxy(const QNetworkProxy& proxy) override;
+
 signals:
 
 public slots:

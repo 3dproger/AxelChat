@@ -6,11 +6,16 @@
 #include <QUrlQuery>
 #include <QFile>
 #include <QDir>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 
 namespace
 {
 
+static const int RequestChatInterval = 2000;
 static const QString FolderLogs = "logs_youtube";
+static const QByteArray UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36";
+static const QByteArray AcceptLanguage = "en-US";
 
 void saveFile(const QString& fileName, const QByteArray& data)
 {
@@ -38,6 +43,14 @@ YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, const QString&
     {
         setLink(_settings->value(_settingsGroupPath + "/" + _settingsKeyUserSpecifiedLink).toString());
     }
+
+    _manager.setProxy(_proxy);
+
+    QObject::connect(&_manager, &QNetworkAccessManager::finished, this, &YouTube::onReply);
+
+    QObject::connect(&_timerRequestChat, &QTimer::timeout, this, &YouTube::onTimeoutRequestChat);
+
+    _timerRequestChat.start(RequestChatInterval);
 }
 
 YouTube::~YouTube()
@@ -219,6 +232,12 @@ QUrl YouTube::createResizedAvatarUrl(const QUrl &sourceAvatarUrl, int imageHeigh
     return sourceAvatarUrl;
 }
 
+void YouTube::setProxy(const QNetworkProxy &proxy)
+{
+    _manager.setProxy(proxy);
+    reconnect();
+}
+
 QUrl YouTube::broadcastLongUrl() const
 {
     return _info.broadcastLongUrl;
@@ -352,53 +371,87 @@ void YouTube::setLink(QString link)
     }
 
     emit stateChanged();
+
+    onTimeoutRequestChat();
 }
 
-void YouTube::onDataReceived(std::shared_ptr<QByteArray> data)
+void YouTube::onTimeoutRequestChat()
 {
-    if (!data)
+    if (_info.broadcastChatUrl.isEmpty())
     {
         return;
     }
 
-    if (data->toUpper().startsWith("<!DOCTYPE HTML>") || data->toLower().startsWith("<html"))
+    QNetworkRequest request(_info.broadcastChatUrl);
+    request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, UserAgent);
+    request.setRawHeader("accept-language", AcceptLanguage);
+    QNetworkReply* reply = _manager.get(request);
+    if (!reply)
     {
-        parseHTML(data);
+        qDebug() << "!reply";
+        return;
+    }
+}
+
+void YouTube::onReply(QNetworkReply *reply)
+{
+    if (!reply)
+    {
+        qDebug() << "!reply";
         return;
     }
 
-    const QJsonDocument jsonDocument = QJsonDocument::fromJson(*data);
-    const QJsonObject liveChatContinuation = jsonDocument.object().value("continuationContents").toObject().value("liveChatContinuation").toObject();
-    const QJsonValue actions = liveChatContinuation.value("actions");
-    if (actions.isArray())
+    const QByteArray rawData = reply->readAll();
+    if (rawData.isEmpty())
     {
-        parseActionsArray(actions.toArray(), *data);
+        qDebug() << "rawData is empty";
         return;
     }
 
-    if (data->startsWith("{\n  \"responseContext\":"))
+    const QString startData = QString::fromUtf8(rawData.left(100));
+
+    if (startData.contains("<title>Oops</title>", Qt::CaseSensitivity::CaseInsensitive))
     {
-        // ignore
+        //ToDo: show message "bad url"
         return;
     }
 
-    saveFile(FolderLogs + "/json_is_not_array.json", *data);
-
-    QByteArray snap = data->left(128);
-    if (data->size() > snap.size())
+    const int start = rawData.indexOf("\"actions\":[");
+    if (start == -1)
     {
-        snap += "...";
+        qDebug() << Q_FUNC_INFO << ": not found actions";
+        saveFile(FolderLogs + "/not_found_actions_from_html_youtube.html", rawData);
+        return;
     }
 
-    printData(Q_FUNC_INFO + QString(": unknown data type"), snap);
+    QByteArray data = rawData.mid(start + 10);
+    const int pos = data.lastIndexOf(",\"actionPanel\"");
+    if (pos != -1)
+    {
+        data = data.remove(pos, data.length());
+    }
+
+    const QJsonDocument jsonDocument = QJsonDocument::fromJson(data);
+    if (jsonDocument.isArray())
+    {
+        const QJsonArray actionsArray = jsonDocument.array();
+        //qDebug() << "array size = " << actionsArray.size();
+        parseActionsArray(actionsArray, data);
+    }
+    else
+    {
+        printData(Q_FUNC_INFO + QString(": document is not array"), data);
+
+        saveFile(FolderLogs + "/failed_to_parse_from_html_youtube.html", rawData);
+        saveFile(FolderLogs + "/failed_to_parse_from_html_youtube.json", data);
+    }
 }
 
 void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
 {
     if (!_info.broadcastConnected && !_info.broadcastId.isEmpty())
     {
-        qDebug(QString("YouTube connected: %1")
-               .arg(_info.broadcastId).toUtf8());
+        qDebug() << "YouTube connected" << _info.broadcastId;
         _info.broadcastConnected = true;
         if (_outputToFile)
         {
@@ -601,15 +654,15 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
         }
         else if (actionObject.contains("replaceChatItemAction"))
         {
-            qDebug() << Q_FUNC_INFO << QString(": object \"replaceChatItemAction\" not supported yet");
+            //qDebug() << Q_FUNC_INFO << QString(": object \"replaceChatItemAction\" not supported yet");
         }
         else if (actionObject.contains("addLiveChatTickerItemAction"))
         {
-            qDebug() << Q_FUNC_INFO << QString(": object \"addLiveChatTickerItemAction\" not supported yet");
+            //qDebug() << Q_FUNC_INFO << QString(": object \"addLiveChatTickerItemAction\" not supported yet");
         }
         else if (actionObject.contains("addBannerToLiveChatCommand"))
         {
-            qDebug() << Q_FUNC_INFO << QString(": object \"addBannerToLiveChatCommand\" not supported yet");
+            //qDebug() << Q_FUNC_INFO << QString(": object \"addBannerToLiveChatCommand\" not supported yet");
         }
         else if (actionObject.contains("addToPlaylistCommand") || actionObject.contains("clickTrackingParams"))
         {
@@ -657,51 +710,4 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
 
     emit readyRead(messages, authors);
     emit stateChanged();
-}
-
-void YouTube::parseHTML(const std::shared_ptr<const QByteArray> rawData)
-{
-    // ToDo: нужно сделать более стабильный парсинг, потому что из-за небольших изменений в структуре HTML, массив actions может быть не найден
-    // ToDo: задача https://github.com/3dproger/AxelChat/issues/156
-
-    if (!rawData)
-    {
-        qDebug() << Q_FUNC_INFO << ": !rawData";
-        return;
-    }
-
-    if (rawData->toLower().contains("<title>oops</title>"))
-    {
-        return;
-    }
-
-    const int start = rawData->indexOf("\"actions\":[");
-    if (start == -1)
-    {
-        qDebug() << Q_FUNC_INFO << ": not found actions";
-        saveFile(FolderLogs + "/not_found_actions_from_html_youtube.html", *rawData);
-        return;
-    }
-
-    QByteArray data = rawData->mid(start + 10);
-    const int pos = data.lastIndexOf(",\"actionPanel\"");
-    if (pos != -1)
-    {
-        data = data.remove(pos, data.length());
-    }
-
-    const QJsonDocument jsonDocument = QJsonDocument::fromJson(data);
-    if (jsonDocument.isArray())
-    {
-        const QJsonArray actionsArray = jsonDocument.array();
-        //qDebug() << "array size = " << actionsArray.size();
-        parseActionsArray(actionsArray, data);
-    }
-    else
-    {
-        printData(Q_FUNC_INFO + QString(": document is not array"), data);
-
-        saveFile(FolderLogs + "/failed_to_parse_from_html_youtube.html", *rawData);
-        saveFile(FolderLogs + "/failed_to_parse_from_html_youtube.json", data);
-    }
 }

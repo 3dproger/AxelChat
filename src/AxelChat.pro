@@ -1,4 +1,4 @@
-QT += widgets gui quick multimedia websockets
+QT += widgets gui quick multimedia websockets network
 
 CONFIG += c++11
 
