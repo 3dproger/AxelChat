@@ -25,7 +25,7 @@ class ChatHandler : public QObject
     Q_PROPERTY(int     proxyServerPort    READ proxyServerPort    WRITE setProxyServerPort    NOTIFY proxyChanged)
 
 public:
-    explicit ChatHandler(QSettings* settings, const QString& settingsGroup = "chat_handler", QObject *parent = nullptr);
+    explicit ChatHandler(QSettings* settings, QObject *parent = nullptr);
     ~ChatHandler();
     MessageAuthor authorByChannelId(const QString& channelId) const;
 
@@ -81,7 +81,6 @@ private:
     ChatMessagesModel _messagesModel;
     QMap<QString, MessageAuthor> _authors;
 
-    QString _settingsGroupPath;
     QSettings*    _settings                 = nullptr;
 
     YouTube* _youTube                       = nullptr;
@@ -91,16 +90,10 @@ private:
 
     bool _enabledSoundNewMessage = false;
     bool _enabledClearMessagesOnLinkChange = false;
-    const QString _settingsEnabledSoundNewMessage = "enabledSoundNewMessage";
-    const QString _settingsEnabledClearMessagesOnLinkChange = "enabledClearMessagesOnLinkChange";
     std::unique_ptr<QSound> _soundDefaultNewMessage = std::unique_ptr<QSound>(new QSound(":/resources/sound/ui/beep1.wav"));
 
     bool _enabledProxy = false;
     QNetworkProxy _proxy = QNetworkProxy(QNetworkProxy::ProxyType::Socks5Proxy/*HttpProxy*/);
-
-    const QString _settingsProxyEnabled = "proxyEnabled";
-    const QString _settingsProxyAddress = "proxyServerAddress";
-    const QString _settingsProxyPort    = "proxyServerPort";
 };
 
 #endif // CHATMESSAGEHANDLER_HPP

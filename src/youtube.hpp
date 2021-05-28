@@ -58,8 +58,6 @@ private:
 
     YouTubeInfo _info;
 
-    const QString _settingsKeyUserSpecifiedLink = "user_specified_link";
-
     static void printData(const QString& tag, const QByteArray& data);
 };
 

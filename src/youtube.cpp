@@ -17,6 +17,8 @@ static const QString FolderLogs = "logs_youtube";
 static const QByteArray UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36";
 static const QByteArray AcceptLanguage = "en-US";
 
+static const QString  SettingsKeyUserSpecifiedLink = "user_specified_link";
+
 void saveFile(const QString& fileName, const QByteArray& data)
 {
     QDir().mkpath(FolderLogs);
@@ -37,13 +39,16 @@ void saveFile(const QString& fileName, const QByteArray& data)
 }
 
 YouTube::YouTube(const QNetworkProxy& proxy, OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
-    : AbstractChatService(proxy, parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
+    : AbstractChatService(proxy, parent)
+    , _outputToFile(outputToFile)
+    , _settings(settings)
+    , _settingsGroupPath(settingsGroupPath)
 {
     _manager.setProxy(proxy);
 
     if (_settings)
     {
-        setLink(_settings->value(_settingsGroupPath + "/" + _settingsKeyUserSpecifiedLink).toString());
+        setLink(_settings->value(_settingsGroupPath + "/" + SettingsKeyUserSpecifiedLink).toString());
     }
 
     QObject::connect(&_manager, &QNetworkAccessManager::finished, this, &YouTube::onReply);
@@ -349,7 +354,7 @@ void YouTube::setLink(QString link)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyUserSpecifiedLink, _info.userSpecified);
+            _settings->setValue(_settingsGroupPath + "/" + SettingsKeyUserSpecifiedLink, _info.userSpecified);
         }
 
         if (preConnected && !preBroadcastId.isEmpty())

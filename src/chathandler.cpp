@@ -4,36 +4,42 @@
 namespace
 {
 
+static const QString SettingsGroupPath = "chat_handler";
+
+static const QString SettingsEnabledSoundNewMessage             = SettingsGroupPath + "/enabledSoundNewMessage";
+static const QString SettingsEnabledClearMessagesOnLinkChange   = SettingsGroupPath + "/enabledClearMessagesOnLinkChange";
+static const QString SettingsProxyEnabled                       = SettingsGroupPath + "/proxyEnabled";
+static const QString SettingsProxyAddress                       = SettingsGroupPath + "/proxyServerAddress";
+static const QString SettingsProxyPort                          = SettingsGroupPath + "/proxyServerPort";
+
 }
 
-ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObject *parent)
+ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
     : QObject(parent)
+    , _settings(settings)
 {
-    _settingsGroupPath = settingsGroup;
-    _settings = settings;
-
     if (_settings)
     {
-        setEnabledSoundNewMessage(_settings->value(_settingsGroupPath + "/" + _settingsEnabledSoundNewMessage, _enabledSoundNewMessage).toBool());
+        setEnabledSoundNewMessage(_settings->value(SettingsEnabledSoundNewMessage, _enabledSoundNewMessage).toBool());
 
-        setEnabledClearMessagesOnLinkChange(_settings->value(_settingsGroupPath + "/" + _settingsEnabledClearMessagesOnLinkChange, _enabledClearMessagesOnLinkChange).toBool());
+        setEnabledClearMessagesOnLinkChange(_settings->value(SettingsEnabledClearMessagesOnLinkChange, _enabledClearMessagesOnLinkChange).toBool());
 
-        setProxyEnabled(_settings->value(_settingsGroupPath + "/" + _settingsProxyEnabled, _enabledProxy).toBool());
-        setProxyServerAddress(_settings->value(_settingsGroupPath + "/" + _settingsProxyAddress, _proxy.hostName()).toString());
-        setProxyServerPort(_settings->value(_settingsGroupPath + "/" + _settingsProxyPort, _proxy.port()).toInt());
+        setProxyEnabled(_settings->value(SettingsProxyEnabled, _enabledProxy).toBool());
+        setProxyServerAddress(_settings->value(SettingsProxyAddress, _proxy.hostName()).toString());
+        setProxyServerPort(_settings->value(SettingsProxyPort, _proxy.port()).toInt());
     }
 
     //Bot
-    _bot = new ChatBot(settings, _settingsGroupPath + "/chat_bot");
+    _bot = new ChatBot(settings, SettingsGroupPath + "/chat_bot");
 
     //Output to file
-    _outputToFile = new OutputToFile(settings, _settingsGroupPath + "/output_to_file");
+    _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file");
 
     connect(this, &ChatHandler::messagesReceived,
             _outputToFile, &OutputToFile::onMessagesReceived);
 
     //YouTube
-    _youTube = new YouTube(proxy(), _outputToFile, settings, _settingsGroupPath + "/youtube");
+    _youTube = new YouTube(proxy(), _outputToFile, settings, SettingsGroupPath + "/youtube");
 
     connect(_youTube, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
@@ -45,7 +51,7 @@ ChatHandler::ChatHandler(QSettings* settings, const QString& settingsGroup, QObj
             this, SLOT(onDisconnected(QString)));
 
     //Twitch
-    _twitch = new Twitch(proxy(), settings, _settingsGroupPath + "/twitch");
+    _twitch = new Twitch(proxy(), settings, SettingsGroupPath + "/twitch");
 
     connect(_twitch, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
@@ -310,7 +316,7 @@ void ChatHandler::setEnabledSoundNewMessage(bool enabled)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsEnabledSoundNewMessage, enabled);
+            _settings->setValue(SettingsEnabledSoundNewMessage, enabled);
         }
 
         emit enabledSoundNewMessageChanged();
@@ -325,7 +331,7 @@ void ChatHandler::setEnabledClearMessagesOnLinkChange(bool enabled)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsEnabledClearMessagesOnLinkChange, enabled);
+            _settings->setValue(SettingsEnabledClearMessagesOnLinkChange, enabled);
         }
 
         emit enabledClearMessagesOnLinkChangeChanged();
@@ -350,7 +356,7 @@ void ChatHandler::setProxyEnabled(bool enabled)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsProxyEnabled, enabled);
+            _settings->setValue(SettingsProxyEnabled, enabled);
         }
 
         updateProxy();
@@ -367,7 +373,7 @@ void ChatHandler::setProxyServerAddress(QString address)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsProxyAddress, address);
+            _settings->setValue(SettingsProxyAddress, address);
         }
 
         updateProxy();
@@ -382,7 +388,7 @@ void ChatHandler::setProxyServerPort(int port)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsProxyPort, port);
+            _settings->setValue(SettingsProxyPort, port);
         }
 
         updateProxy();
