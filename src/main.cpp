@@ -10,7 +10,6 @@
 #include "clipboardqml.hpp"
 #include "qmlutils.hpp"
 #include "i18n.hpp"
-#include "cef.hpp"
 #include <QIcon>
 #include <QStandardPaths>
 #include <QDir>
@@ -20,59 +19,6 @@
 
 int main(int argc, char *argv[])
 {
-    //CEF
-    // Enable High-DPI support on Windows 7 or newer.
-    CefEnableHighDPISupport();
-
-    void* sandbox_info = nullptr;
-
-  #if defined(CEF_USE_SANDBOX)
-    // Manage the life span of the sandbox information object. This is necessary
-    // for sandbox support on Windows. See cef_sandbox_win.h for complete details.
-    CefScopedSandboxInfo scoped_sandbox;
-    sandbox_info = scoped_sandbox.sandbox_info();
-  #endif
-
-#ifdef Q_OS_WIN
-    CefMainArgs main_args((HINSTANCE)GetModuleHandle(0));
-#endif
-
-    // Parse command-line arguments for use in this method.
-    CefRefPtr<CefCommandLine> command_line = CefCommandLine::CreateCommandLine();
-    command_line->InitFromString(::GetCommandLineW());
-
-    // Specify CEF global settings here.
-    CefSettings cefSettings;
-
-    /*if (command_line->HasSwitch("enable-chrome-runtime")) {
-      // Enable experimental Chrome runtime. See issue #2969 for details.
-      cefSettings.chrome_runtime = true;
-    }*/
-
-    CefString(&cefSettings.accept_language_list).FromString("");
-
-#if !defined(CEF_USE_SANDBOX)
-    cefSettings.no_sandbox = true;
-#endif
-
-    // SimpleApp implements application-level callbacks for the browser process.
-    // It will create the first browser instance in OnContextInitialized() after
-    // CEF has initialized.
-    CefRefPtr<QtCefApp> cefApp = new QtCefApp();
-
-    // Execute the sub-process logic, if any. This will either return immediately for the browser
-    // process or block until the sub-process should exit.
-    int exit_code = CefExecuteProcess(main_args, cefApp.get(), sandbox_info);
-    if (exit_code >= 0) {
-      // The sub-process terminated, exit now.
-      return exit_code;
-    }
-
-    // Initialize CEF.
-    CefInitialize(main_args, cefSettings, cefApp.get(), sandbox_info);
-    CefDoMessageLoopWork();
-
-    //Qt
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QCoreApplication::setApplicationName   (APP_INFO_PRODUCTNAME_STR);
@@ -113,16 +59,15 @@ int main(int argc, char *argv[])
 
     //ChatHandler
     ChatHandler::declareQml();
-    ChatHandler* chatHandler = new ChatHandler(settings, cefApp, "chat_handler");
+    ChatHandler* chatHandler = new ChatHandler(settings);
     settings->setParent(chatHandler);
 
     qRegisterMetaType<size_t>("size_t");
     qRegisterMetaType<std::shared_ptr<QByteArray>>("std::shared_ptr<QByteArray>");
-    QObject::connect(cefApp, &QtCefApp::dataReceived, chatHandler->youTube(), &YouTube::onDataReceived);
 
     //Update Checker
     GitHubApi::declareQml();
-    GitHubApi* github = new GitHubApi(settings, "update_checker", chatHandler);
+    GitHubApi* github = new GitHubApi(settings, chatHandler->proxy(), "update_checker", chatHandler);
 
     QQmlApplicationEngine engine;
     qmlUtils->setParent(&engine);
@@ -161,14 +106,7 @@ int main(int argc, char *argv[])
     delete splashScreen;
     splashScreen = nullptr;
 
-    cefApp->moveToThread(engine.thread());
-    cefApp->startTimer(100);
-
-    int returnCode = app.exec();
-
-    CefShutdown();
-
-    return returnCode;
+    return app.exec();
 }
 
 #endif

@@ -16,7 +16,7 @@ class Twitch : public AbstractChatService
     Q_PROPERTY(bool     isChannelNameUserSpecified  READ isChannelNameUserSpecified CONSTANT)
 
 public:
-    explicit Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
+    explicit Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
     ~Twitch();
     ConnectionStateType connectionStateType() const override;
     QString stateDescription() const override;
@@ -28,6 +28,8 @@ public:
     bool isChannelNameUserSpecified() const;
     QString oauthToken() const { return _info.oauthToken; }
     QString userSpecifiedChannel() const { return _info.userSpecifiedChannel; }
+
+    void setProxy(const QNetworkProxy& proxy) override;
 
 signals:
 

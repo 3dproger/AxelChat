@@ -1,28 +1,45 @@
 #include "chathandler.hpp"
 #include <QDebug>
 
-ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroup, QObject *parent)
-    : QObject(parent), _cefApp(cefApp)
+namespace
 {
-    _settingsGroupPath = settingsGroup;
-    _settings = settings;
 
-    if (!_cefApp)
+static const QString SettingsGroupPath = "chat_handler";
+
+static const QString SettingsEnabledSoundNewMessage             = SettingsGroupPath + "/enabledSoundNewMessage";
+static const QString SettingsEnabledClearMessagesOnLinkChange   = SettingsGroupPath + "/enabledClearMessagesOnLinkChange";
+static const QString SettingsProxyEnabled                       = SettingsGroupPath + "/proxyEnabled";
+static const QString SettingsProxyAddress                       = SettingsGroupPath + "/proxyServerAddress";
+static const QString SettingsProxyPort                          = SettingsGroupPath + "/proxyServerPort";
+
+}
+
+ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
+    : QObject(parent)
+    , _settings(settings)
+{
+    if (_settings)
     {
-        qWarning() << Q_FUNC_INFO << ": cefApp == nullptr";
+        setEnabledSoundNewMessage(_settings->value(SettingsEnabledSoundNewMessage, _enabledSoundNewMessage).toBool());
+
+        setEnabledClearMessagesOnLinkChange(_settings->value(SettingsEnabledClearMessagesOnLinkChange, _enabledClearMessagesOnLinkChange).toBool());
+
+        setProxyEnabled(_settings->value(SettingsProxyEnabled, _enabledProxy).toBool());
+        setProxyServerAddress(_settings->value(SettingsProxyAddress, _proxy.hostName()).toString());
+        setProxyServerPort(_settings->value(SettingsProxyPort, _proxy.port()).toInt());
     }
 
     //Bot
-    _bot = new ChatBot(settings, _settingsGroupPath + "/chat_bot");
+    _bot = new ChatBot(settings, SettingsGroupPath + "/chat_bot");
 
     //Output to file
-    _outputToFile = new OutputToFile(settings, _settingsGroupPath + "/output_to_file");
+    _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file");
 
     connect(this, &ChatHandler::messagesReceived,
             _outputToFile, &OutputToFile::onMessagesReceived);
 
     //YouTube
-    _youTube = new YouTube(_outputToFile, settings, _cefApp, _settingsGroupPath + "/youtube");
+    _youTube = new YouTube(proxy(), _outputToFile, settings, SettingsGroupPath + "/youtube");
 
     connect(_youTube, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
@@ -34,7 +51,7 @@ ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const 
             this, SLOT(onDisconnected(QString)));
 
     //Twitch
-    _twitch = new Twitch(settings, _settingsGroupPath + "/twitch");
+    _twitch = new Twitch(proxy(), settings, SettingsGroupPath + "/twitch");
 
     connect(_twitch, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
@@ -44,17 +61,6 @@ ChatHandler::ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const 
 
     connect(_twitch, SIGNAL(disconnected(QString)),
             this, SLOT(onDisconnected(QString)));
-
-    if (_settings)
-    {
-        setEnabledSoundNewMessage(_settings->value(_settingsGroupPath + "/" + _settingsEnabledSoundNewMessage, _enabledSoundNewMessage).toBool());
-
-        setEnabledClearMessagesOnLinkChange(_settings->value(_settingsGroupPath + "/" + _settingsEnabledClearMessagesOnLinkChange, _enabledClearMessagesOnLinkChange).toBool());
-
-        setProxyEnabled(_settings->value(_settingsGroupPath + "/" + _settingsProxyEnabled, _enabledProxy).toBool());
-        setProxyServerAddress(_settings->value(_settingsGroupPath + "/" + _settingsProxyAddress, _proxyServerAddress).toString());
-        setProxyServerPort(_settings->value(_settingsGroupPath + "/" + _settingsProxyPort, _proxyServerPort).toInt());
-    }
 
     /*MessageAuthor a = MessageAuthor::createFromYouTube(
                 "123213123123123123123123123",
@@ -154,10 +160,10 @@ void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<Me
         }
         else
         {
-            qDebug(QString("%1: ignore message because this id already exists")
+            /*qDebug(QString("%1: ignore message because this id already exists")
                    .arg(Q_FUNC_INFO).toUtf8());
 
-            message.printMessageInfo("Raw new message:");
+            message.printMessageInfo("Raw new message:");*/
         }
     }
 }
@@ -245,6 +251,27 @@ void ChatHandler::chatNotification(const QString &text)
     onReadyRead({message}, {message.author()});
 }
 
+void ChatHandler::updateProxy()
+{
+    QNetworkProxy proxy(QNetworkProxy::NoProxy);
+    if (_enabledProxy)
+    {
+        proxy = _proxy;
+    }
+
+    if (_youTube)
+    {
+        _youTube->setProxy(proxy);
+    }
+
+    if (_twitch)
+    {
+        _twitch->setProxy(proxy);
+    }
+
+    emit proxyChanged();
+}
+
 ChatBot *ChatHandler::bot() const
 {
     return _bot;
@@ -289,7 +316,7 @@ void ChatHandler::setEnabledSoundNewMessage(bool enabled)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsEnabledSoundNewMessage, enabled);
+            _settings->setValue(SettingsEnabledSoundNewMessage, enabled);
         }
 
         emit enabledSoundNewMessageChanged();
@@ -304,7 +331,7 @@ void ChatHandler::setEnabledClearMessagesOnLinkChange(bool enabled)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsEnabledClearMessagesOnLinkChange, enabled);
+            _settings->setValue(SettingsEnabledClearMessagesOnLinkChange, enabled);
         }
 
         emit enabledClearMessagesOnLinkChangeChanged();
@@ -329,20 +356,10 @@ void ChatHandler::setProxyEnabled(bool enabled)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsProxyEnabled, enabled);
+            _settings->setValue(SettingsProxyEnabled, enabled);
         }
 
-        if (_cefApp)
-        {
-            _cefApp->setProxyEnabled(enabled);
-        }
-
-        emit proxyChanged();
-
-        if (_youTube)
-        {
-            _youTube->reconnect();
-        }
+        updateProxy();
     }
 }
 
@@ -350,52 +367,42 @@ void ChatHandler::setProxyServerAddress(QString address)
 {
     address = address.trimmed();
 
-    if (_proxyServerAddress != address)
+    if (_proxy.hostName() != address)
     {
-        _proxyServerAddress = address;
+        _proxy.setHostName(address);
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsProxyAddress, address);
+            _settings->setValue(SettingsProxyAddress, address);
         }
 
-        if (_cefApp)
-        {
-            _cefApp->setProxyServer(address, _proxyServerPort);
-        }
-
-        emit proxyChanged();
-
-        if (_enabledProxy && _youTube)
-        {
-            _youTube->reconnect();
-        }
+        updateProxy();
     }
 }
 
 void ChatHandler::setProxyServerPort(int port)
 {
-    if (_proxyServerPort != port)
+    if (_proxy.port() != port)
     {
-        _proxyServerPort = port;
+        _proxy.setPort(port);
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsProxyPort, port);
+            _settings->setValue(SettingsProxyPort, port);
         }
 
-        if (_cefApp)
-        {
-            _cefApp->setProxyServer(_proxyServerAddress, port);
-        }
-
-        emit proxyChanged();
-
-        if (_enabledProxy && _youTube)
-        {
-            _youTube->reconnect();
-        }
+        updateProxy();
     }
+}
+
+QNetworkProxy ChatHandler::proxy() const
+{
+    if (_enabledProxy)
+    {
+        return _proxy;
+    }
+
+    return QNetworkProxy(QNetworkProxy::NoProxy);
 }
 
 YouTube* ChatHandler::youTube() const

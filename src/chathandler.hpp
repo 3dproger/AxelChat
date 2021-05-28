@@ -1,16 +1,17 @@
 #ifndef CHATMESSAGEHANDLER_HPP
 #define CHATMESSAGEHANDLER_HPP
 
-#include <QSettings>
-#include <QMap>
-#include <QDateTime>
 #include "types.hpp"
 #include "youtube.hpp"
 #include "outputtofile.hpp"
 #include "chatbot.hpp"
-#include <QSound>
-#include "cef.hpp"
 #include "twitch.hpp"
+#include <QSettings>
+#include <QMap>
+#include <QDateTime>
+#include <QSound>
+#include <QNetworkProxy>
+#include <memory>
 
 class ChatHandler : public QObject
 {
@@ -24,7 +25,7 @@ class ChatHandler : public QObject
     Q_PROPERTY(int     proxyServerPort    READ proxyServerPort    WRITE setProxyServerPort    NOTIFY proxyChanged)
 
 public:
-    explicit ChatHandler(QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroup = "chat_handler", QObject *parent = nullptr);
+    explicit ChatHandler(QSettings* settings, QObject *parent = nullptr);
     ~ChatHandler();
     MessageAuthor authorByChannelId(const QString& channelId) const;
 
@@ -49,10 +50,13 @@ public:
 
     void setProxyEnabled(bool enabled);
     inline bool proxyEnabled() const { return _enabledProxy; }
+
     void setProxyServerAddress(QString address);
-    inline QString proxyServerAddress() const { return _proxyServerAddress; }
+    inline QString proxyServerAddress() const { return _proxy.hostName(); }
     void setProxyServerPort(int port);
-    inline int proxyServerPort() const { return _proxyServerPort; }
+    inline int proxyServerPort() const { return _proxy.port(); }
+
+    QNetworkProxy proxy() const;
 
 signals:
     void messagesReceived(const ChatMessage& message, const MessageAuthor& author);
@@ -72,14 +76,13 @@ private slots:
 
 private:
     void chatNotification(const QString& text);
+    void updateProxy();
 
     ChatMessagesModel _messagesModel;
     QMap<QString, MessageAuthor> _authors;
 
-    QString _settingsGroupPath;
     QSettings*    _settings                 = nullptr;
 
-    CefRefPtr<QtCefApp> _cefApp             = nullptr;
     YouTube* _youTube                       = nullptr;
     Twitch* _twitch                         = nullptr;
     OutputToFile* _outputToFile             = nullptr;
@@ -87,16 +90,10 @@ private:
 
     bool _enabledSoundNewMessage = false;
     bool _enabledClearMessagesOnLinkChange = false;
-    const QString _settingsEnabledSoundNewMessage = "enabledSoundNewMessage";
-    const QString _settingsEnabledClearMessagesOnLinkChange = "enabledClearMessagesOnLinkChange";
     std::unique_ptr<QSound> _soundDefaultNewMessage = std::unique_ptr<QSound>(new QSound(":/resources/sound/ui/beep1.wav"));
 
     bool _enabledProxy = false;
-    const QString _settingsProxyEnabled = "proxyEnabled";
-    QString _proxyServerAddress;
-    const QString _settingsProxyAddress = "proxyServerAddress";
-    int _proxyServerPort = -1;
-    const QString _settingsProxyPort    = "proxyServerPort";
+    QNetworkProxy _proxy = QNetworkProxy(QNetworkProxy::ProxyType::Socks5Proxy/*HttpProxy*/);
 };
 
 #endif // CHATMESSAGEHANDLER_HPP

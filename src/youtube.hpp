@@ -2,9 +2,11 @@
 #define YOUTUBEINTERCEPTOR_HPP
 
 #include "outputtofile.hpp"
-#include "cef.hpp"
 #include "abstractchatservice.hpp"
 #include <QSettings>
+#include <QNetworkAccessManager>
+#include <QTimer>
+#include <memory>
 
 class YouTube : public AbstractChatService
 {
@@ -15,42 +17,46 @@ class YouTube : public AbstractChatService
     Q_PROPERTY(bool    isBroadcastIdUserSpecified   READ isBroadcastIdUserSpecified         CONSTANT)
 
 public:
-    explicit YouTube(OutputToFile* outputToFile, QSettings* settings, CefRefPtr<QtCefApp> cefApp, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
+    explicit YouTube(const QNetworkProxy& proxy, OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
     ~YouTube();
     int messagesReceived() const;
 
-    bool isBroadcastIdUserSpecified() const;
-    void reconnect();
-    ConnectionStateType connectionStateType() const override;
-    QString stateDescription() const override;
     QString broadcastId() const;
     QString userSpecifiedLink() const;
+    bool isBroadcastIdUserSpecified() const;
+    void reconnect();
+
+    ConnectionStateType connectionStateType() const override;
+    QString stateDescription() const override;
     QUrl broadcastUrl() const override;
     QUrl broadcastLongUrl() const;
     QUrl chatUrl() const override;
     QUrl controlPanelUrl() const override;
     Q_INVOKABLE static QUrl createResizedAvatarUrl(const QUrl& sourceAvatarUrl, int imageHeight);
 
+    void setProxy(const QNetworkProxy& proxy) override;
+
 public slots:
     void setLink(QString link);
-    void onDataReceived(std::shared_ptr<QByteArray> data);
+
+private slots:
+    void onTimeoutRequestChat();
+    void onReply(QNetworkReply *reply);
 
 private:
     QString extractBroadcastId(const QString& link) const;
     void parseActionsArray(const QJsonArray& array, const QByteArray& data);
-    void parseHTML(const std::shared_ptr<const QByteArray> data);
     OutputToFile* _outputToFile = nullptr;
 
     QSettings* _settings = nullptr;
     QString _settingsGroupPath;
 
+    QTimer _timerRequestChat;
+    QNetworkAccessManager _manager;
+
     int _messagesReceived = 0;
 
-    CefRefPtr<QtCefApp> _cefApp = nullptr;
-
     YouTubeInfo _info;
-
-    const QString _settingsKeyUserSpecifiedLink = "user_specified_link";
 
     static void printData(const QString& tag, const QByteArray& data);
 };

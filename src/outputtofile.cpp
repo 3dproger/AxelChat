@@ -6,6 +6,7 @@
 #include <QTimeZone>
 #include <QDir>
 #include <QTextCodec>
+#include <QDebug>
 
 OutputToFile::OutputToFile(QSettings *settings, const QString &settingsGroupPath, QObject *parent) : QObject(parent)
 {

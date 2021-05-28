@@ -3,6 +3,7 @@
 
 #include "types.hpp"
 #include <QObject>
+#include <QNetworkProxy>
 
 class AbstractChatService : public QObject
 {
@@ -25,8 +26,10 @@ public:
 
 
 
-    explicit AbstractChatService(QObject *parent = nullptr)
+    explicit AbstractChatService(const QNetworkProxy& proxy, QObject *parent = nullptr)
         : QObject(parent) { }
+
+    virtual void setProxy(const QNetworkProxy& proxy) = 0;
 
     virtual QUrl chatUrl() const { return QString(); }
     virtual QUrl controlPanelUrl() const { return QString(); }

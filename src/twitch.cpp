@@ -17,11 +17,13 @@ static const QString SettingsKeyUserSpecifiedChannel = "user_specified_channel";
 
 }
 
-Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *parent)
-  : AbstractChatService(parent)
+Twitch::Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
+  : AbstractChatService(proxy, parent)
   , _settings(settings)
   , _settingsGroupPath(settingsGroupPath)
 {
+    _socket.setProxy(proxy);
+
     QObject::connect(&_socket, &QWebSocket::stateChanged, this, [=](QAbstractSocket::SocketState state){
         //qDebug() << "Twitch WebSocket state changed:" << state;
     });
@@ -29,7 +31,7 @@ Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *p
     QObject::connect(&_socket, &QWebSocket::textMessageReceived, this, &Twitch::onIRCMessage);
 
     QObject::connect(&_socket, &QWebSocket::connected, this, [=]() {
-        qDebug() << "Twitch WebSocket connected" << _info.channelName;
+        qDebug() << "Twitch connected" << _info.channelName;
 
         if (_info.connected)
         {
@@ -44,7 +46,7 @@ Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *p
     });
 
     QObject::connect(&_socket, &QWebSocket::disconnected, this, [=](){
-        qDebug() << "Twitch WebSocket disconnected";
+        qDebug() << "Twitch disconnected";
 
         if (_info.connected)
         {
@@ -159,6 +161,12 @@ QUrl Twitch::broadcastUrl() const
 bool Twitch::isChannelNameUserSpecified() const
 {
     return _info.userSpecifiedChannel.trimmed() == _info.channelName.trimmed() && !_info.userSpecifiedChannel.isEmpty();
+}
+
+void Twitch::setProxy(const QNetworkProxy &proxy)
+{
+    _socket.setProxy(proxy);
+    reInitSocket();
 }
 
 void Twitch::setUserSpecifiedChannel(QString userChannel)
