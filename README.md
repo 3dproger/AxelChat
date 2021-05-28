@@ -7,16 +7,12 @@ A program for adding interactivity to live broadcasts and communication with vie
 
 <b><a href="/../../releases">Download</a></b>
 
-# Build
+# Build (deprecated)
 ### Setting Up the Environment for Windows 7 and newer, x64
-1. Install Visual Studio Community 2019: https://visualstudio.microsoft.com
-  <br> 1.1 In Visual Studio Installer enable ```Development of classic C++ applications``` component
-  <br> 1.2 In tab ```Language Packs``` enable only English beacuse there may be encoding problems in displaying compiler messages when in other languages
-  <br> 1.3 After installation, you do not need to run Visual Studio
-2. Download Open Source Qt online installer (sign-up or login required during installing): https://www.qt.io/download-qt-installer or you can also find the offline installers but this is not the recommended way
-3. Run Qt installer and login/sign-up
-4. In page ```Selection of Components``` you need enabled components:
-    * Qt / Qt 5.15.x / MSVC 2019 64-bit
+1. Download Open Source Qt online installer (sign-up or login required during installing): https://www.qt.io/download-qt-installer or you can also find the offline installers but this is not the recommended way
+2. Run Qt installer and login/sign-up
+3. While installing select components:
+    * Qt / Qt 5.15.x / MinGW x.x.x 64-bit
     * Developer and Designer Tools / Qt Creator x.x.x CDB Debugger Support
     * Developer and Designer Tools / Debugging Tools for Windows
     * Developer and Designer Tools / OpenSSL 1.1.1x Toolkit / OpenSSL 32-bit binaries
@@ -24,10 +20,10 @@ A program for adding interactivity to live broadcasts and communication with vie
 ### Build source
 1. Clone repo or download source
 2. Open file ```<AxelChat_project_folder>/src/AxelChat.pro``` with Qt Creator
-3. In Qt Creator select ```Desktop Qt 5.x.x MSVC2019``` kit
+3. In Qt Creator select ```Desktop Qt x.x.x MinGW 64-bit``` kit
 4. Select ```Release``` building mode
 5. Click button ```Build Project "AxelChat"```. If successful build, folder ```release_win64``` will appear in the project folder with AxelChat.exe and other files
-6. Unpack ```<AxelChat_project_folder>/app_files/windows_x86_64_msvc.zip``` in ```<AxelChat_project_folder>/release_win64```
+6. Copy files from ```<AxelChat_project_folder>/app_files/win64``` to ```<AxelChat_project_folder>/release_win64```
 7. Run ```<AxelChat_project_folder>/release_win64/AxelChat.exe``` or click ```Run``` in Qt Creator
 8. For subsequent builds, just close ```AxelChat.exe``` application and click ```Run``` in Qt Creator
 9. To release an AxelChat for use by other users, check if all the required DLLs (\*.os for Linux) are in the folder except system DLLs (\*.os for Linux). Utilities https://github.com/3dproger/ProcDepMonitor or https://www.dependencywalker.com/ or analogs can helps you
