@@ -8,10 +8,12 @@
 #include <QJsonObject>
 #include <QCoreApplication>
 
-GitHubApi::GitHubApi(QSettings* settings, const QString& settingsGroup, QObject *parent) : QObject(parent)
+GitHubApi::GitHubApi(QSettings* settings, const QNetworkProxy& proxy, const QString& settingsGroup, QObject *parent) : QObject(parent)
 {
     _settings = settings;
     _settingsGroup = settingsGroup;
+
+    _manager.setProxy(proxy);
 
     if (_settings)
     {
@@ -51,7 +53,7 @@ void GitHubApi::checkForNewVersion()
 
     QNetworkRequest request = QNetworkRequest(_releasesUrl);
 
-    QNetworkReply* reply = _network->get(request);
+    QNetworkReply* reply = _manager.get(request);
 
     connect(reply, &QNetworkReply::finished, this, &GitHubApi::onReplyReleases);
 }

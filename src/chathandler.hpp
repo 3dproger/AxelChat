@@ -52,9 +52,11 @@ public:
     inline bool proxyEnabled() const { return _enabledProxy; }
 
     void setProxyServerAddress(QString address);
-    inline QString proxyServerAddress() const { return _proxyServerAddress; }
+    inline QString proxyServerAddress() const { return _proxy.hostName(); }
     void setProxyServerPort(int port);
-    inline int proxyServerPort() const { return _proxyServerPort; }
+    inline int proxyServerPort() const { return _proxy.port(); }
+
+    QNetworkProxy proxy() const;
 
 signals:
     void messagesReceived(const ChatMessage& message, const MessageAuthor& author);
@@ -74,6 +76,7 @@ private slots:
 
 private:
     void chatNotification(const QString& text);
+    void updateProxy();
 
     ChatMessagesModel _messagesModel;
     QMap<QString, MessageAuthor> _authors;
@@ -86,8 +89,6 @@ private:
     OutputToFile* _outputToFile             = nullptr;
     ChatBot* _bot                           = nullptr;
 
-    QNetworkProxy _proxy;
-
     bool _enabledSoundNewMessage = false;
     bool _enabledClearMessagesOnLinkChange = false;
     const QString _settingsEnabledSoundNewMessage = "enabledSoundNewMessage";
@@ -95,10 +96,10 @@ private:
     std::unique_ptr<QSound> _soundDefaultNewMessage = std::unique_ptr<QSound>(new QSound(":/resources/sound/ui/beep1.wav"));
 
     bool _enabledProxy = false;
+    QNetworkProxy _proxy = QNetworkProxy(QNetworkProxy::ProxyType::Socks5Proxy/*HttpProxy*/);
+
     const QString _settingsProxyEnabled = "proxyEnabled";
-    QString _proxyServerAddress;
     const QString _settingsProxyAddress = "proxyServerAddress";
-    int _proxyServerPort = -1;
     const QString _settingsProxyPort    = "proxyServerPort";
 };
 

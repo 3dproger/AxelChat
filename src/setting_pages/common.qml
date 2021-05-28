@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
 import AxelChat.QMLUtils 1.0
 import AxelChat.I18n 1.0
 import "../my_components" as MyComponents
@@ -155,6 +156,90 @@ ScrollView {
             anchors.verticalCenter: comboBoxLanguage.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 8
+        }
+
+        Switch {
+            id: switchEnableProxy
+            x: 10
+            y: 220
+            text: qsTr("Proxy (SOCKS5)")
+
+            Component.onCompleted: {
+                checked = chatHandler.proxyEnabled;
+            }
+
+            onCheckedChanged: {
+                chatHandler.proxyEnabled = checked;
+            }
+        }
+
+        MyComponents.MyTextField {
+            id: textFieldProxyServerAddress
+            anchors.left: switchEnableProxy.right
+            anchors.verticalCenterOffset: 0
+            anchors.leftMargin: 0
+            maximumLength: 15
+            y: 162
+            width: 150
+            height: 43
+            anchors.verticalCenter: switchEnableProxy.verticalCenter
+            placeholderText: qsTr("Host name...")
+
+            Component.onCompleted: {
+                text = chatHandler.proxyServerAddress
+            }
+
+            onTextChanged: {
+                chatHandler.proxyServerAddress = text
+            }
+        }
+
+        Text {
+            id: text1
+            y: 80
+            text: ":";
+            anchors.verticalCenter: textFieldProxyServerAddress.verticalCenter
+            anchors.left: textFieldProxyServerAddress.right
+            anchors.leftMargin: 6
+            color: Material.foreground
+        }
+
+        MyComponents.MyTextField {
+            id: textFieldProxyServerPort
+            anchors.left: text1.right
+            anchors.leftMargin: 6
+            maximumLength: 5
+            y: 65
+            width: 60
+            height: 43
+            anchors.verticalCenter: text1.verticalCenter
+            placeholderText: qsTr("Port...")
+            validator: RegExpValidator {
+                regExp:  /^[0-9]{1,5}$/
+            }
+
+            Component.onCompleted: {
+                var port = chatHandler.proxyServerPort;
+                if (port !== -1)
+                {
+                    text = port;
+                }
+                else
+                {
+                    text = "";
+                }
+            }
+
+            onTextChanged: {
+                if (text == "")
+                {
+                    chatHandler.proxyServerPort = -1;
+                }
+                else
+                {
+                    chatHandler.proxyServerPort = text;
+                }
+            }
         }
     }
 }

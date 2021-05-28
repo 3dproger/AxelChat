@@ -6,7 +6,6 @@
 #include <QSettings>
 #include <QNetworkAccessManager>
 #include <QTimer>
-#include <QNetworkProxy>
 #include <memory>
 
 class YouTube : public AbstractChatService
@@ -18,7 +17,7 @@ class YouTube : public AbstractChatService
     Q_PROPERTY(bool    isBroadcastIdUserSpecified   READ isBroadcastIdUserSpecified         CONSTANT)
 
 public:
-    explicit YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
+    explicit YouTube(const QNetworkProxy& proxy, OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
     ~YouTube();
     int messagesReceived() const;
 
@@ -54,7 +53,6 @@ private:
 
     QTimer _timerRequestChat;
     QNetworkAccessManager _manager;
-    QNetworkProxy _proxy;
 
     int _messagesReceived = 0;
 

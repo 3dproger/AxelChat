@@ -49,97 +49,10 @@ ScrollView {
             }
         }
 
-        Switch {
-            id: switchEnableProxy
-            x: 8
-            y: 105
-            text: qsTr("Proxy")
-
-            Component.onCompleted: {
-                checked = chatHandler.proxyEnabled;
-            }
-
-            onCheckedChanged: {
-                chatHandler.proxyEnabled = checked;
-            }
-        }
-
-        MyComponents.MyTextField {
-            id: textFieldProxyServerAddress
-            anchors.left: switchEnableProxy.right
-            anchors.verticalCenterOffset: 0
-            anchors.leftMargin: 0
-            maximumLength: 15
-            y: 162
-            width: 150
-            height: 43
-            anchors.verticalCenter: switchEnableProxy.verticalCenter
-            placeholderText: qsTr("Proxy Server IP")
-            validator: RegExpValidator {
-                regExp:  /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){0,3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
-           }
-
-            Component.onCompleted: {
-                text = chatHandler.proxyServerAddress
-            }
-
-            onTextChanged: {
-                chatHandler.proxyServerAddress = text
-            }
-        }
-
-        Text {
-            id: text1
-            y: 80
-            text: ":";
-            anchors.verticalCenter: textFieldProxyServerAddress.verticalCenter
-            anchors.left: textFieldProxyServerAddress.right
-            anchors.leftMargin: 6
-            color: Material.foreground
-        }
-
-        MyComponents.MyTextField {
-            id: textFieldProxyServerPort
-            anchors.left: text1.right
-            anchors.leftMargin: 6
-            maximumLength: 5
-            y: 65
-            width: 60
-            height: 43
-            anchors.verticalCenter: text1.verticalCenter
-            placeholderText: qsTr("Port")
-            validator: RegExpValidator {
-                regExp:  /^[0-9]{1,5}$/
-            }
-
-            Component.onCompleted: {
-                var port = chatHandler.proxyServerPort;
-                if (port !== -1)
-                {
-                    text = port;
-                }
-                else
-                {
-                    text = "";
-                }
-            }
-
-            onTextChanged: {
-                if (text == "")
-                {
-                    chatHandler.proxyServerPort = -1;
-                }
-                else
-                {
-                    chatHandler.proxyServerPort = text;
-                }
-            }
-        }
-
         Text {
             id: element3
             x: 8
-            y: 165
+            y: 122
             text: qsTr("Broadcast ID:")
             font.pixelSize: 15
             color: Material.foreground
@@ -147,7 +60,7 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textBroadcastId
-            y: 151
+            y: 108
             height: 46
             text: youTube.broadcastId
             anchors.right: buttonCopyBroadcastId.left
@@ -161,7 +74,7 @@ ScrollView {
         Text {
             id: element4
             x: 8
-            y: 214
+            y: 171
             text: qsTr("Broadcast:")
             font.pixelSize: 15
             color: Material.foreground
@@ -169,7 +82,7 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textBroadcastURL
-            y: 200
+            y: 157
             height: 46
             text: youTube.broadcastUrl
             anchors.left: element4.right
@@ -182,7 +95,7 @@ ScrollView {
         Text {
             id: element5
             x: 8
-            y: 318
+            y: 275
             text: qsTr("Chat:")
             font.pixelSize: 15
             color: Material.foreground
@@ -190,7 +103,7 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textChatURL
-            y: 304
+            y: 261
             height: 46
             text: youTube.chatUrl
             anchors.left: element5.right
@@ -223,7 +136,7 @@ ScrollView {
 
         MyComponents.MyTextField {
             id: textControlPanelURL
-            y: 252
+            y: 209
             height: 46
             text: youTube.controlPanelUrl
             anchors.left: element6.right
@@ -236,7 +149,7 @@ ScrollView {
         Text {
             id: element6
             x: 8
-            y: 267
+            y: 224
             text: qsTr("Control Panel:")
             font.pixelSize: 15
             color: Material.foreground
@@ -322,7 +235,7 @@ ScrollView {
         Button {
             id: buttonOpenBroadcastUrl
             x: 593
-            y: 204
+            y: 161
             width: 39
             height: 39
             text: qsTr("Open")
@@ -345,7 +258,7 @@ ScrollView {
         Button {
             id: buttonOpenControlPanelUrl
             x: 593
-            y: 256
+            y: 213
             width: 39
             height: 39
             text: qsTr("Open")
@@ -368,7 +281,7 @@ ScrollView {
         Button {
             id: buttonOpenChatUrl
             x: 595
-            y: 308
+            y: 265
             width: 39
             height: 39
             text: qsTr("Open")
@@ -391,7 +304,7 @@ ScrollView {
         Button {
             id: buttonCopyBroadcastUrl
             x: 550
-            y: 204
+            y: 161
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -416,7 +329,7 @@ ScrollView {
         Button {
             id: buttonCopyControlPanelCopy
             x: 550
-            y: 256
+            y: 213
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -441,7 +354,7 @@ ScrollView {
         Button {
             id: buttonCopyChatUrl
             x: 552
-            y: 308
+            y: 265
             width: 39
             height: 39
             text: qsTr("Copy")
@@ -466,7 +379,7 @@ ScrollView {
         Button {
             id: buttonCopyBroadcastId
             x: 550
-            y: 155
+            y: 112
             width: 39
             height: 39
             text: qsTr("Copy")

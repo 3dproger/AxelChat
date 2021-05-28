@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
     //Update Checker
     GitHubApi::declareQml();
-    GitHubApi* github = new GitHubApi(settings, "update_checker", chatHandler);
+    GitHubApi* github = new GitHubApi(settings, chatHandler->proxy(), "update_checker", chatHandler);
 
     QQmlApplicationEngine engine;
     qmlUtils->setParent(&engine);

@@ -36,15 +36,15 @@ void saveFile(const QString& fileName, const QByteArray& data)
 
 }
 
-YouTube::YouTube(OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
-    : AbstractChatService(parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
+YouTube::YouTube(const QNetworkProxy& proxy, OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
+    : AbstractChatService(proxy, parent), _outputToFile(outputToFile), _settings(settings), _settingsGroupPath(settingsGroupPath)
 {
+    _manager.setProxy(proxy);
+
     if (_settings)
     {
         setLink(_settings->value(_settingsGroupPath + "/" + _settingsKeyUserSpecifiedLink).toString());
     }
-
-    _manager.setProxy(_proxy);
 
     QObject::connect(&_manager, &QNetworkAccessManager::finished, this, &YouTube::onReply);
 
@@ -388,7 +388,7 @@ void YouTube::onTimeoutRequestChat()
     QNetworkReply* reply = _manager.get(request);
     if (!reply)
     {
-        qDebug() << "!reply";
+        qDebug() << Q_FUNC_INFO << ": !reply";
         return;
     }
 }
@@ -404,7 +404,7 @@ void YouTube::onReply(QNetworkReply *reply)
     const QByteArray rawData = reply->readAll();
     if (rawData.isEmpty())
     {
-        qDebug() << "rawData is empty";
+        qDebug() << Q_FUNC_INFO << ":rawData is empty";
         return;
     }
 

@@ -17,11 +17,13 @@ static const QString SettingsKeyUserSpecifiedChannel = "user_specified_channel";
 
 }
 
-Twitch::Twitch(QSettings* settings, const QString& settingsGroupPath, QObject *parent)
-  : AbstractChatService(parent)
+Twitch::Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
+  : AbstractChatService(proxy, parent)
   , _settings(settings)
   , _settingsGroupPath(settingsGroupPath)
 {
+    _socket.setProxy(proxy);
+
     QObject::connect(&_socket, &QWebSocket::stateChanged, this, [=](QAbstractSocket::SocketState state){
         //qDebug() << "Twitch WebSocket state changed:" << state;
     });

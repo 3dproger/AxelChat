@@ -317,7 +317,7 @@ public:
     };
     Q_ENUM(ReplyState)
 
-    explicit GitHubApi(QSettings* settings, const QString& settingsGroup = "update_checker", QObject *parent = nullptr);
+    explicit GitHubApi(QSettings* settings, const QNetworkProxy& proxy, const QString& settingsGroup = "update_checker", QObject *parent = nullptr);
 
     static void declareQml()
     {
@@ -356,7 +356,7 @@ private:
 
     const QString _settingsKeyUserSpecifiedLink = "skipped_versions";
 
-    QNetworkAccessManager* _network = new QNetworkAccessManager(this);
+    QNetworkAccessManager _manager;
 
     const QUrl _releasesUrl = QUrl("https://api.github.com/repos/3dproger/AxelChat/releases");
 
