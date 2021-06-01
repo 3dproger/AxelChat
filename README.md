@@ -8,7 +8,7 @@ A program for adding interactivity to live broadcasts and communication with vie
 <b><a href="/../../releases">Download</a></b>
 
 # Build
-### Setting Up the Environment for Windows 7 and newer, x64
+### Installing Qt for Windows 7 and newer, x64
 1. Download Open Source Qt online installer (sign-up or login required during installing): https://www.qt.io/download-qt-installer or you can also find the offline installers but this is not the recommended way
 2. Run Qt installer and login/sign-up
 3. While installing select components:
