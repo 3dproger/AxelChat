@@ -29,6 +29,7 @@ HEADERS += \
     qmlutils.hpp \
     twitch.hpp \
     types.hpp \
+    utils_axelchat.hpp \
     youtube.hpp
 
 SOURCES += \

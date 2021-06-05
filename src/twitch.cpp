@@ -17,8 +17,9 @@ static const QString SettingsKeyUserSpecifiedChannel = "user_specified_channel";
 
 }
 
-Twitch::Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
+Twitch::Twitch(const QNetworkProxy& proxy, OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
   : AbstractChatService(proxy, parent)
+  , _outputToFile(outputToFile)
   , _settings(settings)
   , _settingsGroupPath(settingsGroupPath)
 {
@@ -37,6 +38,11 @@ Twitch::Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& s
         {
             _info.connected = false;
             emit stateChanged();
+
+            if (_outputToFile)
+            {
+                _outputToFile->setTwitchInfo(_info);
+            }
         }
 
         _socket.sendTextMessage(QString("PASS oauth:") + _info.oauthToken);
@@ -53,6 +59,11 @@ Twitch::Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& s
             _info.connected = false;
             emit disconnected(_lastConnectedChannelName);
             emit stateChanged();
+
+            if (_outputToFile)
+            {
+                _outputToFile->setTwitchInfo(_info);
+            }
         }
     });
 
@@ -77,6 +88,15 @@ Twitch::Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& s
 Twitch::~Twitch()
 {
     _socket.close();
+
+    _info.connected = false;
+    emit disconnected(_lastConnectedChannelName);
+    emit stateChanged();
+
+    if (_outputToFile)
+    {
+        _outputToFile->setTwitchInfo(_info);
+    }
 }
 
 AbstractChatService::ConnectionStateType Twitch::connectionStateType() const
@@ -135,7 +155,7 @@ QUrl Twitch::chatUrl() const
         return QUrl();
     }
 
-    return QUrl(QString("https://www.twitch.tv/popout/%1/chat").arg(_info.channelName));
+    return _info.chatUrl;
 }
 
 QUrl Twitch::controlPanelUrl() const
@@ -145,7 +165,7 @@ QUrl Twitch::controlPanelUrl() const
         return QUrl();
     }
 
-    return QUrl(QString("https://dashboard.twitch.tv/u/%1/stream-manager").arg(_info.channelName));
+    return _info.controlPanelUrl;
 }
 
 QUrl Twitch::broadcastUrl() const
@@ -155,7 +175,7 @@ QUrl Twitch::broadcastUrl() const
         return QUrl();
     }
 
-    return QUrl(QString("https://www.twitch.tv/%1").arg(_info.channelName));
+    return _info.channelUrl;
 }
 
 bool Twitch::isChannelNameUserSpecified() const
@@ -185,6 +205,11 @@ void Twitch::setUserSpecifiedChannel(QString userChannel)
         reInitSocket();
 
         emit stateChanged();
+
+        if (_outputToFile)
+        {
+            _outputToFile->setTwitchInfo(_info);
+        }
     }
 }
 
@@ -207,6 +232,11 @@ void Twitch::setOAuthToken(QString token)
         reInitSocket();
 
         emit stateChanged();
+
+        if (_outputToFile)
+        {
+            _outputToFile->setTwitchInfo(_info);
+        }
     }
 }
 
@@ -234,12 +264,23 @@ void Twitch::reInitSocket()
         }
     }
 
+    _info.chatUrl = QUrl(QString("https://www.twitch.tv/popout/%1/chat").arg(_info.channelName));
+
+    _info.channelUrl = QUrl(QString("https://www.twitch.tv/%1").arg(_info.channelName));
+
+    _info.controlPanelUrl = QUrl(QString("https://dashboard.twitch.tv/u/%1/stream-manager").arg(_info.channelName));
+
     _socket.close();
 
     if (_info.connected)
     {
         _info.connected = false;
         emit stateChanged();
+
+        if (_outputToFile)
+        {
+            _outputToFile->setTwitchInfo(_info);
+        }
     }
 
     if (!_info.channelName.isEmpty())
@@ -277,6 +318,11 @@ void Twitch::onIRCMessage(const QString &rawData)
             _lastConnectedChannelName = _info.channelName;
             emit connected(_info.channelName);
             emit stateChanged();
+
+            if (_outputToFile)
+            {
+                _outputToFile->setTwitchInfo(_info);
+            }
         }
 
         if (rawMessage.startsWith(":" + TwitchIRCHost))

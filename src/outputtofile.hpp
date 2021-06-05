@@ -24,6 +24,7 @@ public:
     void resetSettings();
 
     void setYouTubeInfo(const YouTubeInfo& youTubeCurrent);
+    void setTwitchInfo(const TwitchInfo& twitchCurrent);
 
 signals:
     void outputFolderChanged();
@@ -47,7 +48,9 @@ private:
 
     void reinitIni();
     void writeStartupInfo();
-    void writeYoutubeInfo();
+    void writeInfo();
+
+    QString prepare(const QString& text);
 
     QSettings* _settings = nullptr;
     QString _settingsGroupPath = "output_to_file";
@@ -66,6 +69,7 @@ private:
     QString _codec = "UTF-8";
 
     YouTubeInfo _youTubeInfo;
+    TwitchInfo _twitchInfo;
 
     QString _broadcastFolder;
 

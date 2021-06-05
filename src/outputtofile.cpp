@@ -7,6 +7,14 @@
 #include <QDir>
 #include <QTextCodec>
 #include <QDebug>
+#include "utils_axelchat.hpp"
+
+namespace
+{
+
+static const QString DateTimeFormat = "yyyy-MM-ddThh:mm:ss.zzz";
+
+}
 
 OutputToFile::OutputToFile(QSettings *settings, const QString &settingsGroupPath, QObject *parent) : QObject(parent)
 {
@@ -123,19 +131,15 @@ void OutputToFile::onMessagesReceived(const ChatMessage &message, const MessageA
             const QString& group = QString("%1").arg(_iniMessagesCount);
 
             _iniMessages->setValue(group + "/author",
-                                   author.name());
+                                   prepare(author.name()));
 
             _iniMessages->setValue(group + "/message",
-                                   message.text());
+                                   prepare(message.text()));
 
             _iniMessages->setValue(group + "/author_channel_id",
-                                   message.author().channelId());
+                                   prepare(message.author().channelId()));
 
-            _iniMessages->setValue(group + "/time", QString("%1:%2:%3.%4")
-                                   .arg(message.publishedAt().time().hour(),   2, 10, QChar('0'))
-                                   .arg(message.publishedAt().time().minute(), 2, 10, QChar('0'))
-                                   .arg(message.publishedAt().time().second(), 2, 10, QChar('0'))
-                                   .arg(message.publishedAt().time().msec(),   3, 10, QChar('0')));
+            _iniMessages->setValue(group + "/time", message.publishedAt().toString(DateTimeFormat));
 
             _iniMessagesCount++;
 
@@ -311,42 +315,64 @@ void OutputToFile::reinitIni()
     }
 
     writeStartupInfo();
-    writeYoutubeInfo();
+    writeInfo();
 }
 
 void OutputToFile::writeStartupInfo()
 {
     if (_enabled)
     {
-        _iniCurrent->setValue("software/version",                  QCoreApplication::applicationVersion());
+        _iniCurrent->setValue("software/version",                   prepare(QCoreApplication::applicationVersion()));
 
-        _iniCurrent->setValue("software/startup_time_hour",        _startupDateTime.time().hour());
-        _iniCurrent->setValue("software/startup_time_minute",      _startupDateTime.time().minute());
-        _iniCurrent->setValue("software/startup_time_second",      _startupDateTime.time().second());
-        _iniCurrent->setValue("software/startup_time_msec", _startupDateTime.time().msec());
-        _iniCurrent->setValue("software/startup_timestamp_utc",    _startupDateTime.toMSecsSinceEpoch());
+        _iniCurrent->setValue("software/startup_time",              prepare(_startupDateTime.toString(DateTimeFormat)));
+        _iniCurrent->setValue("software/startup_timestamp_utc",     prepare(QString("%1").arg(_startupDateTime.toMSecsSinceEpoch())));
 
-        _iniCurrent->setValue("software/startup_timezone_id",      QString::fromUtf8(_startupDateTime.timeZone().id()));
-        _iniCurrent->setValue("software/startup_timezone_offset_from_utc", QString("%1")
-                              .arg(double(_startupDateTime.timeZone().standardTimeOffset(_startupDateTime)) / float(60 * 60)));
+        _iniCurrent->setValue("software/startup_timezone_id",       prepare(QString::fromUtf8(_startupDateTime.timeZone().id())));
+        _iniCurrent->setValue("software/startup_timezone_offset_from_utc", prepare(QString("%1")
+                              .arg(double(_startupDateTime.timeZone().standardTimeOffset(_startupDateTime)) / float(60 * 60))));
     }
 }
 
-void OutputToFile::writeYoutubeInfo()
+void OutputToFile::writeInfo()
 {
     if (_enabled)
     {
         _iniCurrent->setValue("youtube/broadcast_connected", _youTubeInfo.broadcastConnected);
-        _iniCurrent->setValue("youtube/broadcast_id", _youTubeInfo.broadcastId);
-        _iniCurrent->setValue("youtube/broadcast_user_specified", _youTubeInfo.userSpecified);
-        _iniCurrent->setValue("youtube/broadcast_url", _youTubeInfo.broadcastLongUrl.toString());
-        _iniCurrent->setValue("youtube/broadcast_chat_url", _youTubeInfo.broadcastChatUrl.toString());
+        _iniCurrent->setValue("youtube/broadcast_id", prepare(_youTubeInfo.broadcastId));
+        _iniCurrent->setValue("youtube/broadcast_user_specified", prepare(_youTubeInfo.userSpecified));
+        _iniCurrent->setValue("youtube/broadcast_url", prepare(_youTubeInfo.broadcastLongUrl.toString()));
+        _iniCurrent->setValue("youtube/broadcast_chat_url", prepare(_youTubeInfo.broadcastChatUrl.toString()));
+        _iniCurrent->setValue("youtube/broadcast_control_panel_url", prepare(_youTubeInfo.controlPanelUrl.toString()));
+
+        _iniCurrent->setValue("twitch/broadcast_connected", _twitchInfo.connected);
+        _iniCurrent->setValue("twitch/channel_name", prepare(_twitchInfo.channelName));
+        _iniCurrent->setValue("twitch/user_specified", prepare(_twitchInfo.userSpecifiedChannel));
+        _iniCurrent->setValue("twitch/channel_url", prepare(_twitchInfo.channelUrl.toString()));
+        _iniCurrent->setValue("twitch/chat_url", prepare(_twitchInfo.chatUrl.toString()));
+        _iniCurrent->setValue("twitch/control_panel_url", prepare(_twitchInfo.controlPanelUrl.toString()));
     }
+}
+
+QString OutputToFile::prepare(const QString &text)
+{
+    if (_codec.trimmed().toUpper() == "UTF-8")
+    {
+        return text;
+    }
+
+    return convertUtf8ToANSIByNumbers(text);
 }
 
 void OutputToFile::setYouTubeInfo(const YouTubeInfo &youTubeCurrent)
 {
     _youTubeInfo = youTubeCurrent;
+
+    reinitIni();
+}
+
+void OutputToFile::setTwitchInfo(const TwitchInfo &twitchCurrent)
+{
+    _twitchInfo = twitchCurrent;
 
     reinitIni();
 }

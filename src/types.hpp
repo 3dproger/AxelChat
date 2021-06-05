@@ -21,6 +21,9 @@ struct YouTubeInfo {
 struct TwitchInfo {
     QString channelName;
     QString userSpecifiedChannel;
+    QUrl channelUrl;
+    QUrl chatUrl;
+    QUrl controlPanelUrl;
     QString oauthToken;
     bool connected = false;
 

@@ -3,6 +3,7 @@
 
 #include "types.hpp"
 #include "abstractchatservice.hpp"
+#include "outputtofile.hpp"
 #include <QSettings>
 #include <QWebSocket>
 #include <QTimer>
@@ -16,7 +17,7 @@ class Twitch : public AbstractChatService
     Q_PROPERTY(bool     isChannelNameUserSpecified  READ isChannelNameUserSpecified CONSTANT)
 
 public:
-    explicit Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
+    explicit Twitch(const QNetworkProxy& proxy, OutputToFile* outputToFile, QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
     ~Twitch();
     ConnectionStateType connectionStateType() const override;
     QString stateDescription() const override;
@@ -43,6 +44,8 @@ private slots:
 
 private:
     void reInitSocket();
+
+    OutputToFile* _outputToFile = nullptr;
 
     QSettings* _settings = nullptr;
     QString _settingsGroupPath;

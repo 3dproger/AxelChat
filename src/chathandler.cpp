@@ -51,7 +51,7 @@ ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
             this, SLOT(onDisconnected(QString)));
 
     //Twitch
-    _twitch = new Twitch(proxy(), settings, SettingsGroupPath + "/twitch");
+    _twitch = new Twitch(proxy(), _outputToFile, settings, SettingsGroupPath + "/twitch");
 
     connect(_twitch, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
                      this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
