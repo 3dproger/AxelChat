@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>/svg/ic-credit-card</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic-credit-card" fill-rule="nonzero" fill="#4A4A4A">
+            <path d="M3,7.00247329 L3,7.00247329 L3,16.9975267 C3,17.544239 3.44475929,18 3.99339768,18 L20.0066023,18 C20.5550537,18 21,17.5511774 21,16.9975267 L21,7.00247329 C21,6.45576096 20.5552407,6 20.0066023,6 L3.99339768,6 C3.44494629,6 3,6.44882258 3,7.00247329 L3,7.00247329 Z M1,7.00247329 L1,7.00247329 C1,5.34831175 2.33627892,4 3.99339768,4 L20.0066023,4 C21.6637011,4 23,5.35495419 23,7.00247329 L23,16.9975267 C23,18.6516882 21.6637211,20 20.0066023,20 L3.99339768,20 C2.3362989,20 1,18.6450458 1,16.9975267 L1,7.00247329 Z M3,8 L21,8 L21,11 L3,11 L3,8 Z" id="Rectangle-23"></path>
+        </g>
+    </g>
+</svg>
