@@ -1,5 +1,9 @@
 ![Image](images/github-social5a.png)
 
+## Features
+- Display messages from any live YouTube chat without authorization. Messages in AxelChat arrive much faster than the standard YouTube live chat in your browser
+- Display messages from any live Twitch chat. You need to log in, but this is done quickly
+
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/3dproger/AxelChat/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
