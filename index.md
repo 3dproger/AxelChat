@@ -4,7 +4,7 @@
 
 ![Image](images/github-social5a.png)
 
-## Features
+# Features
 - Display messages from multiple streaming platforms at once. For example YouTube and Twitch
 - Display messages from any live YouTube chat without authorization. Messages in AxelChat arrive much faster than the standard YouTube live chat in your browser
 - Display messages from any live Twitch chat with avatars of participants
@@ -13,21 +13,21 @@
 - Saving messages and other information on the fly to text files. It may be useful for further processing by other software
 - Link display for quick and easy broadcast management
 - Proxy support (experimental)
-## Possibly in future updates
+# Possibly in future updates
 - Support for other live streaming platforms
 - Support for donate platforms
 - Support for other operating systems, including mobile
 - Many other expected in the future
-## FAQ
+# FAQ
 - Is AxelChat considered a viewer? - No, at least for now, for YouTube and Twitch, this is true
 - Whether AxelChat sends any user data? - No, except for what is required for authorization on Twitch
-## Known Issues
+# Known Issues
 - Twitch: currently does not work with chat only for followers
 - YouTube: messages that YouTube may find inappropriate are not displayed
 - YouTube: Works only with open access broadcasts or available via the link. Private broadcasts are not supported
 - Unstable work with proxies
 - Doesn't work without GPU
-## Troubleshooting
+# Troubleshooting
 ### Doesn't connect (General)
 - Check your internet connection
 - Check proxy settings if using
