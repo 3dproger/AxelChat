@@ -3,7 +3,7 @@
 [Issues](https://github.com/3dproger/AxelChat/issues)
 
 <p align="center">
-  <img width="863" height="640" src="images/github-social5b.png">
+  <img src="images/github-social5b.png">
 </p>
 
 # Features
