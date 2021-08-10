@@ -1,5 +1,5 @@
 [Download](https://github.com/3dproger/axelchat/releases/latest/) |
-[All Releases](https://github.com/3dproger/AxelChat/releases) |
+[Releases](https://github.com/3dproger/AxelChat/releases) |
 [Issues](https://github.com/3dproger/AxelChat/issues)
 
 <p align="center">
