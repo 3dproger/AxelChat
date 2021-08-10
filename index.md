@@ -13,3 +13,8 @@
 ## FAQ
 - Is AxelChat considered a viewer? - No, at least for now, for YouTube and Twitch, this is true.
 - Whether AxelChat sends any user data? - No.
+## Known Issues
+- For Twitch: currently does not work with chat only for followers
+- For YouTube: 
+- Unstable work with proxies
+- Doesn't work without GPU
