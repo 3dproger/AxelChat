@@ -2,7 +2,9 @@
 [All Releases](https://github.com/3dproger/AxelChat/releases) |
 [Issues](https://github.com/3dproger/AxelChat/issues)
 
-![Image](images/github-social5b.png)
+<p align="center">
+  <img width="863" height="640" src="images/github-social5b.png">
+</p>
 
 # Features
 - Display messages from multiple streaming platforms at once. For example YouTube and Twitch
