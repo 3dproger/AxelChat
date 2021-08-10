@@ -17,7 +17,7 @@
 - Support for other live streaming platforms
 - Support for donate platforms
 - Support for other operating systems, including mobile
-- Many other expected in the future
+- Many other improvements and fixes
 # FAQ
 - Is AxelChat considered a viewer? - No, at least for now, for YouTube and Twitch, this is true
 - Whether AxelChat sends any user data? - No, except for what is required for authorization on Twitch
