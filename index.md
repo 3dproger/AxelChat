@@ -26,11 +26,15 @@
 - Unstable work with proxies
 - Doesn't work without GPU
 ## Troubleshooting
-### Doesn't connect to YouTube
+### Doesn't connect (General)
+- Check your internet connection
+- Check proxy settings if using
+- Check your firewall settings
+### Doesn't connect (YouTube)
 - Check that the link to the broadcast is correct
 - Check that the broadcast is incomplete
 - Check that the broadcast is publicly available or accessed via a link. Private broadcasts are not supported
-### Doesn't connect to Twitch
+### Doesn't connect (Twitch)
 - Check that the link to the channel is correct
 - Check that the OAuth-token is correct. Update the OAuth-token, if necessary, by pressing the corresponding button in the AxelChat
 - Check in the settings of your Twitch account if the permission to use the twitch account has not been revoked. Update the OAuth-token, if necessary, by pressing the corresponding button in the AxelChat
