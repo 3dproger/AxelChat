@@ -1,5 +1,7 @@
 [Download](https://github.com/3dproger/axelchat/releases/latest/) |
-[All Releases](https://github.com/3dproger/AxelChat/releases)
+[All Releases](https://github.com/3dproger/AxelChat/releases) |
+[Issues](https://github.com/3dproger/AxelChat/issues)
+
 ![Image](images/github-social5a.png)
 
 ## Features
