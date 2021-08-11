@@ -24,7 +24,6 @@
 - Is AxelChat considered a viewer? - No, at least for now, for YouTube and Twitch
 - Whether AxelChat sends any user data? - No, except for what is required for authorization on Twitch
 # Known Issues
-- Twitch: currently does not work with chat only for followers
 - YouTube: messages that YouTube may find inappropriate are not displayed
 - YouTube: Works only with open access broadcasts or available via the link. Private broadcasts are not supported
 # Troubleshooting
