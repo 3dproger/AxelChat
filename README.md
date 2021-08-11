@@ -27,8 +27,6 @@
 - Twitch: currently does not work with chat only for followers
 - YouTube: messages that YouTube may find inappropriate are not displayed
 - YouTube: Works only with open access broadcasts or available via the link. Private broadcasts are not supported
-- Unstable work with proxies
-- Doesn't work without GPU
 # Troubleshooting
 ### Doesn't connect (General)
 - Check your internet connection
