@@ -25,7 +25,7 @@
 - Whether AxelChat sends any user data? - No, except for what is required for authorization on Twitch
 # Known Issues
 - YouTube: messages that YouTube may find inappropriate are not displayed
-- YouTube: Works only with open access broadcasts or available via the link. Private broadcasts are not supported
+- YouTube: works only with open access broadcasts or available via the link. Private broadcasts are not supported
 # Troubleshooting
 ### Doesn't connect (General)
 - Check your internet connection
