@@ -5,7 +5,7 @@
 <p align="center">
   <img src="images/github-social5b.png">
 </p>
-1
+
 # Features
 - Display messages from multiple streaming platforms at once. For example YouTube and Twitch
 - Display messages from any live YouTube chat without authorization. Messages in AxelChat arrive much faster than the standard YouTube live chat in your browser
