@@ -1,7 +1,9 @@
 [Download](https://github.com/3dproger/axelchat/releases/latest/) |
 [Releases](https://github.com/3dproger/AxelChat/releases) |
-[Issues](https://github.com/3dproger/AxelChat/issues)
+[Issues](https://github.com/3dproger/AxelChat/issues) |
+[Patreon](https://patreon.com/axel_k)
 
+[<img src="images/button-download.png">](https://github.com/3dproger/AxelChat/releases)
 [![Patreon](https://raw.githubusercontent.com/3dproger/AxelChat/main/images/button-patron.png)](https://patreon.com/axel_k)
 
 <p align="center">
