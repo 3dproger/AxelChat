@@ -10,13 +10,15 @@
   <img src="images/github-social5b.png">
 </p>
 
-
-
 # Features
 - Display messages from multiple streaming platforms at once. For example YouTube and Twitch
 - Display messages from any live YouTube chat without authorization. Messages in AxelChat arrive much faster than the standard YouTube live chat in your browser
 - Display messages from any live Twitch chat with avatars of participants
 - Displays detailed information about a participant in a live chat in a separate window (including a link to the participant's channel)
+<p align="center">
+  <img src="images/9.png">
+</p>
+
 - Sound commands that are activated by the corresponding message from the chat. There are built-in commands, but you can always add your own
 - Saving messages and other information on the fly to text files. It may be useful for further processing by other software
 - Link display for quick and easy broadcast management
