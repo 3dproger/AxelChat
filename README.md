@@ -11,6 +11,7 @@
 </p>
 
 # Features
+- Easy to set up
 - Display messages from multiple streaming platforms at once. For example YouTube and Twitch
 - Display messages from any live YouTube chat without authorization. Messages in AxelChat arrive much faster than the standard YouTube live chat in your browser
 - Display messages from any live Twitch chat with avatars of participants
