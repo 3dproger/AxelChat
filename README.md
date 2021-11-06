@@ -35,6 +35,7 @@
 - Whether AxelChat sends any user data? - No, except for what is required for authorization on Twitch
 - Does AxelChat work with YouTube premieres? - Yes
 - Can I download a YouTube chat for an already past stream using the AxelChat? - No, use something else instead. For example, use the browser extension [Save Live Streaming Chats for YouTube™](https://chrome.google.com/webstore/detail/save-live-streaming-chats/bcclhcedlelimlnmcpfeiabljbpahnef)
+- Is the source code hidden? - Yes. Until recently, the source code was open, but I hid it due to the reluctance to leak my "company secrets" to potential competitors. I do not exclude that someday I will open the source code again
 # Known Issues
 - YouTube: messages that YouTube may find inappropriate are not displayed
 - YouTube: works only with open access broadcasts or available via the link. Private broadcasts are not supported
