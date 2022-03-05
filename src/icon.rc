@@ -1,0 +1,41 @@
+IDI_ICON1 ICON DISCARDABLE "icon.ico"
+
+/* https://docs.microsoft.com/ru-ru/windows/win32/menurc/versioninfo-resource?redirectedfrom=MSDN */
+
+#include <windows.h>
+#include "applicationinfo.hpp"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     APP_INFO_FILEVERSION
+PRODUCTVERSION  APP_INFO_PRODUCTVERSION
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName",        APP_INFO_COMPANYNAME_STR
+            VALUE "FileDescription",    APP_INFO_FILEDESCRIPTION_STR
+            VALUE "FileVersion",        APP_INFO_FILEVERSION_STR
+            VALUE "InternalName",       APP_INFO_INTERNALNAME_STR
+            VALUE "LegalCopyright",     APP_INFO_LEGALCOPYRIGHT_STR
+            VALUE "LegalTrademarks1",   APP_INFO_LEGALTRADEMARKS1_STR
+            VALUE "LegalTrademarks2",   APP_INFO_LEGALTRADEMARKS2_STR
+            VALUE "OriginalFilename",   APP_INFO_ORIGINALFILENAME_STR
+            VALUE "ProductName",        APP_INFO_PRODUCTNAME_STR
+            VALUE "ProductVersion",     APP_INFO_PRODUCTVERSION_STR
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        /* The following line should only be modified for localized versions.     */
+        /* It consists of any number of WORD,WORD pairs, with each pair           */
+        /* describing a language,codepage combination supported by the file.      */
+        /*                                                                        */
+        /* For example, a file might have values "0x409,1252" indicating that it  */
+        /* supports English language (0x409) in the Windows ANSI codepage (1252). */
+
+        /* VALUE "Translation", 0x409, 1252 */
+        VALUE "Translation", APP_INFO_RC_TRANSLATION
+    END
+END

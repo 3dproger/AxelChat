@@ -1,0 +1,38 @@
+{
+  "kind": "youtube#liveChatMessageListResponse",
+  "etag": "89ymVZdQPvXb6hYJyGhlM5NSvTo",
+  "pollingIntervalMillis": 1042,
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 1
+  },
+  "nextPageToken": "GLrCjsve0OoCIOT2tuTj0OoC",
+  "items": [
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "BS2bCQTNfFNKhM_vYQ_rgVrigBY",
+      "id": "LCC.CjgKDQoLclNqTXllSVNXN3cqJwoYVUN1amtqOFpnVmtzY20zNEdBMVo4d1RREgtyU2pNeWVJU1c3dxI5ChpDTHJDanN2ZTBPb0NGWTZFd2dFZGZPNEs1URIbQ09YLXBwTGUwT29DRlE5bG13b2ROandDb3cw",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "Cg0KC3JTak15ZUlTVzd3KicKGFVDdWprajhaZ1Zrc2NtMzRHQTFaOHdUURILclNqTXllSVNXN3c",
+        "authorChannelId": "UCujkj8ZgVkscm34GA1Z8wTQ",
+        "publishedAt": "2020-07-16T02:36:46.546000Z",
+        "hasDisplayContent": true,
+        "displayMessage": "Привет",
+        "textMessageDetails": {
+          "messageText": "Привет"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UCujkj8ZgVkscm34GA1Z8wTQ",
+        "channelUrl": "http://www.youtube.com/channel/UCujkj8ZgVkscm34GA1Z8wTQ",
+        "displayName": "Axel_k",
+        "profileImageUrl": "https://yt3.ggpht.com/--0lMuZX6fzc/AAAAAAAAAAI/AAAAAAAAAAA/pQM7591zRZ0/s88-c-k-no-mo-rj-c0xffffff/photo.jpg",
+        "isVerified": false,
+        "isChatOwner": true,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    }
+  ]
+}

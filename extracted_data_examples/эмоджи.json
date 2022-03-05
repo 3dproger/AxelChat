@@ -1,0 +1,62 @@
+"liveChatTextMessageRenderer": {
+								"message": {
+									"runs": [{
+										"emoji": {
+											"emojiId": "UCkszU2WH9gy1mb0dV-11UJg/uP90Xq6wNYrK8gTUoo3wAg",
+											"shortcuts": [":takeout:"],
+											"searchTerms": ["takeout"],
+											"image": {
+												"thumbnails": [{
+													"url": "https://yt3.ggpht.com/ehUiXdRyvel0hba-BopQoDWTvM9ogZcMPaaAeR6IA9wkocdG21aFVN_IylxRGHtl2mE6L9jg1Do=w24-h24-c-k-nd",
+													"width": 24,
+													"height": 24
+												}, {
+													"url": "https://yt3.ggpht.com/ehUiXdRyvel0hba-BopQoDWTvM9ogZcMPaaAeR6IA9wkocdG21aFVN_IylxRGHtl2mE6L9jg1Do=w48-h48-c-k-nd",
+													"width": 48,
+													"height": 48
+												}],
+												"accessibility": {
+													"accessibilityData": {
+														"label": ":takeout:"
+													}
+												}
+											},
+											"isCustomEmoji": true
+										}
+									}]
+								},
+								"authorName": {
+									"simpleText": "Miss Green 6"
+								},
+								"authorPhoto": {
+									"thumbnails": [{
+										"url": "https://yt3.ggpht.com/-5b_L9PWgdE4/AAAAAAAAAAI/AAAAAAAAAAA/SDS9y6LDMR0/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+										"width": 32,
+										"height": 32
+									}, {
+										"url": "https://yt3.ggpht.com/-5b_L9PWgdE4/AAAAAAAAAAI/AAAAAAAAAAA/SDS9y6LDMR0/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+										"width": 64,
+										"height": 64
+									}]
+								},
+								"contextMenuEndpoint": {
+									"commandMetadata": {
+										"webCommandMetadata": {
+											"ignoreNavigation": true
+										}
+									},
+									"liveChatItemContextMenuEndpoint": {
+										"params": "Q2pzS09Rb2FRMUJsV0RoaVlWaDBMVzlEUmxWaFEzZG5SV1JSVnpSUFoxRVNHME5OVTFneFdqSlhkQzF2UTBaUlNFNTBRVzlrT1VaSlRrUm5NUkFBR2pnS0RRb0xOWEZoY0RWaFR6UnBPVUVxSndvWVZVTlRTalJuYTFaRE5rNXlka2xKT0hWdGVuUm1NRTkzRWdzMWNXRndOV0ZQTkdrNVFTQUJLQVF5R2dvWVZVTlRjRVJETkZWR1lYTlVOazVNV2tkT1h6Uk5hbEpu"
+									}
+								},
+								"id": "CjkKGkNQZVg4YmFYdC1vQ0ZVYUN3Z0VkUVc0T2dREhtDTVNYMVoyV3Qtb0NGUUhOdEFvZDlGSU5EZzE%3D",
+								"timestampUsec": "1593988911746039",
+								"authorExternalChannelId": "UCSpDC4UFasT6NLZGN_4MjRg",
+								"contextMenuAccessibility": {
+									"accessibilityData": {
+										"label": "Действия с комментариями."
+									}
+								}
+							}
+						},
+						"clientId": "CMSX1Z2Wt-oCFQHNtAod9FINDg1"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>/svg/ic-computer</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic-computer">
+            <path d="M4,7.99703014 L4,15 L4,16 L5,16 L19,16 L20,16 L20,15 L20,7.99703014 C20,6.89728733 19.0980352,6 17.9931545,6 L6.00684547,6 C4.90000582,6 4,6.8917406 4,7.99703014 Z M2,17.5 C2,18.3207647 2.67202251,19 3.50020972,19 L20.4997903,19 C21.3247426,19 22,18.3283969 22,17.5 C22,16.6792353 21.3279775,16 20.4997903,16 L3.50020972,16 C2.67525741,16 2,16.6716031 2,17.5 Z" id="Combined-Shape" stroke="#4A4A4A" stroke-width="2"></path>
+            <path d="M7.1645898,8.26667961 C6.4501558,8.62389661 6,9.29913031 6,10.25 C6,10.6642136 6.33578644,11 6.75,11 C7.16421356,11 7.5,10.6642136 7.5,10.25 C7.5,9.88836969 7.6123442,9.71985339 7.8354102,9.60832039 C7.99380626,9.52912236 8.16854044,9.5 8.25,9.5 C8.66421356,9.5 9,9.16421356 9,8.75 C9,8.33578644 8.66421356,8 8.25,8 C7.95645956,8 7.56869374,8.06462764 7.1645898,8.26667961 Z" id="Path-27" fill="#4A4A4A" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

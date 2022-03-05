@@ -1,0 +1,37 @@
+{
+    "liveChatModeChangeMessageRenderer": {
+        "icon": {
+            "iconType": "TAB_SUBSCRIPTIONS"
+        },
+        "id": "ChwKGkNKRFR5OV9BanZNQ0ZZVEJ3UW9keWlJS1B3",
+        "subtext": {
+            "runs": [
+                {
+                    "italics": true,
+                    "text": "Only channel subscribers of "
+                },
+                {
+                    "italics": true,
+                    "text": "5 minutes"
+                },
+                {
+                    "italics": true,
+                    "text": " or longer can send messages"
+                }
+            ]
+        },
+        "text": {
+            "runs": [
+                {
+                    "bold": true,
+                    "text": "Tisi Schubech"
+                },
+                {
+                    "bold": true,
+                    "text": " turned on subscribers-only mode"
+                }
+            ]
+        },
+        "timestampUsec": "1632173672492898"
+    }
+}

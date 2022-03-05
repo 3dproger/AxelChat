@@ -1,0 +1,774 @@
+{
+	"responseContext": {
+		"serviceTrackingParams": [{
+			"service": "CSI",
+			"params": [{
+				"key": "GetGuide_rid",
+				"value": "0x20bd156616460930"
+			}, {
+				"key": "c",
+				"value": "WEB"
+			}, {
+				"key": "cver",
+				"value": "2.20200715.03.01"
+			}, {
+				"key": "yt_li",
+				"value": "0"
+			}]
+		}, {
+			"service": "GFEEDBACK",
+			"params": [{
+				"key": "e",
+				"value": "23744176,23804281,23839597,23847157,23856950,23857949,23859802,23862230,23868327,23876640,23880389,23882503,23883098,23884386,23892986,23895671,23907595,23909159,23911733,23911809,23912263,23913084,23913084,23914607,23915998,23916148,23917633,23918273,23919905,23921959,23921985,23923847,24590220,9449243,9453586"
+			}, {
+				"key": "logged_in",
+				"value": "0"
+			}]
+		}, {
+			"service": "GUIDED_HELP",
+			"params": [{
+				"key": "logged_in",
+				"value": "0"
+			}]
+		}, {
+			"service": "ECATCHER",
+			"params": [{
+				"key": "client.name",
+				"value": "WEB"
+			}, {
+				"key": "client.version",
+				"value": "2.20200715"
+			}, {
+				"key": "innertube.build.changelist",
+				"value": "321319885"
+			}, {
+				"key": "innertube.build.experiments.source_version",
+				"value": "321402662"
+			}, {
+				"key": "innertube.build.label",
+				"value": "youtube.ytfe.innertube_20200714_2_RC2"
+			}, {
+				"key": "innertube.build.timestamp",
+				"value": "1594803644"
+			}, {
+				"key": "innertube.build.variants.checksum",
+				"value": "b0fa7dafee6a97cdc415f8ae7e05c48e"
+			}, {
+				"key": "innertube.run.job",
+				"value": "ytfe-innertube-replica-only.ytfe"
+			}]
+		}],
+		"maxAgeSeconds": 3600,
+		"webResponseContextExtensionData": {
+			"hasDecorated": true
+		}
+	},
+	"items": [{
+		"guideSectionRenderer": {
+			"items": [{
+				"guideEntryRenderer": {
+					"title": "Главная",
+					"icon": {
+						"iconType": "WHAT_TO_WATCH"
+					},
+					"trackingParams": "CBsQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Главная"
+					},
+					"isPrimary": true,
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBsQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFDIIZy1zeXN0ZW0=",
+						"browseEndpoint": {
+							"browseId": "FEwhat_to_watch"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3854
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Главная"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "В тренде",
+					"icon": {
+						"iconType": "TRENDING"
+					},
+					"trackingParams": "CBoQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "В тренде"
+					},
+					"isPrimary": true,
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBoQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFDIKZy10cmVuZGluZw==",
+						"browseEndpoint": {
+							"browseId": "FEtrending"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/feed/trending",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 6827
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "В тренде"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Подписки",
+					"icon": {
+						"iconType": "SUBSCRIPTIONS"
+					},
+					"trackingParams": "CBkQtSwYAiITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Подписки"
+					},
+					"isPrimary": true,
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBkQtSwYAiITCNWXnd7Y0OoCFQRfmwod9jwCFDIKZy1wZXJzb25hbA==",
+						"browseEndpoint": {
+							"browseId": "FEsubscriptions"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/feed/subscriptions",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 6827
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Подписки"
+						}
+					}
+				}
+			}],
+			"trackingParams": "CBgQ5isYACITCNWXnd7Y0OoCFQRfmwod9jwCFA=="
+		}
+	}, {
+		"guideSectionRenderer": {
+			"items": [{
+				"guideEntryRenderer": {
+					"title": "Библиотека",
+					"icon": {
+						"iconType": "VIDEO_LIBRARY_WHITE"
+					},
+					"trackingParams": "CBcQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Библиотека"
+					},
+					"targetId": "library-guide-item",
+					"isPrimary": true,
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBcQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+						"browseEndpoint": {
+							"browseId": "FElibrary"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/feed/library",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 6827
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Библиотека"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "История",
+					"icon": {
+						"iconType": "WATCH_HISTORY"
+					},
+					"trackingParams": "CBYQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "История"
+					},
+					"isPrimary": true,
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBYQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFDIKZy1wZXJzb25hbA==",
+						"browseEndpoint": {
+							"browseId": "FEhistory"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/feed/history",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 6827
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "История"
+						}
+					}
+				}
+			}],
+			"trackingParams": "CBUQ5isYASITCNWXnd7Y0OoCFQRfmwod9jwCFA=="
+		}
+	}, {
+		"guideSigninPromoRenderer": {
+			"descriptiveText": {
+				"simpleText": "Вы сможете ставить отметки \"Нравится\", писать комментарии и подписываться на каналы."
+			},
+			"actionText": {
+				"simpleText": "Войти"
+			},
+			"signInButton": {
+				"buttonRenderer": {
+					"size": "SIZE_SMALL",
+					"isDisabled": false,
+					"text": {
+						"simpleText": "Войти"
+					},
+					"icon": {
+						"iconType": "AVATAR_LOGGED_OUT"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBQQ04AEIhMI1Zed3tjQ6gIVBF-bCh32PAIU",
+						"signInEndpoint": {
+							"hack": true
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Dru%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252Fyoutubei%252Fv1%252Fguide%253Fkey%253DAIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&hl=ru",
+								"rootVe": 83769
+							}
+						}
+					},
+					"trackingParams": "CBQQ04AEIhMI1Zed3tjQ6gIVBF-bCh32PAIU",
+					"style": "STYLE_SUGGESTIVE"
+				}
+			}
+		}
+	}, {
+		"guideSectionRenderer": {
+			"items": [{
+				"guideEntryRenderer": {
+					"title": "Музыка",
+					"trackingParams": "CBMQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Музыка"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBMQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFDIJZy1jaGFubmVs",
+						"browseEndpoint": {
+							"browseId": "UC-9-kyTW8ZkZNDHQJ6FgpwQ"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3611
+							}
+						}
+					},
+					"thumbnail": {
+						"thumbnails": [{
+							"url": "//yt3.ggpht.com/R7EvwH9x7nbtnsD5CS0BUfdWG8DAuyC0MooYR8wrzxZhceO2Z8rdTW892shWIVo6X4-C7BS4tQ=s88-c-k-c0xffffffff-no-nd-rj"
+						}],
+						"webThumbnailDetailsExtensionData": {
+							"excludeFromVpl": true
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Музыка"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Спорт",
+					"trackingParams": "CBIQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Спорт"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBIQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFDIJZy1jaGFubmVs",
+						"browseEndpoint": {
+							"browseId": "UCEgdi0XIXXZ-qJOFPf4JSKw"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/channel/UCEgdi0XIXXZ-qJOFPf4JSKw",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3611
+							}
+						}
+					},
+					"thumbnail": {
+						"thumbnails": [{
+							"url": "//yt3.ggpht.com/74xP0VZzqFkD_AuDdFY8-kxW9lYZPEo4pvlwtKyixwygVM4-kUDENxbhjNdeP10J71MJcZOF=s88-c-k-c0xffffffff-no-nd-rj"
+						}],
+						"webThumbnailDetailsExtensionData": {
+							"excludeFromVpl": true
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Спорт"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Видеоигры",
+					"trackingParams": "CBEQtSwYAiITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Видеоигры"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBEQtSwYAiITCNWXnd7Y0OoCFQRfmwod9jwCFDIJZy1jaGFubmVs",
+						"browseEndpoint": {
+							"browseId": "UCOpNcN46UbXVtpKMrmU4Abg"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/gaming",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3611
+							}
+						}
+					},
+					"thumbnail": {
+						"thumbnails": [{
+							"url": "//yt3.ggpht.com/VmkEQ7gLgT9gSS5eqa2K6I9GJ1n3zft66aYBXhE_XLe3iWndQ9ssFYykkCnrUT2AvDdhgNAzcA=s88-c-k-c0xffffffff-no-nd-rj"
+						}],
+						"webThumbnailDetailsExtensionData": {
+							"excludeFromVpl": true
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Видеоигры"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Фильмы",
+					"trackingParams": "CBAQtSwYAyITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Фильмы"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CBAQtSwYAyITCNWXnd7Y0OoCFQRfmwod9jwCFDIJZy1jaGFubmVs",
+						"browseEndpoint": {
+							"browseId": "UClgRkhTL3_hImCAmdLfDE4g"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/channel/UClgRkhTL3_hImCAmdLfDE4g",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3611
+							}
+						}
+					},
+					"thumbnail": {
+						"thumbnails": [{
+							"url": "//yt3.ggpht.com/6lo97rUTO7xhIBXZqLiaW2kA_eMBIEmqc27EqlKLyE4nAY-yzcKBG0Hs0YdUka3gJ629HcwgyzQ=s88-c-k-c0xffffffff-no-nd-rj"
+						}],
+						"webThumbnailDetailsExtensionData": {
+							"excludeFromVpl": true
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Фильмы"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Новости",
+					"trackingParams": "CA8QtSwYBCITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Новости"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CA8QtSwYBCITCNWXnd7Y0OoCFQRfmwod9jwCFDIJZy1jaGFubmVs",
+						"browseEndpoint": {
+							"browseId": "UCYfdidRxbB8Qhf0Nx7ioOYw"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/channel/UCYfdidRxbB8Qhf0Nx7ioOYw",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3611
+							}
+						}
+					},
+					"thumbnail": {
+						"thumbnails": [{
+							"url": "//yt3.ggpht.com/dTAqfxkze5GTKk8lB87XFli6GBppuoOiCZ49MaucV76-TSFE8m2I4bY8IbHshkdR1ioRdJ4S=s88-c-k-c0xffffffff-no-nd-rj"
+						}],
+						"webThumbnailDetailsExtensionData": {
+							"excludeFromVpl": true
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Новости"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Прямые трансляции",
+					"trackingParams": "CA4QtSwYBSITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Прямые трансляции"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CA4QtSwYBSITCNWXnd7Y0OoCFQRfmwod9jwCFDIJZy1jaGFubmVs",
+						"browseEndpoint": {
+							"browseId": "UC4R8DWoMoI7CAwX8_LjQHig"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/channel/UC4R8DWoMoI7CAwX8_LjQHig",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3611
+							}
+						}
+					},
+					"thumbnail": {
+						"thumbnails": [{
+							"url": "//yt3.ggpht.com/5HkUAx2SOolanKFGX7Au5O84m4XbzvjpxXowcw2EYjbZmUObb_MzjZiiSDfy3z9ImpC0PCuZIB_dlPnEqQ=s88-c-k-c0xffffffff-no-nd-rj"
+						}],
+						"webThumbnailDetailsExtensionData": {
+							"excludeFromVpl": true
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Прямые трансляции"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "В центре внимания",
+					"trackingParams": "CA0QtSwYBiITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "В центре внимания"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CA0QtSwYBiITCNWXnd7Y0OoCFQRfmwod9jwCFDIJZy1jaGFubmVs",
+						"browseEndpoint": {
+							"browseId": "UC8iNz9uwDGfomRnnKKbOhOQ"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/channel/UC8iNz9uwDGfomRnnKKbOhOQ",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3611
+							}
+						}
+					},
+					"thumbnail": {
+						"thumbnails": [{
+							"url": "https://yt3.ggpht.com/a/AATXAJxNcCA-KaJa7ISaSDDAOh476MLvFYTbkjKmw6uPGA=s88-c-k-c0xffffffff-no-rj-mo"
+						}],
+						"webThumbnailDetailsExtensionData": {
+							"excludeFromVpl": true
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "В центре внимания"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Панорамные видео",
+					"trackingParams": "CAwQtSwYByITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Панорамные видео"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CAwQtSwYByITCNWXnd7Y0OoCFQRfmwod9jwCFDIJZy1jaGFubmVs",
+						"browseEndpoint": {
+							"browseId": "UCzuqhhs6NWbgTzMuM09WKDQ"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/channel/UCzuqhhs6NWbgTzMuM09WKDQ",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3611
+							}
+						}
+					},
+					"thumbnail": {
+						"thumbnails": [{
+							"url": "//yt3.ggpht.com/fC7IZNuXlgr5Smv4uba_mndW1v3CFkUZ_lGfFcwsPFBd1_xU1cSflRzvBQ9tJPxjxPE6TLrl=s88-c-k-c0xffffffff-no-nd-rj"
+						}],
+						"webThumbnailDetailsExtensionData": {
+							"excludeFromVpl": true
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Панорамные видео"
+						}
+					}
+				}
+			}],
+			"title": "Лучшее на YouTube",
+			"trackingParams": "CAsQ5isYAyITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+			"formattedTitle": {
+				"simpleText": "Лучшее на YouTube"
+			}
+		}
+	}, {
+		"guideSectionRenderer": {
+			"items": [{
+				"guideEntryRenderer": {
+					"title": "Каталог каналов",
+					"icon": {
+						"iconType": "ADD_CIRCLE"
+					},
+					"trackingParams": "CAoQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Каталог каналов"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CAoQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFDIIZy1tYW5hZ2U=",
+						"browseEndpoint": {
+							"browseId": "FEguide_builder"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/feed/guide_builder",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 6827
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Каталог каналов"
+						}
+					}
+				}
+			}],
+			"trackingParams": "CAkQ5isYBCITCNWXnd7Y0OoCFQRfmwod9jwCFA=="
+		}
+	}, {
+		"guideSectionRenderer": {
+			"items": [{
+				"guideEntryRenderer": {
+					"title": "YouTube Premium",
+					"icon": {
+						"iconType": "UNLIMITED"
+					},
+					"trackingParams": "CAgQmbcBGAAiEwjVl53e2NDqAhUEX5sKHfY8AhQ=",
+					"formattedTitle": {
+						"simpleText": "YouTube Premium"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CAgQmbcBGAAiEwjVl53e2NDqAhUEX5sKHfY8AhQ=",
+						"browseEndpoint": {
+							"browseId": "SPunlimited"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/premium",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 11487
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "YouTube Premium"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Трансляции",
+					"icon": {
+						"iconType": "LIVE"
+					},
+					"trackingParams": "CAcQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Трансляции"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CAcQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+						"browseEndpoint": {
+							"browseId": "UC4R8DWoMoI7CAwX8_LjQHig"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/channel/UC4R8DWoMoI7CAwX8_LjQHig",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 3611
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Трансляции"
+						}
+					}
+				}
+			}],
+			"title": "Другие возможности",
+			"trackingParams": "CAYQ5isYBSITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+			"formattedTitle": {
+				"simpleText": "Другие возможности"
+			}
+		}
+	}, {
+		"guideSectionRenderer": {
+			"items": [{
+				"guideEntryRenderer": {
+					"title": "Настройки",
+					"icon": {
+						"iconType": "SETTINGS"
+					},
+					"trackingParams": "CAUQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Настройки"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CAUQtSwYACITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+						"signalNavigationEndpoint": {
+							"signal": "ACCOUNT_SETTINGS"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/account",
+								"rootVe": 83769
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Настройки"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Жалобы",
+					"icon": {
+						"iconType": "FLAG"
+					},
+					"trackingParams": "CAQQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Жалобы"
+					},
+					"navigationEndpoint": {
+						"clickTrackingParams": "CAQQtSwYASITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+						"browseEndpoint": {
+							"browseId": "SPreport_history"
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/reporthistory",
+								"webPageType": "WEB_PAGE_TYPE_BROWSE",
+								"rootVe": 6827
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Жалобы"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Справка",
+					"icon": {
+						"iconType": "HELP"
+					},
+					"trackingParams": "CAMQtSwYAiITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Справка"
+					},
+					"serviceEndpoint": {
+						"clickTrackingParams": "CAMQtSwYAiITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+						"signalServiceEndpoint": {
+							"signal": "CLIENT_SIGNAL",
+							"actions": [{
+								"signalAction": {
+									"signal": "HELP"
+								}
+							}]
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/service_ajax",
+								"sendPost": true
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Справка"
+						}
+					}
+				}
+			}, {
+				"guideEntryRenderer": {
+					"title": "Отправить отзыв",
+					"icon": {
+						"iconType": "FEEDBACK"
+					},
+					"trackingParams": "CAIQtSwYAyITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+					"formattedTitle": {
+						"simpleText": "Отправить отзыв"
+					},
+					"serviceEndpoint": {
+						"clickTrackingParams": "CAIQtSwYAyITCNWXnd7Y0OoCFQRfmwod9jwCFA==",
+						"signalServiceEndpoint": {
+							"signal": "CLIENT_SIGNAL",
+							"actions": [{
+								"sendFeedbackAction": {
+									"bucket": "Kevlar"
+								}
+							}]
+						},
+						"commandMetadata": {
+							"webCommandMetadata": {
+								"url": "/service_ajax",
+								"sendPost": true
+							}
+						}
+					},
+					"accessibility": {
+						"accessibilityData": {
+							"label": "Отправить отзыв"
+						}
+					}
+				}
+			}],
+			"trackingParams": "CAEQ5isYBiITCNWXnd7Y0OoCFQRfmwod9jwCFA=="
+		}
+	}],
+	"trackingParams": "CAAQumkiEwjVl53e2NDqAhUEX5sKHfY8AhQ="
+}

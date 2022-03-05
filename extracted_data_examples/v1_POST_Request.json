@@ -1,0 +1,29 @@
+{
+	"context": {
+		"client": {
+			"browserName": "Firefox",
+			"browserVersion": "79.0",
+			"clientName": "WEB",
+			"clientVersion": "2.20200731.02.01",
+			"gl": "RU",
+			"hl": "ru",
+			"osName": "Windows",
+			"osVersion": "10.0",
+			"screenHeightPoints": 533,
+			"screenPixelDensity": 1,
+			"screenWidthPoints": 1920,
+			"userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0,gzip(gfe)",
+			"userInterfaceTheme": "USER_INTERFACE_THEME_LIGHT",
+			"utcOffsetMinutes": 180,
+			"visitorData": "CgtaQmNCLUpMZnVTRSj7pqL5BQ%3D%3D"
+		},
+		"clientScreenNonce": "MC41MTUzNjMyMzY3NjkzNzg2",
+		"request": {
+			"consistencyTokenJars": [],
+			"internalExperimentFlags": [],
+			"sessionId": "6845474341693309907"
+		},
+		"user": {}
+	},
+	"hidden": false
+}

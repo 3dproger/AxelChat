@@ -1,0 +1,76 @@
+{
+    "liveChatMembershipItemRenderer": {
+        "authorBadges": [
+            {
+                "liveChatAuthorBadgeRenderer": {
+                    "accessibility": {
+                        "accessibilityData": {
+                            "label": "Member (2 months)"
+                        }
+                    },
+                    "customThumbnail": {
+                        "thumbnails": [
+                            {
+                                "url": "https://yt3.ggpht.com/rpbFTLi5VAJ7k0YczXgf7bFHXflvQkqsfBFnYBssDzgZR-2651WLTNRa11yTUAZTGS46tjSEZA=s16-c-k"
+                            },
+                            {
+                                "url": "https://yt3.ggpht.com/rpbFTLi5VAJ7k0YczXgf7bFHXflvQkqsfBFnYBssDzgZR-2651WLTNRa11yTUAZTGS46tjSEZA=s32-c-k"
+                            }
+                        ]
+                    },
+                    "tooltip": "Member (2 months)"
+                }
+            }
+        ],
+        "authorExternalChannelId": "UCeLCwUeqUAe3BQBg_rLlzGQ",
+        "authorName": {
+            "simpleText": "Louis"
+        },
+        "authorPhoto": {
+            "thumbnails": [
+                {
+                    "height": 32,
+                    "url": "https://yt4.ggpht.com/ytc/AKedOLRGVzauZqmPO2jTQ8BwNmM7S2Sm3ZTFHE3Fe8niFg=s32-c-k-c0x00ffffff-no-rj",
+                    "width": 32
+                },
+                {
+                    "height": 64,
+                    "url": "https://yt4.ggpht.com/ytc/AKedOLRGVzauZqmPO2jTQ8BwNmM7S2Sm3ZTFHE3Fe8niFg=s64-c-k-c0x00ffffff-no-rj",
+                    "width": 64
+                }
+            ]
+        },
+        "contextMenuAccessibility": {
+            "accessibilityData": {
+                "label": "Comment actions"
+            }
+        },
+        "contextMenuEndpoint": {
+            "clickTrackingParams": "CBAQ4P0GIhMIuoaKydOO8wIVyA-yCh0yQgHt",
+            "commandMetadata": {
+                "webCommandMetadata": {
+                    "ignoreNavigation": true
+                }
+            },
+            "liveChatItemContextMenuEndpoint": {
+                "params": "Q2g0S0hBb2FRMDlYZVRNMWFsUnFkazFEUmxOQlJURm5RV1IxVWpoRVZWRWFLU29uQ2hoVlF6WjVNbHBHYWxweFJuTklNbmt5UWpBeFJFd3lTbmNTQ3preFRVaHlWalpTVnpkQklBSW9CRElhQ2hoVlEyVk1RM2RWWlhGVlFXVXpRbEZDWjE5eVRHeDZSMUUlM0Q="
+            }
+        },
+        "headerSubtext": {
+            "runs": [
+                {
+                    "text": "Welcome to "
+                },
+                {
+                    "text": "VIP Bronze"
+                },
+                {
+                    "text": "!"
+                }
+            ]
+        },
+        "id": "ChwKGkNPV3kzNWpUanZNQ0ZTQUUxZ0FkdVI4RFVR",
+        "timestampUsec": "1632178624011779",
+        "trackingParams": "CBAQ4P0GIhMIuoaKydOO8wIVyA-yCh0yQgHt"
+    }
+}

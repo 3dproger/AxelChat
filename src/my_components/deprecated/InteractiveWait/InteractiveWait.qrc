@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/">
+        <file>gifs/gift_200_transparent.gif</file>
+        <file>gifs/porridge_200_transparent.gif</file>
+        <file>gifs/car_200_transparent.gif</file>
+        <file>gifs/cat-meow_200_transparent.gif</file>
+        <file>gifs/cola_200_transparent.gif</file>
+        <file>gifs/computer-display_200_transparent.gif</file>
+        <file>gifs/cool_200_transparent.gif</file>
+        <file>gifs/delivery_200_transparent.gif</file>
+        <file>gifs/fidget-spinner_200_transparent.gif</file>
+        <file>gifs/ghost_200_transparent.gif</file>
+        <file>gifs/hourglass_200_transparent.gif</file>
+        <file>gifs/iphone-spinner-2_200_transparent.gif</file>
+        <file>gifs/kawaii_200_transparent.gif</file>
+        <file>gifs/mug_200_transparent.gif</file>
+        <file>gifs/no-connection_200_transparent.gif</file>
+        <file>gifs/roller-skating_200_transparent.gif</file>
+        <file>gifs/row-boat_200_transparent.gif</file>
+        <file>gifs/settings_200_transparent.gif</file>
+        <file>gifs/shuttercock_200_transparent.gif</file>
+        <file>gifs/skateboarding_200_transparent.gif</file>
+        <file>gifs/snow-storm-weather_200_transparent.gif</file>
+        <file>gifs/soccer-ball_200_transparent.gif</file>
+        <file>gifs/spinning-arrows_200_transparent.gif</file>
+        <file>gifs/spinning-circle-2_200_transparent.gif</file>
+        <file>gifs/sup_200_transparent.gif</file>
+        <file>gifs/tea_200_transparent.gif</file>
+        <file>gifs/volleyball_200_transparent.gif</file>
+        <file>gifs/walk_200_transparent.gif</file>
+        <file>gifs/cd-2_200_transparent.gif</file>
+        <file>gifs/fly-elephant_200_transparent.gif</file>
+        <file>gifs/puzzled_200_transparent.gif</file>
+        <file>gifs/sleeping_200_transparent.gif</file>
+        <file>gifs/confused_200_transparent.gif</file>
+        <file>gifs/spinner-1_200_transparent.gif</file>
+    </qresource>
+</RCC>

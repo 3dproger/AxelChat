@@ -1,0 +1,257 @@
+{
+	"csn": "whgXX_2CLoLiyAXktpWIDQ",
+	"endpoint": {
+		"commandMetadata": {
+			"webCommandMetadata": {
+				"url": "/live_chat/get_live_chat?commandMetadata=%5Bobject+Object%5D\u0026continuation=0ofMyAOuARpQQ2pnS0RRb0xSa05MV1VkTldWQjZNVWtxSndvWVZVTlVkMlpaUlVGRFNHRk5PRVJ1UkZVeVRWVnRaemxCRWd0R1EwdFpSMDFaVUhveFNTQUIok8is6uLe6gIwADgAQAJKIAgAEAAYACAAOgBAAEoCCAFQw6XLnN3e6gJYA3gAgAEAUJGW5-ri3uoCWM6z8-663uoCaASCAQIIBIgBAJoBAggBoAGytpTr4t7qAg%253D%253D\u0026hidden=true"
+			}
+		},
+		"urlEndpoint": {
+			"url": "/live_chat/get_live_chat?commandMetadata=%5Bobject+Object%5D\u0026continuation=0ofMyAOuARpQQ2pnS0RRb0xSa05MV1VkTldWQjZNVWtxSndvWVZVTlVkMlpaUlVGRFNHRk5PRVJ1UkZVeVRWVnRaemxCRWd0R1EwdFpSMDFaVUhveFNTQUIok8is6uLe6gIwADgAQAJKIAgAEAAYACAAOgBAAEoCCAFQw6XLnN3e6gJYA3gAgAEAUJGW5-ri3uoCWM6z8-663uoCaASCAQIIBIgBAJoBAggBoAGytpTr4t7qAg%253D%253D\u0026hidden=true"
+		}
+	},
+	"xsrf_token": "QUFFLUhqa3lsQVhkeXJTNWVscHdpTVNQajgtRnhvdjV2d3xBQ3Jtc0trbTRuVUE5cVVjNmowcnNiTi1iVkc5VFRfYlVtdDRMa25pWmJoRklDNE84Rm45UWlwQjdlcjVaLVFEdHQ2aUUtdE8weXVDclBXTnloNnA4QjNNVU9NLTA4d3lqZmhIc1lKczgxbHh4Vm9wa1RON241WTM3MHF4NWxvQXFjbmFIdUx4Zmg4T3JQV1NvSlRCdGU1UzI4eXROb1NsUGc=",
+	"timing": {
+		"info": {
+			"st": 88
+		}
+	},
+	"response": {
+		"responseContext": {
+			"serviceTrackingParams": [{
+				"service": "CSI",
+				"params": [{
+					"key": "GetLiveChat_rid",
+					"value": "0xc3bb82fb1b45a92b"
+				}, {
+					"key": "c",
+					"value": "WEB"
+				}, {
+					"key": "cver",
+					"value": "2.20200716.00.00"
+				}, {
+					"key": "yt_li",
+					"value": "0"
+				}]
+			}, {
+				"service": "GFEEDBACK",
+				"params": [{
+					"key": "e",
+					"value": "23723207,23744176,23748147,23804281,23811284,23834610,23839597,23847157,23856950,23857949,23859802,23861737,23862230,23868318,23880389,23882685,23883098,23884386,23885571,23892986,23894826,23895671,23907595,23909159,23911730,23914056,23914890,23915997,23916148,23916390,23917633,23918079,23918273,23918597,23919119,23919576,23922349,23924130,23924884,45170004,9449243"
+				}, {
+					"key": "logged_in",
+					"value": "0"
+				}]
+			}, {
+				"service": "GUIDED_HELP",
+				"params": [{
+					"key": "logged_in",
+					"value": "0"
+				}]
+			}, {
+				"service": "ECATCHER",
+				"params": [{
+					"key": "client.name",
+					"value": "WEB"
+				}, {
+					"key": "client.version",
+					"value": "2.20200716"
+				}, {
+					"key": "innertube.build.changelist",
+					"value": "321378458"
+				}, {
+					"key": "innertube.build.experiments.source_version",
+					"value": "322345599"
+				}, {
+					"key": "innertube.build.label",
+					"value": "youtube.ytfe.innertube_20200715_0_RC0"
+				}, {
+					"key": "innertube.build.timestamp",
+					"value": "1594832099"
+				}, {
+					"key": "innertube.build.variants.checksum",
+					"value": "3379e928eb33ec4a4d46644a9dce2ed7"
+				}, {
+					"key": "innertube.run.job",
+					"value": "ytfe-innertube-replica-only.ytfe"
+				}]
+			}],
+			"webResponseContextExtensionData": {
+				"ytConfigData": {
+					"csn": "whgXX_2CLoLiyAXktpWIDQ",
+					"visitorData": "CgtHTXV0ZkpTbVh5MCjCsdz4BQ%3D%3D"
+				},
+				"hasDecorated": true
+			}
+		},
+		"continuationContents": {
+			"liveChatContinuation": {
+				"continuations": [{
+					"invalidationContinuationData": {
+						"invalidationId": {
+							"objectSource": 1056,
+							"objectId": "Y2hhdH5GQ0tZR01ZUHoxSX41MzE3ODMx",
+							"topic": "chat~FCKYGMYPz1I~5317831",
+							"subscribeToGcmTopics": true,
+							"protoCreationTimestampMs": "1595349186827"
+						},
+						"timeoutMs": 10000,
+						"continuation": "0ofMyAOuARpQQ2pnS0RRb0xSa05MV1VkTldWQjZNVWtxSndvWVZVTlVkMlpaUlVGRFNHRk5PRVJ1UkZVeVRWVnRaemxCRWd0R1EwdFpSMDFaVUhveFNTQUIojv2W7OLe6gIwADgAQAJKIAgAEAAYACAAOgBAAEoCCAFQw6XLnN3e6gJYA3gAgAEAUPSfrOzi3uoCWM6z8-663uoCaASCAQIIBIgBAJoBAggBoAGlp8vs4t7qAg%3D%3D",
+						"clickTrackingParams": "CAEQl98BIhMI46_I7OLe6gIVkGmyCh2rTwAZ"
+					}
+				}],
+				"actions": [{
+					"addChatItemAction": {
+						"item": {
+							"liveChatPaidMessageRenderer": {
+								"id": "ChwKGkNLVFduZWJpM3VvQ0Zkd0ExZ0FkQ0wwSUd3",
+								"timestampUsec": "1595349185969806",
+								"authorName": {
+									"simpleText": "Vasia Demin"
+								},
+								"authorPhoto": {
+									"thumbnails": [{
+										"url": "https://yt3.ggpht.com/-TYfkeh77ZKk/AAAAAAAAAAI/AAAAAAAAAAA/IiTcDBLmrUE/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+										"width": 32,
+										"height": 32
+									}, {
+										"url": "https://yt3.ggpht.com/-TYfkeh77ZKk/AAAAAAAAAAI/AAAAAAAAAAA/IiTcDBLmrUE/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+										"width": 64,
+										"height": 64
+									}]
+								},
+								"purchaseAmountText": {
+									"simpleText": "100,00 ?"
+								},
+								"message": {
+									"runs": [{
+										"text": "а что с stm?"
+									}]
+								},
+								"headerBackgroundColor": 4278239141,
+								"headerTextColor": 4278190080,
+								"bodyBackgroundColor": 4280150454,
+								"bodyTextColor": 4278190080,
+								"authorExternalChannelId": "UC8csh3XNW_AwuBoYn4uV80g",
+								"authorNameTextColor": 2315255808,
+								"contextMenuEndpoint": {
+									"clickTrackingParams": "CAQQ7rsEIhMI46_I7OLe6gIVkGmyCh2rTwAZ",
+									"commandMetadata": {
+										"webCommandMetadata": {
+											"ignoreNavigation": true
+										}
+									},
+									"liveChatItemContextMenuEndpoint": {
+										"params": "Q2g0S0hBb2FRMHRVVjI1bFlta3pkVzlEUm1SM1FURm5RV1JEVERCSlIzY1FBQm80Q2cwS0MwWkRTMWxIVFZsUWVqRkpLaWNLR0ZWRFZIZG1XVVZCUTBoaFRUaEVia1JWTWsxVmJXYzVRUklMUmtOTFdVZE5XVkI2TVVrZ0FTZ0VNaG9LR0ZWRE9HTnphRE5ZVGxkZlFYZDFRbTlaYmpSMVZqZ3dadyUzRCUzRA=="
+									}
+								},
+								"timestampColor": 2147483648,
+								"contextMenuAccessibility": {
+									"accessibilityData": {
+										"label": "Действия с комментариями."
+									}
+								},
+								"trackingParams": "CAQQ7rsEIhMI46_I7OLe6gIVkGmyCh2rTwAZ"
+							}
+						}
+					}
+				}, {
+					"addLiveChatTickerItemAction": {
+						"item": {
+							"liveChatTickerPaidMessageItemRenderer": {
+								"id": "ChwKGkNLVFduZWJpM3VvQ0Zkd0ExZ0FkQ0wwSUd3",
+								"amount": {
+									"simpleText": "100,00 ?"
+								},
+								"amountTextColor": 4278190080,
+								"startBackgroundColor": 4280150454,
+								"endBackgroundColor": 4278239141,
+								"authorPhoto": {
+									"thumbnails": [{
+										"url": "https://yt3.ggpht.com/-TYfkeh77ZKk/AAAAAAAAAAI/AAAAAAAAAAA/IiTcDBLmrUE/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+										"width": 32,
+										"height": 32
+									}, {
+										"url": "https://yt3.ggpht.com/-TYfkeh77ZKk/AAAAAAAAAAI/AAAAAAAAAAA/IiTcDBLmrUE/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+										"width": 64,
+										"height": 64
+									}]
+								},
+								"durationSec": 120,
+								"showItemEndpoint": {
+									"clickTrackingParams": "CAIQsMgEIhMI46_I7OLe6gIVkGmyCh2rTwAZ",
+									"commandMetadata": {
+										"webCommandMetadata": {
+											"ignoreNavigation": true
+										}
+									},
+									"showLiveChatItemEndpoint": {
+										"renderer": {
+											"liveChatPaidMessageRenderer": {
+												"id": "ChwKGkNLVFduZWJpM3VvQ0Zkd0ExZ0FkQ0wwSUd3",
+												"timestampUsec": "1595349185969806",
+												"authorName": {
+													"simpleText": "Vasia Demin"
+												},
+												"authorPhoto": {
+													"thumbnails": [{
+														"url": "https://yt3.ggpht.com/-TYfkeh77ZKk/AAAAAAAAAAI/AAAAAAAAAAA/IiTcDBLmrUE/s32-c-k-no-mo-rj-c0xffffff/photo.jpg",
+														"width": 32,
+														"height": 32
+													}, {
+														"url": "https://yt3.ggpht.com/-TYfkeh77ZKk/AAAAAAAAAAI/AAAAAAAAAAA/IiTcDBLmrUE/s64-c-k-no-mo-rj-c0xffffff/photo.jpg",
+														"width": 64,
+														"height": 64
+													}]
+												},
+												"purchaseAmountText": {
+													"simpleText": "100,00 ?"
+												},
+												"message": {
+													"runs": [{
+														"text": "а что с stm?"
+													}]
+												},
+												"headerBackgroundColor": 4278239141,
+												"headerTextColor": 4278190080,
+												"bodyBackgroundColor": 4280150454,
+												"bodyTextColor": 4278190080,
+												"authorExternalChannelId": "UC8csh3XNW_AwuBoYn4uV80g",
+												"authorNameTextColor": 2315255808,
+												"contextMenuEndpoint": {
+													"clickTrackingParams": "CAMQ7rsEIhMI46_I7OLe6gIVkGmyCh2rTwAZ",
+													"commandMetadata": {
+														"webCommandMetadata": {
+															"ignoreNavigation": true
+														}
+													},
+													"liveChatItemContextMenuEndpoint": {
+														"params": "Q2g0S0hBb2FRMHRVVjI1bFlta3pkVzlEUm1SM1FURm5RV1JEVERCSlIzY1FBQm80Q2cwS0MwWkRTMWxIVFZsUWVqRkpLaWNLR0ZWRFZIZG1XVVZCUTBoaFRUaEVia1JWTWsxVmJXYzVRUklMUmtOTFdVZE5XVkI2TVVrZ0FTZ0VNaG9LR0ZWRE9HTnphRE5ZVGxkZlFYZDFRbTlaYmpSMVZqZ3dadyUzRCUzRA=="
+													}
+												},
+												"timestampColor": 2147483648,
+												"contextMenuAccessibility": {
+													"accessibilityData": {
+														"label": "Действия с комментариями."
+													}
+												},
+												"trackingParams": "CAMQ7rsEIhMI46_I7OLe6gIVkGmyCh2rTwAZ"
+											}
+										}
+									}
+								},
+								"authorExternalChannelId": "UC8csh3XNW_AwuBoYn4uV80g",
+								"fullDurationSec": 120,
+								"trackingParams": "CAIQsMgEIhMI46_I7OLe6gIVkGmyCh2rTwAZ"
+							}
+						},
+						"durationSec": "120"
+					}
+				}],
+				"trackingParams": "CAEQl98BIhMI46_I7OLe6gIVkGmyCh2rTwAZ"
+			}
+		},
+		"trackingParams": "CAAQ0b4BIhMI46_I7OLe6gIVkGmyCh2rTwAZ"
+	},
+	"url": "\/live_chat\/get_live_chat?commandMetadata=%5Bobject+Object%5D\u0026continuation=0ofMyAOuARpQQ2pnS0RRb0xSa05MV1VkTldWQjZNVWtxSndvWVZVTlVkMlpaUlVGRFNHRk5PRVJ1UkZVeVRWVnRaemxCRWd0R1EwdFpSMDFaVUhveFNTQUIok8is6uLe6gIwADgAQAJKIAgAEAAYACAAOgBAAEoCCAFQw6XLnN3e6gJYA3gAgAEAUJGW5-ri3uoCWM6z8-663uoCaASCAQIIBIgBAJoBAggBoAGytpTr4t7qAg%253D%253D\u0026hidden=true"
+}

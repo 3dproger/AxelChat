@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>/svg/ic-user</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic-user">
+            <path d="M16,12 L8.04052734,12 L6.99415032,12 C5.34230238,12 4,13.3434383 4,14.9979131 L4,17.9901045 C4,19.1063821 4.89616668,20 6.00684547,20 L17.9931545,20 C19.1028553,20 20,19.0996241 20,17.9901045 L20,14.9979131 C20,13.3446164 18.6550273,12 16.9989566,12 L16,12 Z" id="Rectangle-20" stroke="#4A4A4A" stroke-width="2"></path>
+            <path d="M12,13 C14.209139,13 16,11.209139 16,9 C16,6.790861 14.209139,5 12,5 C9.790861,5 8,6.790861 8,9 C8,11.209139 9.790861,13 12,13 Z M12,15 C8.6862915,15 6,12.3137085 6,9 C6,5.6862915 8.6862915,3 12,3 C15.3137085,3 18,5.6862915 18,9 C18,12.3137085 15.3137085,15 12,15 Z" id="Oval-1" fill="#4A4A4A" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

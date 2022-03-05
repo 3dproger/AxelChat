@@ -1,0 +1,12 @@
+{
+	"videoViewCountRenderer": {
+		"viewCount": {
+			"runs": [{
+				"text": "2"
+			}, {
+				"text": " зрителя ждут начала"
+			}]
+		},
+		"isLive": true
+	}
+}

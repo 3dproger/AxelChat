@@ -1,0 +1,13 @@
+Websites
+Set a link to icons8.com on all pages where you use our content. If you use it on most pages, a link in your footer is fine.
+
+Desktop Apps
+macOS and Windows applications should have the link to https://icons8.com in the About dialog.
+
+Mobile Apps
+For smartphone apps, please set a link to https://icons8.com in the About dialog or settings.
+Also, please credit our work in your App Store or Google Play description (something like "Icons by Icons8" is fine).
+
+Open Source
+Established open source projects could get the icons for free. For you, we'll opensource the resources that you need.
+By established projects we mean the Wikipedia criteria. If you have a page on Wikipedia and it's not removed for a week, you're qualified.

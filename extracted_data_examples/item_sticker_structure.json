@@ -1,0 +1,69 @@
+{
+    "liveChatPaidStickerRenderer": {
+        "authorExternalChannelId": "UCLtl7ASWDArPQ_v2d7tUiSA",
+        "authorName": {
+            "simpleText": "Fanszeneborussia"
+        },
+        "authorNameTextColor": 3019898879,
+        "authorPhoto": {
+            "thumbnails": [
+                {
+                    "height": 32,
+                    "url": "https://yt4.ggpht.com/ytc/AKedOLT5HPZYG7BM5b-FAjDejxZ0M4jQByh6eNvkyeJ9=s32-c-k-c0x00ffffff-no-rj",
+                    "width": 32
+                },
+                {
+                    "height": 64,
+                    "url": "https://yt4.ggpht.com/ytc/AKedOLT5HPZYG7BM5b-FAjDejxZ0M4jQByh6eNvkyeJ9=s64-c-k-c0x00ffffff-no-rj",
+                    "width": 64
+                }
+            ]
+        },
+        "backgroundColor": 4279592384,
+        "contextMenuAccessibility": {
+            "accessibilityData": {
+                "label": "Comment actions"
+            }
+        },
+        "contextMenuEndpoint": {
+            "clickTrackingParams": "CAsQ77sEIhMIifaxtryO8wIViFmbCh229AZ_",
+            "commandMetadata": {
+                "webCommandMetadata": {
+                    "ignoreNavigation": true
+                }
+            },
+            "liveChatItemContextMenuEndpoint": {
+                "params": "Q2g0S0hBb2FRMHBwVHpFMU5qaHFkazFEUm1KNlQzZFJiMlJVTUdkR05uY2FLU29uQ2hoVlEyOXFVRzlaVUhKcE9GQnRNbEpUWTJKZlFYcFZYMUVTQzBSdVJFb3ROR2d4ZDAxeklBSW9CRElhQ2hoVlEweDBiRGRCVTFkRVFYSlFVVjkyTW1RM2RGVnBVMEUlM0Q="
+            }
+        },
+        "id": "ChwKGkNKaU8xNTY4anZNQ0Ziek93UW9kVDBnRjZ3",
+        "moneyChipBackgroundColor": 4280191205,
+        "moneyChipTextColor": 4294967295,
+        "purchaseAmountText": {
+            "simpleText": "€0.99"
+        },
+        "sticker": {
+            "accessibility": {
+                "accessibilityData": {
+                    "label": "Money-mouth face"
+                }
+            },
+            "thumbnails": [
+                {
+                    "height": 40,
+                    "url": "//lh3.googleusercontent.com/uimZTz5ijPAGLvJyA1dOW8VIdlPsyVHxqETgB0Fa17rMs35ZgoD_fUJ0lsh_Oh28r13N-8RJP5XZCF3eRw=s40-rp",
+                    "width": 40
+                },
+                {
+                    "height": 80,
+                    "url": "//lh3.googleusercontent.com/uimZTz5ijPAGLvJyA1dOW8VIdlPsyVHxqETgB0Fa17rMs35ZgoD_fUJ0lsh_Oh28r13N-8RJP5XZCF3eRw=s80-rp",
+                    "width": 80
+                }
+            ]
+        },
+        "stickerDisplayHeight": 40,
+        "stickerDisplayWidth": 40,
+        "timestampUsec": "1632172499700362",
+        "trackingParams": "CAsQ77sEIhMIifaxtryO8wIViFmbCh229AZ_"
+    }
+}

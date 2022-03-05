@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>settings.qml</file>
+        <file>my_components/ImageRounded.qml</file>
+        <file>my_components/MyTextField.qml</file>
+        <file>updatesnotification.qml</file>
+        <file>setting_pages/about.qml</file>
+        <file>setting_pages/appearance.qml</file>
+        <file>setting_pages/chatcommands.qml</file>
+        <file>setting_pages/outputtofile.qml</file>
+        <file>setting_pages/youtube.qml</file>
+        <file>setting_pages/authors.qml</file>
+        <file>setting_pages/common.qml</file>
+        <file>my_components/RoundMouseArea.qml</file>
+        <file>author_info_window.qml</file>
+        <file>setting_pages/all_commands_window.qml</file>
+        <file>Global.qml</file>
+        <file>qmldir</file>
+        <file>my_components/SliderRow.qml</file>
+        <file>my_components/MyTextArea.qml</file>
+        <file>setting_pages/twitch.qml</file>
+        <file>font_settings.qml</file>
+    </qresource>
+</RCC>
