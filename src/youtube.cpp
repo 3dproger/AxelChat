@@ -19,7 +19,7 @@ static const int RequestStreamInterval = 20000;
 static const QString FolderLogs = "logs_youtube";
 
 static const QString  SettingsKeyUserSpecifiedLink = "user_specified_link";
-static const QString  SettingsKeyIgnoreMessagesBeforeConnect = "ignore_nessages_before_connect";
+static const QString  SettingsKeyShowMessagesBeforeConnectEnabled = "show_messages_before_connect_enabled";
 
 static const QByteArray AcceptLanguageNetworkHeaderName = ""; // "en-US;q=0.5,en;q=0.3";
 
@@ -251,21 +251,21 @@ void YouTube::setNeedRemoveBeforeAtAsCurrent()
     _needRemoveBeforeAt = QDateTime::currentDateTime();
 }
 
-bool YouTube::isNeedIgnoreMessagesBeforeConnect() const
+bool YouTube::isShowMessagesBeforeConnectEnabled() const
 {
     if (_settings)
     {
-        return _settings->value(_settingsGroupPath + "/" + SettingsKeyIgnoreMessagesBeforeConnect, false).toBool();
+        return _settings->value(_settingsGroupPath + "/" + SettingsKeyShowMessagesBeforeConnectEnabled, true).toBool();
     }
 
-    return false;
+    return true;
 }
 
-void YouTube::setNeedIgnoreMessagesBeforeConnect(bool enable)
+void YouTube::setShowMessagesBeforeConnectEnabled(bool enable)
 {
     if (_settings)
     {
-        _settings->setValue(_settingsGroupPath + "/" + SettingsKeyIgnoreMessagesBeforeConnect, enable);
+        _settings->setValue(_settingsGroupPath + "/" + SettingsKeyShowMessagesBeforeConnectEnabled, enable);
     }
 }
 
@@ -370,7 +370,7 @@ void YouTube::setLink(QString link)
 
         _info = AxelChat::YouTubeInfo();
 
-        if (!link.isEmpty() && isNeedIgnoreMessagesBeforeConnect())
+        if (!link.isEmpty() && !isShowMessagesBeforeConnectEnabled())
         {
             setNeedRemoveBeforeAtAsCurrent();
         }

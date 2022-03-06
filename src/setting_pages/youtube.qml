@@ -150,14 +150,14 @@ ScrollView {
         }
 
         Switch {
-            text: qsTr("Do not show messages sent before connection")
+            text: qsTr("Show messages sent before connecting")
 
             Component.onCompleted: {
-                checked = youTube.isNeedIgnoreMessagesBeforeConnect;
+                checked = youTube.isShowMessagesBeforeConnectEnabled;
             }
 
             onCheckedChanged: {
-                youTube.isNeedIgnoreMessagesBeforeConnect = checked;
+                youTube.isShowMessagesBeforeConnectEnabled = checked;
             }
         }
 

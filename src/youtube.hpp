@@ -14,7 +14,7 @@ class YouTube : public AbstractChatService
     Q_PROPERTY(QString broadcastId                          READ broadcastId                        NOTIFY stateChanged)
     Q_PROPERTY(QUrl    broadcastLongUrl                     READ broadcastLongUrl                   NOTIFY stateChanged)
     Q_PROPERTY(bool    isBroadcastIdUserSpecified           READ isBroadcastIdUserSpecified         CONSTANT)
-    Q_PROPERTY(bool    isNeedIgnoreMessagesBeforeConnect    READ isNeedIgnoreMessagesBeforeConnect  WRITE setNeedIgnoreMessagesBeforeConnect    NOTIFY stateChanged)
+    Q_PROPERTY(bool    isShowMessagesBeforeConnectEnabled   READ isShowMessagesBeforeConnectEnabled WRITE setShowMessagesBeforeConnectEnabled    NOTIFY stateChanged)
 
 public:
     explicit YouTube(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
@@ -42,8 +42,8 @@ public:
 
     void setNeedRemoveBeforeAtAsCurrent();
 
-    bool isNeedIgnoreMessagesBeforeConnect() const;
-    void setNeedIgnoreMessagesBeforeConnect(bool enable);
+    bool isShowMessagesBeforeConnectEnabled() const;
+    void setShowMessagesBeforeConnectEnabled(bool enable);
 
 public slots:
     void setLink(QString link);

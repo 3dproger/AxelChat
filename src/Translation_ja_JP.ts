@@ -22,27 +22,27 @@
 <context>
     <name>ChatHandler</name>
     <message>
-        <location filename="chathandler.cpp" line="287"/>
+        <location filename="chathandler.cpp" line="288"/>
         <source>YouTube connected</source>
         <translation>YouTubeが接続されました</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="293"/>
+        <location filename="chathandler.cpp" line="294"/>
         <source>Twitch connected</source>
         <translation>Twitchが接続されました</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="299"/>
+        <location filename="chathandler.cpp" line="300"/>
         <source>GoodGame connected</source>
         <translation>GoodGameが接続されました</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="319"/>
+        <location filename="chathandler.cpp" line="320"/>
         <source>YouTube disconnected</source>
         <translation>YouTubeが切断されています</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="326"/>
+        <location filename="chathandler.cpp" line="327"/>
         <source>Twitch disconnected</source>
         <translation>Twitchが切断されています</translation>
     </message>
@@ -1021,8 +1021,9 @@ Latest version available: %2</source>
     </message>
     <message>
         <location filename="setting_pages/youtube.qml" line="153"/>
-        <source>Do not show messages sent before connection</source>
-        <translation>接続前に送信されたメッセージを表示しない</translation>
+        <source>Show messages sent before connecting</source>
+        <oldsource>Do not show messages sent before connection</oldsource>
+        <translation>接続する前に送信されたメッセージを表示する</translation>
     </message>
 </context>
 </TS>

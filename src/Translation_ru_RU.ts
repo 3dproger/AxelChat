@@ -34,28 +34,28 @@
         <translation type="vanished">YouTube подключён: %1</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="287"/>
+        <location filename="chathandler.cpp" line="288"/>
         <source>YouTube connected</source>
         <translation>YouTube подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="293"/>
+        <location filename="chathandler.cpp" line="294"/>
         <source>Twitch connected</source>
         <oldsource>Twitch connected: %1</oldsource>
         <translation>Twitch подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="299"/>
+        <location filename="chathandler.cpp" line="300"/>
         <source>GoodGame connected</source>
         <translation>GoodGame подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="319"/>
+        <location filename="chathandler.cpp" line="320"/>
         <source>YouTube disconnected</source>
         <translation>YouTube отключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="326"/>
+        <location filename="chathandler.cpp" line="327"/>
         <source>Twitch disconnected</source>
         <translation>Twitch отключён</translation>
     </message>
@@ -1379,8 +1379,9 @@ Latest version available: %2</oldsource>
     </message>
     <message>
         <location filename="setting_pages/youtube.qml" line="153"/>
-        <source>Do not show messages sent before connection</source>
-        <translation>Не показывать сообщения, отправленные до подключения</translation>
+        <source>Show messages sent before connecting</source>
+        <oldsource>Do not show messages sent before connection</oldsource>
+        <translation>Показывать сообщения, отправленные до подключения</translation>
     </message>
     <message>
         <source>Proxy</source>
