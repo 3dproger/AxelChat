@@ -149,6 +149,18 @@ ScrollView {
             }
         }
 
+        Switch {
+            text: qsTr("Do not show messages sent before connection")
+
+            Component.onCompleted: {
+                checked = youTube.isNeedIgnoreMessagesBeforeConnect;
+            }
+
+            onCheckedChanged: {
+                youTube.isNeedIgnoreMessagesBeforeConnect = checked;
+            }
+        }
+
         /*Row {
             MyComponents.MyTextArea {
                 readOnly: true

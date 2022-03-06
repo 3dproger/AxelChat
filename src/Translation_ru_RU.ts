@@ -34,28 +34,28 @@
         <translation type="vanished">YouTube подключён: %1</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="289"/>
+        <location filename="chathandler.cpp" line="287"/>
         <source>YouTube connected</source>
         <translation>YouTube подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="295"/>
+        <location filename="chathandler.cpp" line="293"/>
         <source>Twitch connected</source>
         <oldsource>Twitch connected: %1</oldsource>
         <translation>Twitch подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="301"/>
+        <location filename="chathandler.cpp" line="299"/>
         <source>GoodGame connected</source>
         <translation>GoodGame подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="321"/>
+        <location filename="chathandler.cpp" line="319"/>
         <source>YouTube disconnected</source>
         <translation>YouTube отключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="328"/>
+        <location filename="chathandler.cpp" line="326"/>
         <source>Twitch disconnected</source>
         <translation>Twitch отключён</translation>
     </message>
@@ -432,27 +432,27 @@
 <context>
     <name>YouTube</name>
     <message>
-        <location filename="youtube.cpp" line="300"/>
+        <location filename="youtube.cpp" line="324"/>
         <source>Broadcast not specified</source>
         <translation>Трансляция не указана</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="305"/>
+        <location filename="youtube.cpp" line="329"/>
         <source>The broadcast is not correct</source>
         <translation>Трансляция указана некорректно</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="308"/>
+        <location filename="youtube.cpp" line="332"/>
         <source>Not connected</source>
         <translation>Не подключено</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="311"/>
+        <location filename="youtube.cpp" line="335"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="314"/>
+        <location filename="youtube.cpp" line="338"/>
         <source>Successfully connected!</source>
         <translation>Успешно подключено!</translation>
     </message>
@@ -469,22 +469,22 @@
         <translation type="vanished">ID трансляции: %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="406"/>
+        <location filename="youtube.cpp" line="435"/>
         <source>Broadcast Short URL: %1</source>
         <translation>Короткий URL трансляции: %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="407"/>
+        <location filename="youtube.cpp" line="436"/>
         <source>Broadcast Long URL: %1</source>
         <translation>Длинный URL трансляции: %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="408"/>
+        <location filename="youtube.cpp" line="437"/>
         <source>Chat URL: %1</source>
         <translation>URL чата: %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="409"/>
+        <location filename="youtube.cpp" line="438"/>
         <source>Control Panel URL: %1</source>
         <translation>URL панели управления: %1</translation>
     </message>
@@ -1376,6 +1376,11 @@ Latest version available: %2</oldsource>
         <location filename="setting_pages/youtube.qml" line="143"/>
         <source>Chat</source>
         <translation>Чат</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/youtube.qml" line="153"/>
+        <source>Do not show messages sent before connection</source>
+        <translation>Не показывать сообщения, отправленные до подключения</translation>
     </message>
     <message>
         <source>Proxy</source>

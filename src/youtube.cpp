@@ -251,6 +251,24 @@ void YouTube::setNeedRemoveBeforeAtAsCurrent()
     _needRemoveBeforeAt = QDateTime::currentDateTime();
 }
 
+bool YouTube::isNeedIgnoreMessagesBeforeConnect() const
+{
+    if (_settings)
+    {
+        return _settings->value(_settingsGroupPath + "/" + SettingsKeyIgnoreMessagesBeforeConnect, false).toBool();
+    }
+
+    return false;
+}
+
+void YouTube::setNeedIgnoreMessagesBeforeConnect(bool enable)
+{
+    if (_settings)
+    {
+        _settings->setValue(_settingsGroupPath + "/" + SettingsKeyIgnoreMessagesBeforeConnect, enable);
+    }
+}
+
 QUrl YouTube::broadcastLongUrl() const
 {
     return _info.broadcastLongUrl;
@@ -352,7 +370,7 @@ void YouTube::setLink(QString link)
 
         _info = AxelChat::YouTubeInfo();
 
-        if (!link.isEmpty() && _settings && _settings->value(_settingsGroupPath + "/" + SettingsKeyIgnoreMessagesBeforeConnect, false).toBool())
+        if (!link.isEmpty() && isNeedIgnoreMessagesBeforeConnect())
         {
             setNeedRemoveBeforeAtAsCurrent();
         }

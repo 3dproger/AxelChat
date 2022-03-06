@@ -22,27 +22,27 @@
 <context>
     <name>ChatHandler</name>
     <message>
-        <location filename="chathandler.cpp" line="289"/>
+        <location filename="chathandler.cpp" line="287"/>
         <source>YouTube connected</source>
         <translation>YouTubeが接続されました</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="295"/>
+        <location filename="chathandler.cpp" line="293"/>
         <source>Twitch connected</source>
         <translation>Twitchが接続されました</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="301"/>
+        <location filename="chathandler.cpp" line="299"/>
         <source>GoodGame connected</source>
         <translation>GoodGameが接続されました</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="321"/>
+        <location filename="chathandler.cpp" line="319"/>
         <source>YouTube disconnected</source>
         <translation>YouTubeが切断されています</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="328"/>
+        <location filename="chathandler.cpp" line="326"/>
         <source>Twitch disconnected</source>
         <translation>Twitchが切断されています</translation>
     </message>
@@ -361,47 +361,47 @@
 <context>
     <name>YouTube</name>
     <message>
-        <location filename="youtube.cpp" line="300"/>
+        <location filename="youtube.cpp" line="324"/>
         <source>Broadcast not specified</source>
         <translation>ブロードキャストが指定されていません</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="305"/>
+        <location filename="youtube.cpp" line="329"/>
         <source>The broadcast is not correct</source>
         <translation>ブロードキャストが正しくありません</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="308"/>
+        <location filename="youtube.cpp" line="332"/>
         <source>Not connected</source>
         <translation>接続されていません</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="311"/>
+        <location filename="youtube.cpp" line="335"/>
         <source>Connecting...</source>
         <translation>接続しています...</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="314"/>
+        <location filename="youtube.cpp" line="338"/>
         <source>Successfully connected!</source>
         <translation>正常に接続されました！</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="406"/>
+        <location filename="youtube.cpp" line="435"/>
         <source>Broadcast Short URL: %1</source>
         <translation>ブロードキャスト短縮URL：%1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="407"/>
+        <location filename="youtube.cpp" line="436"/>
         <source>Broadcast Long URL: %1</source>
         <translation>ブロードキャスト長いURL： %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="408"/>
+        <location filename="youtube.cpp" line="437"/>
         <source>Chat URL: %1</source>
         <translation>チャットURL： %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="409"/>
+        <location filename="youtube.cpp" line="438"/>
         <source>Control Panel URL: %1</source>
         <translation>コントロールパネルのURL： %1</translation>
     </message>
@@ -1018,6 +1018,11 @@ Latest version available: %2</source>
         <location filename="setting_pages/youtube.qml" line="143"/>
         <source>Chat</source>
         <translation>チャット</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/youtube.qml" line="153"/>
+        <source>Do not show messages sent before connection</source>
+        <translation>接続前に送信されたメッセージを表示しない</translation>
     </message>
 </context>
 </TS>
