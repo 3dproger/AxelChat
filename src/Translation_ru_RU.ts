@@ -517,9 +517,9 @@ Latest version available: %2</oldsource>
     </message>
     <message>
         <location filename="setting_pages/about.qml" line="67"/>
-        <source>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020-2021</source>
-        <oldsource>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020</oldsource>
-        <translation>Александр &apos;Axel_k&apos; Кирсанов (c) 2020-2021</translation>
+        <source>Alexander &apos;Axel_k&apos; Kirsanov %1</source>
+        <oldsource>Alexander &apos;Axel_k&apos; Kirsanov © 2020-2022</oldsource>
+        <translation>Александр &apos;Axel_k&apos; Кирсанов %1</translation>
     </message>
     <message>
         <location filename="setting_pages/about.qml" line="52"/>
@@ -567,8 +567,9 @@ Latest version available: %2</oldsource>
         <translation>Релизы</translation>
     </message>
     <message>
+        <location filename="setting_pages/about.qml" line="211"/>
         <source>Source Code</source>
-        <translation type="vanished">Исходный код</translation>
+        <translation>Исходный код</translation>
     </message>
     <message>
         <source>License</source>
@@ -813,7 +814,7 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Прокси</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="187"/>
+        <location filename="setting_pages/common.qml" line="188"/>
         <source>Host name...</source>
         <translation>Имя хоста...</translation>
     </message>
@@ -822,7 +823,7 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Сервер...</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="208"/>
+        <location filename="setting_pages/common.qml" line="209"/>
         <source>Port...</source>
         <translation>Порт...</translation>
     </message>
@@ -840,22 +841,22 @@ Latest version available: %2</oldsource>
         <translation>Клики мыши будут игнорироваться окном чата. Вернуться в предыдущее состояние можно через иконку в трее</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="100"/>
+        <location filename="setting_pages/common.qml" line="101"/>
         <source>Click-through window</source>
         <translation>Пропускать клики мыши</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="122"/>
+        <location filename="setting_pages/common.qml" line="123"/>
         <source>Clear Messages on Link Change</source>
         <translation>Очистить сообщения при смене ссылки</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="134"/>
+        <location filename="setting_pages/common.qml" line="135"/>
         <source>Enabled Hardware Graphics Accelerator</source>
         <translation>Включить аппаратный ускоритель графики</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="239"/>
+        <location filename="setting_pages/common.qml" line="240"/>
         <source>Program folder</source>
         <translation>Папка программы</translation>
     </message>
@@ -864,7 +865,7 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Изменения вступят в силу после перезапуска программы</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="150"/>
+        <location filename="setting_pages/common.qml" line="151"/>
         <source>Enable Sound when New Message Received</source>
         <translation>Включить звук при получении нового сообщения</translation>
     </message>
@@ -878,12 +879,12 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Не обрабатывать ввод</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="172"/>
+        <location filename="setting_pages/common.qml" line="173"/>
         <source>Proxy (SOCKS5)</source>
         <translation>Прокси (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="86"/>
+        <location filename="setting_pages/common.qml" line="87"/>
         <source>Stay on Top Window</source>
         <translation>Поверх всех окон</translation>
     </message>
@@ -947,12 +948,12 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Ссылка или ID трансляции не указана</translation>
     </message>
     <message>
-        <location filename="main.qml" line="837"/>
+        <location filename="main.qml" line="860"/>
         <source>Nothing connected</source>
         <translation>Ничего не подключено</translation>
     </message>
     <message>
-        <location filename="main.qml" line="841"/>
+        <location filename="main.qml" line="864"/>
         <source>Right click on the window to open the settings</source>
         <translation>Кликните правой кнопкой мыши по окну, чтобы открыть настройки</translation>
     </message>

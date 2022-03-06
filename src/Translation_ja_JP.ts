@@ -425,8 +425,9 @@
     </message>
     <message>
         <location filename="setting_pages/about.qml" line="67"/>
-        <source>Alexander &apos;Axel_k&apos; Kirsanov (c) 2020-2021</source>
-        <translation></translation>
+        <source>Alexander &apos;Axel_k&apos; Kirsanov %1</source>
+        <oldsource>Alexander &apos;Axel_k&apos; Kirsanov © 2020-2022</oldsource>
+        <translation>Alexander &apos;Axel_k&apos; Kirsanov %1</translation>
     </message>
     <message>
         <location filename="setting_pages/about.qml" line="83"/>
@@ -447,6 +448,11 @@
         <location filename="setting_pages/about.qml" line="197"/>
         <source>Releases</source>
         <translation>リリース</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/about.qml" line="211"/>
+        <source>Source Code</source>
+        <translation>ソースコード</translation>
     </message>
     <message>
         <location filename="setting_pages/about.qml" line="223"/>
@@ -666,47 +672,47 @@ Latest version available: %2</source>
         <translation>言語</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="86"/>
+        <location filename="setting_pages/common.qml" line="87"/>
         <source>Stay on Top Window</source>
         <translation>ウィンドウを上に保つ</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="100"/>
+        <location filename="setting_pages/common.qml" line="101"/>
         <source>Click-through window</source>
         <translation>クリックスルーウィンドウ</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="122"/>
+        <location filename="setting_pages/common.qml" line="123"/>
         <source>Clear Messages on Link Change</source>
         <translation>リンク変更時のメッセージのクリア</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="134"/>
+        <location filename="setting_pages/common.qml" line="135"/>
         <source>Enabled Hardware Graphics Accelerator</source>
         <translation>ハードウェアグラフィックアクセラレーションを有効にする</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="150"/>
+        <location filename="setting_pages/common.qml" line="151"/>
         <source>Enable Sound when New Message Received</source>
         <translation>新しいメッセージを受信したときにサウンドを有効にする</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="172"/>
+        <location filename="setting_pages/common.qml" line="173"/>
         <source>Proxy (SOCKS5)</source>
         <translation>プロキシー (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="187"/>
+        <location filename="setting_pages/common.qml" line="188"/>
         <source>Host name...</source>
         <translation>ホスト名...</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="208"/>
+        <location filename="setting_pages/common.qml" line="209"/>
         <source>Port...</source>
         <translation>ポート...</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="239"/>
+        <location filename="setting_pages/common.qml" line="240"/>
         <source>Program folder</source>
         <translation>プログラムフォルダ</translation>
     </message>
@@ -758,12 +764,12 @@ Latest version available: %2</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="main.qml" line="837"/>
+        <location filename="main.qml" line="860"/>
         <source>Nothing connected</source>
         <translation>接続されているものはありません</translation>
     </message>
     <message>
-        <location filename="main.qml" line="841"/>
+        <location filename="main.qml" line="864"/>
         <source>Right click on the window to open the settings</source>
         <translation>ウィンドウを右クリックして設定を開きます</translation>
     </message>

@@ -64,7 +64,7 @@ ScrollView {
             id: element
             y: 352
             height: 24
-            text: qsTr("Alexander 'Axel_k' Kirsanov © 2020-2022")
+            text: qsTr("Alexander 'Axel_k' Kirsanov %1").arg("© 2020-2022")
             anchors.right: parent.right
             anchors.rightMargin: 8
             anchors.left: parent.left
@@ -204,7 +204,7 @@ ScrollView {
             }
         }
 
-        /*Button {
+        Button {
             id: buttonSource
             x: 10
             y: 116
@@ -214,7 +214,7 @@ ScrollView {
             onClicked: {
                 Qt.openUrlExternally("https://github.com/3dproger/AxelChat");
             }
-        }*/
+        }
 
         Text {
             id: element6
