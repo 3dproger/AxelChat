@@ -194,6 +194,7 @@ void ChatHandler::onReadyRead(QList<ChatMessage> &messages)
         else
         {
             _authors[channelId] = author;
+            _authors[channelId]._messagesSentCurrent = 1;
         }
 
 #ifndef AXELCHAT_LIBRARY
