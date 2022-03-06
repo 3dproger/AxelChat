@@ -60,7 +60,7 @@
 - Check in the settings of your Twitch account if the permission to use the twitch account has not been revoked. Update the OAuth-token, if necessary, by pressing the corresponding button in the AxelChat
 
 # Build AxelChat from source for Windows 7 and newer, x64
-## Installing Qt
+### Installing Qt
 1. Download [Open Source Qt online installer](https://www.qt.io/download-qt-installer) or you can also find the offline installers but this is not the recommended way
 2. Run Qt installer and login/sign-up if required
 3. While installing select components:
@@ -70,7 +70,7 @@
     * Developer and Designer Tools / OpenSSL 1.1.1x Toolkit / OpenSSL 32-bit binaries
     * Developer and Designer Tools / OpenSSL 1.1.1x Toolkit / OpenSSL 64-bit binaries
 
-## Build source
+### Build source
 1. Clone repo or download source
 2. Open file ```<AxelChat_project_folder>/src/AxelChat.pro``` with Qt Creator
 3. In Qt Creator select ```Desktop Qt x.x.x MinGW 64-bit``` kit
