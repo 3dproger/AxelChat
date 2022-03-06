@@ -54,7 +54,7 @@
 - Check that the OAuth-token is correct. Update the OAuth-token, if necessary, by pressing the corresponding button in the AxelChat
 - Check in the settings of your Twitch account if the permission to use the twitch account has not been revoked. Update the OAuth-token, if necessary, by pressing the corresponding button in the AxelChat
 
-# Build AxelChat
+# Build AxelChat from source
 ### Installing Qt for Windows 7 and newer, x64
 1. Download Open Source Qt online installer (sign-up or login required during installing): https://www.qt.io/download-qt-installer or you can also find the offline installers but this is not the recommended way
 2. Run Qt installer and login/sign-up
