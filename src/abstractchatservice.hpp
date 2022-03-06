@@ -62,7 +62,7 @@ public:
 signals:
     void stateChanged();
     void detailedInformationChanged();
-    void readyRead(const QList<ChatMessage>& messages, const QList<MessageAuthor>& authors);
+    void readyRead(QList<ChatMessage>& messages);
     void connected(QString name);
     void disconnected(QString name);
     void avatarDiscovered(const QString& channelId, const QUrl& url);

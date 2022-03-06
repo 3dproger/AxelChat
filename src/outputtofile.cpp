@@ -128,7 +128,7 @@ void OutputToFile::resetSettings()
     setOutputFolder(standardOutputFolder());
 }
 
-void OutputToFile::onMessagesReceived(const ChatMessage &message, const MessageAuthor& author)
+void OutputToFile::onMessagesReceived(const ChatMessage &message)
 {
     const ChatMessage::Type type = message.type();
 
@@ -145,7 +145,7 @@ void OutputToFile::onMessagesReceived(const ChatMessage &message, const MessageA
         {
             // author name
 
-            tags.append(QPair<QString, QString>("author", author.name()));
+            tags.append(QPair<QString, QString>("author", message.author().name()));
         }
 
         {

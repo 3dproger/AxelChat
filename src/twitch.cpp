@@ -392,7 +392,6 @@ void Twitch::onIRCMessage(const QString &rawData)
     }
 
     QList<ChatMessage> messages;
-    QList<MessageAuthor> authors;
 
     const QVector<QStringRef> rawMessages = rawData.splitRef("\r\n");
     for (const QStringRef& raw : rawMessages)
@@ -628,7 +627,6 @@ void Twitch::onIRCMessage(const QString &rawData)
         }
 
         const MessageAuthor author = MessageAuthor::createFromTwitch(displayName, channelLogin, avatar, nicknameColor, badges);
-        authors.append(author);
 
         QString messageText;
         if (emotesInfo.isEmpty())
@@ -675,7 +673,7 @@ void Twitch::onIRCMessage(const QString &rawData)
 
     if (!messages.isEmpty())
     {
-        emit readyRead(messages, authors);
+        emit readyRead(messages);
     }
 }
 

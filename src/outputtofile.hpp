@@ -43,7 +43,7 @@ signals:
 
 public slots:
     void setOutputFolder(QString outputFolder);
-    void onMessagesReceived(const ChatMessage& message, const MessageAuthor& author);
+    void onMessagesReceived(const ChatMessage& message);
     Q_INVOKABLE void showInExplorer();
 
 private slots:

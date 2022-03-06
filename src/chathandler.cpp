@@ -40,15 +40,14 @@ ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
     //Output to file
     _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file");
 
-    connect(this, &ChatHandler::messagesReceived,
+    connect(this, &ChatHandler::messageReceived,
             _outputToFile, &OutputToFile::onMessagesReceived);
 #endif
 
     //YouTube
     _youTube = new YouTube(proxy(), settings, SettingsGroupPath + "/youtube");
 
-    connect(_youTube, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
-                     this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
+    connect(_youTube, &YouTube::readyRead, this, &ChatHandler::onReadyRead);
 
     connect(_youTube, SIGNAL(connected(QString)),
                      this, SLOT(onConnected(QString)));
@@ -67,8 +66,8 @@ ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
     //Twitch
     _twitch = new Twitch(proxy(), settings, SettingsGroupPath + "/twitch");
 
-    connect(_twitch, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
-                     this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
+    connect(_twitch, SIGNAL(readyRead(QList<ChatMessage>&)),
+                     this, SLOT(onReadyRead(QList<ChatMessage>&)));
 
     connect(_twitch, SIGNAL(avatarDiscovered(const QString&, const QUrl&)),
                      this, SLOT(onAvatarDiscovered(const QString&, const QUrl&)));
@@ -91,8 +90,8 @@ ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
     //GoodGame
     _goodGame = new GoodGame(proxy(), settings, SettingsGroupPath + "/goodgame");
 
-    connect(_goodGame, SIGNAL(readyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)),
-                     this, SLOT(onReadyRead(const QList<ChatMessage>&, const QList<MessageAuthor>&)));
+    connect(_goodGame, SIGNAL(readyRead(QList<ChatMessage>&)),
+                     this, SLOT(onReadyRead(QList<ChatMessage>&)));
 
     connect(_goodGame, SIGNAL(connected(QString)),
                      this, SLOT(onConnected(QString)));
@@ -168,68 +167,63 @@ MessageAuthor ChatHandler::authorByChannelId(const QString &channelId) const
 
 
 //ToDo: использование ссылок в слотах и сигналах может плохо кончиться! Особенно, если соеденены разные потоки
-void ChatHandler::onReadyRead(const QList<ChatMessage> &messages, const QList<MessageAuthor> &authors)
+void ChatHandler::onReadyRead(QList<ChatMessage> &messages)
 {
-    if (_enabledSoundNewMessage && !messages.empty())
-    {
-        playNewMessageSound();
-    }
+    bool messageAdded = false;
 
-    for (const MessageAuthor& author : authors)
+    for (int i = 0; i < messages.count(); ++i)
     {
-        const QString& channelId = author.channelId();
-        int messagesSentCurrent = 0;
+        ChatMessage&& message = std::move(messages[i]);
+
+        if (_messagesModel.contains(message.id()) && !message.isDeleterItem())
+        {
+            continue;
+        }
+
+        /*qDebug(QString("%1: %2")
+               .arg(message.authorName).arg(message.text).toUtf8());*/
+
+        const MessageAuthor author = message.author();
+
+        const QString channelId = author.channelId();
 
         if (_authors.contains(channelId))
         {
-            messagesSentCurrent = _authors[channelId]._messagesSentCurrent;
-        }
-
-        _authors[channelId] = author;
-        _authors[channelId]._messagesSentCurrent = messagesSentCurrent;
-    }
-
-
-    for (ChatMessage message : messages)//ToDo: убрать копирование
-    {
-        if (!_messagesModel.contains(message.id()) || message.isDeleterItem())
-        {
-            /*qDebug(QString("%1: %2")
-                   .arg(message.authorName).arg(message.text).toUtf8());*/
-
-            const QString& channelId = message.author().channelId();
-            if (_authors.contains(channelId))
-            {
-                _authors[channelId]._messagesSentCurrent++;
-            }
-
-#ifndef AXELCHAT_LIBRARY
-            if (_bot && message.author().channelId() != MessageAuthor::softwareAuthor().channelId())
-            {
-                _bot->processMessage(message);
-            }
-#endif
-
-            _messagesModel.append(std::move(message));
-
-            emit messagesReceived(message, message.author());
+            _authors[channelId]._messagesSentCurrent++;
         }
         else
         {
-            /*qDebug(QString("%1: ignore message because this id already exists")
-                   .arg(Q_FUNC_INFO).toUtf8());
-
-            message.printMessageInfo("Raw new message:");*/
+            _authors[channelId] = author;
         }
+
+#ifndef AXELCHAT_LIBRARY
+        if (_bot && channelId != MessageAuthor::softwareAuthor().channelId())
+        {
+            _bot->processMessage(message);
+        }
+#endif
+
+        _messagesModel.append(std::move(message));
+        messageAdded = true;
+
+        emit messageReceived(message);
     }
 
-    emit messagesDataChanged();
+    if (messageAdded)
+    {
+        emit messagesDataChanged();
+
+        if (_enabledSoundNewMessage && !messages.empty())
+        {
+            playNewMessageSound();
+        }
+    }
 }
 
 void ChatHandler::sendTestMessage(const QString &text)
 {
-    const ChatMessage& message = ChatMessage::createTestMessage(text);
-    onReadyRead({message}, {message.author()});
+    QList<ChatMessage> messages = {ChatMessage::createTestMessage(text)};
+    onReadyRead(messages);
 }
 
 void ChatHandler::playNewMessageSound()
@@ -256,6 +250,10 @@ void ChatHandler::onAvatarDiscovered(const QString &channelId, const QUrl &url)
 void ChatHandler::clearMessages()
 {
     _messagesModel.clear();
+    if (_youTube)
+    {
+        _youTube->setNeedRemoveBeforeAtAsCurrent();
+    }
 }
 
 void ChatHandler::onStateChanged()
@@ -345,8 +343,8 @@ void ChatHandler::onDisconnected(QString name)
 
 void ChatHandler::sendNotification(const QString &text)
 {
-    const ChatMessage& message = ChatMessage::createSoftwareNotification(text);
-    onReadyRead({message}, {message.author()});
+    QList<ChatMessage> messages = {ChatMessage::createSoftwareNotification(text)};
+    onReadyRead(messages);
 }
 
 void ChatHandler::updateProxy()

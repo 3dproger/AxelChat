@@ -19,6 +19,7 @@ static const int RequestStreamInterval = 20000;
 static const QString FolderLogs = "logs_youtube";
 
 static const QString  SettingsKeyUserSpecifiedLink = "user_specified_link";
+static const QString  SettingsKeyIgnoreMessagesBeforeConnect = "ignore_nessages_before_connect";
 
 static const QByteArray AcceptLanguageNetworkHeaderName = ""; // "en-US;q=0.5,en;q=0.3";
 
@@ -245,6 +246,11 @@ void YouTube::setProxy(const QNetworkProxy &proxy)
     reconnect();
 }
 
+void YouTube::setNeedRemoveBeforeAtAsCurrent()
+{
+    _needRemoveBeforeAt = QDateTime::currentDateTime();
+}
+
 QUrl YouTube::broadcastLongUrl() const
 {
     return _info.broadcastLongUrl;
@@ -345,6 +351,11 @@ void YouTube::setLink(QString link)
         const QString preBroadcastId = _info.broadcastId;
 
         _info = AxelChat::YouTubeInfo();
+
+        if (!link.isEmpty() && _settings && _settings->value(_settingsGroupPath + "/" + SettingsKeyIgnoreMessagesBeforeConnect, false).toBool())
+        {
+            setNeedRemoveBeforeAtAsCurrent();
+        }
 
         _badChatReplies = 0;
         _badLivePageReplies = 0;
@@ -606,7 +617,6 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
     }
 
     QList<ChatMessage> messages;
-    QList<MessageAuthor> authors;
 
     foreach (const QJsonValue& actionJson, array)
     {
@@ -891,6 +901,14 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
 
         if (valid)
         {
+            if (publishedAt.isValid() && _needRemoveBeforeAt.isValid())
+            {
+                if (publishedAt < _needRemoveBeforeAt)
+                {
+                    continue;
+                }
+            }
+
             if (isDeleter)
             {
                 const ChatMessage& message = ChatMessage::createDeleterFromYouTube(messageText, messageId);
@@ -918,14 +936,13 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
                             forcedColors);
 
                 messages.append(message);
-                authors.append(author);
 
                 _messagesReceived++;
             }
         }
     }
 
-    emit readyRead(messages, authors);
+    emit readyRead(messages);
     emit stateChanged();
 }
 

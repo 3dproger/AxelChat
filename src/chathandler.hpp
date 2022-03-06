@@ -74,7 +74,7 @@ public:
     QNetworkProxy proxy() const;
 
 signals:
-    void messagesReceived(const ChatMessage& message, const MessageAuthor& author);
+    void messageReceived(const ChatMessage& message);
     void connectedCountChanged();
     void viewersTotalCountChanged();
     void enabledSoundNewMessageChanged();
@@ -83,7 +83,7 @@ signals:
     void messagesDataChanged();
 
 public slots:
-    void onReadyRead(const QList<ChatMessage>& messages, const QList<MessageAuthor>& authors);
+    void onReadyRead(QList<ChatMessage>& messages);
     void sendTestMessage(const QString& text);
     void sendNotification(const QString& text);
     void playNewMessageSound();

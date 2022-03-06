@@ -39,6 +39,8 @@ public:
 
     qint64 traffic() const override { return _traffic; }
 
+    void setNeedRemoveBeforeAtAsCurrent();
+
 public slots:
     void setLink(QString link);
 
@@ -76,6 +78,7 @@ private:
     int _badLivePageReplies = 0;
 
     AxelChat::YouTubeInfo _info;
+    QDateTime _needRemoveBeforeAt;
 
     static void printData(const QString& tag, const QByteArray& data);
 

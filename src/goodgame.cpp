@@ -133,7 +133,6 @@ void GoodGame::onWebSocketReceived(const QString &rawData)
     if (type == "channel_history")
     {
         QList<ChatMessage> messages;
-        QList<MessageAuthor> authors;
 
         const QJsonArray jsonMessages = data.value("messages").toArray();
         for (const QJsonValue& value : qAsConst(jsonMessages))
@@ -151,12 +150,11 @@ void GoodGame::onWebSocketReceived(const QString &rawData)
             const ChatMessage message = ChatMessage::createFromGoodGame(text, QDateTime::fromMSecsSinceEpoch(timestamp), author);
 
             messages.append(message);
-            authors.append(author);
         }
 
         if (!messages.isEmpty())
         {
-            emit readyRead(messages, authors);
+            emit readyRead(messages);
         }
     }
     else if (type == "welcome")
