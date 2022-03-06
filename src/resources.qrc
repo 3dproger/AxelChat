@@ -164,5 +164,6 @@
         <file>resources/images/goodgame-icon.svg</file>
         <file>resources/images/viewer.svg</file>
         <file>resources/images/flags/japan.svg</file>
+        <file>resources/images/internet-globe.svg</file>
     </qresource>
 </RCC>

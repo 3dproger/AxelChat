@@ -169,27 +169,6 @@ ScrollView {
             color: Material.foreground
         }
 
-        /*Button {
-            id: buttonDiscussions
-            x: 10
-            y: 62
-            text: qsTr("Forum (Discussions)")
-            icon.source: "qrc:/resources/images/feedback.svg"
-
-            //Material.background: "#ffffff"
-            //Material.foreground: "#c51a4a"
-
-            //Material.background: "#003760"
-            //Material.foreground: "#03A9F4"
-
-            //Material.background: "#03A9F4"
-            //Material.foreground: "#FFFFFF"
-
-            onClicked: {
-                Qt.openUrlExternally("https://github.com/3dproger/AxelChat/discussions");
-            }
-        }*/
-
         Button {
             id: buttonReleases
             x: 521
@@ -201,18 +180,6 @@ ScrollView {
 
             onClicked: {
                 Qt.openUrlExternally("https://github.com/3dproger/AxelChat/releases");
-            }
-        }
-
-        Button {
-            id: buttonSource
-            x: 10
-            y: 116
-            text: qsTr("Source Code")
-            icon.source: "qrc:/resources/images/github.svg"
-
-            onClicked: {
-                Qt.openUrlExternally("https://github.com/3dproger/AxelChat");
             }
         }
 
@@ -258,9 +225,22 @@ ScrollView {
         }*/
 
         Button {
-            id: buttonPatreon
+            id: buttonSite
             x: 8
             y: 8
+            text: "AxelChat"
+            icon.source: "qrc:/resources/images/internet-globe.svg"
+            highlighted: true
+
+            onClicked: {
+                Qt.openUrlExternally("https://3dproger.github.io/AxelChat/");
+            }
+        }
+
+        Button {
+            id: buttonPatreon
+            x: 8
+            y: 62
             text: qsTr("Support the developer")
             icon.source: "qrc:/resources/images/heart.svg"
             Material.background: "#DB61A2"
@@ -273,12 +253,24 @@ ScrollView {
         Button {
             id: buttonIssues
             x: 8
-            y: 62
+            y: 116
             text: qsTr("Complaints and suggestions (Issues)")
             icon.source: "qrc:/resources/images/feedback.svg"
 
             onClicked: {
                 Qt.openUrlExternally("https://github.com/3dproger/AxelChat/issues");
+            }
+        }
+
+        Button {
+            id: buttonSource
+            x: 10
+            y: 170
+            text: qsTr("Source Code")
+            icon.source: "qrc:/resources/images/github.svg"
+
+            onClicked: {
+                Qt.openUrlExternally("https://github.com/3dproger/AxelChat");
             }
         }
     }
@@ -326,6 +318,8 @@ ScrollView {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:1.100000023841858;height:480;width:640}
+    D{i:0;autoSize:true;formeditorZoom:1.100000023841858;height:480;width:640}D{i:2}D{i:3}
+D{i:4}D{i:5}D{i:6}D{i:7}D{i:8}D{i:9}D{i:10}D{i:11}D{i:12}D{i:13}D{i:14}D{i:15}D{i:16}
+D{i:17}D{i:18}D{i:19}D{i:20}D{i:1}D{i:21}
 }
 ##^##*/
