@@ -56,7 +56,7 @@
 
 # Build AxelChat from source
 ### Installing Qt for Windows 7 and newer, x64
-1. Download Open Source Qt online installer (sign-up or login required during installing): https://www.qt.io/download-qt-installer or you can also find the offline installers but this is not the recommended way
+1. Download Open Source Qt online installer (sign-up or login required during installing): [Download page](https://www.qt.io/download-qt-installer) or you can also find the offline installers but this is not the recommended way
 2. Run Qt installer and login/sign-up
 3. While installing select components:
     * Qt / Qt 5.15.x / MinGW x.x.x 64-bit
@@ -73,4 +73,4 @@
 6. Copy files from ```<AxelChat_project_folder>/app_files/win64``` to ```<AxelChat_project_folder>/release_win64```
 7. Run ```<AxelChat_project_folder>/release_win64/AxelChat.exe``` or click ```Run``` in Qt Creator
 8. For subsequent builds, just close ```AxelChat.exe``` application and click ```Run``` in Qt Creator
-9. To release an AxelChat for use by other users, check if all the required DLLs (\*.os for Linux) are in the folder except system DLLs (\*.os for Linux). Utilities https://github.com/3dproger/ProcDepMonitor or https://www.dependencywalker.com/ or analogs can helps you
+9. To release an AxelChat for use by other users, check if all the required DLLs (\*.os for Linux) are in the folder except system DLLs (\*.os for Linux). Utilities [ProcDepMonitor](https://github.com/3dproger/ProcDepMonitor) or [DependencyWalker](https://www.dependencywalker.com)/ or analogs can helps you
