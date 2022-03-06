@@ -1,2 +1,2 @@
 * linguist-vendored
-*.html linguist-vendored=false
+extracted_data_examples/* linguist-vendored=false
