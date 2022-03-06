@@ -1,2 +1,9 @@
 theme: jekyll-theme-architect
 #show_downloads: true
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - ../README.md
