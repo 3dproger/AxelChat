@@ -20,24 +20,6 @@ ScrollView {
         return decodeURIComponent(path);
     }
 
-    Dialog {
-        id: dialogMain
-        title: qsTr("Export to txt");
-        standardButtons: Dialog.Ok
-
-        contentItem: Rectangle {
-            color: "lightskyblue"
-            implicitWidth: 400
-            implicitHeight: 100
-            Text {
-                text: qsTr("Failed to save!")
-                color: Material.foreground
-                anchors.centerIn: parent
-
-            }
-        }
-    }
-
     Column {
         id: column
         spacing: 6
