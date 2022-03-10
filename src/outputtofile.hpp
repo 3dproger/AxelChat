@@ -34,7 +34,7 @@ public:
     void setTwitchInfo(const AxelChat::TwitchInfo& twitchCurrent);
     void setGoodGameInfo(const AxelChat::GoodGameInfo& goodGameCurrent);
 
-    Q_INVOKABLE void setCodecOption(int option, bool applyWithoutReset);
+    Q_INVOKABLE bool setCodecOption(int option, bool applyWithoutReset); // return true if need restart
     Q_INVOKABLE int codecOption() const;
 
 signals:

@@ -216,11 +216,11 @@ void OutputToFile::showInExplorer()
     QDesktopServices::openUrl(QUrl::fromLocalFile(QString("file:///") + _outputFolder));
 }
 
-void OutputToFile::setCodecOption(int option, bool applyWithoutReset)
+bool OutputToFile::setCodecOption(int option, bool applyWithoutReset)
 {
     if (option == _codec)
     {
-        return;
+        return false;
     }
 
     if (applyWithoutReset)
@@ -237,7 +237,7 @@ void OutputToFile::setCodecOption(int option, bool applyWithoutReset)
             break;
         default:
             qCritical() << "unknown codec option" << option << ", ignore";
-            return;
+            return false;
         }
 
         reinit(true);
@@ -247,6 +247,8 @@ void OutputToFile::setCodecOption(int option, bool applyWithoutReset)
     {
         _settings->setValue(_settingsGroupPath + "/" + _settingsKeyCodec, option);
     }
+
+    return true;
 }
 
 int OutputToFile::codecOption() const
