@@ -16,6 +16,7 @@ namespace
 static const QString DateTimeFileNameFormat = "yyyy-MM-ddThh-mm-ss.zzz";
 static const QString MessagesFileName = "messages.ini";
 static const QString MessagesCountFileName = "count.txt";
+static const QString YouTubeLastMessageId = "youtube_last_message_id.txt";
 
 static QString dateTimeToStr(const QDateTime& dateTime)
 {
@@ -55,14 +56,19 @@ OutputToFile::~OutputToFile()
         }
     }
 
-    if (_fileMessages->isOpen())
+    if (_fileMessages && _fileMessages->isOpen())
     {
         _fileMessages->close();
     }
 
-    if (_fileMessagesCount->isOpen())
+    if (_fileMessagesCount && _fileMessagesCount->isOpen())
     {
         _fileMessagesCount->close();
+    }
+
+    if (_fileYouTubeLastMessageId && _fileYouTubeLastMessageId->isOpen())
+    {
+        _fileYouTubeLastMessageId->close();
     }
 }
 
@@ -207,7 +213,7 @@ void OutputToFile::onMessagesReceived(const ChatMessage &message)
             break;
         }
 
-        writeMessage(tags);
+        writeMessage(tags, message);
     }
 }
 
@@ -256,7 +262,7 @@ int OutputToFile::codecOption() const
     return _codec;
 }
 
-void OutputToFile::writeMessage(const QList<QPair<QString, QString>> tags /*<tagName, tagValue>*/)
+void OutputToFile::writeMessage(const QList<QPair<QString, QString>> tags /*<tagName, tagValue>*/, const ChatMessage &message)
 {
     if (!_fileMessages)
     {
@@ -267,6 +273,12 @@ void OutputToFile::writeMessage(const QList<QPair<QString, QString>> tags /*<tag
     if (!_fileMessagesCount)
     {
         qDebug() << Q_FUNC_INFO << "!_fileMessagesStatistics";
+        return;
+    }
+
+    if (!_fileYouTubeLastMessageId)
+    {
+        qDebug() << Q_FUNC_INFO << "!_fileYouTubeLastMessageId";
         return;
     }
 
@@ -325,6 +337,23 @@ void OutputToFile::writeMessage(const QList<QPair<QString, QString>> tags /*<tag
     {
         qWarning() << "failed to flush file" << _fileMessagesCount->fileName();
     }
+
+    if (message.type() == ChatMessage::Type::YouTube)
+    {
+        if (!_fileYouTubeLastMessageId->open(QIODevice::OpenModeFlag::Text | QIODevice::OpenModeFlag::WriteOnly | QIODevice::OpenModeFlag::Truncate))
+        {
+            qWarning() << Q_FUNC_INFO << "failed to open file" << _fileYouTubeLastMessageId->fileName() << ":" << _fileYouTubeLastMessageId->errorString();
+            return;
+        }
+
+        _fileYouTubeLastMessageId->write(message.id().toUtf8());
+        if (!_fileMessagesCount->flush())
+        {
+            qWarning() << "failed to flush file" << _fileYouTubeLastMessageId->fileName();
+        }
+
+        _fileYouTubeLastMessageId->close();
+    }
 }
 
 QByteArray OutputToFile::prepare(const QString &text_)
@@ -372,6 +401,13 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
         _fileMessagesCount = nullptr;
     }
 
+    if (_fileYouTubeLastMessageId)
+    {
+        _fileYouTubeLastMessageId->close();
+        _fileYouTubeLastMessageId->deleteLater();
+        _fileYouTubeLastMessageId = nullptr;
+    }
+
     if (forceUpdateOutputFolder || _messagesFolder.isEmpty())
     {
         _messagesFolder = _outputFolder + "/messages/" + _startupDateTime.toString(DateTimeFileNameFormat);
@@ -386,8 +422,10 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
         }
     }
 
-    _fileMessages = new QFile(_messagesFolder + "/" + MessagesFileName, this);
-    _fileMessagesCount = new QFile(_messagesFolder + "/" + MessagesCountFileName, this);
+    _fileMessages               = new QFile(_messagesFolder + "/" + MessagesFileName,       this);
+    _fileMessagesCount          = new QFile(_messagesFolder + "/" + MessagesCountFileName,  this);
+    _fileYouTubeLastMessageId   = new QFile(_messagesFolder + "/" + YouTubeLastMessageId,   this);
+
     //Current
     if (_iniCurrentInfo)
     {

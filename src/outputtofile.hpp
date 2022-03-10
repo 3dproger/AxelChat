@@ -47,7 +47,7 @@ public slots:
     Q_INVOKABLE void showInExplorer();
 
 private slots:
-    void writeMessage(const QList<QPair<QString, QString>> tags /*<tagName, tagValue>*/);
+    void writeMessage(const QList<QPair<QString, QString>> tags /*<tagName, tagValue>*/, const ChatMessage &message);
 
 private:
     QByteArray prepare(const QString& text);
@@ -68,9 +68,10 @@ private:
     bool _enabled = false;
     QString _outputFolder = standardOutputFolder();
 
-    QFile* _fileMessagesCount = nullptr;
-    QFile* _fileMessages = nullptr;
-    QSettings* _iniCurrentInfo   = nullptr;
+    QFile* _fileMessagesCount           = nullptr;
+    QFile* _fileMessages                = nullptr;
+    QSettings* _iniCurrentInfo          = nullptr;
+    QFile* _fileYouTubeLastMessageId    = nullptr;
 
     const QString _settingsKeyEnabled          = "enabled";
     const QString _settingsKeyOutputFolder     = "output_folder";
