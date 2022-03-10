@@ -213,7 +213,7 @@ void OutputToFile::onMessagesReceived(const ChatMessage &message)
 
 void OutputToFile::showInExplorer()
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(_outputFolder));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QString("file:///") + _outputFolder));
 }
 
 void OutputToFile::setCodecOption(int option, bool applyWithoutReset)
