@@ -274,7 +274,7 @@ void ChatHandler::onStateChanged()
 #ifndef AXELCHAT_LIBRARY
 void ChatHandler::openProgramFolder()
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(QCoreApplication::applicationDirPath()));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QString("file:///") + QCoreApplication::applicationDirPath()));
 }
 #endif
 
