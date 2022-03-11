@@ -39,7 +39,7 @@ private:
     QWebSocket _socket;
 
     QSettings& settings;
-    QString SettingsGroupPath;
+    const QString SettingsGroupPath;
 
     AxelChat::GoodGameInfo _info;
     QString _lastConnectedChannelName;

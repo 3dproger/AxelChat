@@ -8,27 +8,19 @@
 #include <QJsonObject>
 #include <QCoreApplication>
 
-GitHubApi::GitHubApi(QSettings* settings, const QNetworkProxy& proxy, const QString& settingsGroup, QObject *parent) : QObject(parent)
+GitHubApi::GitHubApi(QSettings& settings_, const QNetworkProxy& proxy, const QString& settingsGroup, QObject *parent)
+    : QObject(parent)
+    , settings(settings_)
+    , SettingsGroup(settingsGroup)
 {
-    _settings = settings;
-    _settingsGroup = settingsGroup;
-
     _manager.setProxy(proxy);
 
-    if (_settings)
-    {
-        QDateTime latestPollingAt = _settings->value(_settingsGroup + "/latest_polling_at").toDateTime();
+    QDateTime latestPollingAt = settings.value(SettingsGroup + "/latest_polling_at").toDateTime();
 
-        if (latestPollingAt.isValid())
-        {
-            if (latestPollingAt.addDays(1) <= QDateTime::currentDateTime())//Uncomment for release, comment for testing auto requests
-            //if (true)//Uncomment for testing auto requests, comment for release
-            {
-                checkForNewVersion();
-                _autoRequested = true;
-            }
-        }
-        else
+    if (latestPollingAt.isValid())
+    {
+        if (latestPollingAt.addDays(1) <= QDateTime::currentDateTime())//Uncomment for release, comment for testing auto requests
+        //if (true)//Uncomment for testing auto requests, comment for release
         {
             checkForNewVersion();
             _autoRequested = true;
@@ -237,10 +229,7 @@ void GitHubApi::onReplyReleases()
                 }
             }
 
-            if (_settings)
-            {
-                _settings->setValue(_settingsGroup + "/latest_polling_at", QDateTime::currentDateTime());
-            }
+            settings.setValue(SettingsGroup + "/latest_polling_at", QDateTime::currentDateTime());
 
             /*qDebug(QString("Current version \"%1\", latest version \"%2\"")
                    .arg(currentVersion.toString())
@@ -255,21 +244,18 @@ void GitHubApi::onReplyReleases()
                 {
                     bool skipThisVersion = false;
 
-                    if (_settings)
+                    const QStringList& skippedList = settings.value(SettingsGroup + "/" + _settingsKeyUserSpecifiedLink).toStringList();
+
+                    for (const QString& skippedName : skippedList)
                     {
-                        const QStringList& skippedList = _settings->value(_settingsGroup + "/" + _settingsKeyUserSpecifiedLink).toStringList();
+                        const Version& skipped = Version::fromString(skippedName);
 
-                        for (const QString& skippedName : skippedList)
+                        if (skipped.valid)
                         {
-                            const Version& skipped = Version::fromString(skippedName);
-
-                            if (skipped.valid)
+                            if (_latestRelease.version.toString().trimmed().toLower() == skipped.toString().trimmed().toLower())
                             {
-                                if (_latestRelease.version.toString().trimmed().toLower() == skipped.toString().trimmed().toLower())
-                                {
-                                    skipThisVersion = true;
-                                    break;
-                                }
+                                skipThisVersion = true;
+                                break;
                             }
                         }
                     }
@@ -454,26 +440,23 @@ QDateTime GitHubApi::lastVersionDateTime() const
 
 void GitHubApi::setSkipCurrentVersion(bool skip) const
 {
-    if (_settings)
+    QStringList skippedList = settings.value(SettingsGroup + "/" + _settingsKeyUserSpecifiedLink).toStringList();
+
+    QString currentVersionName = _latestRelease.version.toString();
+
+    if (skip)
     {
-        QStringList skippedList = _settings->value(_settingsGroup + "/" + _settingsKeyUserSpecifiedLink).toStringList();
-
-        QString currentVersionName = _latestRelease.version.toString();
-
-        if (skip)
+        if (!skippedList.contains(currentVersionName))
         {
-            if (!skippedList.contains(currentVersionName))
-            {
-                skippedList.append(currentVersionName);
-            }
+            skippedList.append(currentVersionName);
         }
-        else
-        {
-            skippedList.removeAll(currentVersionName);
-        }
-
-        _settings->setValue(_settingsGroup + "/" + _settingsKeyUserSpecifiedLink, skippedList);
     }
+    else
+    {
+        skippedList.removeAll(currentVersionName);
+    }
+
+    settings.setValue(SettingsGroup + "/" + _settingsKeyUserSpecifiedLink, skippedList);
 }
 
 

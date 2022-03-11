@@ -11,7 +11,7 @@ class I18n : public QObject
     Q_PROPERTY(QString language READ language NOTIFY languageChanged)
 
 public:
-    explicit I18n(QSettings* settings, const QString& settingsGroup, QQmlApplicationEngine* qmlEngine = nullptr, QObject *parent = nullptr);
+    explicit I18n(QSettings& settings, const QString& settingsGroup, QQmlApplicationEngine* qmlEngine = nullptr, QObject *parent = nullptr);
     Q_INVOKABLE bool setLanguage(const QString& shortTag);
     Q_INVOKABLE QString systemLanguage() const;
     ~I18n();
@@ -25,8 +25,8 @@ signals:
 
 private:
     QTranslator* _appTranslator = nullptr;
-    QSettings*    _settings = nullptr;
-    QString _settingsGroupPath = "i18n";
+    QSettings& settings;
+    const QString SettingsGroupPath = "i18n";
 
     QQmlApplicationEngine* _qmlEngine = nullptr;
 

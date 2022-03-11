@@ -3,21 +3,13 @@
 #include <QLocale>
 #include <QQmlEngine>
 
-I18n::I18n(QSettings* settings, const QString& settingsGroup, QQmlApplicationEngine* qmlEngine, QObject *parent) :
+I18n::I18n(QSettings& settings_, const QString& settingsGroup, QQmlApplicationEngine* qmlEngine, QObject *parent) :
     QObject(parent),
-    _settings(settings),
-    _settingsGroupPath(settingsGroup),
+    settings(settings_),
+    SettingsGroupPath(settingsGroup),
     _qmlEngine(qmlEngine)
 {
-    if (_settings)
-    {
-        setLanguage(_settings->value(_settingsGroupPath + "/" + SETTINGNAME_LANGUAGETAG,
-                         systemLanguage()).toString());
-    }
-    else
-    {
-        setLanguage(systemLanguage());
-    }
+    setLanguage(settings.value(SettingsGroupPath + "/" + SETTINGNAME_LANGUAGETAG, systemLanguage()).toString());
 }
 
 bool I18n::setLanguage(const QString &shortTag)
@@ -35,10 +27,8 @@ bool I18n::setLanguage(const QString &shortTag)
         _languageTag = "C";
 
         if (normTag == "c" || normTag == "en") {
-            if (_settings)
-            {
-                _settings->setValue(_settingsGroupPath + "/" + SETTINGNAME_LANGUAGETAG, normTag);
-            }
+            settings.setValue(SettingsGroupPath + "/" + SETTINGNAME_LANGUAGETAG, normTag);
+
             if (_qmlEngine)
             {
                 _qmlEngine->retranslate();
@@ -79,10 +69,7 @@ bool I18n::setLanguage(const QString &shortTag)
             return false;
         }
 
-        if (_settings)
-        {
-            _settings->setValue(_settingsGroupPath + "/" + SETTINGNAME_LANGUAGETAG, normTag);
-        }
+        settings.setValue(SettingsGroupPath + "/" + SETTINGNAME_LANGUAGETAG, normTag);
 
         _languageTag = normTag;
         QLocale::setDefault(normTag);

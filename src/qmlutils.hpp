@@ -15,7 +15,7 @@ class QMLUtils : public QObject
                READ buildCpuArchitecture
                CONSTANT)
 public:
-    explicit QMLUtils(QSettings* settings, const QString& settingsGroup, QObject *parent = nullptr);
+    explicit QMLUtils(QSettings& settings, const QString& settingsGroup, QObject *parent = nullptr);
     static void declareQml();
 
     Q_INVOKABLE static void restartApplication();
@@ -33,8 +33,8 @@ signals:
     void enabledHardwareGraphicsAcceleratorChanged();
 
 private:
-    QSettings* _settings       = nullptr;
-    QString _settingsGroupPath = "qml_utils";
+    QSettings& settings;
+    const QString SettingsGroupPath = "qml_utils";
 
     QString _settingsEnabledHardwareGraphicsAccelerator = "enabledHardwareGraphicsAccelerator";
     bool _enabledHardwareGraphicsAccelerator = true;

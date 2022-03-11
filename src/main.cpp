@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain(APP_INFO_COMPANYDOMAIN_STR);
     QCoreApplication::setApplicationVersion(APP_INFO_PRODUCTVERSION_STR);
 
-    QSettings* settings = new QSettings();
+    QSettings settings;
 
     //QML Utils
     QMLUtils::declareQml();
@@ -62,8 +62,7 @@ int main(int argc, char *argv[])
 
     //ChatHandler
     ChatHandler::declareQml();
-    ChatHandler* chatHandler = new ChatHandler(*settings);
-    settings->setParent(chatHandler);
+    ChatHandler* chatHandler = new ChatHandler(settings);
 
     qRegisterMetaType<size_t>("size_t");
     qRegisterMetaType<std::shared_ptr<QByteArray>>("std::shared_ptr<QByteArray>");

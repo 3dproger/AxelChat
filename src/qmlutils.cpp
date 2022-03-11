@@ -4,15 +4,14 @@
 #include <QQmlEngine>
 #include <QSysInfo>
 
-QMLUtils::QMLUtils(QSettings* settings, const QString& settingsGroup, QObject *parent) :
-    QObject(parent), _settings(settings), _settingsGroupPath(settingsGroup)
+QMLUtils::QMLUtils(QSettings& settings_, const QString& settingsGroup, QObject *parent)
+    : QObject(parent)
+    , settings(settings_)
+    , SettingsGroupPath(settingsGroup)
 {
-    if (_settings)
-    {
-        _enabledHardwareGraphicsAccelerator = settings->value(
-                    _settingsGroupPath + "/" + _settingsEnabledHardwareGraphicsAccelerator,
-                    _enabledHardwareGraphicsAccelerator).toBool();
-    }
+    _enabledHardwareGraphicsAccelerator = settings.value(
+                SettingsGroupPath + "/" + _settingsEnabledHardwareGraphicsAccelerator,
+                _enabledHardwareGraphicsAccelerator).toBool();
 
     if (_enabledHardwareGraphicsAccelerator)
     {
@@ -44,10 +43,7 @@ void QMLUtils::setEnabledHardwareGraphicsAccelerator(bool enabled)
     {
         _enabledHardwareGraphicsAccelerator = enabled;
 
-        if (_settings)
-        {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsEnabledHardwareGraphicsAccelerator, enabled);
-        }
+        settings.setValue(SettingsGroupPath + "/" + _settingsEnabledHardwareGraphicsAccelerator, enabled);
 
         emit enabledHardwareGraphicsAcceleratorChanged();
     }
@@ -60,36 +56,18 @@ QString QMLUtils::buildCpuArchitecture() const
 
 void QMLUtils::setValue(const QString &key, const QVariant &value)
 {
-    if (!_settings)
-    {
-        qWarning() << "!_settings";
-        return;
-    }
-
-    return _settings->setValue(_settingsGroupPath + "/" + key, value);
+    return settings.setValue(SettingsGroupPath + "/" + key, value);
 }
 
 bool QMLUtils::valueBool(const QString& key, bool defaultValue)
 {
-    if (!_settings)
-    {
-        qWarning() << "!_settings";
-        return defaultValue;
-    }
-
-    return _settings->value(_settingsGroupPath + "/" + key, defaultValue).toBool();
+    return settings.value(SettingsGroupPath + "/" + key, defaultValue).toBool();
 }
 
 qreal QMLUtils::valueReal(const QString &key, qreal defaultValue)
 {
-    if (!_settings)
-    {
-        qWarning() << "!_settings";
-        return defaultValue;
-    }
-
     bool ok = false;
-    const qreal result = _settings->value(_settingsGroupPath + "/" + key, defaultValue).toReal(&ok);
+    const qreal result = settings.value(SettingsGroupPath + "/" + key, defaultValue).toReal(&ok);
     if (ok)
     {
         return result;

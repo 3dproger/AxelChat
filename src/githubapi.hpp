@@ -317,7 +317,7 @@ public:
     };
     Q_ENUM(ReplyState)
 
-    explicit GitHubApi(QSettings* settings, const QNetworkProxy& proxy, const QString& settingsGroup = "update_checker", QObject *parent = nullptr);
+    explicit GitHubApi(QSettings& settings, const QNetworkProxy& proxy, const QString& settingsGroup = "update_checker", QObject *parent = nullptr);
 
     static void declareQml()
     {
@@ -351,8 +351,8 @@ private:
     OperatingSystem currentOperatingSystem() const;
     Architecture currentArchitecture() const;
 
-    QSettings* _settings = nullptr;
-    QString _settingsGroup;
+    QSettings& settings;
+    const QString SettingsGroup;
 
     const QString _settingsKeyUserSpecifiedLink = "skipped_versions";
 
