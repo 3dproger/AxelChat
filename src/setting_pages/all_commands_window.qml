@@ -1,14 +1,20 @@
 import QtQuick 2.0
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.12
 import "../my_components" as MyComponents
 
-ApplicationWindow {
-    id: applicationWindow
+Window {
+    id: window
     width: 610
     height: 407
     minimumHeight: 200
     minimumWidth:  200
+
+    Material.theme: Material.Dark
+    Material.accent: "#03A9F4"
+    Material.foreground: "#FFFFFF"
+    color: "#202225"
 
     ScrollView {
         anchors.left: parent.left
@@ -32,10 +38,8 @@ ApplicationWindow {
             anchors.rightMargin: 14
             anchors.topMargin: 13
             anchors.leftMargin: 7
-
             readOnly: true
-
-
+            background.visible: false
         }
     }
 
@@ -52,6 +56,7 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 8
         anchors.rightMargin: 8
+        highlighted: true
 
         onClicked: {
             clipboard.text = textInputCommands.text;
