@@ -4,25 +4,30 @@
 #include <QQmlEngine>
 #include <QSysInfo>
 
+namespace
+{
+
+static const QString SK_EnabledHardwareGraphicsAccelerator = "enabledHardwareGraphicsAccelerator";
+
+}
+
 QMLUtils::QMLUtils(QSettings& settings_, const QString& settingsGroup, QObject *parent)
     : QObject(parent)
     , settings(settings_)
     , SettingsGroupPath(settingsGroup)
 {
-    _enabledHardwareGraphicsAccelerator = settings.value(
-                SettingsGroupPath + "/" + _settingsEnabledHardwareGraphicsAccelerator,
-                _enabledHardwareGraphicsAccelerator).toBool();
-
-    if (_enabledHardwareGraphicsAccelerator)
     {
-        //AA_UseDesktopOpenGL == OpenGL для ПК (работает плохо)
-        //AA_UseOpenGLES == OpenGL для мобильных платформ (работает лучше всего)
-        //ToDo: неизвестно, что произойдёт, если не будет поддерживаться аппаратное ускорение устройством
-        QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-    }
-    else
-    {
-        QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+        if (enabledHardwareGraphicsAccelerator())
+        {
+            //AA_UseDesktopOpenGL == OpenGL для ПК (работает плохо)
+            //AA_UseOpenGLES == OpenGL для мобильных платформ (работает лучше всего)
+            //ToDo: неизвестно, что произойдёт, если не будет поддерживаться аппаратное ускорение устройством
+            QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+        }
+        else
+        {
+            QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+        }
     }
 }
 
@@ -34,18 +39,15 @@ void QMLUtils::restartApplication()
 
 bool QMLUtils::enabledHardwareGraphicsAccelerator() const
 {
-    return _enabledHardwareGraphicsAccelerator;
+    return settings.value(SettingsGroupPath + "/" + SK_EnabledHardwareGraphicsAccelerator, true).toBool();
 }
 
 void QMLUtils::setEnabledHardwareGraphicsAccelerator(bool enabled)
 {
-    if (enabled != _enabledHardwareGraphicsAccelerator)
+    if (enabled != enabledHardwareGraphicsAccelerator())
     {
-        _enabledHardwareGraphicsAccelerator = enabled;
-
-        settings.setValue(SettingsGroupPath + "/" + _settingsEnabledHardwareGraphicsAccelerator, enabled);
-
-        emit enabledHardwareGraphicsAcceleratorChanged();
+        settings.setValue(SettingsGroupPath + "/" + SK_EnabledHardwareGraphicsAccelerator, enabled);
+        emit valueChanged();
     }
 }
 

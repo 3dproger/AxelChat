@@ -7,13 +7,9 @@
 class QMLUtils : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool enabledHardwareGraphicsAccelerator
-               READ enabledHardwareGraphicsAccelerator
-               WRITE setEnabledHardwareGraphicsAccelerator
-               NOTIFY enabledHardwareGraphicsAcceleratorChanged)
-    Q_PROPERTY(QString buildCpuArchitecture
-               READ buildCpuArchitecture
-               CONSTANT)
+    Q_PROPERTY(bool enabledHardwareGraphicsAccelerator READ enabledHardwareGraphicsAccelerator WRITE setEnabledHardwareGraphicsAccelerator NOTIFY valueChanged)
+    Q_PROPERTY(QString buildCpuArchitecture READ buildCpuArchitecture CONSTANT)
+
 public:
     explicit QMLUtils(QSettings& settings, const QString& settingsGroup, QObject *parent = nullptr);
     static void declareQml();
@@ -30,14 +26,11 @@ public:
     Q_INVOKABLE qreal valueReal(const QString& key, qreal defaultValue);
 
 signals:
-    void enabledHardwareGraphicsAcceleratorChanged();
+    void valueChanged();
 
 private:
     QSettings& settings;
     const QString SettingsGroupPath = "qml_utils";
-
-    QString _settingsEnabledHardwareGraphicsAccelerator = "enabledHardwareGraphicsAccelerator";
-    bool _enabledHardwareGraphicsAccelerator = true;
 };
 
 #endif // QMLUTILS_HPP
