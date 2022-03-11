@@ -4,17 +4,17 @@
 <context>
     <name>ChatBot</name>
     <message>
-        <location filename="chatbot.cpp" line="272"/>
+        <location filename="chatbot.cpp" line="254"/>
         <source>Custom commands</source>
         <translation>カスタムコマンド</translation>
     </message>
     <message>
-        <location filename="chatbot.cpp" line="279"/>
+        <location filename="chatbot.cpp" line="261"/>
         <source>Built-in commands</source>
         <translation>組み込みコマンド</translation>
     </message>
     <message>
-        <location filename="chatbot.cpp" line="290"/>
+        <location filename="chatbot.cpp" line="272"/>
         <source>2nd Channel Edition</source>
         <translation></translation>
     </message>
@@ -22,27 +22,27 @@
 <context>
     <name>ChatHandler</name>
     <message>
-        <location filename="chathandler.cpp" line="288"/>
+        <location filename="chathandler.cpp" line="283"/>
         <source>YouTube connected</source>
         <translation>YouTubeが接続されました</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="294"/>
+        <location filename="chathandler.cpp" line="289"/>
         <source>Twitch connected</source>
         <translation>Twitchが接続されました</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="300"/>
+        <location filename="chathandler.cpp" line="295"/>
         <source>GoodGame connected</source>
         <translation>GoodGameが接続されました</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="320"/>
+        <location filename="chathandler.cpp" line="315"/>
         <source>YouTube disconnected</source>
         <translation>YouTubeが切断されています</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="327"/>
+        <location filename="chathandler.cpp" line="322"/>
         <source>Twitch disconnected</source>
         <translation>Twitchが切断されています</translation>
     </message>
@@ -333,27 +333,27 @@
         <translation>pingタイムアウト！ 再度接続しています...</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="215"/>
+        <location filename="twitch.cpp" line="212"/>
         <source>Channel not specified</source>
         <translation>チャネルが指定されていません</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="220"/>
+        <location filename="twitch.cpp" line="217"/>
         <source>OAuth token not specified</source>
         <translation>OAuthトークンが指定されていません</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="223"/>
+        <location filename="twitch.cpp" line="220"/>
         <source>Not connected</source>
         <translation>接続されていません</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="226"/>
+        <location filename="twitch.cpp" line="223"/>
         <source>Connecting...</source>
         <translation>接続しています...</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="229"/>
+        <location filename="twitch.cpp" line="226"/>
         <source>Successfully connected!</source>
         <translation>正常に接続されました！</translation>
     </message>
@@ -361,47 +361,47 @@
 <context>
     <name>YouTube</name>
     <message>
-        <location filename="youtube.cpp" line="324"/>
+        <location filename="youtube.cpp" line="313"/>
         <source>Broadcast not specified</source>
         <translation>ブロードキャストが指定されていません</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="329"/>
+        <location filename="youtube.cpp" line="318"/>
         <source>The broadcast is not correct</source>
         <translation>ブロードキャストが正しくありません</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="332"/>
+        <location filename="youtube.cpp" line="321"/>
         <source>Not connected</source>
         <translation>接続されていません</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="335"/>
+        <location filename="youtube.cpp" line="324"/>
         <source>Connecting...</source>
         <translation>接続しています...</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="338"/>
+        <location filename="youtube.cpp" line="327"/>
         <source>Successfully connected!</source>
         <translation>正常に接続されました！</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="435"/>
+        <location filename="youtube.cpp" line="421"/>
         <source>Broadcast Short URL: %1</source>
         <translation>ブロードキャスト短縮URL：%1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="436"/>
+        <location filename="youtube.cpp" line="422"/>
         <source>Broadcast Long URL: %1</source>
         <translation>ブロードキャスト長いURL： %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="437"/>
+        <location filename="youtube.cpp" line="423"/>
         <source>Chat URL: %1</source>
         <translation>チャットURL： %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="438"/>
+        <location filename="youtube.cpp" line="424"/>
         <source>Control Panel URL: %1</source>
         <translation>コントロールパネルのURL： %1</translation>
     </message>
@@ -445,37 +445,37 @@
         <translation>申し込む</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="197"/>
+        <location filename="setting_pages/about.qml" line="176"/>
         <source>Releases</source>
         <translation>リリース</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="211"/>
+        <location filename="setting_pages/about.qml" line="269"/>
         <source>Source Code</source>
         <translation>ソースコード</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="223"/>
+        <location filename="setting_pages/about.qml" line="190"/>
         <source>AxelChat is a free and cross-platform app for adding interactivity to live-streaming and interacting with viewers simultaneously for multiple live-streaming platforms</source>
         <translation>AxelChatは、ライブストリーミングに双方向性を追加し、複数のライブストリーミングプラットフォームで同時に視聴者と対話するための無料のクロスプラットフォームアプリです</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="237"/>
+        <location filename="setting_pages/about.qml" line="204"/>
         <source>GitHub</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="264"/>
+        <location filename="setting_pages/about.qml" line="244"/>
         <source>Support the developer</source>
         <translation>開発者をサポートする</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="277"/>
+        <location filename="setting_pages/about.qml" line="257"/>
         <source>Complaints and suggestions (Issues)</source>
         <translation>苦情と提案（問題）</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="307"/>
+        <location filename="setting_pages/about.qml" line="299"/>
         <source>You are using the most current version!
 
 Current version: %1
@@ -486,12 +486,12 @@ Latest version available: %2</source>
 利用可能なバージョン： %2</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="315"/>
+        <location filename="setting_pages/about.qml" line="307"/>
         <source>Failed to connect to server. Check your internet connection!</source>
         <translation>サーバーへの接続に失敗しました。 インターネット接続を確認してください！</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="320"/>
+        <location filename="setting_pages/about.qml" line="312"/>
         <source>Request limits exceeded! Please try again later</source>
         <translation>リクエスト制限を超えました！ 後でもう一度やり直してください</translation>
     </message>
@@ -499,7 +499,7 @@ Latest version available: %2</source>
 <context>
     <name>all_commands_window</name>
     <message>
-        <location filename="setting_pages/all_commands_window.qml" line="50"/>
+        <location filename="setting_pages/all_commands_window.qml" line="54"/>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
@@ -672,47 +672,52 @@ Latest version available: %2</source>
         <translation>言語</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="87"/>
+        <location filename="setting_pages/common.qml" line="86"/>
         <source>Stay on Top Window</source>
         <translation>ウィンドウを上に保つ</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="101"/>
+        <location filename="setting_pages/common.qml" line="100"/>
         <source>Click-through window</source>
         <translation>クリックスルーウィンドウ</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="123"/>
+        <location filename="setting_pages/common.qml" line="122"/>
         <source>Clear Messages on Link Change</source>
         <translation>リンク変更時のメッセージのクリア</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="135"/>
+        <location filename="setting_pages/common.qml" line="134"/>
         <source>Enabled Hardware Graphics Accelerator</source>
         <translation>ハードウェアグラフィックアクセラレーションを有効にする</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="151"/>
+        <location filename="setting_pages/common.qml" line="150"/>
+        <source>Enabled HighDpi scaling</source>
+        <translation>HighDpiスケーリングを有効にする</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/common.qml" line="166"/>
         <source>Enable Sound when New Message Received</source>
         <translation>新しいメッセージを受信したときにサウンドを有効にする</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="173"/>
+        <location filename="setting_pages/common.qml" line="188"/>
         <source>Proxy (SOCKS5)</source>
         <translation>プロキシー (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="188"/>
+        <location filename="setting_pages/common.qml" line="203"/>
         <source>Host name...</source>
         <translation>ホスト名...</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="209"/>
+        <location filename="setting_pages/common.qml" line="224"/>
         <source>Port...</source>
         <translation>ポート...</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="240"/>
+        <location filename="setting_pages/common.qml" line="255"/>
         <source>Program folder</source>
         <translation>プログラムフォルダ</translation>
     </message>
@@ -777,57 +782,55 @@ Latest version available: %2</source>
 <context>
     <name>outputtofile</name>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="25"/>
         <source>Export to txt</source>
-        <translation>txtにエクスポート</translation>
+        <translation type="vanished">txtにエクスポート</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="33"/>
         <source>Failed to save!</source>
-        <translation>保存に失敗しました！</translation>
+        <translation type="vanished">保存に失敗しました！</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="47"/>
+        <location filename="setting_pages/outputtofile.qml" line="29"/>
         <source>Enable Output to ini-file</source>
         <translation>iniファイルへの出力を有効にする</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="61"/>
+        <location filename="setting_pages/outputtofile.qml" line="43"/>
         <source>Folder where to save:</source>
         <translation>保存先のフォルダー：</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="73"/>
+        <location filename="setting_pages/outputtofile.qml" line="55"/>
         <source>Folder where to save...</source>
         <translation>保存先のフォルダ...</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="86"/>
+        <location filename="setting_pages/outputtofile.qml" line="68"/>
         <source>Find</source>
         <translation>探す</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="99"/>
+        <location filename="setting_pages/outputtofile.qml" line="81"/>
         <source>Please select a folder</source>
         <translation>フォルダを選択してください</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="112"/>
+        <location filename="setting_pages/outputtofile.qml" line="94"/>
         <source>Show in Explorer</source>
         <translation>エクスプローラーで表示</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="120"/>
+        <location filename="setting_pages/outputtofile.qml" line="102"/>
         <source>Reset Path</source>
         <translation>パスをリセット</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="136"/>
+        <location filename="setting_pages/outputtofile.qml" line="118"/>
         <source>Codec:</source>
         <translation>コーデック：</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="151"/>
+        <location filename="setting_pages/outputtofile.qml" line="133"/>
         <source>ANSI and UTF-8 numbers</source>
         <translation>UTF-8番号とANSI</translation>
     </message>

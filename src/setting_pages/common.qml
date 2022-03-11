@@ -34,7 +34,6 @@ ScrollView {
                 width: 210
 
                 model: ListModel {
-                    id: model
                     ListElement { text: "English"; }
                     ListElement { text: "Русский"; }
                     ListElement { text: "日本語 (experimental)"; }
@@ -140,6 +139,22 @@ ScrollView {
 
             onCheckedChanged: {
                 qmlUtils.enabledHardwareGraphicsAccelerator = checked;
+            }
+
+            onClicked: {
+                Global.windowSettings.showRestartDialog()
+            }
+        }
+
+        Switch {
+            text: qsTr("Enabled HighDpi scaling")
+
+            Component.onCompleted: {
+                checked = qmlUtils.enabledHighDpiScaling;
+            }
+
+            onCheckedChanged: {
+                qmlUtils.enabledHighDpiScaling = checked;
             }
 
             onClicked: {

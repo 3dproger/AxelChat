@@ -8,6 +8,7 @@ namespace
 {
 
 static const QString SK_EnabledHardwareGraphicsAccelerator = "enabledHardwareGraphicsAccelerator";
+static const QString SK_EnabledHighDpiScaling = "enabledHighDpiScaling";
 
 }
 
@@ -29,6 +30,17 @@ QMLUtils::QMLUtils(QSettings& settings_, const QString& settingsGroup, QObject *
             QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
         }
     }
+
+    {
+        if (enabledHighDpiScaling())
+        {
+            QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+        }
+        else
+        {
+            QApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
+        }
+    }
 }
 
 void QMLUtils::restartApplication()
@@ -47,7 +59,21 @@ void QMLUtils::setEnabledHardwareGraphicsAccelerator(bool enabled)
     if (enabled != enabledHardwareGraphicsAccelerator())
     {
         settings.setValue(SettingsGroupPath + "/" + SK_EnabledHardwareGraphicsAccelerator, enabled);
-        emit valueChanged();
+        emit dataChanged();
+    }
+}
+
+bool QMLUtils::enabledHighDpiScaling() const
+{
+    return settings.value(SettingsGroupPath + "/" + SK_EnabledHighDpiScaling, false).toBool();
+}
+
+void QMLUtils::setEnabledHighDpiScaling(bool enabled)
+{
+    if (enabled != enabledHighDpiScaling())
+    {
+        settings.setValue(SettingsGroupPath + "/" + SK_EnabledHighDpiScaling, enabled);
+        emit dataChanged();
     }
 }
 

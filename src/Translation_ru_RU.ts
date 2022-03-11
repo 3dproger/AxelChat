@@ -4,17 +4,17 @@
 <context>
     <name>ChatBot</name>
     <message>
-        <location filename="chatbot.cpp" line="272"/>
+        <location filename="chatbot.cpp" line="254"/>
         <source>Custom commands</source>
         <translation>Пользовательские команды</translation>
     </message>
     <message>
-        <location filename="chatbot.cpp" line="279"/>
+        <location filename="chatbot.cpp" line="261"/>
         <source>Built-in commands</source>
         <translation>Встроенные команды</translation>
     </message>
     <message>
-        <location filename="chatbot.cpp" line="290"/>
+        <location filename="chatbot.cpp" line="272"/>
         <source>2nd Channel Edition</source>
         <translation></translation>
     </message>
@@ -34,28 +34,28 @@
         <translation type="vanished">YouTube подключён: %1</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="288"/>
+        <location filename="chathandler.cpp" line="283"/>
         <source>YouTube connected</source>
         <translation>YouTube подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="294"/>
+        <location filename="chathandler.cpp" line="289"/>
         <source>Twitch connected</source>
         <oldsource>Twitch connected: %1</oldsource>
         <translation>Twitch подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="300"/>
+        <location filename="chathandler.cpp" line="295"/>
         <source>GoodGame connected</source>
         <translation>GoodGame подключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="320"/>
+        <location filename="chathandler.cpp" line="315"/>
         <source>YouTube disconnected</source>
         <translation>YouTube отключён</translation>
     </message>
     <message>
-        <location filename="chathandler.cpp" line="327"/>
+        <location filename="chathandler.cpp" line="322"/>
         <source>Twitch disconnected</source>
         <translation>Twitch отключён</translation>
     </message>
@@ -404,27 +404,27 @@
         <translation>Тайм-аут пинга! Переподключение...</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="215"/>
+        <location filename="twitch.cpp" line="212"/>
         <source>Channel not specified</source>
         <translation>Канал не указан</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="220"/>
+        <location filename="twitch.cpp" line="217"/>
         <source>OAuth token not specified</source>
         <translation>OAuth-токен не указан</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="223"/>
+        <location filename="twitch.cpp" line="220"/>
         <source>Not connected</source>
         <translation>Не подключено</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="226"/>
+        <location filename="twitch.cpp" line="223"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="twitch.cpp" line="229"/>
+        <location filename="twitch.cpp" line="226"/>
         <source>Successfully connected!</source>
         <translation>Успешно подключено!</translation>
     </message>
@@ -432,27 +432,27 @@
 <context>
     <name>YouTube</name>
     <message>
-        <location filename="youtube.cpp" line="324"/>
+        <location filename="youtube.cpp" line="313"/>
         <source>Broadcast not specified</source>
         <translation>Трансляция не указана</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="329"/>
+        <location filename="youtube.cpp" line="318"/>
         <source>The broadcast is not correct</source>
         <translation>Трансляция указана некорректно</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="332"/>
+        <location filename="youtube.cpp" line="321"/>
         <source>Not connected</source>
         <translation>Не подключено</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="335"/>
+        <location filename="youtube.cpp" line="324"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="338"/>
+        <location filename="youtube.cpp" line="327"/>
         <source>Successfully connected!</source>
         <translation>Успешно подключено!</translation>
     </message>
@@ -469,22 +469,22 @@
         <translation type="vanished">ID трансляции: %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="435"/>
+        <location filename="youtube.cpp" line="421"/>
         <source>Broadcast Short URL: %1</source>
         <translation>Короткий URL трансляции: %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="436"/>
+        <location filename="youtube.cpp" line="422"/>
         <source>Broadcast Long URL: %1</source>
         <translation>Длинный URL трансляции: %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="437"/>
+        <location filename="youtube.cpp" line="423"/>
         <source>Chat URL: %1</source>
         <translation>URL чата: %1</translation>
     </message>
     <message>
-        <location filename="youtube.cpp" line="438"/>
+        <location filename="youtube.cpp" line="424"/>
         <source>Control Panel URL: %1</source>
         <translation>URL панели управления: %1</translation>
     </message>
@@ -492,7 +492,7 @@
 <context>
     <name>about</name>
     <message>
-        <location filename="setting_pages/about.qml" line="307"/>
+        <location filename="setting_pages/about.qml" line="299"/>
         <source>You are using the most current version!
 
 Current version: %1
@@ -506,12 +506,12 @@ Latest version available: %2</oldsource>
 Последняя доступная версия: %2</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="315"/>
+        <location filename="setting_pages/about.qml" line="307"/>
         <source>Failed to connect to server. Check your internet connection!</source>
         <translation>Не удалось подключиться к серверу. Проверьте подключение к интернету!</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="320"/>
+        <location filename="setting_pages/about.qml" line="312"/>
         <source>Request limits exceeded! Please try again later</source>
         <translation>Превышен лимит запросов! Пожалуйста, повторите попытку  позже</translation>
     </message>
@@ -553,7 +553,7 @@ Latest version available: %2</oldsource>
         <translation>подпишись</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="264"/>
+        <location filename="setting_pages/about.qml" line="244"/>
         <source>Support the developer</source>
         <translation>Поддержать разработчика</translation>
     </message>
@@ -562,12 +562,12 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Форум (Discussions)</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="197"/>
+        <location filename="setting_pages/about.qml" line="176"/>
         <source>Releases</source>
         <translation>Релизы</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="211"/>
+        <location filename="setting_pages/about.qml" line="269"/>
         <source>Source Code</source>
         <translation>Исходный код</translation>
     </message>
@@ -576,7 +576,7 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Лицензия</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="277"/>
+        <location filename="setting_pages/about.qml" line="257"/>
         <source>Complaints and suggestions (Issues)</source>
         <oldsource>Complaints and suggestions  (Issues)</oldsource>
         <translation>Жалобы и предложения (Issues)</translation>
@@ -586,13 +586,13 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Жалобы и предложения</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="223"/>
+        <location filename="setting_pages/about.qml" line="190"/>
         <source>AxelChat is a free and cross-platform app for adding interactivity to live-streaming and interacting with viewers simultaneously for multiple live-streaming platforms</source>
         <oldsource>A free and cross-platform app for adding interactivity to live-streaming and interacting with viewers simultaneously for multiple live-streaming platforms</oldsource>
         <translation>AxelChat — бесплатное кроссплатформенное приложение для добавления интерактивности к прямым трансляциям и одновременного взаимодействия со зрителями с нескольких стриминговых платформ</translation>
     </message>
     <message>
-        <location filename="setting_pages/about.qml" line="237"/>
+        <location filename="setting_pages/about.qml" line="204"/>
         <source>GitHub</source>
         <translation></translation>
     </message>
@@ -600,7 +600,7 @@ Latest version available: %2</oldsource>
 <context>
     <name>all_commands_window</name>
     <message>
-        <location filename="setting_pages/all_commands_window.qml" line="50"/>
+        <location filename="setting_pages/all_commands_window.qml" line="54"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
@@ -814,7 +814,7 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Прокси</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="188"/>
+        <location filename="setting_pages/common.qml" line="203"/>
         <source>Host name...</source>
         <translation>Имя хоста...</translation>
     </message>
@@ -823,7 +823,7 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Сервер...</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="209"/>
+        <location filename="setting_pages/common.qml" line="224"/>
         <source>Port...</source>
         <translation>Порт...</translation>
     </message>
@@ -841,22 +841,27 @@ Latest version available: %2</oldsource>
         <translation>Клики мыши будут игнорироваться окном чата. Вернуться в предыдущее состояние можно через иконку в трее</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="101"/>
+        <location filename="setting_pages/common.qml" line="100"/>
         <source>Click-through window</source>
         <translation>Пропускать клики мыши</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="123"/>
+        <location filename="setting_pages/common.qml" line="122"/>
         <source>Clear Messages on Link Change</source>
         <translation>Очистить сообщения при смене ссылки</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="135"/>
+        <location filename="setting_pages/common.qml" line="134"/>
         <source>Enabled Hardware Graphics Accelerator</source>
         <translation>Включить аппаратный ускоритель графики</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="240"/>
+        <location filename="setting_pages/common.qml" line="150"/>
+        <source>Enabled HighDpi scaling</source>
+        <translation>Включить HighDpi масштабирование</translation>
+    </message>
+    <message>
+        <location filename="setting_pages/common.qml" line="255"/>
         <source>Program folder</source>
         <translation>Папка программы</translation>
     </message>
@@ -865,7 +870,7 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Изменения вступят в силу после перезапуска программы</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="151"/>
+        <location filename="setting_pages/common.qml" line="166"/>
         <source>Enable Sound when New Message Received</source>
         <translation>Включить звук при получении нового сообщения</translation>
     </message>
@@ -879,12 +884,12 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Не обрабатывать ввод</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="173"/>
+        <location filename="setting_pages/common.qml" line="188"/>
         <source>Proxy (SOCKS5)</source>
         <translation>Прокси (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="setting_pages/common.qml" line="87"/>
+        <location filename="setting_pages/common.qml" line="86"/>
         <source>Stay on Top Window</source>
         <translation>Поверх всех окон</translation>
     </message>
@@ -982,32 +987,31 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Включить вывод в файл</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="33"/>
         <source>Failed to save!</source>
-        <translation>Не удалось сохранить!</translation>
+        <translation type="vanished">Не удалось сохранить!</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="47"/>
+        <location filename="setting_pages/outputtofile.qml" line="29"/>
         <source>Enable Output to ini-file</source>
         <translation>Включить вывод в ini-файл</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="61"/>
+        <location filename="setting_pages/outputtofile.qml" line="43"/>
         <source>Folder where to save:</source>
         <translation>Папка, где будет сохранено:</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="73"/>
+        <location filename="setting_pages/outputtofile.qml" line="55"/>
         <source>Folder where to save...</source>
         <translation>Папка, где сохранять...</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="86"/>
+        <location filename="setting_pages/outputtofile.qml" line="68"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="99"/>
+        <location filename="setting_pages/outputtofile.qml" line="81"/>
         <source>Please select a folder</source>
         <translation>Пожалуйста, выберите папку</translation>
     </message>
@@ -1024,12 +1028,12 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Сбросить</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="112"/>
+        <location filename="setting_pages/outputtofile.qml" line="94"/>
         <source>Show in Explorer</source>
         <translation>Показать в Проводнике</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="120"/>
+        <location filename="setting_pages/outputtofile.qml" line="102"/>
         <source>Reset Path</source>
         <translation>Сбросить путь</translation>
     </message>
@@ -1042,13 +1046,13 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Local 8 Bit</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="151"/>
+        <location filename="setting_pages/outputtofile.qml" line="133"/>
         <source>ANSI and UTF-8 numbers</source>
         <oldsource>Latin-1 and UTF-8 numbers</oldsource>
         <translation>ANSI и UTF-8 номера</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="136"/>
+        <location filename="setting_pages/outputtofile.qml" line="118"/>
         <source>Codec:</source>
         <translation>Кодировка:</translation>
     </message>
@@ -1061,9 +1065,8 @@ Latest version available: %2</oldsource>
         <translation type="vanished">Перезапуск</translation>
     </message>
     <message>
-        <location filename="setting_pages/outputtofile.qml" line="25"/>
         <source>Export to txt</source>
-        <translation>Экспорт в txt</translation>
+        <translation type="vanished">Экспорт в txt</translation>
     </message>
 </context>
 <context>

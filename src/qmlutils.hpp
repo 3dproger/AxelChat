@@ -7,7 +7,8 @@
 class QMLUtils : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool enabledHardwareGraphicsAccelerator READ enabledHardwareGraphicsAccelerator WRITE setEnabledHardwareGraphicsAccelerator NOTIFY valueChanged)
+    Q_PROPERTY(bool enabledHardwareGraphicsAccelerator READ enabledHardwareGraphicsAccelerator WRITE setEnabledHardwareGraphicsAccelerator NOTIFY dataChanged)
+    Q_PROPERTY(bool enabledHighDpiScaling READ enabledHighDpiScaling WRITE setEnabledHighDpiScaling NOTIFY dataChanged)
     Q_PROPERTY(QString buildCpuArchitecture READ buildCpuArchitecture CONSTANT)
 
 public:
@@ -15,8 +16,12 @@ public:
     static void declareQml();
 
     Q_INVOKABLE static void restartApplication();
+
     bool enabledHardwareGraphicsAccelerator() const;
     void setEnabledHardwareGraphicsAccelerator(bool enabled);
+
+    bool enabledHighDpiScaling() const;
+    void setEnabledHighDpiScaling(bool enabled);
 
     QString buildCpuArchitecture() const;
 
@@ -26,7 +31,7 @@ public:
     Q_INVOKABLE qreal valueReal(const QString& key, qreal defaultValue);
 
 signals:
-    void valueChanged();
+    void dataChanged();
 
 private:
     QSettings& settings;

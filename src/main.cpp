@@ -22,8 +22,6 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
     QCoreApplication::setApplicationName   (APP_INFO_PRODUCTNAME_STR);
     QCoreApplication::setOrganizationName  (APP_INFO_COMPANYNAME_STR);
     QCoreApplication::setOrganizationDomain(APP_INFO_COMPANYDOMAIN_STR);
