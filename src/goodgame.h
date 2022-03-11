@@ -13,7 +13,7 @@ class GoodGame : public AbstractChatService
 {
     Q_OBJECT
 public:
-    explicit GoodGame(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
+    explicit GoodGame(const QNetworkProxy& proxy, QSettings& settings, const QString& SettingsGroupPath, QObject *parent = nullptr);
     ~GoodGame();
 
     void setProxy(const QNetworkProxy &proxy) override;
@@ -38,8 +38,8 @@ private:
 
     QWebSocket _socket;
 
-    QSettings* _settings = nullptr;
-    QString _settingsGroupPath;
+    QSettings& settings;
+    QString SettingsGroupPath;
 
     AxelChat::GoodGameInfo _info;
     QString _lastConnectedChannelName;

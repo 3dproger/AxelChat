@@ -33,7 +33,7 @@ class ChatHandler : public QObject
     Q_PROPERTY(int     proxyServerPort    READ proxyServerPort    WRITE setProxyServerPort    NOTIFY proxyChanged)
 
 public:
-    explicit ChatHandler(QSettings* settings, QObject *parent = nullptr);
+    explicit ChatHandler(QSettings& settings, QObject *parent = nullptr);
     ~ChatHandler();
     MessageAuthor authorByChannelId(const QString& channelId) const;
 
@@ -104,7 +104,7 @@ private:
     ChatMessagesModel _messagesModel;
     QMap<QString, MessageAuthor> _authors;
 
-    QSettings*    _settings                 = nullptr;
+    QSettings& settings;
 
     YouTube* _youTube                       = nullptr;
     Twitch* _twitch                         = nullptr;

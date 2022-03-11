@@ -18,31 +18,28 @@ static const QString SettingsProxyPort                          = SettingsGroupP
 
 }
 
-ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
+ChatHandler::ChatHandler(QSettings& settings_, QObject *parent)
     : QObject(parent)
-    , _settings(settings)
+    , settings(settings_)
 {
-    if (_settings)
-    {
-        setEnabledSoundNewMessage(_settings->value(SettingsEnabledSoundNewMessage, _enabledSoundNewMessage).toBool());
+    setEnabledSoundNewMessage(settings.value(SettingsEnabledSoundNewMessage, _enabledSoundNewMessage).toBool());
 
-        setEnabledClearMessagesOnLinkChange(_settings->value(SettingsEnabledClearMessagesOnLinkChange, _enabledClearMessagesOnLinkChange).toBool());
+    setEnabledClearMessagesOnLinkChange(settings.value(SettingsEnabledClearMessagesOnLinkChange, _enabledClearMessagesOnLinkChange).toBool());
 
-        setProxyEnabled(_settings->value(SettingsProxyEnabled, _enabledProxy).toBool());
-        setProxyServerAddress(_settings->value(SettingsProxyAddress, _proxy.hostName()).toString());
-        setProxyServerPort(_settings->value(SettingsProxyPort, _proxy.port()).toInt());
-    }
+    setProxyEnabled(settings.value(SettingsProxyEnabled, _enabledProxy).toBool());
+    setProxyServerAddress(settings.value(SettingsProxyAddress, _proxy.hostName()).toString());
+    setProxyServerPort(settings.value(SettingsProxyPort, _proxy.port()).toInt());
 
 #ifndef AXELCHAT_LIBRARY
     //Bot
-    _bot = new ChatBot(*settings, SettingsGroupPath + "/chat_bot");
+    _bot = new ChatBot(settings, SettingsGroupPath + "/chat_bot");
 
     //Output to file
-    _outputToFile = new OutputToFile(*settings, SettingsGroupPath + "/output_to_file");
+    _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file");
 #endif
 
     //YouTube
-    _youTube = new YouTube(proxy(), *settings, SettingsGroupPath + "/youtube");
+    _youTube = new YouTube(proxy(), settings, SettingsGroupPath + "/youtube");
 
     connect(_youTube, &YouTube::readyRead, this, &ChatHandler::onReadyRead);
 
@@ -61,7 +58,7 @@ ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
     });
 
     //Twitch
-    _twitch = new Twitch(proxy(), *settings, SettingsGroupPath + "/twitch");
+    _twitch = new Twitch(proxy(), settings, SettingsGroupPath + "/twitch");
 
     connect(_twitch, SIGNAL(readyRead(QList<ChatMessage>&)),
                      this, SLOT(onReadyRead(QList<ChatMessage>&)));
@@ -418,10 +415,7 @@ void ChatHandler::setEnabledSoundNewMessage(bool enabled)
     {
         _enabledSoundNewMessage = enabled;
 
-        if (_settings)
-        {
-            _settings->setValue(SettingsEnabledSoundNewMessage, enabled);
-        }
+        settings.setValue(SettingsEnabledSoundNewMessage, enabled);
 
         emit enabledSoundNewMessageChanged();
     }
@@ -433,10 +427,7 @@ void ChatHandler::setEnabledClearMessagesOnLinkChange(bool enabled)
     {
         _enabledClearMessagesOnLinkChange = enabled;
 
-        if (_settings)
-        {
-            _settings->setValue(SettingsEnabledClearMessagesOnLinkChange, enabled);
-        }
+        settings.setValue(SettingsEnabledClearMessagesOnLinkChange, enabled);
 
         emit enabledClearMessagesOnLinkChangeChanged();
     }
@@ -512,10 +503,7 @@ void ChatHandler::setProxyEnabled(bool enabled)
     {
         _enabledProxy = enabled;
 
-        if (_settings)
-        {
-            _settings->setValue(SettingsProxyEnabled, enabled);
-        }
+        settings.setValue(SettingsProxyEnabled, enabled);
 
         updateProxy();
     }
@@ -529,10 +517,7 @@ void ChatHandler::setProxyServerAddress(QString address)
     {
         _proxy.setHostName(address);
 
-        if (_settings)
-        {
-            _settings->setValue(SettingsProxyAddress, address);
-        }
+        settings.setValue(SettingsProxyAddress, address);
 
         updateProxy();
     }
@@ -544,10 +529,7 @@ void ChatHandler::setProxyServerPort(int port)
     {
         _proxy.setPort(port);
 
-        if (_settings)
-        {
-            _settings->setValue(SettingsProxyPort, port);
-        }
+        settings.setValue(SettingsProxyPort, port);
 
         updateProxy();
     }

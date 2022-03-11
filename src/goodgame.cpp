@@ -3,10 +3,10 @@
 #include <QJsonValue>
 #include <QJsonArray>
 
-GoodGame::GoodGame(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
+GoodGame::GoodGame(const QNetworkProxy& proxy, QSettings& settings_, const QString& settingsGroupPath, QObject *parent)
     : AbstractChatService(proxy, parent)
-    , _settings(settings)
-    , _settingsGroupPath(settingsGroupPath)
+    , settings(settings_)
+    , SettingsGroupPath(settingsGroupPath)
 {
     QObject::connect(&_socket, &QWebSocket::stateChanged, this, [=](QAbstractSocket::SocketState state){
         //qDebug() << "GoodGame WebSocket state changed:" << state;

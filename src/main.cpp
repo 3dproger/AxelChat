@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
     //ChatHandler
     ChatHandler::declareQml();
-    ChatHandler* chatHandler = new ChatHandler(settings);
+    ChatHandler* chatHandler = new ChatHandler(*settings);
     settings->setParent(chatHandler);
 
     qRegisterMetaType<size_t>("size_t");
