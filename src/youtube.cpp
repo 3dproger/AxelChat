@@ -42,17 +42,14 @@ QByteArray extractDigitsOnly(const QByteArray& data)
 
 }
 
-YouTube::YouTube(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
+YouTube::YouTube(const QNetworkProxy& proxy, QSettings& settings_, const QString& settingsGroupPath, QObject *parent)
     : AbstractChatService(proxy, parent)
-    , _settings(settings)
-    , _settingsGroupPath(settingsGroupPath)
+    , settings(settings_)
+    , SettingsGroupPath(settingsGroupPath)
 {
     _manager.setProxy(proxy);
 
-    if (_settings)
-    {
-        setLink(_settings->value(_settingsGroupPath + "/" + SettingsKeyUserSpecifiedLink).toString());
-    }
+    setLink(settings.value(SettingsGroupPath + "/" + SettingsKeyUserSpecifiedLink).toString());
 
     QObject::connect(&_timerRequestChat, &QTimer::timeout, this, &YouTube::onTimeoutRequestChat);
     _timerRequestChat.start(RequestChatInterval);
@@ -253,20 +250,12 @@ void YouTube::setNeedRemoveBeforeAtAsCurrent()
 
 bool YouTube::isShowMessagesBeforeConnectEnabled() const
 {
-    if (_settings)
-    {
-        return _settings->value(_settingsGroupPath + "/" + SettingsKeyShowMessagesBeforeConnectEnabled, true).toBool();
-    }
-
-    return true;
+    return settings.value(SettingsGroupPath + "/" + SettingsKeyShowMessagesBeforeConnectEnabled, true).toBool();
 }
 
 void YouTube::setShowMessagesBeforeConnectEnabled(bool enable)
 {
-    if (_settings)
-    {
-        _settings->setValue(_settingsGroupPath + "/" + SettingsKeyShowMessagesBeforeConnectEnabled, enable);
-    }
+    settings.setValue(SettingsGroupPath + "/" + SettingsKeyShowMessagesBeforeConnectEnabled, enable);
 }
 
 QUrl YouTube::broadcastLongUrl() const
@@ -422,10 +411,7 @@ void YouTube::setLink(QString link)
                                                          .arg(_info.broadcastId));
         }
 
-        if (_settings)
-        {
-            _settings->setValue(_settingsGroupPath + "/" + SettingsKeyUserSpecifiedLink, _info.userSpecified);
-        }
+        settings.setValue(SettingsGroupPath + "/" + SettingsKeyUserSpecifiedLink, _info.userSpecified);
 
         if (preConnected && !preBroadcastId.isEmpty())
         {

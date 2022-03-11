@@ -35,14 +35,14 @@ ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
 
 #ifndef AXELCHAT_LIBRARY
     //Bot
-    _bot = new ChatBot(settings, SettingsGroupPath + "/chat_bot");
+    _bot = new ChatBot(*settings, SettingsGroupPath + "/chat_bot");
 
     //Output to file
     _outputToFile = new OutputToFile(*settings, SettingsGroupPath + "/output_to_file");
 #endif
 
     //YouTube
-    _youTube = new YouTube(proxy(), settings, SettingsGroupPath + "/youtube");
+    _youTube = new YouTube(proxy(), *settings, SettingsGroupPath + "/youtube");
 
     connect(_youTube, &YouTube::readyRead, this, &ChatHandler::onReadyRead);
 
@@ -61,7 +61,7 @@ ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
     });
 
     //Twitch
-    _twitch = new Twitch(proxy(), settings, SettingsGroupPath + "/twitch");
+    _twitch = new Twitch(proxy(), *settings, SettingsGroupPath + "/twitch");
 
     connect(_twitch, SIGNAL(readyRead(QList<ChatMessage>&)),
                      this, SLOT(onReadyRead(QList<ChatMessage>&)));

@@ -17,7 +17,7 @@ class YouTube : public AbstractChatService
     Q_PROPERTY(bool    isShowMessagesBeforeConnectEnabled   READ isShowMessagesBeforeConnectEnabled WRITE setShowMessagesBeforeConnectEnabled    NOTIFY stateChanged)
 
 public:
-    explicit YouTube(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
+    explicit YouTube(const QNetworkProxy& proxy, QSettings& settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
     ~YouTube();
     int messagesReceived() const;
 
@@ -68,8 +68,8 @@ private:
 
     QColor intToColor(quint64 rawColor) const;
 
-    QSettings* _settings = nullptr;
-    QString _settingsGroupPath;
+    QSettings& settings;
+    const QString SettingsGroupPath;
 
     QTimer _timerRequestChat;
     QTimer _timerRequestStreamPage;

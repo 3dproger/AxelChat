@@ -4,23 +4,20 @@
 #include <QJsonArray>
 #include <QMediaContent>
 
-ChatBot::ChatBot(QSettings* settings, const QString& settingsGroup, QObject *parent)
+ChatBot::ChatBot(QSettings& settings_, const QString& settingsGroup, QObject *parent)
     : QObject(parent)
-    , _settingsGroupPath(settingsGroup)
-    , _settings(settings)
+    , settings(settings_)
+    , SettingsGroupPath(settingsGroup)
 
 {
     initBuiltinCommands();
     loadCommands();
 
-    if (_settings)
-    {
-        setVolume(_settings->value(_settingsGroupPath + "/" + _settingsKeyVolume, _volume).toInt());
+    setVolume(settings.value(SettingsGroupPath + "/" + _settingsKeyVolume, _volume).toInt());
 
-        setEnabledCommands(_settings->value(_settingsGroupPath + "/" + _settingsKeyEnabledCommands, _enabledCommands).toBool());
+    setEnabledCommands(settings.value(SettingsGroupPath + "/" + _settingsKeyEnabledCommands, _enabledCommands).toBool());
 
-        setIncludeBuiltInCommands(_settings->value(_settingsGroupPath + "/" + _settingsKeyIncludeBuiltInCommands, _includeBuiltInCommands).toBool());
-    }
+    setIncludeBuiltInCommands(settings.value(SettingsGroupPath + "/" + _settingsKeyIncludeBuiltInCommands, _includeBuiltInCommands).toBool());
 }
 
 int ChatBot::volume() const
@@ -34,10 +31,7 @@ void ChatBot::setEnabledCommands(bool enabledCommands)
     {
         _enabledCommands = enabledCommands;
 
-        if (_settings)
-        {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyEnabledCommands, enabledCommands);
-        }
+        settings.setValue(SettingsGroupPath + "/" + _settingsKeyEnabledCommands, enabledCommands);
 
         emit enabledCommandsChanged();
     }
@@ -49,10 +43,7 @@ void ChatBot::setIncludeBuiltInCommands(bool includeBuiltInCommands)
     {
         _includeBuiltInCommands = includeBuiltInCommands;
 
-        if (_settings)
-        {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyIncludeBuiltInCommands, includeBuiltInCommands);
-        }
+        settings.setValue(SettingsGroupPath + "/" + _settingsKeyIncludeBuiltInCommands, includeBuiltInCommands);
 
         emit includedBuiltInCommandsChanged();
     }
@@ -68,12 +59,6 @@ void ChatBot::addAction(BotAction *action)
     if (!action)
     {
         qDebug() << "!action";
-        return;
-    }
-
-    if (!_settings)
-    {
-        qDebug() << "!_settings";
         return;
     }
 
@@ -150,10 +135,7 @@ void ChatBot::setVolume(int volume)
         _volume = volume;
         _player.setVolume(volume);
 
-        if (_settings)
-        {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyVolume, volume);
-        }
+        settings.setValue(SettingsGroupPath + "/" + _settingsKeyVolume, volume);
 
         emit volumeChanged();
     }
@@ -465,38 +447,26 @@ void ChatBot::initBuiltinCommands()
 
 void ChatBot::saveCommands()
 {
-    if (!_settings)
-    {
-        qDebug() << "!_settings";
-        return;
-    }
-
     for (int i = 0; i < _actions.count(); ++i)
     {
         BotAction* action = _actions[i];
-        _settings->setValue(_settingsGroupPath + "/" + _settingsGroupActions + QString("/%1").arg(i), action->toJson());
+        settings.setValue(SettingsGroupPath + "/" + _settingsGroupActions + QString("/%1").arg(i), action->toJson());
     }
 
-    const QStringList& keysToRemove = keysInGroup(*_settings, _settingsGroupPath + "/" + _settingsGroupActions);
+    const QStringList& keysToRemove = keysInGroup(settings, SettingsGroupPath + "/" + _settingsGroupActions);
 
     for (int i = _actions.count(); i < keysToRemove.count(); ++i)
     {
-        _settings->remove(_settingsGroupPath + "/" + _settingsGroupActions + "/" + keysToRemove[i]);
+        settings.remove(SettingsGroupPath + "/" + _settingsGroupActions + "/" + keysToRemove[i]);
     }
 }
 
 void ChatBot::loadCommands()
 {
-    if (!_settings)
-    {
-        qDebug() << "!_settings";
-        return;
-    }
-
-    const QStringList& commandsGroups = keysInGroup(*_settings, _settingsGroupPath + "/" + _settingsGroupActions);
+    const QStringList& commandsGroups = keysInGroup(settings, SettingsGroupPath + "/" + _settingsGroupActions);
 
     for (const QString& commandGroup : commandsGroups)
-    {        const QJsonObject& object = _settings->value(_settingsGroupPath + "/" + _settingsGroupActions + "/" + commandGroup,
+    {        const QJsonObject& object = settings.value(SettingsGroupPath + "/" + _settingsGroupActions + "/" + commandGroup,
                          QJsonObject())
                 .toJsonObject();
 

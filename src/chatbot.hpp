@@ -14,7 +14,7 @@ class ChatBot : public QObject
     Q_PROPERTY(bool includeBuiltInCommands READ includeBuiltInCommands WRITE setIncludeBuiltInCommands NOTIFY includedBuiltInCommandsChanged())
 
 public:
-    explicit ChatBot(QSettings* settings, const QString& settingsGroup, QObject *parent = nullptr);
+    explicit ChatBot(QSettings& settings, const QString& settingsGroup, QObject *parent = nullptr);
 
     int volume() const;
 
@@ -58,9 +58,8 @@ private:
 
     void addLineToCommandsText(QString& text, const BotAction* action) const;
 
-
-    QString _settingsGroupPath = "chat_bot";
-    QSettings*  _settings = nullptr;
+    QSettings& settings;
+    const QString SettingsGroupPath = "chat_bot";
 
     const QString _settingsKeyVolume = "volume";
     const QString _settingsKeyEnabledCommands = "enabled_commands";

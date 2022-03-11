@@ -66,10 +66,10 @@ static bool checkReply(QNetworkReply *reply, const char *tag, QByteArray& result
 
 }
 
-Twitch::Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& settingsGroupPath, QObject *parent)
+Twitch::Twitch(const QNetworkProxy& proxy, QSettings& settings_, const QString& settingsGroupPath, QObject *parent)
   : AbstractChatService(proxy, parent)
-  , _settings(settings)
-  , _settingsGroupPath(settingsGroupPath)
+  , settings(settings_)
+  , SettingsGroupPath(settingsGroupPath)
 {
     _socket.setProxy(proxy);
 
@@ -161,13 +161,10 @@ Twitch::Twitch(const QNetworkProxy& proxy, QSettings* settings, const QString& s
     });
     _timerUpdaetStreamInfo.start(UpdateStreamInfoPeriod);
 
-    if (_settings)
-    {
-        const QString token = QString::fromUtf8(QByteArray::fromBase64(_settings->value(_settingsGroupPath + "/" + SettingsKeyOAuthToken).toByteArray()));
-        setOAuthToken(token);
+    const QString token = QString::fromUtf8(QByteArray::fromBase64(settings.value(SettingsGroupPath + "/" + SettingsKeyOAuthToken).toByteArray()));
+    setOAuthToken(token);
 
-        setUserSpecifiedChannel(_settings->value(_settingsGroupPath + "/" + SettingsKeyUserSpecifiedChannel).toString());
-    }
+    setUserSpecifiedChannel(settings.value(SettingsGroupPath + "/" + SettingsKeyUserSpecifiedChannel).toString());
 
     QFile fileBadges(":/resources/twitch-global-badges-20210728.json");
     if (fileBadges.open(QIODevice::OpenModeFlag::ReadOnly | QIODevice::OpenModeFlag::Text))
@@ -300,10 +297,7 @@ void Twitch::setUserSpecifiedChannel(QString userChannel)
     {
         _info.userSpecifiedChannel = userChannel;
 
-        if (_settings)
-        {
-            _settings->setValue(_settingsGroupPath + "/" + SettingsKeyUserSpecifiedChannel, _info.userSpecifiedChannel);
-        }
+        settings.setValue(SettingsGroupPath + "/" + SettingsKeyUserSpecifiedChannel, _info.userSpecifiedChannel);
 
         reInitSocket();
 
@@ -322,10 +316,7 @@ void Twitch::setOAuthToken(QString token)
     {
         _info.oauthToken = token;
 
-        if (_settings)
-        {
-            _settings->setValue(_settingsGroupPath + "/" + SettingsKeyOAuthToken, _info.oauthToken.toUtf8().toBase64());
-        }
+        settings.setValue(SettingsGroupPath + "/" + SettingsKeyOAuthToken, _info.oauthToken.toUtf8().toBase64());
 
         reInitSocket();
 
