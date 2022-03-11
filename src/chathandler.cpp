@@ -39,9 +39,6 @@ ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
 
     //Output to file
     _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file");
-
-    connect(this, &ChatHandler::messageReceived,
-            _outputToFile, &OutputToFile::onMessagesReceived);
 #endif
 
     //YouTube
@@ -167,9 +164,9 @@ MessageAuthor ChatHandler::authorByChannelId(const QString &channelId) const
 
 
 //ToDo: использование ссылок в слотах и сигналах может плохо кончиться! Особенно, если соеденены разные потоки
-void ChatHandler::onReadyRead(QList<ChatMessage> &messages)
+void ChatHandler::onReadyRead(QList<ChatMessage>& messages)
 {
-    bool messageAdded = false;
+    QList<ChatMessage> messagesValidToAdd;
 
     for (int i = 0; i < messages.count(); ++i)
     {
@@ -204,20 +201,30 @@ void ChatHandler::onReadyRead(QList<ChatMessage> &messages)
         }
 #endif
 
-        _messagesModel.append(std::move(message));
-        messageAdded = true;
-
-        emit messageReceived(message);
+        messagesValidToAdd.append(std::move(message));
     }
 
-    if (messageAdded)
+    if (messagesValidToAdd.isEmpty())
     {
-        emit messagesDataChanged();
+        return;
+    }
 
-        if (_enabledSoundNewMessage && !messages.empty())
-        {
-            playNewMessageSound();
-        }
+    if (_outputToFile)
+    {
+        _outputToFile->writeMessages(messagesValidToAdd);
+    }
+
+    for (int i = 0; i < messagesValidToAdd.count(); ++i)
+    {
+        ChatMessage&& message = std::move(messagesValidToAdd[i]);
+        _messagesModel.append(std::move(message));
+    }
+
+    emit messagesDataChanged();
+
+    if (_enabledSoundNewMessage && !messages.empty())
+    {
+        playNewMessageSound();
     }
 }
 
@@ -260,15 +267,6 @@ void ChatHandler::clearMessages()
 void ChatHandler::onStateChanged()
 {
     emit viewersTotalCountChanged();
-
-#ifndef AXELCHAT_LIBRARY
-    if (_outputToFile)
-    {
-
-
-
-    }
-#endif
 }
 
 #ifndef AXELCHAT_LIBRARY

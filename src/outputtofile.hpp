@@ -40,17 +40,20 @@ public:
 signals:
     void outputFolderChanged();
     void enabledChanged();
+    void youTubeLastMessageIdChanged(const QString& id);
 
 public slots:
     void setOutputFolder(QString outputFolder);
-    void onMessagesReceived(const ChatMessage& message);
+    void writeMessages(const QList<ChatMessage>& messages);
     Q_INVOKABLE void showInExplorer();
 
 private slots:
-    void writeMessage(const QList<QPair<QString, QString>> tags /*<tagName, tagValue>*/, const ChatMessage &message);
+    void writeMessage(const QList<QPair<QString, QString>> tags /*<tagName, tagValue>*/);
 
 private:
     QByteArray prepare(const QString& text);
+    void readYouTubeLastMessageId();
+    void saveYouTubeLastMessageId(const QString& id);
 
     struct AuthorInfo{
         QString name;
@@ -67,11 +70,14 @@ private:
 
     bool _enabled = false;
     QString _outputFolder = standardOutputFolder();
+    QString _intermediateFolder;
 
     QFile* _fileMessagesCount           = nullptr;
     QFile* _fileMessages                = nullptr;
     QSettings* _iniCurrentInfo          = nullptr;
+
     QFile* _fileYouTubeLastMessageId    = nullptr;
+    QString _youTubeLastMessageId;
 
     const QString _settingsKeyEnabled          = "enabled";
     const QString _settingsKeyOutputFolder     = "output_folder";
@@ -85,6 +91,7 @@ private:
 
     const QDateTime _startupDateTime = QDateTime::currentDateTime();
 
+    QString _messagesCurrentFolder;
     QString _messagesFolder;
 };
 

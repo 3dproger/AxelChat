@@ -134,18 +134,45 @@ void OutputToFile::resetSettings()
     setOutputFolder(standardOutputFolder());
 }
 
-void OutputToFile::onMessagesReceived(const ChatMessage &message)
+void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
 {
-    const ChatMessage::Type type = message.type();
-
-    if (type == ChatMessage::Type::Unknown ||
-        type == ChatMessage::Type::TestMessage)
+    if (!_enabled)
     {
         return;
     }
 
-    if (_enabled)
+    int firstValidMessage = 0;
+
+    if (!_youTubeLastMessageId.isEmpty())
     {
+        for (int i = 0; i < messages.count(); ++i)
+        {
+            const ChatMessage& message = messages[i];
+
+            if (message.id() == _youTubeLastMessageId)
+            {
+                qDebug() << "found youtube message with id" << message.id() << ", ignore messages before it, index =" << i;
+                firstValidMessage = i;
+                _youTubeLastMessageId.clear();
+                break;
+            }
+        }
+    }
+
+    QString currentLastYouTubeMessageId;
+
+    for (int i = firstValidMessage; i < messages.count(); ++i)
+    {
+        const ChatMessage& message = messages[i];
+
+        const ChatMessage::Type type = message.type();
+
+        if (type == ChatMessage::Type::Unknown ||
+            type == ChatMessage::Type::TestMessage)
+        {
+            continue;
+        }
+
         QList<QPair<QString, QString>> tags;
 
         {
@@ -213,7 +240,21 @@ void OutputToFile::onMessagesReceived(const ChatMessage &message)
             break;
         }
 
-        writeMessage(tags, message);
+        writeMessage(tags);
+
+        if (message.type() == ChatMessage::Type::YouTube)
+        {
+            const QString id = message.id();
+            if (!id.isEmpty())
+            {
+                currentLastYouTubeMessageId = id;
+            }
+        }
+    }
+
+    if (!currentLastYouTubeMessageId.isEmpty())
+    {
+        saveYouTubeLastMessageId(currentLastYouTubeMessageId);
     }
 }
 
@@ -262,7 +303,7 @@ int OutputToFile::codecOption() const
     return _codec;
 }
 
-void OutputToFile::writeMessage(const QList<QPair<QString, QString>> tags /*<tagName, tagValue>*/, const ChatMessage &message)
+void OutputToFile::writeMessage(const QList<QPair<QString, QString>> tags /*<tagName, tagValue>*/)
 {
     if (!_fileMessages)
     {
@@ -273,12 +314,6 @@ void OutputToFile::writeMessage(const QList<QPair<QString, QString>> tags /*<tag
     if (!_fileMessagesCount)
     {
         qDebug() << Q_FUNC_INFO << "!_fileMessagesStatistics";
-        return;
-    }
-
-    if (!_fileYouTubeLastMessageId)
-    {
-        qDebug() << Q_FUNC_INFO << "!_fileYouTubeLastMessageId";
         return;
     }
 
@@ -337,23 +372,6 @@ void OutputToFile::writeMessage(const QList<QPair<QString, QString>> tags /*<tag
     {
         qWarning() << "failed to flush file" << _fileMessagesCount->fileName();
     }
-
-    if (message.type() == ChatMessage::Type::YouTube)
-    {
-        if (!_fileYouTubeLastMessageId->open(QIODevice::OpenModeFlag::Text | QIODevice::OpenModeFlag::WriteOnly | QIODevice::OpenModeFlag::Truncate))
-        {
-            qWarning() << Q_FUNC_INFO << "failed to open file" << _fileYouTubeLastMessageId->fileName() << ":" << _fileYouTubeLastMessageId->errorString();
-            return;
-        }
-
-        _fileYouTubeLastMessageId->write(message.id().toUtf8());
-        if (!_fileMessagesCount->flush())
-        {
-            qWarning() << "failed to flush file" << _fileYouTubeLastMessageId->fileName();
-        }
-
-        _fileYouTubeLastMessageId->close();
-    }
 }
 
 QByteArray OutputToFile::prepare(const QString &text_)
@@ -384,6 +402,53 @@ QByteArray OutputToFile::prepare(const QString &text_)
     return text.toUtf8();
 }
 
+void OutputToFile::readYouTubeLastMessageId()
+{
+    if (!_fileYouTubeLastMessageId)
+    {
+        qDebug() << Q_FUNC_INFO << "!_fileYouTubeLastMessageId";
+        return;
+    }
+
+    _youTubeLastMessageId = QString();
+
+    if (!_fileYouTubeLastMessageId->open(QIODevice::OpenModeFlag::Text | QIODevice::OpenModeFlag::ReadOnly))
+    {
+        qWarning() << Q_FUNC_INFO << "failed to open file" << _fileYouTubeLastMessageId->fileName() << ":" << _fileYouTubeLastMessageId->errorString();
+        return;
+    }
+
+    const QString id = QString::fromUtf8(_fileYouTubeLastMessageId->readAll());
+    _fileYouTubeLastMessageId->close();
+
+    _youTubeLastMessageId = id;
+
+    //qDebug() << "loaded youtube last message id =" << _youTubeLastMessageId;
+}
+
+void OutputToFile::saveYouTubeLastMessageId(const QString &id)
+{
+    if (!_fileYouTubeLastMessageId)
+    {
+        qDebug() << Q_FUNC_INFO << "!_fileYouTubeLastMessageId";
+        return;
+    }
+
+    if (!_fileYouTubeLastMessageId->open(QIODevice::OpenModeFlag::Text | QIODevice::OpenModeFlag::WriteOnly | QIODevice::OpenModeFlag::Truncate))
+    {
+        qWarning() << Q_FUNC_INFO << "failed to open file" << _fileYouTubeLastMessageId->fileName() << ":" << _fileYouTubeLastMessageId->errorString();
+        return;
+    }
+
+    _fileYouTubeLastMessageId->write(id.toUtf8());
+    if (!_fileMessagesCount->flush())
+    {
+        qWarning() << "failed to flush file" << _fileYouTubeLastMessageId->fileName();
+    }
+
+    _fileYouTubeLastMessageId->close();
+}
+
 void OutputToFile::reinit(bool forceUpdateOutputFolder)
 {
     //Messages
@@ -408,23 +473,32 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
         _fileYouTubeLastMessageId = nullptr;
     }
 
-    if (forceUpdateOutputFolder || _messagesFolder.isEmpty())
+    if (forceUpdateOutputFolder || _messagesFolder.isEmpty() || _messagesCurrentFolder.isEmpty())
     {
-        _messagesFolder = _outputFolder + "/messages/" + _startupDateTime.toString(DateTimeFileNameFormat);
+        _messagesFolder = _outputFolder + "/messages";
+        _messagesCurrentFolder = _messagesFolder + "/" + _startupDateTime.toString(DateTimeFileNameFormat);
     }
 
     if (_enabled)
     {
-        QDir dir = QDir(_messagesFolder);
+        QDir dir;
+
+        dir = QDir(_messagesFolder);
         if (!dir.exists())
         {
             dir.mkpath(_messagesFolder);
         }
+
+        dir = QDir(_messagesCurrentFolder);
+        if (!dir.exists())
+        {
+            dir.mkpath(_messagesCurrentFolder);
+        }
     }
 
-    _fileMessages               = new QFile(_messagesFolder + "/" + MessagesFileName,       this);
-    _fileMessagesCount          = new QFile(_messagesFolder + "/" + MessagesCountFileName,  this);
-    _fileYouTubeLastMessageId   = new QFile(_messagesFolder + "/" + YouTubeLastMessageId,   this);
+    _fileMessages               = new QFile(_messagesCurrentFolder + "/" + MessagesFileName,       this);
+    _fileMessagesCount          = new QFile(_messagesCurrentFolder + "/" + MessagesCountFileName,  this);
+    _fileYouTubeLastMessageId   = new QFile(_messagesFolder        + "/" + YouTubeLastMessageId,   this);
 
     //Current
     if (_iniCurrentInfo)
@@ -439,10 +513,12 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
 
     if (_enabled)
     {
+        readYouTubeLastMessageId();
+
         _iniCurrentInfo->setValue("software/started", true);
     }
 
-    writeStartupInfo(_messagesFolder);
+    writeStartupInfo(_messagesCurrentFolder);
     writeInfo();
 }
 

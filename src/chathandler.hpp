@@ -74,7 +74,6 @@ public:
     QNetworkProxy proxy() const;
 
 signals:
-    void messageReceived(const ChatMessage& message);
     void connectedCountChanged();
     void viewersTotalCountChanged();
     void enabledSoundNewMessageChanged();
