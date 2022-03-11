@@ -52,8 +52,6 @@ private slots:
 
 private:
     QByteArray prepare(const QString& text);
-    void readYouTubeLastMessageId();
-    void saveYouTubeLastMessageId(const QString& id);
 
     struct AuthorInfo{
         QString name;
@@ -66,7 +64,7 @@ private:
     void writeInfo();
 
     QSettings* _settings = nullptr;
-    QString _settingsGroupPath = "output_to_file";
+    QString SettingsGroupPath;
 
     bool _enabled = false;
     QString _outputFolder = standardOutputFolder();
@@ -76,12 +74,7 @@ private:
     QFile* _fileMessages                = nullptr;
     QSettings* _iniCurrentInfo          = nullptr;
 
-    QFile* _fileYouTubeLastMessageId    = nullptr;
     QString _youTubeLastMessageId;
-
-    const QString _settingsKeyEnabled          = "enabled";
-    const QString _settingsKeyOutputFolder     = "output_folder";
-    const QString _settingsKeyCodec            = "codec";
 
     OutputToFileCodec _codec = OutputToFileCodec::UTF8Codec;
 
@@ -92,7 +85,6 @@ private:
     const QDateTime _startupDateTime = QDateTime::currentDateTime();
 
     QString _messagesCurrentFolder;
-    QString _messagesFolder;
 };
 
 #endif // OUTPUTTOFILE_HPP

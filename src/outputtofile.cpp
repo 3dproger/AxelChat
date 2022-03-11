@@ -12,6 +12,10 @@
 namespace
 {
 
+static const QString SK_Enabled                     = "enabled";
+static const QString SK_OutputFolder                = "output_folder";
+static const QString SK_Codec                       = "codec";
+static const QString SK_YouTubeLastMessageSavedId   = "youtube_last_saved_message_id";
 
 static const QString DateTimeFileNameFormat = "yyyy-MM-ddThh-mm-ss.zzz";
 static const QString MessagesFileName = "messages.ini";
@@ -26,22 +30,22 @@ static QString dateTimeToStr(const QDateTime& dateTime)
 
 }
 
-OutputToFile::OutputToFile(QSettings *settings, const QString &settingsGroupPath, QObject *parent) : QObject(parent)
+OutputToFile::OutputToFile(QSettings *settings, const QString &settingsGroupPath, QObject *parent)
+    : QObject(parent)
+    , _settings(settings)
+    , SettingsGroupPath(settingsGroupPath)
 {
-    _settings = settings;
-    _settingsGroupPath = settingsGroupPath;
-
     reinit(true);
 
     if (_settings)
     {
-        setEnabled(_settings->value(_settingsGroupPath + "/" + _settingsKeyEnabled,
+        setEnabled(_settings->value(SettingsGroupPath + "/" + SK_Enabled,
                                     false).toBool());
 
-        setOutputFolder(_settings->value(_settingsGroupPath + "/" + _settingsKeyOutputFolder,
+        setOutputFolder(_settings->value(SettingsGroupPath + "/" + SK_OutputFolder,
                 standardOutputFolder()).toString());
 
-        setCodecOption(_settings->value(_settingsGroupPath + "/" + _settingsKeyCodec,
+        setCodecOption(_settings->value(SettingsGroupPath + "/" + SK_Codec,
                                   _codec).toInt(), true);
     }
 }
@@ -65,11 +69,6 @@ OutputToFile::~OutputToFile()
     {
         _fileMessagesCount->close();
     }
-
-    if (_fileYouTubeLastMessageId && _fileYouTubeLastMessageId->isOpen())
-    {
-        _fileYouTubeLastMessageId->close();
-    }
 }
 
 bool OutputToFile::enabled() const
@@ -84,7 +83,7 @@ void OutputToFile::setEnabled(bool enabled)
         _enabled = enabled;
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyEnabled, enabled);
+            _settings->setValue(SettingsGroupPath + "/" + SK_Enabled, enabled);
         }
 
         //qDebug(QString("OutputToFile: %1").arg(_enabled ? "enabled" : "disabled").toUtf8());
@@ -118,7 +117,7 @@ void OutputToFile::setOutputFolder(QString outputFolder)
 
         if (_settings)
         {
-            _settings->setValue(_settingsGroupPath + "/" + _settingsKeyOutputFolder, outputFolder);
+            _settings->setValue(SettingsGroupPath + "/" + SK_OutputFolder, outputFolder);
         }
 
         reinit(true);
@@ -254,7 +253,7 @@ void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
 
     if (!currentLastYouTubeMessageId.isEmpty())
     {
-        saveYouTubeLastMessageId(currentLastYouTubeMessageId);
+        _settings->setValue(SettingsGroupPath + "/" + SK_YouTubeLastMessageSavedId, currentLastYouTubeMessageId);
     }
 }
 
@@ -292,7 +291,7 @@ bool OutputToFile::setCodecOption(int option, bool applyWithoutReset)
 
     if (_settings)
     {
-        _settings->setValue(_settingsGroupPath + "/" + _settingsKeyCodec, option);
+        _settings->setValue(SettingsGroupPath + "/" + SK_Codec, option);
     }
 
     return true;
@@ -402,53 +401,6 @@ QByteArray OutputToFile::prepare(const QString &text_)
     return text.toUtf8();
 }
 
-void OutputToFile::readYouTubeLastMessageId()
-{
-    if (!_fileYouTubeLastMessageId)
-    {
-        qDebug() << Q_FUNC_INFO << "!_fileYouTubeLastMessageId";
-        return;
-    }
-
-    _youTubeLastMessageId = QString();
-
-    if (!_fileYouTubeLastMessageId->open(QIODevice::OpenModeFlag::Text | QIODevice::OpenModeFlag::ReadOnly))
-    {
-        qWarning() << Q_FUNC_INFO << "failed to open file" << _fileYouTubeLastMessageId->fileName() << ":" << _fileYouTubeLastMessageId->errorString();
-        return;
-    }
-
-    const QString id = QString::fromUtf8(_fileYouTubeLastMessageId->readAll());
-    _fileYouTubeLastMessageId->close();
-
-    _youTubeLastMessageId = id;
-
-    //qDebug() << "loaded youtube last message id =" << _youTubeLastMessageId;
-}
-
-void OutputToFile::saveYouTubeLastMessageId(const QString &id)
-{
-    if (!_fileYouTubeLastMessageId)
-    {
-        qDebug() << Q_FUNC_INFO << "!_fileYouTubeLastMessageId";
-        return;
-    }
-
-    if (!_fileYouTubeLastMessageId->open(QIODevice::OpenModeFlag::Text | QIODevice::OpenModeFlag::WriteOnly | QIODevice::OpenModeFlag::Truncate))
-    {
-        qWarning() << Q_FUNC_INFO << "failed to open file" << _fileYouTubeLastMessageId->fileName() << ":" << _fileYouTubeLastMessageId->errorString();
-        return;
-    }
-
-    _fileYouTubeLastMessageId->write(id.toUtf8());
-    if (!_fileMessagesCount->flush())
-    {
-        qWarning() << "failed to flush file" << _fileYouTubeLastMessageId->fileName();
-    }
-
-    _fileYouTubeLastMessageId->close();
-}
-
 void OutputToFile::reinit(bool forceUpdateOutputFolder)
 {
     //Messages
@@ -466,28 +418,14 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
         _fileMessagesCount = nullptr;
     }
 
-    if (_fileYouTubeLastMessageId)
+    if (forceUpdateOutputFolder || _messagesCurrentFolder.isEmpty())
     {
-        _fileYouTubeLastMessageId->close();
-        _fileYouTubeLastMessageId->deleteLater();
-        _fileYouTubeLastMessageId = nullptr;
-    }
-
-    if (forceUpdateOutputFolder || _messagesFolder.isEmpty() || _messagesCurrentFolder.isEmpty())
-    {
-        _messagesFolder = _outputFolder + "/messages";
-        _messagesCurrentFolder = _messagesFolder + "/" + _startupDateTime.toString(DateTimeFileNameFormat);
+        _messagesCurrentFolder = _outputFolder + "/messages/" + _startupDateTime.toString(DateTimeFileNameFormat);
     }
 
     if (_enabled)
     {
         QDir dir;
-
-        dir = QDir(_messagesFolder);
-        if (!dir.exists())
-        {
-            dir.mkpath(_messagesFolder);
-        }
 
         dir = QDir(_messagesCurrentFolder);
         if (!dir.exists())
@@ -498,7 +436,6 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
 
     _fileMessages               = new QFile(_messagesCurrentFolder + "/" + MessagesFileName,       this);
     _fileMessagesCount          = new QFile(_messagesCurrentFolder + "/" + MessagesCountFileName,  this);
-    _fileYouTubeLastMessageId   = new QFile(_messagesFolder        + "/" + YouTubeLastMessageId,   this);
 
     //Current
     if (_iniCurrentInfo)
@@ -513,7 +450,7 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
 
     if (_enabled)
     {
-        readYouTubeLastMessageId();
+        _youTubeLastMessageId = _settings->value(SettingsGroupPath + "/" + SK_YouTubeLastMessageSavedId).toString();
 
         _iniCurrentInfo->setValue("software/started", true);
     }
