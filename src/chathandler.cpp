@@ -38,7 +38,7 @@ ChatHandler::ChatHandler(QSettings* settings, QObject *parent)
     _bot = new ChatBot(settings, SettingsGroupPath + "/chat_bot");
 
     //Output to file
-    _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file");
+    _outputToFile = new OutputToFile(*settings, SettingsGroupPath + "/output_to_file");
 #endif
 
     //YouTube

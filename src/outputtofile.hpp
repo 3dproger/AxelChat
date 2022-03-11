@@ -21,7 +21,7 @@ public:
         ANSIWithUTF8Codec = 200
     };
 
-    explicit OutputToFile(QSettings* settings, const QString& settingsGroupPath, QObject *parent = nullptr);
+    explicit OutputToFile(QSettings& settings, const QString& settingsGroupPath, QObject *parent = nullptr);
     ~OutputToFile();
 
     bool enabled() const;
@@ -63,8 +63,8 @@ private:
     void writeStartupInfo(const QString& messagesFolder);
     void writeInfo();
 
-    QSettings* _settings = nullptr;
-    QString SettingsGroupPath;
+    QSettings& settings;
+    const QString SettingsGroupPath;
 
     bool _enabled = false;
     QString _outputFolder = standardOutputFolder();

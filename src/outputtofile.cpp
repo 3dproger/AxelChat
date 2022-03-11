@@ -30,24 +30,18 @@ static QString dateTimeToStr(const QDateTime& dateTime)
 
 }
 
-OutputToFile::OutputToFile(QSettings *settings, const QString &settingsGroupPath, QObject *parent)
+OutputToFile::OutputToFile(QSettings &settings_, const QString &settingsGroupPath, QObject *parent)
     : QObject(parent)
-    , _settings(settings)
+    , settings(settings_)
     , SettingsGroupPath(settingsGroupPath)
 {
     reinit(true);
 
-    if (_settings)
-    {
-        setEnabled(_settings->value(SettingsGroupPath + "/" + SK_Enabled,
-                                    false).toBool());
+    setEnabled(settings.value(SettingsGroupPath + "/" + SK_Enabled, false).toBool());
 
-        setOutputFolder(_settings->value(SettingsGroupPath + "/" + SK_OutputFolder,
-                standardOutputFolder()).toString());
+    setOutputFolder(settings.value(SettingsGroupPath + "/" + SK_OutputFolder, standardOutputFolder()).toString());
 
-        setCodecOption(_settings->value(SettingsGroupPath + "/" + SK_Codec,
-                                  _codec).toInt(), true);
-    }
+    setCodecOption(settings.value(SettingsGroupPath + "/" + SK_Codec, _codec).toInt(), true);
 }
 
 OutputToFile::~OutputToFile()
@@ -81,10 +75,8 @@ void OutputToFile::setEnabled(bool enabled)
     if (_enabled != enabled)
     {
         _enabled = enabled;
-        if (_settings)
-        {
-            _settings->setValue(SettingsGroupPath + "/" + SK_Enabled, enabled);
-        }
+
+        settings.setValue(SettingsGroupPath + "/" + SK_Enabled, enabled);
 
         //qDebug(QString("OutputToFile: %1").arg(_enabled ? "enabled" : "disabled").toUtf8());
 
@@ -115,10 +107,7 @@ void OutputToFile::setOutputFolder(QString outputFolder)
     {
         _outputFolder = outputFolder;
 
-        if (_settings)
-        {
-            _settings->setValue(SettingsGroupPath + "/" + SK_OutputFolder, outputFolder);
-        }
+        settings.setValue(SettingsGroupPath + "/" + SK_OutputFolder, outputFolder);
 
         reinit(true);
 
@@ -253,7 +242,7 @@ void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
 
     if (!currentLastYouTubeMessageId.isEmpty())
     {
-        _settings->setValue(SettingsGroupPath + "/" + SK_YouTubeLastMessageSavedId, currentLastYouTubeMessageId);
+        settings.setValue(SettingsGroupPath + "/" + SK_YouTubeLastMessageSavedId, currentLastYouTubeMessageId);
     }
 }
 
@@ -289,10 +278,7 @@ bool OutputToFile::setCodecOption(int option, bool applyWithoutReset)
         reinit(true);
     }
 
-    if (_settings)
-    {
-        _settings->setValue(SettingsGroupPath + "/" + SK_Codec, option);
-    }
+    settings.setValue(SettingsGroupPath + "/" + SK_Codec, option);
 
     return true;
 }
@@ -450,7 +436,7 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
 
     if (_enabled)
     {
-        _youTubeLastMessageId = _settings->value(SettingsGroupPath + "/" + SK_YouTubeLastMessageSavedId).toString();
+        _youTubeLastMessageId = settings.value(SettingsGroupPath + "/" + SK_YouTubeLastMessageSavedId).toString();
 
         _iniCurrentInfo->setValue("software/started", true);
     }
