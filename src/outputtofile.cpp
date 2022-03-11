@@ -150,7 +150,7 @@ void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
 
             if (message.id() == _youTubeLastMessageId)
             {
-                qDebug() << "found youtube message with id" << message.id() << ", ignore messages before it, index =" << i;
+                qDebug() << "found youtube message with id" << message.id() << ", ignore saving messages before it, index =" << i;
                 firstValidMessage = i;
                 _youTubeLastMessageId.clear();
                 break;
