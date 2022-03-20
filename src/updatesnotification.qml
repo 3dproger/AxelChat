@@ -42,6 +42,7 @@ Window {
         anchors.right: parent.right
         anchors.rightMargin: 8
         autoExclusive: true
+        highlighted: true
 
         onClicked: {
             Qt.openUrlExternally(updateChecker.lastVersionDownloadUrl)
