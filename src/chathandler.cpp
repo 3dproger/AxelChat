@@ -255,14 +255,22 @@ void ChatHandler::onAvatarDiscovered(const QString &channelId, const QUrl &url)
 void ChatHandler::clearMessages()
 {
     _messagesModel.clear();
-    if (_youTube)
-    {
-        _youTube->setNeedRemoveBeforeAtAsCurrent();
-    }
 }
 
 void ChatHandler::onStateChanged()
 {
+    if (_outputToFile)
+    {
+        if (qobject_cast<YouTube*>(sender()) && _youTube)
+        {
+            _outputToFile->setYouTubeInfo(_youTube->getInfo());
+        }
+        else if (qobject_cast<Twitch*>(sender()) && _twitch)
+        {
+            _outputToFile->setTwitchInfo(_twitch->getInfo());
+        }
+    }
+
     emit viewersTotalCountChanged();
 }
 

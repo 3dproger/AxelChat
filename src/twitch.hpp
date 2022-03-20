@@ -34,6 +34,8 @@ public:
 
     void setProxy(const QNetworkProxy& proxy) override;
 
+    AxelChat::TwitchInfo getInfo() const;
+
 signals:
 
 public slots:

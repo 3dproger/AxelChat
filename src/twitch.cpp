@@ -289,6 +289,11 @@ void Twitch::setProxy(const QNetworkProxy &proxy)
     reInitSocket();
 }
 
+AxelChat::TwitchInfo Twitch::getInfo() const
+{
+    return _info;
+}
+
 void Twitch::setUserSpecifiedChannel(QString userChannel)
 {
     userChannel = userChannel.trimmed();

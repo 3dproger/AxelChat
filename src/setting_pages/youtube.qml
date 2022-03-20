@@ -149,18 +149,6 @@ ScrollView {
             }
         }
 
-        Switch {
-            text: qsTr("Show messages sent before connecting")
-
-            Component.onCompleted: {
-                checked = youTube.isShowMessagesBeforeConnectEnabled;
-            }
-
-            onCheckedChanged: {
-                youTube.isShowMessagesBeforeConnectEnabled = checked;
-            }
-        }
-
         /*Row {
             MyComponents.MyTextArea {
                 readOnly: true

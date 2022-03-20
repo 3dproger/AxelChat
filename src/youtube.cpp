@@ -19,7 +19,6 @@ static const int RequestStreamInterval = 20000;
 static const QString FolderLogs = "logs_youtube";
 
 static const QString  SettingsKeyUserSpecifiedLink = "user_specified_link";
-static const QString  SettingsKeyShowMessagesBeforeConnectEnabled = "show_messages_before_connect_enabled";
 
 static const QByteArray AcceptLanguageNetworkHeaderName = ""; // "en-US;q=0.5,en;q=0.3";
 
@@ -243,19 +242,9 @@ void YouTube::setProxy(const QNetworkProxy &proxy)
     reconnect();
 }
 
-void YouTube::setNeedRemoveBeforeAtAsCurrent()
+AxelChat::YouTubeInfo YouTube::getInfo() const
 {
-    _needRemoveBeforeAt = QDateTime::currentDateTime();
-}
-
-bool YouTube::isShowMessagesBeforeConnectEnabled() const
-{
-    return settings.value(SettingsGroupPath + "/" + SettingsKeyShowMessagesBeforeConnectEnabled, true).toBool();
-}
-
-void YouTube::setShowMessagesBeforeConnectEnabled(bool enable)
-{
-    settings.setValue(SettingsGroupPath + "/" + SettingsKeyShowMessagesBeforeConnectEnabled, enable);
+    return _info;
 }
 
 QUrl YouTube::broadcastLongUrl() const
@@ -358,11 +347,6 @@ void YouTube::setLink(QString link)
         const QString preBroadcastId = _info.broadcastId;
 
         _info = AxelChat::YouTubeInfo();
-
-        if (!link.isEmpty() && !isShowMessagesBeforeConnectEnabled())
-        {
-            setNeedRemoveBeforeAtAsCurrent();
-        }
 
         _badChatReplies = 0;
         _badLivePageReplies = 0;
@@ -905,14 +889,6 @@ void YouTube::parseActionsArray(const QJsonArray& array, const QByteArray& data)
 
         if (valid)
         {
-            if (publishedAt.isValid() && _needRemoveBeforeAt.isValid())
-            {
-                if (publishedAt < _needRemoveBeforeAt)
-                {
-                    continue;
-                }
-            }
-
             if (isDeleter)
             {
                 const ChatMessage& message = ChatMessage::createDeleterFromYouTube(messageText, messageId);

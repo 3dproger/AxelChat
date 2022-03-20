@@ -14,10 +14,9 @@ class YouTube : public AbstractChatService
     Q_PROPERTY(QString broadcastId                          READ broadcastId                        NOTIFY stateChanged)
     Q_PROPERTY(QUrl    broadcastLongUrl                     READ broadcastLongUrl                   NOTIFY stateChanged)
     Q_PROPERTY(bool    isBroadcastIdUserSpecified           READ isBroadcastIdUserSpecified         CONSTANT)
-    Q_PROPERTY(bool    isShowMessagesBeforeConnectEnabled   READ isShowMessagesBeforeConnectEnabled WRITE setShowMessagesBeforeConnectEnabled    NOTIFY stateChanged)
 
 public:
-    explicit YouTube(const QNetworkProxy& proxy, QSettings& settings, const QString& settingsGroupPath = "youtube_interceptor", QObject *parent = nullptr);
+    explicit YouTube(const QNetworkProxy& proxy, QSettings& settings, const QString& settingsGroupPath, QObject *parent = nullptr);
     ~YouTube();
     int messagesReceived() const;
 
@@ -40,10 +39,7 @@ public:
 
     qint64 traffic() const override { return _traffic; }
 
-    void setNeedRemoveBeforeAtAsCurrent();
-
-    bool isShowMessagesBeforeConnectEnabled() const;
-    void setShowMessagesBeforeConnectEnabled(bool enable);
+    AxelChat::YouTubeInfo getInfo() const;
 
 public slots:
     void setLink(QString link);
@@ -82,7 +78,6 @@ private:
     int _badLivePageReplies = 0;
 
     AxelChat::YouTubeInfo _info;
-    QDateTime _needRemoveBeforeAt;
 
     static void printData(const QString& tag, const QByteArray& data);
 
