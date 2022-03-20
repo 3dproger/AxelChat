@@ -135,7 +135,7 @@ ScrollView {
                 anchors.verticalCenter: parent.verticalCenter
                 enabled: youTube.broadcastUrl.toString().length !== 0
                 onClicked: {
-                    Qt.openUrlExternally(youTube.broadcastUrl)
+                    Qt.openUrlExternally(youTube.broadcastLongUrl)
                 }
             }
 
