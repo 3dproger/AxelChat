@@ -169,7 +169,7 @@ Window {
 
                 Connections {
                     target: chatHandler
-                    function onMessageReceived() {
+                    function onMessagesDataChanged() {
                         labelMessagesSent.text = qsTr("Messages (current session): %1")
                         .arg(chatHandler.authorMessagesSentCurrent(authorChannelId));
                     }
