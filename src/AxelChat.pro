@@ -55,6 +55,10 @@ SOURCES += \
 RESOURCES += qml.qrc \
     resources.qrc
 
+contains(QT_ARCH, i386)|contains(QT_ARCH, x86_64) {
+    RESOURCES += builtin_commands.qrc
+}
+
 TRANSLATIONS += \
     Translation_ru_RU.ts \
     Translation_ja_JP.ts

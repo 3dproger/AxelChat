@@ -1,0 +1,102 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/sound/commands/airhorn.mp3</file>
+        <file>resources/sound/commands/applause.mp3</file>
+        <file>resources/sound/commands/astalavista.mp3</file>
+        <file>resources/sound/commands/ben_applause.mp3</file>
+        <file>resources/sound/commands/budum_tss.mp3</file>
+        <file>resources/sound/commands/cant-touch-this.mp3</file>
+        <file>resources/sound/commands/chc_lock_and_load.wav</file>
+        <file>resources/sound/commands/chgk_volchok.mp3</file>
+        <file>resources/sound/commands/chto-eto.mp3</file>
+        <file>resources/sound/commands/cj.wav</file>
+        <file>resources/sound/commands/crickets.mp3</file>
+        <file>resources/sound/commands/deja-vu.mp3</file>
+        <file>resources/sound/commands/do_it.mp3</file>
+        <file>resources/sound/commands/dramatic.mp3</file>
+        <file>resources/sound/commands/drujko-ne-budu.mp3</file>
+        <file>resources/sound/commands/eurobeat.mp3</file>
+        <file>resources/sound/commands/fatality.mp3</file>
+        <file>resources/sound/commands/fiasko.mp3</file>
+        <file>resources/sound/commands/final.mp3</file>
+        <file>resources/sound/commands/finishhim.mp3</file>
+        <file>resources/sound/commands/firstblood.mp3</file>
+        <file>resources/sound/commands/fly.mp3</file>
+        <file>resources/sound/commands/fura_big.mp3</file>
+        <file>resources/sound/commands/gandalf_shallnotpass.mp3</file>
+        <file>resources/sound/commands/gas.mp3</file>
+        <file>resources/sound/commands/gg.mp3</file>
+        <file>resources/sound/commands/great_father.mp3</file>
+        <file>resources/sound/commands/gta-sa-done.mp3</file>
+        <file>resources/sound/commands/hadouken.mp3</file>
+        <file>resources/sound/commands/ha-ha.mp3</file>
+        <file>resources/sound/commands/mk-fight.mp3</file>
+        <file>resources/sound/commands/mk-round1.mp3</file>
+        <file>resources/sound/commands/mk-round2.mp3</file>
+        <file>resources/sound/commands/mk-round3.mp3</file>
+        <file>resources/sound/commands/mk-toasty.mp3</file>
+        <file>resources/sound/commands/monsterkill.mp3</file>
+        <file>resources/sound/commands/ne-tochno.mp3</file>
+        <file>resources/sound/commands/nooo.mp3</file>
+        <file>resources/sound/commands/nuzhdiki.mp3</file>
+        <file>resources/sound/commands/of_course.mp3</file>
+        <file>resources/sound/commands/omaewamou.mp3</file>
+        <file>resources/sound/commands/omaewamou2.mp3</file>
+        <file>resources/sound/commands/pch_mimo.mp3</file>
+        <file>resources/sound/commands/pivo.mp3</file>
+        <file>resources/sound/commands/playstation.mp3</file>
+        <file>resources/sound/commands/psycho.mp3</file>
+        <file>resources/sound/commands/run.mp3</file>
+        <file>resources/sound/commands/sad_trombone.mp3</file>
+        <file>resources/sound/commands/sadaffleck.mp3</file>
+        <file>resources/sound/commands/sad-violin.mp3</file>
+        <file>resources/sound/commands/saspens.mp3</file>
+        <file>resources/sound/commands/saxophone.mp3</file>
+        <file>resources/sound/commands/sfx_bill_v5.mp3</file>
+        <file>resources/sound/commands/to_be_continued.mp3</file>
+        <file>resources/sound/commands/tuturu.mp3</file>
+        <file>resources/sound/commands/vot_eto_povorot.mp3</file>
+        <file>resources/sound/commands/wc_cool.mp3</file>
+        <file>resources/sound/commands/wc_good.mp3</file>
+        <file>resources/sound/commands/wc_lie_down.mp3</file>
+        <file>resources/sound/commands/wc_notime.mp3</file>
+        <file>resources/sound/commands/wc_what_are_you.mp3</file>
+        <file>resources/sound/commands/wow.mp3</file>
+        <file>resources/sound/commands/x-files.mp3</file>
+        <file>resources/sound/commands/xp.mp3</file>
+        <file>resources/sound/commands/накосячил.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel- Бань себя сам-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-3-2-1 - Good Luck-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Gin Chin Good Luck.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Анонимных неалкоголиков сборище-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Вернуть в семью Артура-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Викник смех.wav</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Вот таким нетривиальным способом-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Да быстро ты поел-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Доступ запрещён - Всем БАН. До Свидания-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Из измерения X возвращается-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Кто-то там играет в Тетрис-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Максим подтверди - Подтверждаю-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Меня Терминатор домогался-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Меня чуть не засосало-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Мы оказывается разрабатываем TNU4-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Не удаляйте мне интернет на компьютере-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Ни пуха ни Good Luck-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Ну не надо меня доставать-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Ну не судьба-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Пожалуйста не баньте-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Пожалуйста. Я не хочу думать об этом-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Полный турболёт-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Понятно всё с тобой. Ничем ты не поможешь мне-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Рисовать - это изврат-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Сейчас так ХОП-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Скинь скринь скринъ-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Скрытая реклама.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Теперь я потерял жизнь-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Терминатор забеременел Робокопом-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Чёрт. Нет. Почему. Я не хочу-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Что надо чикса-бикса-kissvk.com.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Это факт.mp3</file>
+        <file>resources/sound/commands/2nd_channel/2nd Channel-Я тебя в интернете забаню-kissvk.com.mp3</file>
+    </qresource>
+</RCC>
