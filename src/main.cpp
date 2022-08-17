@@ -29,24 +29,22 @@ int main(int argc, char *argv[])
 
     QSettings settings;
 
-    //QML Utils
     QMLUtils::declareQml();
-    QMLUtils* qmlUtils = new QMLUtils(settings, "qml_utils");
+    QMLUtils qmlUtils(settings, "qml_utils");
 
     QApplication app(argc, argv);
 
     QSplashScreen* splashScreen = new QSplashScreen(QPixmap(":/icon.ico"));
     splashScreen->show();
 
-    //Window icon
+    QNetworkAccessManager network;
+
     app.setWindowIcon(QIcon(":/icon.ico"));
 
-    //Translations
     I18n::declareQml();
-    I18n* i18n = new I18n(settings, "i18n", nullptr, &app);
+    I18n i18n(settings, "i18n", nullptr);
     Q_UNUSED(i18n);
 
-    //Settings
     QString settingsPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
 
     QDir dir(settingsPath);
@@ -58,48 +56,42 @@ int main(int argc, char *argv[])
         }
     }
 
-    //ChatHandler
     ChatHandler::declareQml();
-    ChatHandler* chatHandler = new ChatHandler(settings);
+    ChatHandler chatHandler(settings);
 
     qRegisterMetaType<size_t>("size_t");
     qRegisterMetaType<std::shared_ptr<QByteArray>>("std::shared_ptr<QByteArray>");
 
-    //Update Checker
     GitHubApi::declareQml();
-    GitHubApi* github = new GitHubApi(settings, chatHandler->proxy(), "update_checker", chatHandler);
+    GitHubApi github(settings, "update_checker", network);
 
     QQmlApplicationEngine engine;
-    qmlUtils->setParent(&engine);
-    chatHandler->setParent(&engine);
-    i18n->setQmlApplicationEngine(&engine);
+
+    i18n.setQmlApplicationEngine(&engine);
 
     engine.rootContext();
 
-    //Clipboard
     ClipboardQml::declareQml();
-    ClipboardQml* clipboard = new ClipboardQml(&engine);
+    ClipboardQml clipboard;
 
-    //Commands Editor Window
     CommandsEditor::declareQml();
-    CommandsEditor* commandsEditor = new CommandsEditor(chatHandler->bot());
+    CommandsEditor commandsEditor(chatHandler.bot());
 
-    //Tray
     Tray::declareQml();
-    Tray* tray = new Tray(&engine);
+    Tray tray(&engine);
 
-    engine.rootContext()->setContextProperty("i18n",               i18n);
-    engine.rootContext()->setContextProperty("chatHandler",        chatHandler);
-    engine.rootContext()->setContextProperty("youTube",            chatHandler->youTube());
-    engine.rootContext()->setContextProperty("twitch",             chatHandler->twitch());
-    engine.rootContext()->setContextProperty("outputToFile",       chatHandler->outputToFile());
-    engine.rootContext()->setContextProperty("chatBot",            chatHandler->bot());
-    engine.rootContext()->setContextProperty("updateChecker",      github);
-    engine.rootContext()->setContextProperty("clipboard",          clipboard);
-    engine.rootContext()->setContextProperty("qmlUtils",           qmlUtils);
-    engine.rootContext()->setContextProperty("messagesModel",      chatHandler->messagesModel());
-    engine.rootContext()->setContextProperty("commandsEditor",     commandsEditor);
-    engine.rootContext()->setContextProperty("tray",               tray);
+    engine.rootContext()->setContextProperty("i18n",               &i18n);
+    engine.rootContext()->setContextProperty("chatHandler",        &chatHandler);
+    engine.rootContext()->setContextProperty("youTube",            chatHandler.youTube());
+    engine.rootContext()->setContextProperty("twitch",             chatHandler.twitch());
+    engine.rootContext()->setContextProperty("outputToFile",       chatHandler.outputToFile());
+    engine.rootContext()->setContextProperty("chatBot",            chatHandler.bot());
+    engine.rootContext()->setContextProperty("updateChecker",      &github);
+    engine.rootContext()->setContextProperty("clipboard",          &clipboard);
+    engine.rootContext()->setContextProperty("qmlUtils",           &qmlUtils);
+    engine.rootContext()->setContextProperty("messagesModel",      chatHandler.messagesModel());
+    engine.rootContext()->setContextProperty("commandsEditor",     &commandsEditor);
+    engine.rootContext()->setContextProperty("tray",               &tray);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -108,16 +100,6 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
-
-    for (QObject* obj : engine.rootObjects())
-    {
-        QQuickWindow* window = dynamic_cast<QQuickWindow*>(obj);
-        if (window)
-        {
-            //window->handle();
-            break;
-        }
-    }
 
     splashScreen->close();
     delete splashScreen;

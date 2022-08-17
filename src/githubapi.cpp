@@ -8,13 +8,12 @@
 #include <QJsonObject>
 #include <QCoreApplication>
 
-GitHubApi::GitHubApi(QSettings& settings_, const QNetworkProxy& proxy, const QString& settingsGroup, QObject *parent)
+GitHubApi::GitHubApi(QSettings& settings_, const QString& settingsGroup, QNetworkAccessManager& network_, QObject *parent)
     : QObject(parent)
     , settings(settings_)
     , SettingsGroup(settingsGroup)
+    , network(network_)
 {
-    _manager.setProxy(proxy);
-
     QDateTime latestPollingAt = settings.value(SettingsGroup + "/latest_polling_at").toDateTime();
 
     if (latestPollingAt.isValid())
@@ -45,7 +44,7 @@ void GitHubApi::checkForNewVersion()
 
     QNetworkRequest request = QNetworkRequest(_releasesUrl);
 
-    QNetworkReply* reply = _manager.get(request);
+    QNetworkReply* reply = network.get(request);
 
     connect(reply, &QNetworkReply::finished, this, &GitHubApi::onReplyReleases);
 }
