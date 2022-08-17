@@ -36,7 +36,7 @@ ChatHandler::ChatHandler(QSettings& settings_, QNetworkAccessManager& network_, 
     _bot = new ChatBot(settings, SettingsGroupPath + "/chat_bot", this);
 
     //Output to file
-    _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file", this);
+    _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file", network, this);
 #endif
 
     youtube = new YouTube(settings, SettingsGroupPath + "/youtube", network, this);

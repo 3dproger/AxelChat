@@ -7,6 +7,11 @@
 #include <QDir>
 #include <QTextCodec>
 #include <QDebug>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QImage>
+#include <QImageReader>
 #include "utils_axelchat.hpp"
 
 namespace
@@ -24,10 +29,11 @@ static const QString YouTubeLastMessageId = "youtube_last_message_id.txt";
 
 }
 
-OutputToFile::OutputToFile(QSettings &settings_, const QString &settingsGroupPath, QObject *parent)
+OutputToFile::OutputToFile(QSettings &settings_, const QString &settingsGroupPath, QNetworkAccessManager& network_, QObject *parent)
     : QObject(parent)
     , settings(settings_)
     , SettingsGroupPath(settingsGroupPath)
+    , network(network_)
 {
     reinit(true);
 
@@ -181,29 +187,29 @@ void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
             tags.append(QPair<QString, QString>("user_url", message.author().pageUrl().toString()));
         }
 
+        QString serviceId;
         {
             // chat service
 
-            QString chatServie;
             switch (type) {
             case ChatMessage::SoftwareNotification:
-                chatServie = "softwarenotification";
+                serviceId = "softwarenotification";
                 break;
             case ChatMessage::TestMessage:
-                chatServie = "testmessage";
+                serviceId = "testmessage";
                 break;
             case ChatMessage::YouTube:
-                chatServie = "youtube";
+                serviceId = "youtube";
                 break;
             case ChatMessage::Twitch:
-                chatServie = "twitch";
+                serviceId = "twitch";
                 break;
             case ChatMessage::Unknown:
             default:
-                chatServie = "unknown";
+                serviceId = "unknown";
                 break;
             }
-            tags.append(QPair<QString, QString>("chat_service", chatServie));
+            tags.append(QPair<QString, QString>("chat_service", serviceId));
         }
 
         // chat-service specific data
@@ -231,6 +237,86 @@ void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
             {
                 currentLastYouTubeMessageId = id;
             }
+        }
+
+        switch (type)
+        {
+        case ChatMessage::GoodGame:
+        case ChatMessage::YouTube:
+        case ChatMessage::Twitch:
+        {
+            const QString channelId = message.author().channelId();
+
+            if (!downloadedAvatarsAuthorId.contains(channelId))
+            {
+                //qDebug() << "Load avatar for" << channelId + "/" + channelId;
+
+                QNetworkRequest request(message.author().avatarUrl());
+                QNetworkReply* reply = network.get(request);
+                connect(reply, &QNetworkReply::finished, this, [this, serviceId, channelId]()
+                {
+                    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
+                    if (!reply)
+                    {
+                        return;
+                    }
+
+                    if (reply->bytesAvailable() <= 0)
+                    {
+                        qDebug() << "Failed download avatar" << channelId;
+                        return;
+                    }
+
+                    QByteArray format;
+
+                    {
+                        format = QImageReader(reply).format();
+                    }
+
+                    format = format.trimmed().toLower();
+
+                    if (format.isEmpty())
+                    {
+                        qDebug() << "Failed to detect avatar format" << channelId;
+                        return;
+                    }
+
+                    const QString avatarsDirectory = _outputFolder + "/avtars/" + serviceId;
+                    QDir dir(avatarsDirectory);
+                    if (!dir.exists())
+                    {
+                        if (!dir.mkpath(avatarsDirectory))
+                        {
+                            qDebug() << "Failed to make path" << avatarsDirectory;
+                        }
+                    }
+
+                    const QString fileName = avatarsDirectory + "/" + channelId + "." + format;
+                    QFile file(fileName);
+                    if (file.open(QFile::OpenModeFlag::WriteOnly))
+                    {
+                        file.write(reply->readAll());
+                        file.close();
+
+                        qDebug() << "Saved avatar" << channelId;
+                    }
+                    else
+                    {
+                        qDebug() << "Failed to save avatar" << fileName;
+                    }
+
+                    downloadedAvatarsAuthorId.insert(channelId);
+
+                    reply->deleteLater();
+                });
+            }
+        }
+            break;
+
+        case ChatMessage::Unknown:
+        case ChatMessage::SoftwareNotification:
+        case ChatMessage::TestMessage:
+            break;
         }
     }
 

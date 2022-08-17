@@ -21,7 +21,7 @@ public:
         ANSIWithUTF8Codec = 200
     };
 
-    explicit OutputToFile(QSettings& settings, const QString& settingsGroupPath, QObject *parent = nullptr);
+    explicit OutputToFile(QSettings& settings, const QString& settingsGroupPath, QNetworkAccessManager& network, QObject *parent = nullptr);
     ~OutputToFile();
 
     bool enabled() const;
@@ -65,6 +65,7 @@ private:
 
     QSettings& settings;
     const QString SettingsGroupPath;
+    QNetworkAccessManager& network;
 
     bool _enabled = false;
     QString _outputFolder = standardOutputFolder();
@@ -85,6 +86,8 @@ private:
     const QDateTime _startupDateTime = QDateTime::currentDateTime();
 
     QString _messagesCurrentFolder;
+
+    QSet<QString> downloadedAvatarsAuthorId;
 };
 
 #endif // OUTPUTTOFILE_HPP
