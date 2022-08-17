@@ -24,7 +24,7 @@ static const QString SK_YouTubeLastMessageSavedId   = "youtube_last_saved_messag
 
 static const QString DateTimeFileNameFormat = "yyyy-MM-ddThh-mm-ss.zzz";
 static const QString MessagesFileName = "messages.ini";
-static const QString MessagesCountFileName = "count.txt";
+static const QString MessagesCountFileName = "messages_count.txt";
 static const QString YouTubeLastMessageId = "youtube_last_message_id.txt";
 
 }
@@ -163,29 +163,10 @@ void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
 
         QList<QPair<QString, QString>> tags;
 
-        {
-            // author name
-
-            tags.append(QPair<QString, QString>("author", message.author().name()));
-        }
-
-        {
-            // message text
-
-            tags.append(QPair<QString, QString>("message", message.text()));
-        }
-
-        {
-            // time
-
-            tags.append(QPair<QString, QString>("time", message.publishedAt().toTimeZone(QTimeZone::systemTimeZone()).toString(Qt::DateFormat::ISODateWithMs)));
-        }
-
-        {
-            // user url
-
-            tags.append(QPair<QString, QString>("user_url", message.author().pageUrl().toString()));
-        }
+        tags.append(QPair<QString, QString>("author", message.author().name()));
+        tags.append(QPair<QString, QString>("author_id", message.author().channelId()));
+        tags.append(QPair<QString, QString>("message", message.text()));
+        tags.append(QPair<QString, QString>("time", message.publishedAt().toTimeZone(QTimeZone::systemTimeZone()).toString(Qt::DateFormat::ISODateWithMs)));
 
         QString serviceId;
         {
@@ -209,23 +190,7 @@ void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
                 serviceId = "unknown";
                 break;
             }
-            tags.append(QPair<QString, QString>("chat_service", serviceId));
-        }
-
-        // chat-service specific data
-        switch (type) {
-        case ChatMessage::YouTube:
-            tags.append(QPair<QString, QString>("youtube_channel_id", message.author().channelId()));
-            break;
-
-        case ChatMessage::Twitch:
-            tags.append(QPair<QString, QString>("twitch_login", message.author().channelId()));
-            break;
-
-        case ChatMessage::Unknown:
-        case ChatMessage::SoftwareNotification:
-        case ChatMessage::TestMessage:
-            break;
+            tags.append(QPair<QString, QString>("service", serviceId));
         }
 
         writeMessage(tags);
@@ -281,7 +246,7 @@ void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
                         return;
                     }
 
-                    const QString avatarsDirectory = _outputFolder + "/avtars/" + serviceId;
+                    const QString avatarsDirectory = _messagesCurrentFolder + "/avatars/" + serviceId;
                     QDir dir(avatarsDirectory);
                     if (!dir.exists())
                     {
