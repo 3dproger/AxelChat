@@ -264,7 +264,7 @@ void OutputToFile::downloadAvatar(const QString &channelId, const QUrl &url, con
             return;
         }
 
-        const QString avatarsDirectory = _messagesCurrentFolder + "/avatars/" + serviceId;
+        const QString avatarsDirectory = _sessionFolder + "/avatars/" + serviceId;
         QDir dir(avatarsDirectory);
         if (!dir.exists())
         {
@@ -447,24 +447,24 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
         _fileMessagesCount = nullptr;
     }
 
-    if (forceUpdateOutputFolder || _messagesCurrentFolder.isEmpty())
+    if (forceUpdateOutputFolder || _sessionFolder.isEmpty())
     {
-        _messagesCurrentFolder = _outputFolder + "/messages/" + _startupDateTime.toString(DateTimeFileNameFormat);
+        _sessionFolder = _outputFolder + "/sessions/" + _startupDateTime.toString(DateTimeFileNameFormat);
     }
 
     if (_enabled)
     {
         QDir dir;
 
-        dir = QDir(_messagesCurrentFolder);
+        dir = QDir(_sessionFolder);
         if (!dir.exists())
         {
-            dir.mkpath(_messagesCurrentFolder);
+            dir.mkpath(_sessionFolder);
         }
     }
 
-    _fileMessages               = new QFile(_messagesCurrentFolder + "/" + MessagesFileName,       this);
-    _fileMessagesCount          = new QFile(_messagesCurrentFolder + "/" + MessagesCountFileName,  this);
+    _fileMessages               = new QFile(_sessionFolder + "/" + MessagesFileName,       this);
+    _fileMessagesCount          = new QFile(_sessionFolder + "/" + MessagesCountFileName,  this);
 
     //Current
     if (_iniCurrentInfo)
@@ -484,7 +484,7 @@ void OutputToFile::reinit(bool forceUpdateOutputFolder)
         _iniCurrentInfo->setValue("software/started", true);
     }
 
-    writeStartupInfo(_messagesCurrentFolder);
+    writeStartupInfo(_sessionFolder);
     writeInfo();
 }
 

@@ -86,7 +86,7 @@ private:
 
     const QDateTime _startupDateTime = QDateTime::currentDateTime();
 
-    QString _messagesCurrentFolder;
+    QString _sessionFolder;
 
     QSet<QString> downloadedAvatarsAuthorId;
 };
