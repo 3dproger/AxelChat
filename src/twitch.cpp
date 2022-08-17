@@ -706,6 +706,8 @@ void Twitch::onReplyAvatarsByChannelPage()
     const QString channelLogin = repliesForAvatar[reply];
     repliesForAvatar.remove(reply);
 
+    reply->deleteLater();
+
     static const QList<QByteArray> AvatarUrlPrefixes = {
         "https://static-cdn.jtvnw.net/jtv_user_pictures/",
         "https://static-cdn.jtvnw.net/user-default-pictures-uv/",
@@ -797,6 +799,8 @@ void Twitch::onReplyBadges()
         return;
     }
 
+    reply->deleteLater();
+
     parseBadgesJson(data);
 }
 
@@ -852,6 +856,8 @@ void Twitch::onReplyUserInfo()
         return;
     }
 
+    reply->deleteLater();
+
     const QJsonArray dataArr = QJsonDocument::fromJson(data).object().value("data").toArray();
     for (const QJsonValue& v : qAsConst(dataArr))
     {
@@ -905,6 +911,8 @@ void Twitch::onReplyStreamInfo()
     {
         return;
     }
+
+    reply->deleteLater();
 
     bool found = false;
 

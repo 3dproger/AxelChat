@@ -450,6 +450,8 @@ void YouTube::onReplyChatPage()
     //emit stateChanged();
 
     const QByteArray rawData = reply->readAll();
+    reply->deleteLater();
+
     if (rawData.isEmpty())
     {
         processBadChatReply();
@@ -530,6 +532,8 @@ void YouTube::onReplyChannelLivePage()
     }
 
     const QByteArray rawData = reply->readAll();
+    reply->deleteLater();
+
     if (rawData.isEmpty())
     {
         qDebug() << Q_FUNC_INFO << ":rawData is empty";
@@ -574,6 +578,8 @@ void YouTube::onReplyStreamPage()
     //emit stateChanged();
 
     const QByteArray rawData = reply->readAll();
+    reply->deleteLater();
+
     if (rawData.isEmpty())
     {
         qDebug() << Q_FUNC_INFO << ":rawData is empty";
