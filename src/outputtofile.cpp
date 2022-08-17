@@ -22,12 +22,6 @@ static const QString MessagesFileName = "messages.ini";
 static const QString MessagesCountFileName = "count.txt";
 static const QString YouTubeLastMessageId = "youtube_last_message_id.txt";
 
-static QString dateTimeToStr(const QDateTime& dateTime)
-{
-    static const QString DateTimeMessagePrepareFormat = "yyyy-MM-ddThh:mm:ss.zzz";
-    return dateTime.toString(DateTimeMessagePrepareFormat) + "Z";
-}
-
 }
 
 OutputToFile::OutputToFile(QSettings &settings_, const QString &settingsGroupPath, QObject *parent)
@@ -178,7 +172,7 @@ void OutputToFile::writeMessages(const QList<ChatMessage>& messages)
         {
             // time
 
-            tags.append(QPair<QString, QString>("time", dateTimeToStr(message.publishedAt())));
+            tags.append(QPair<QString, QString>("time", message.publishedAt().toTimeZone(QTimeZone::systemTimeZone()).toString(Qt::DateFormat::ISODateWithMs)));
         }
 
         {
@@ -453,12 +447,7 @@ void OutputToFile::writeStartupInfo(const QString& messagesFolder)
 
         _iniCurrentInfo->setValue("software/current_messages_folder",   messagesFolder);
 
-        _iniCurrentInfo->setValue("software/startup_time",              dateTimeToStr(_startupDateTime));
-        _iniCurrentInfo->setValue("software/startup_timestamp_utc",     QString("%1").arg(_startupDateTime.toMSecsSinceEpoch()));
-
-        _iniCurrentInfo->setValue("software/startup_timezone_id",       QString::fromUtf8(_startupDateTime.timeZone().id()));
-        _iniCurrentInfo->setValue("software/startup_timezone_offset_from_utc", QString("%1")
-                              .arg(double(_startupDateTime.timeZone().standardTimeOffset(_startupDateTime)) / float(60 * 60)));
+        _iniCurrentInfo->setValue("software/startup_time",              _startupDateTime.toTimeZone(QTimeZone::systemTimeZone()).toString(Qt::DateFormat::ISODateWithMs));
     }
 }
 
