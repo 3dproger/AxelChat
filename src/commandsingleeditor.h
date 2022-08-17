@@ -14,7 +14,7 @@ class CommandSingleEditor : public QDialog
     Q_OBJECT
 
 public:
-    explicit CommandSingleEditor(ChatBot* chatBot, QWidget *parent = nullptr);
+    explicit CommandSingleEditor(ChatBot& chatBot, QWidget *parent = nullptr);
     void setCommand(BotAction* action, int pos);
     ~CommandSingleEditor();
 
@@ -36,7 +36,7 @@ private slots:
 
 private:
     Ui::CommandSingleEditor *ui;
-    ChatBot* _chatBot = nullptr;
+    ChatBot& chatBot;
     bool _createNew = true;
     int _editingActionNum = -1;
 };

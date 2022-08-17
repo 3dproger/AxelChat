@@ -13,14 +13,15 @@ class GoodGame : public AbstractChatService
 {
     Q_OBJECT
 public:
-    explicit GoodGame(const QNetworkProxy& proxy, QSettings& settings, const QString& SettingsGroupPath, QObject *parent = nullptr);
+    explicit GoodGame(QSettings& settings, const QString& SettingsGroupPath, QNetworkAccessManager& network, QObject *parent = nullptr);
     ~GoodGame();
 
-    void setProxy(const QNetworkProxy &proxy) override;
     ConnectionStateType connectionStateType() const override;
     QString stateDescription() const override;
     QString detailedInformation() const override;
     int viewersCount() const override;
+    void reconnect() override;
+    QString getNameLocalized() const override;
 
 signals:
 
@@ -34,12 +35,11 @@ private slots:
 
 private:
 
-    void reInitSocket();
-
     QWebSocket _socket;
 
     QSettings& settings;
     const QString SettingsGroupPath;
+    QNetworkAccessManager& network;
 
     AxelChat::GoodGameInfo _info;
     QString _lastConnectedChannelName;

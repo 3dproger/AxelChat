@@ -3,10 +3,10 @@
 #include <QDebug>
 #include <QMessageBox>
 
-CommandsEditor::CommandsEditor(ChatBot* chatBot, QWidget *parent) :
+CommandsEditor::CommandsEditor(ChatBot& chatBot_, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CommandsEditor),
-    _chatBot(chatBot)
+    chatBot(chatBot_)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
@@ -15,7 +15,7 @@ CommandsEditor::CommandsEditor(ChatBot* chatBot, QWidget *parent) :
     ui->tableWidgetCommands->setColumnCount(2);
     ui->tableWidgetCommands->setColumnWidth(1, 130);
     ui->tableWidgetCommands->setColumnWidth(1, 300);
-    _singleEditor = new CommandSingleEditor(_chatBot, this);
+    _singleEditor = new CommandSingleEditor(chatBot, this);
     connect(_singleEditor, &CommandSingleEditor::commandsChanged, this, &CommandsEditor::updateCommands);
     updateCommands();
     on_tableWidgetCommands_itemSelectionChanged();
@@ -40,13 +40,7 @@ void CommandsEditor::updateCommands()
     ui->tableWidgetCommands->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Keywords")));
     ui->tableWidgetCommands->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Action")));
 
-    if (!_chatBot)
-    {
-        qDebug() << "_chatBot == nullptr";
-        return;
-    }
-
-    const QList<BotAction*>& actions = _chatBot->actions();
+    const QList<BotAction*>& actions = chatBot.actions();
 
     for (int i = 0; i < actions.count(); ++i)
     {
@@ -87,7 +81,7 @@ void CommandsEditor::updateCommands()
 void CommandsEditor::editCurrentCommand()
 {
     const int row = ui->tableWidgetCommands->currentRow();
-    const QList<BotAction*>& actions = _chatBot->actions();
+    const QList<BotAction*>& actions = chatBot.actions();
     if (row < actions.count() && row != -1)
     {
         _singleEditor->setCommand(actions.at(row), row);
@@ -109,7 +103,7 @@ void CommandsEditor::on_pushButtonEdit_clicked()
 void CommandsEditor::on_tableWidgetCommands_itemSelectionChanged()
 {
     const int row = ui->tableWidgetCommands->currentRow();
-    const QList<BotAction*>& actions = _chatBot->actions();
+    const QList<BotAction*>& actions = chatBot.actions();
     if (row < actions.count() && row != -1)
     {
         ui->pushButtonEdit->setEnabled(true);
@@ -137,19 +131,12 @@ void CommandsEditor::on_pushButtonDelete_clicked()
     }
 
     const int row = ui->tableWidgetCommands->currentRow();
-    if (_chatBot)
-    {
-        _chatBot->deleteAction(row);
-    }
-
+    chatBot.deleteAction(row);
     updateCommands();
 }
 
 void CommandsEditor::on_pushButtonExecute_clicked()
 {
     const int row = ui->tableWidgetCommands->currentRow();
-    if (_chatBot)
-    {
-        _chatBot->executeAction(row);
-    }
+    chatBot.executeAction(row);
 }

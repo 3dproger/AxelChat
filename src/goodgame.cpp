@@ -2,11 +2,13 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
+#include <QNetworkAccessManager>
 
-GoodGame::GoodGame(const QNetworkProxy& proxy, QSettings& settings_, const QString& settingsGroupPath, QObject *parent)
-    : AbstractChatService(proxy, parent)
+GoodGame::GoodGame(QSettings& settings_, const QString& settingsGroupPath, QNetworkAccessManager& network_, QObject *parent)
+    : AbstractChatService(parent)
     , settings(settings_)
     , SettingsGroupPath(settingsGroupPath)
+    , network(network_)
 {
     QObject::connect(&_socket, &QWebSocket::stateChanged, this, [=](QAbstractSocket::SocketState state){
         //qDebug() << "GoodGame WebSocket state changed:" << state;
@@ -37,7 +39,7 @@ GoodGame::GoodGame(const QNetworkProxy& proxy, QSettings& settings_, const QStri
         qDebug() << "GoodGame WebSocket error:" << error_;
     });
 
-    reInitSocket();
+    reconnect();
 
     QObject::connect(&_timerReconnect, &QTimer::timeout, this, &GoodGame::timeoutReconnect);
     _timerReconnect.start(2000);
@@ -46,11 +48,6 @@ GoodGame::GoodGame(const QNetworkProxy& proxy, QSettings& settings_, const QStri
 GoodGame::~GoodGame()
 {
     _socket.close();
-}
-
-void GoodGame::setProxy(const QNetworkProxy &proxy)
-{
-
 }
 
 AbstractChatService::ConnectionStateType GoodGame::connectionStateType() const
@@ -78,7 +75,7 @@ void GoodGame::timeoutReconnect()
 {
     if (!_info.connected /*&& !_info.oauthToken.isEmpty()*/)
     {
-        reInitSocket();
+        reconnect();
     }
 }
 
@@ -112,14 +109,21 @@ void GoodGame::requestGetChannelHistory()
     sendToWebSocket(document);
 }
 
-void GoodGame::reInitSocket()
+void GoodGame::reconnect()
 {
     return;
     _socket.close();
 
     //https://goodgame.ru/chat/26624
 
+    _socket.setProxy(network.proxy());
+
     _socket.open(QUrl("wss://chat.goodgame.ru/chat/websocket"));
+}
+
+QString GoodGame::getNameLocalized() const
+{
+    return tr("GoodGame");
 }
 
 void GoodGame::onWebSocketReceived(const QString &rawData)

@@ -41,13 +41,12 @@ QByteArray extractDigitsOnly(const QByteArray& data)
 
 }
 
-YouTube::YouTube(const QNetworkProxy& proxy, QSettings& settings_, const QString& settingsGroupPath, QObject *parent)
-    : AbstractChatService(proxy, parent)
+YouTube::YouTube(QSettings& settings_, const QString& settingsGroupPath, QNetworkAccessManager& network_, QObject *parent)
+    : AbstractChatService(parent)
     , settings(settings_)
     , SettingsGroupPath(settingsGroupPath)
+    , network(network_)
 {
-    _manager.setProxy(proxy);
-
     setLink(settings.value(SettingsGroupPath + "/" + SettingsKeyUserSpecifiedLink).toString());
 
     QObject::connect(&_timerRequestChat, &QTimer::timeout, this, &YouTube::onTimeoutRequestChat);
@@ -236,12 +235,6 @@ QUrl YouTube::createResizedAvatarUrl(const QUrl &sourceAvatarUrl, int imageHeigh
     return sourceAvatarUrl;
 }
 
-void YouTube::setProxy(const QNetworkProxy &proxy)
-{
-    _manager.setProxy(proxy);
-    reconnect();
-}
-
 AxelChat::YouTubeInfo YouTube::getInfo() const
 {
     return _info;
@@ -275,8 +268,13 @@ bool YouTube::isBroadcastIdUserSpecified() const
 void YouTube::reconnect()
 {
     const QString link = _info.userSpecified;
-    setLink("");
+    setLink(QString());
     setLink(link);
+}
+
+QString YouTube::getNameLocalized() const
+{
+    return tr("YouTube");
 }
 
 AbstractChatService::ConnectionStateType YouTube::connectionStateType() const
@@ -366,7 +364,7 @@ void YouTube::setLink(QString link)
             request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, AxelChat::UserAgentNetworkHeaderName);
             request.setRawHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             request.setRawHeader("Accept-Language", AcceptLanguageNetworkHeaderName);
-            QNetworkReply* reply = _manager.get(request);
+            QNetworkReply* reply = network.get(request);
             if (!reply)
             {
                 qDebug() << Q_FUNC_INFO << ": !reply";
@@ -426,7 +424,7 @@ void YouTube::onTimeoutRequestChat()
     QNetworkRequest request(_info.broadcastChatUrl);
     request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, AxelChat::UserAgentNetworkHeaderName);
     request.setRawHeader("accept-language", AcceptLanguageNetworkHeaderName);
-    QNetworkReply* reply = _manager.get(request);
+    QNetworkReply* reply = network.get(request);
     if (!reply)
     {
         qDebug() << Q_FUNC_INFO << ": !reply";
@@ -555,7 +553,7 @@ void YouTube::onTimeoutRequestStreamPage()
     request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, AxelChat::UserAgentNetworkHeaderName);
     request.setRawHeader("accept-language", AcceptLanguageNetworkHeaderName);
 
-    QNetworkReply* reply = _manager.get(request);
+    QNetworkReply* reply = network.get(request);
     if (!reply)
     {
         qDebug() << Q_FUNC_INFO << ": !reply";

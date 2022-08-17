@@ -16,14 +16,15 @@ class YouTube : public AbstractChatService
     Q_PROPERTY(bool    isBroadcastIdUserSpecified           READ isBroadcastIdUserSpecified         CONSTANT)
 
 public:
-    explicit YouTube(const QNetworkProxy& proxy, QSettings& settings, const QString& settingsGroupPath, QObject *parent = nullptr);
+    explicit YouTube(QSettings& settings, const QString& settingsGroupPath, QNetworkAccessManager& network, QObject *parent = nullptr);
     ~YouTube();
     int messagesReceived() const;
 
     QString broadcastId() const;
     QString userSpecifiedLink() const;
     bool isBroadcastIdUserSpecified() const;
-    void reconnect();
+    void reconnect() override;
+    QString getNameLocalized() const override;
 
     ConnectionStateType connectionStateType() const override;
     QString stateDescription() const override;
@@ -34,8 +35,6 @@ public:
     QUrl chatUrl() const override;
     QUrl controlPanelUrl() const override;
     Q_INVOKABLE static QUrl createResizedAvatarUrl(const QUrl& sourceAvatarUrl, int imageHeight);
-
-    void setProxy(const QNetworkProxy& proxy) override;
 
     qint64 traffic() const override { return _traffic; }
 
@@ -66,11 +65,10 @@ private:
 
     QSettings& settings;
     const QString SettingsGroupPath;
+    QNetworkAccessManager& network;
 
     QTimer _timerRequestChat;
     QTimer _timerRequestStreamPage;
-
-    QNetworkAccessManager _manager;
 
     int _messagesReceived = 0;
 

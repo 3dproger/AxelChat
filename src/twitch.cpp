@@ -66,13 +66,12 @@ static bool checkReply(QNetworkReply *reply, const char *tag, QByteArray& result
 
 }
 
-Twitch::Twitch(const QNetworkProxy& proxy, QSettings& settings_, const QString& settingsGroupPath, QObject *parent)
-  : AbstractChatService(proxy, parent)
+Twitch::Twitch(QSettings& settings_, const QString& settingsGroupPath, QNetworkAccessManager& network_, QObject *parent)
+  : AbstractChatService(parent)
   , settings(settings_)
   , SettingsGroupPath(settingsGroupPath)
+  , network(network_)
 {
-    _socket.setProxy(proxy);
-
     QObject::connect(&_socket, &QWebSocket::stateChanged, this, [=](QAbstractSocket::SocketState state){
         Q_UNUSED(state)
         //qDebug() << "Twitch: WebSocket state changed:" << state;
@@ -119,12 +118,12 @@ Twitch::Twitch(const QNetworkProxy& proxy, QSettings& settings_, const QString& 
         qDebug() << "Twitch: WebSocket error:" << error_;
     });
 
-    reInitSocket();
+    reconnect();
 
     QObject::connect(&_timerReconnect, &QTimer::timeout, this, [&](){
         if (!_info.connected && !_info.oauthToken.isEmpty())
         {
-            reInitSocket();
+            reconnect();
         }
     });
     _timerReconnect.start(ReconncectPeriod);
@@ -140,7 +139,7 @@ Twitch::Twitch(const QNetworkProxy& proxy, QSettings& settings_, const QString& 
 
             emit disconnected(_lastConnectedChannelName);
             emit stateChanged();
-            reInitSocket();
+            reconnect();
         }
     });
 
@@ -283,12 +282,6 @@ bool Twitch::isChannelNameUserSpecified() const
     return _info.userSpecifiedChannel.trimmed() == _info.channelLogin.trimmed() && !_info.userSpecifiedChannel.isEmpty();
 }
 
-void Twitch::setProxy(const QNetworkProxy &proxy)
-{
-    _socket.setProxy(proxy);
-    reInitSocket();
-}
-
 AxelChat::TwitchInfo Twitch::getInfo() const
 {
     return _info;
@@ -304,7 +297,7 @@ void Twitch::setUserSpecifiedChannel(QString userChannel)
 
         settings.setValue(SettingsGroupPath + "/" + SettingsKeyUserSpecifiedChannel, _info.userSpecifiedChannel);
 
-        reInitSocket();
+        reconnect();
 
         emit stateChanged();
     }
@@ -323,7 +316,7 @@ void Twitch::setOAuthToken(QString token)
 
         settings.setValue(SettingsGroupPath + "/" + SettingsKeyOAuthToken, _info.oauthToken.toUtf8().toBase64());
 
-        reInitSocket();
+        reconnect();
 
         emit stateChanged();
     }
@@ -335,7 +328,7 @@ void Twitch::sendIRCMessage(const QString &message)
     _socket.sendTextMessage(message);
 }
 
-void Twitch::reInitSocket()
+void Twitch::reconnect()
 {
     _info.userSpecifiedChannel = _info.userSpecifiedChannel.trimmed().toLower();
 
@@ -375,9 +368,16 @@ void Twitch::reInitSocket()
 
     if (!_info.channelLogin.isEmpty())
     {
+        _socket.setProxy(network.proxy());
+
         // ToDo: use SSL? wss://irc-ws.chat.twitch.tv:443
         _socket.open(QUrl("ws://irc-ws.chat.twitch.tv:80"));
     }
+}
+
+QString Twitch::getNameLocalized() const
+{
+    return tr("Twitch");
 }
 
 void Twitch::onIRCMessage(const QString &rawData)
@@ -680,7 +680,7 @@ void Twitch::requestForAvatarsByChannelPage(const QString &channelLogin)
     //request.setRawHeader("Accept-Encoding", "gzip, deflate, br");
     //request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, AxelChat::UserAgentNetworkHeaderName);
     request.setRawHeader("Accept-Language", AcceptLanguageNetworkHeaderName);
-    QNetworkReply* reply = _manager.get(request);
+    QNetworkReply* reply = network.get(request);
     if (!reply)
     {
         qDebug() << Q_FUNC_INFO << ": !reply";
@@ -765,7 +765,7 @@ void Twitch::requestForGlobalBadges()
     QNetworkRequest request(QString("https://badges.twitch.tv/v1/badges/global/display"));
     request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, AxelChat::UserAgentNetworkHeaderName);
     request.setRawHeader("Accept-Language", AcceptLanguageNetworkHeaderName);
-    QNetworkReply* reply = _manager.get(request);
+    QNetworkReply* reply = network.get(request);
     if (!reply)
     {
         qDebug() << Q_FUNC_INFO << ": !reply";
@@ -780,7 +780,7 @@ void Twitch::requestForChannelBadges(const QString &broadcasterId)
     QNetworkRequest request(QString("https://badges.twitch.tv/v1/badges/channels/%1/display").arg(broadcasterId));
     request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, AxelChat::UserAgentNetworkHeaderName);
     request.setRawHeader("Accept-Language", AcceptLanguageNetworkHeaderName);
-    QNetworkReply* reply = _manager.get(request);
+    QNetworkReply* reply = network.get(request);
     if (!reply)
     {
         qDebug() << Q_FUNC_INFO << ": !reply";
@@ -837,7 +837,7 @@ void Twitch::requestUserInfo(const QString& login)
     request.setRawHeader("Accept-Language", AcceptLanguageNetworkHeaderName);
     request.setRawHeader("Client-ID", ApplicationClientID.toUtf8());
     request.setRawHeader("Authorization", QByteArray("Bearer ") + _info.oauthToken.toUtf8());
-    QNetworkReply* reply = _manager.get(request);
+    QNetworkReply* reply = network.get(request);
     if (!reply)
     {
         qDebug() << Q_FUNC_INFO << ": !reply";
@@ -893,7 +893,7 @@ void Twitch::requestStreamInfo(const QString &login)
     request.setRawHeader("Accept-Language", AcceptLanguageNetworkHeaderName);
     request.setRawHeader("Client-ID", ApplicationClientID.toUtf8());
     request.setRawHeader("Authorization", QByteArray("Bearer ") + _info.oauthToken.toUtf8());
-    QNetworkReply* reply = _manager.get(request);
+    QNetworkReply* reply = network.get(request);
     if (!reply)
     {
         qDebug() << Q_FUNC_INFO << ": !reply";

@@ -5,10 +5,10 @@
 #include <QFile>
 #include "botaction.hpp"
 
-CommandSingleEditor::CommandSingleEditor(ChatBot* chatBot, QWidget *parent) :
+CommandSingleEditor::CommandSingleEditor(ChatBot& chatBot_, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CommandSingleEditor),
-    _chatBot(chatBot)
+    chatBot(chatBot_)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
@@ -140,12 +140,6 @@ void CommandSingleEditor::on_pushButtonDone_clicked()
         }
     }
 
-    if (!_chatBot)
-    {
-        qDebug() << "!_chatBot";
-        return;
-    }
-
     BotAction *newAction = BotAction::createSoundPlay(
                 keywords,
                 fileName,
@@ -164,11 +158,11 @@ void CommandSingleEditor::on_pushButtonDone_clicked()
 
     if (_createNew)
     {
-        _chatBot->addAction(newAction);
+        chatBot.addAction(newAction);
     }
     else
     {
-        _chatBot->rewriteAction(_editingActionNum, newAction);
+        chatBot.rewriteAction(_editingActionNum, newAction);
     }
 
     emit commandsChanged();

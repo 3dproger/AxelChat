@@ -33,18 +33,17 @@ class ChatHandler : public QObject
     Q_PROPERTY(int     proxyServerPort    READ proxyServerPort    WRITE setProxyServerPort    NOTIFY proxyChanged)
 
 public:
-    explicit ChatHandler(QSettings& settings, QObject *parent = nullptr);
-    ~ChatHandler();
-    MessageAuthor authorByChannelId(const QString& channelId) const;
+    explicit ChatHandler(QSettings& settings, QNetworkAccessManager& network, QObject *parent = nullptr);
+    MessageAuthor getAuthorByChannelId(const QString& channelId) const;
 
-    YouTube *youTube() const;
-    Twitch* twitch() const;
-    GoodGame* goodGame() const;
-    ChatMessagesModel* messagesModel();
+    YouTube& getYoutube();
+    Twitch& getTwitch() const;
+    GoodGame& getGoodGame() const;
+    ChatMessagesModel& getMessagesModel();
 
 #ifndef AXELCHAT_LIBRARY
-    OutputToFile *outputToFile() const;
-    ChatBot *bot() const;
+    OutputToFile& getOutputToFile() const;
+    ChatBot& getBot() const;
 #endif
 
 #ifdef QT_QUICK_LIB
@@ -100,15 +99,18 @@ private slots:
 
 private:
     void updateProxy();
+    void addService(AbstractChatService& service);
 
-    ChatMessagesModel _messagesModel;
-    QMap<QString, MessageAuthor> _authors;
+    ChatMessagesModel messagesModel;
+    QMap<QString, MessageAuthor> authors;
 
     QSettings& settings;
+    QNetworkAccessManager& network;
 
-    YouTube* _youTube                       = nullptr;
-    Twitch* _twitch                         = nullptr;
-    GoodGame* _goodGame                     = nullptr;
+    YouTube* youtube                       = nullptr;
+    Twitch* twitch                         = nullptr;
+    GoodGame* goodGame                     = nullptr;
+    QList<AbstractChatService*> services;
 
 #ifndef AXELCHAT_LIBRARY
     OutputToFile* _outputToFile             = nullptr;

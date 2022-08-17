@@ -3,7 +3,6 @@
 
 #include "types.hpp"
 #include <QObject>
-#include <QNetworkProxy>
 
 class ChatHandler;
 
@@ -31,11 +30,9 @@ public:
 
     Q_PROPERTY(qint64               traffic                      READ traffic                    NOTIFY stateChanged)
 
-    explicit AbstractChatService(const QNetworkProxy& proxy, QObject *parent = nullptr)
+    explicit AbstractChatService(QObject *parent = nullptr)
         : QObject(parent)
     { }
-
-    virtual void setProxy(const QNetworkProxy& proxy) = 0;
 
     virtual QUrl chatUrl() const { return QString(); }
     virtual QUrl controlPanelUrl() const { return QString(); }
@@ -44,10 +41,13 @@ public:
     virtual ConnectionStateType connectionStateType() const = 0;
     virtual QString stateDescription() const  = 0;
     virtual QString detailedInformation() const = 0;
+    virtual QString getNameLocalized() const = 0;
 
     virtual int viewersCount() const = 0;
 
     virtual qint64 traffic() const { return -1; }
+
+    virtual void reconnect() = 0;
 
 #ifdef QT_QUICK_LIB
     static void declareQML()

@@ -17,7 +17,7 @@ class Twitch : public AbstractChatService
     Q_PROPERTY(bool     isChannelNameUserSpecified  READ isChannelNameUserSpecified CONSTANT)
 
 public:
-    explicit Twitch(const QNetworkProxy& proxy, QSettings& settings, const QString& settingsGroupPath, QObject *parent = nullptr);
+    explicit Twitch(QSettings& settings, const QString& settingsGroupPath, QNetworkAccessManager& network, QObject *parent = nullptr);
     ~Twitch();
     ConnectionStateType connectionStateType() const override;
     QString stateDescription() const override;
@@ -32,9 +32,10 @@ public:
     QString oauthToken() const { return _info.oauthToken; }
     QString userSpecifiedChannel() const { return _info.userSpecifiedChannel; }
 
-    void setProxy(const QNetworkProxy& proxy) override;
-
     AxelChat::TwitchInfo getInfo() const;
+
+    void reconnect() override;
+    QString getNameLocalized() const override;
 
 signals:
 
@@ -73,10 +74,9 @@ private:
         }
     };
 
-    void reInitSocket();
-
     QSettings& settings;
     const QString SettingsGroupPath;
+    QNetworkAccessManager& network;
 
     QWebSocket _socket;
 
@@ -88,8 +88,6 @@ private:
     QTimer _timerCheckPong;
 
     QTimer _timerUpdaetStreamInfo;
-
-    QNetworkAccessManager _manager;
 
     QHash<QNetworkReply*, QString> repliesForAvatar; // <reply, channel_id>
     QHash<QString, QUrl> avatarsUrls; // <channel_name, avatar_url>

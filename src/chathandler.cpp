@@ -18,9 +18,10 @@ static const QString SettingsProxyPort                          = SettingsGroupP
 
 }
 
-ChatHandler::ChatHandler(QSettings& settings_, QObject *parent)
+ChatHandler::ChatHandler(QSettings& settings_, QNetworkAccessManager& network_, QObject *parent)
     : QObject(parent)
     , settings(settings_)
+    , network(network_)
 {
     setEnabledSoundNewMessage(settings.value(SettingsEnabledSoundNewMessage, _enabledSoundNewMessage).toBool());
 
@@ -32,133 +33,27 @@ ChatHandler::ChatHandler(QSettings& settings_, QObject *parent)
 
 #ifndef AXELCHAT_LIBRARY
     //Bot
-    _bot = new ChatBot(settings, SettingsGroupPath + "/chat_bot");
+    _bot = new ChatBot(settings, SettingsGroupPath + "/chat_bot", this);
 
     //Output to file
-    _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file");
+    _outputToFile = new OutputToFile(settings, SettingsGroupPath + "/output_to_file", this);
 #endif
 
-    //YouTube
-    _youTube = new YouTube(proxy(), settings, SettingsGroupPath + "/youtube");
+    youtube = new YouTube(settings, SettingsGroupPath + "/youtube", network, this);
+    addService(*youtube);
 
-    connect(_youTube, &YouTube::readyRead, this, &ChatHandler::onReadyRead);
+    twitch = new Twitch(settings, SettingsGroupPath + "/twitch", network, this);
+    connect(twitch, &Twitch::avatarDiscovered, this, &ChatHandler::onAvatarDiscovered);
+    addService(*twitch);
 
-    connect(_youTube, SIGNAL(connected(QString)),
-                     this, SLOT(onConnected(QString)));
-
-    connect(_youTube, SIGNAL(disconnected(QString)),
-            this, SLOT(onDisconnected(QString)));
-
-    connect(_youTube, SIGNAL(stateChanged()),
-            this, SLOT(onStateChanged()));
-
-    connect(_youTube, &AbstractChatService::needSendNotification,
-            this, [&](const QString& text){
-        sendNotification(QString("YouTube: ") + text);
-    });
-
-    //Twitch
-    _twitch = new Twitch(proxy(), settings, SettingsGroupPath + "/twitch");
-
-    connect(_twitch, SIGNAL(readyRead(QList<ChatMessage>&)),
-                     this, SLOT(onReadyRead(QList<ChatMessage>&)));
-
-    connect(_twitch, SIGNAL(avatarDiscovered(const QString&, const QUrl&)),
-                     this, SLOT(onAvatarDiscovered(const QString&, const QUrl&)));
-
-
-    connect(_twitch, SIGNAL(connected(QString)),
-                     this, SLOT(onConnected(QString)));
-
-    connect(_twitch, SIGNAL(disconnected(QString)),
-            this, SLOT(onDisconnected(QString)));
-
-    connect(_twitch, SIGNAL(stateChanged()),
-            this, SLOT(onStateChanged()));
-
-    connect(_twitch, &AbstractChatService::needSendNotification,
-            this, [&](const QString& text){
-        sendNotification(QString("Twitch: ") + text);
-    });
-
-    //GoodGame
-    _goodGame = new GoodGame(proxy(), settings, SettingsGroupPath + "/goodgame");
-
-    connect(_goodGame, SIGNAL(readyRead(QList<ChatMessage>&)),
-                     this, SLOT(onReadyRead(QList<ChatMessage>&)));
-
-    connect(_goodGame, SIGNAL(connected(QString)),
-                     this, SLOT(onConnected(QString)));
-
-    connect(_goodGame, SIGNAL(disconnected(QString)),
-            this, SLOT(onDisconnected(QString)));
-
-    connect(_goodGame, SIGNAL(stateChanged()),
-            this, SLOT(onStateChanged()));
-
-    connect(_goodGame, &AbstractChatService::needSendNotification,
-            this, [&](const QString& text){
-        sendNotification(QString("GoodGame: ") + text);
-    });
-
-    /*MessageAuthor a = MessageAuthor::createFromYouTube(
-                "123213123123123123123123123",
-                "21324f4f",
-                QUrl("qrc:/resources/images/axelchat-rounded.svg"),
-                QUrl("qrc:/resources/images/axelchat-rounded.svg"),
-                true,
-                true,
-                true,
-                true);
-
-    onReadyRead({ChatMessage::createYouTube(
-            "123gbdfgbdgbdfgbdfgbdfgbdfgbdfgbdfgb",
-            "sadasdsbsgbfdgbdgfbdfgbdadfw",
-            QDateTime::currentDateTime(),
-            QDateTime::currentDateTime(),
-                 a)}, {a});*/
+    goodGame = new GoodGame(settings, SettingsGroupPath + "/goodgame", network, this);
+    addService(*goodGame);
 }
 
-ChatHandler::~ChatHandler()
+MessageAuthor ChatHandler::getAuthorByChannelId(const QString &channelId) const
 {
-    if (_youTube)
-    {
-        delete _youTube;
-        _youTube = nullptr;
-    }
-
-    if (_twitch)
-    {
-        delete _twitch;
-        _twitch = nullptr;
-    }
-
-    if (_goodGame)
-    {
-        delete _goodGame;
-        _goodGame = nullptr;
-    }
-
-#ifndef AXELCHAT_LIBRARY
-    if (_bot)
-    {
-        delete _bot;
-        _bot = nullptr;
-    }
-
-    if (_outputToFile)
-    {
-        delete _outputToFile;
-        _outputToFile = nullptr;
-    }
-#endif
+    return authors.value(channelId);
 }
-
-MessageAuthor ChatHandler::authorByChannelId(const QString &channelId) const
-{
-    return _authors.value(channelId);
-}
-
 
 //ToDo: использование ссылок в слотах и сигналах может плохо кончиться! Особенно, если соеденены разные потоки
 void ChatHandler::onReadyRead(QList<ChatMessage>& messages)
@@ -169,7 +64,7 @@ void ChatHandler::onReadyRead(QList<ChatMessage>& messages)
     {
         ChatMessage&& message = std::move(messages[i]);
 
-        if (_messagesModel.contains(message.id()) && !message.isDeleterItem())
+        if (messagesModel.contains(message.id()) && !message.isDeleterItem())
         {
             continue;
         }
@@ -181,14 +76,14 @@ void ChatHandler::onReadyRead(QList<ChatMessage>& messages)
 
         const QString channelId = author.channelId();
 
-        if (_authors.contains(channelId))
+        if (authors.contains(channelId))
         {
-            _authors[channelId]._messagesSentCurrent++;
+            authors[channelId]._messagesSentCurrent++;
         }
         else
         {
-            _authors[channelId] = author;
-            _authors[channelId]._messagesSentCurrent = 1;
+            authors[channelId] = author;
+            authors[channelId]._messagesSentCurrent = 1;
         }
 
 #ifndef AXELCHAT_LIBRARY
@@ -214,7 +109,7 @@ void ChatHandler::onReadyRead(QList<ChatMessage>& messages)
     for (int i = 0; i < messagesValidToAdd.count(); ++i)
     {
         ChatMessage&& message = std::move(messagesValidToAdd[i]);
-        _messagesModel.append(std::move(message));
+        messagesModel.append(std::move(message));
     }
 
     emit messagesDataChanged();
@@ -249,25 +144,25 @@ void ChatHandler::playNewMessageSound()
 
 void ChatHandler::onAvatarDiscovered(const QString &channelId, const QUrl &url)
 {
-    _messagesModel.applyAvatar(channelId, url);
+    messagesModel.applyAvatar(channelId, url);
 }
 
 void ChatHandler::clearMessages()
 {
-    _messagesModel.clear();
+    messagesModel.clear();
 }
 
 void ChatHandler::onStateChanged()
 {
     if (_outputToFile)
     {
-        if (qobject_cast<YouTube*>(sender()) && _youTube)
+        if (qobject_cast<YouTube*>(sender()) && youtube)
         {
-            _outputToFile->setYouTubeInfo(_youTube->getInfo());
+            _outputToFile->setYouTubeInfo(youtube->getInfo());
         }
-        else if (qobject_cast<Twitch*>(sender()) && _twitch)
+        else if (qobject_cast<Twitch*>(sender()) && twitch)
         {
-            _outputToFile->setTwitchInfo(_twitch->getInfo());
+            _outputToFile->setTwitchInfo(twitch->getInfo());
         }
     }
 
@@ -283,59 +178,26 @@ void ChatHandler::openProgramFolder()
 
 void ChatHandler::onConnected(QString name)
 {
-    QString text;
-
-    YouTube* youTube = dynamic_cast<YouTube*>(sender());
-    if (youTube)
+    AbstractChatService* service = qobject_cast<AbstractChatService*>(sender());
+    if (!service)
     {
-        text = tr("YouTube connected");
+        return;
     }
 
-    Twitch* twitch = dynamic_cast<Twitch*>(sender());
-    if (twitch)
-    {
-        text = tr("Twitch connected");
-    }
-
-    GoodGame* goodGame = dynamic_cast<GoodGame*>(sender());
-    if (goodGame)
-    {
-        text = tr("GoodGame connected");
-    }
-
-    if (!name.isEmpty())
-    {
-        text += ": " + name;
-    }
-
-    sendNotification(text);
+    sendNotification(tr("%1 connected: %2").arg(service->getNameLocalized()).arg(name));
 
     emit connectedCountChanged();
 }
 
 void ChatHandler::onDisconnected(QString name)
 {
-    QString text;
-
-    YouTube* youTube = dynamic_cast<YouTube*>(sender());
-    if (youTube)
+    AbstractChatService* service = qobject_cast<AbstractChatService*>(sender());
+    if (!service)
     {
-        text = tr("YouTube disconnected");
-
+        return;
     }
 
-    Twitch* twitch = dynamic_cast<Twitch*>(sender());
-    if (twitch)
-    {
-        text = tr("Twitch disconnected");
-    }
-
-    if (!name.isEmpty())
-    {
-        text += ": " + name;
-    }
-
-    sendNotification(text);
+    sendNotification(tr("%1 disconnected: %2").arg(service->getNameLocalized()).arg(name));
 
     if (_enabledClearMessagesOnLinkChange)
     {
@@ -353,45 +215,58 @@ void ChatHandler::sendNotification(const QString &text)
 
 void ChatHandler::updateProxy()
 {
-    QNetworkProxy proxy(QNetworkProxy::NoProxy);
     if (_enabledProxy)
     {
-        proxy = _proxy;
+        network.setProxy(_proxy);
+    }
+    else
+    {
+        network.setProxy(QNetworkProxy(QNetworkProxy::NoProxy));
     }
 
-    if (_youTube)
+    for (AbstractChatService* chat : qAsConst(services))
     {
-        _youTube->setProxy(proxy);
-    }
-
-    if (_twitch)
-    {
-        _twitch->setProxy(proxy);
-    }
-
-    if (_goodGame)
-    {
-        _goodGame->setProxy(proxy);
+        chat->reconnect();
     }
 
     emit proxyChanged();
 }
 
-#ifndef AXELCHAT_LIBRARY
-ChatBot *ChatHandler::bot() const
+void ChatHandler::addService(AbstractChatService& service)
 {
-    return _bot;
+    services.append(&service);
+
+    connect(&service, &AbstractChatService::readyRead, this, &ChatHandler::onReadyRead);
+    connect(&service, &AbstractChatService::connected, this, &ChatHandler::onConnected);
+    connect(&service, &AbstractChatService::disconnected, this, &ChatHandler::onDisconnected);
+    connect(&service, &AbstractChatService::stateChanged, this, &ChatHandler::onStateChanged);
+    connect(&service, &AbstractChatService::needSendNotification, this, [this](const QString& text)
+    {
+        AbstractChatService* service = qobject_cast<AbstractChatService*>(sender());
+        if (!service)
+        {
+            return;
+        }
+
+        sendNotification(service->getNameLocalized() + ": " + text);
+    });
 }
 
-OutputToFile *ChatHandler::outputToFile() const
+#ifndef AXELCHAT_LIBRARY
+ChatBot& ChatHandler::getBot() const
 {
-    return _outputToFile;
+    return *_bot;
+}
+
+OutputToFile& ChatHandler::getOutputToFile() const
+{
+    return *_outputToFile;
 }
 #endif
 
-ChatMessagesModel* ChatHandler::messagesModel()
+ChatMessagesModel& ChatHandler::getMessagesModel()
 {
-    return &_messagesModel;
+    return messagesModel;
 }
 
 #ifdef QT_QUICK_LIB
@@ -443,53 +318,37 @@ void ChatHandler::setEnabledClearMessagesOnLinkChange(bool enabled)
 
 int ChatHandler::connectedCount() const
 {
-    return (_youTube->connectionStateType()  == AbstractChatService::ConnectionStateType::Connected) +
-           (_twitch->connectionStateType()   == AbstractChatService::ConnectionStateType::Connected) +
-            (_goodGame->connectionStateType() == AbstractChatService::ConnectionStateType::Connected);
+    int result = 0;
+
+    for (AbstractChatService* service : services)
+    {
+        if (service->connectionStateType()  == AbstractChatService::ConnectionStateType::Connected)
+        {
+            result++;
+        }
+    }
+
+    return result;
 }
 
 int ChatHandler::viewersTotalCount() const
 {
     int result = 0;
 
-    bool found = false;
-
-    if (_youTube && _youTube->connectionStateType() == AbstractChatService::ConnectionStateType::Connected)
+    for (AbstractChatService* service : services)
     {
-        if (_youTube->viewersCount() < 0)
+        if (service->connectionStateType()  == AbstractChatService::ConnectionStateType::Connected)
         {
-            return -1;
+            const int count = service->viewersCount();
+            if (count < 0)
+            {
+                return -1;
+            }
+            else
+            {
+                result += count;
+            }
         }
-
-        result += _youTube->viewersCount();
-        found = true;
-    }
-
-    if (_twitch && _twitch->connectionStateType() == AbstractChatService::ConnectionStateType::Connected)
-    {
-        if (_twitch->viewersCount() < 0)
-        {
-            return -1;
-        }
-
-        result += _twitch->viewersCount();
-        found = true;
-    }
-
-    if (_goodGame && _goodGame->connectionStateType() == AbstractChatService::ConnectionStateType::Connected)
-    {
-        if (_goodGame->viewersCount() < 0)
-        {
-            return -1;
-        }
-
-        result += _goodGame->viewersCount();
-        found = true;
-    }
-
-    if (!found)
-    {
-        return -1;
     }
 
     return result;
@@ -497,12 +356,12 @@ int ChatHandler::viewersTotalCount() const
 
 int ChatHandler::authorMessagesSentCurrent(const QString &channelId) const
 {
-    return _authors.value(channelId)._messagesSentCurrent;
+    return authors.value(channelId)._messagesSentCurrent;
 }
 
 QUrl ChatHandler::authorSizedAvatarUrl(const QString &channelId, int height) const
 {
-    return YouTube::createResizedAvatarUrl(_authors.value(channelId).avatarUrl(), height);
+    return YouTube::createResizedAvatarUrl(authors.value(channelId).avatarUrl(), height);
 }
 
 void ChatHandler::setProxyEnabled(bool enabled)
@@ -553,17 +412,17 @@ QNetworkProxy ChatHandler::proxy() const
     return QNetworkProxy(QNetworkProxy::NoProxy);
 }
 
-YouTube* ChatHandler::youTube() const
+YouTube& ChatHandler::getYoutube()
 {
-    return _youTube;
+    return *youtube;
 }
 
-Twitch* ChatHandler::twitch() const
+Twitch& ChatHandler::getTwitch() const
 {
-    return _twitch;
+    return *twitch;
 }
 
-GoodGame *ChatHandler::goodGame() const
+GoodGame& ChatHandler::getGoodGame() const
 {
-    return _goodGame;
+    return *goodGame;
 }

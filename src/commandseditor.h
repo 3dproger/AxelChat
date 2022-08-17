@@ -16,7 +16,7 @@ class CommandsEditor : public QDialog
     Q_OBJECT
 
 public:
-    explicit CommandsEditor(ChatBot* chatBot, QWidget *parent = nullptr);
+    explicit CommandsEditor(ChatBot& chatBot, QWidget *parent = nullptr);
     ~CommandsEditor();
 
     static void declareQml()
@@ -42,7 +42,7 @@ private slots:
 private:
     void editCurrentCommand();
     Ui::CommandsEditor *ui;
-    ChatBot* _chatBot = nullptr;
+    ChatBot& chatBot;
     CommandSingleEditor* _singleEditor = nullptr;
 };
 

@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     }
 
     ChatHandler::declareQml();
-    ChatHandler chatHandler(settings);
+    ChatHandler chatHandler(settings, network);
 
     qRegisterMetaType<size_t>("size_t");
     qRegisterMetaType<std::shared_ptr<QByteArray>>("std::shared_ptr<QByteArray>");
@@ -75,21 +75,21 @@ int main(int argc, char *argv[])
     ClipboardQml clipboard;
 
     CommandsEditor::declareQml();
-    CommandsEditor commandsEditor(chatHandler.bot());
+    CommandsEditor commandsEditor(chatHandler.getBot());
 
     Tray::declareQml();
     Tray tray(&engine);
 
     engine.rootContext()->setContextProperty("i18n",               &i18n);
     engine.rootContext()->setContextProperty("chatHandler",        &chatHandler);
-    engine.rootContext()->setContextProperty("youTube",            chatHandler.youTube());
-    engine.rootContext()->setContextProperty("twitch",             chatHandler.twitch());
-    engine.rootContext()->setContextProperty("outputToFile",       chatHandler.outputToFile());
-    engine.rootContext()->setContextProperty("chatBot",            chatHandler.bot());
+    engine.rootContext()->setContextProperty("youTube",            &chatHandler.getYoutube());
+    engine.rootContext()->setContextProperty("twitch",             &chatHandler.getTwitch());
+    engine.rootContext()->setContextProperty("outputToFile",       &chatHandler.getOutputToFile());
+    engine.rootContext()->setContextProperty("chatBot",            &chatHandler.getBot());
     engine.rootContext()->setContextProperty("updateChecker",      &github);
     engine.rootContext()->setContextProperty("clipboard",          &clipboard);
     engine.rootContext()->setContextProperty("qmlUtils",           &qmlUtils);
-    engine.rootContext()->setContextProperty("messagesModel",      chatHandler.messagesModel());
+    engine.rootContext()->setContextProperty("messagesModel",      &chatHandler.getMessagesModel());
     engine.rootContext()->setContextProperty("commandsEditor",     &commandsEditor);
     engine.rootContext()->setContextProperty("tray",               &tray);
 
