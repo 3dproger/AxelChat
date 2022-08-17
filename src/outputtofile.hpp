@@ -46,6 +46,7 @@ public slots:
     void setOutputFolder(QString outputFolder);
     void writeMessages(const QList<ChatMessage>& messages);
     Q_INVOKABLE void showInExplorer();
+    void downloadAvatar(const QString &channelId, const QUrl &url, const ChatMessage::Type& service);
 
 private slots:
     void writeMessage(const QList<QPair<QString, QString>> tags /*<tagName, tagValue>*/);

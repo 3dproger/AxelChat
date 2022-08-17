@@ -144,6 +144,14 @@ void ChatHandler::playNewMessageSound()
 
 void ChatHandler::onAvatarDiscovered(const QString &channelId, const QUrl &url)
 {
+    ChatMessage::Type type = ChatMessage::Type::Unknown;
+    Twitch* twitch = qobject_cast<Twitch*>(sender());
+    if (twitch)
+    {
+        type = ChatMessage::Type::Twitch;
+    }
+
+    _outputToFile->downloadAvatar(channelId, url, type);
     messagesModel.applyAvatar(channelId, url);
 }
 

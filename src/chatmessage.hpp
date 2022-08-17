@@ -159,6 +159,22 @@ public:
     };
     Q_ENUM(Type)
 
+    static QString convertServiceId(const ChatMessage::Type type)
+    {
+        switch (type)
+        {
+        case ChatMessage::SoftwareNotification: return "softwarenotification";
+        case ChatMessage::TestMessage: return "testmessage";
+        case ChatMessage::YouTube: return "youtube";
+        case ChatMessage::Twitch: return "twitch";
+        case ChatMessage::Unknown:
+        default:
+            return "unknown";
+        }
+
+        return "unknown";
+    }
+
     static ChatMessage createFromYouTube(const QString& text,
                               const QString& id,
                               const QDateTime& publishedAt,
