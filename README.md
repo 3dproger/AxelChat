@@ -6,8 +6,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 [Feedback](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform?usp=sf_link) |
 [Issues](https://github.com/3dproger/AxelChat/issues) |
 [Sponsor](https://3dproger.github.io/AxelChat/sponsor) |
-[Privacy Policy](https://3dproger.github.io/AxelChat/privacy) |
-[License, Terms and Conditions](https://github.com/3dproger/AxelChat/blob/main/LICENSE)
+[Privacy Policy](https://3dproger.github.io/AxelChat/privacy)
 
 [<img src="misc/images/button-download.png">](https://github.com/3dproger/AxelChat/releases)
 [<img src="misc/images/button-feedback.png">](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform?usp=sf_link)
