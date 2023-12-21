@@ -34,6 +34,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] WASD support
 - [x] Rutube support
 - [ ] Facebook Live support
+- [ ] VStream support
 - [ ] Nimo TV support
 - [ ] Huya Live support
 - [ ] Douyin support
