@@ -38,6 +38,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [ ] Huya Live integration
 - [ ] Douyin integration
 - [ ] NUUM integration
+- [ ] VIMM integration
 - [x] Discord integration
 - [x] Telegram integration
 - [x] DonationAlerts integration
