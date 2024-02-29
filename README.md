@@ -62,18 +62,18 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Displays detailed information about a participant in a live chat in a separate window including a link to the participant's page/channel (see example below)
 - [x] Sound commands that are activated by the corresponding message from the chat. There are built-in commands, but you can always add your own
 - [x] Saving messages and other information on the fly to text files. It may be useful for further processing by other software
+- [x] BetterTTV, FrankerFaceZ, 7TV emotes support on any streaming platform
+- [x] Ability to integrate with other applications via WebSocket
+- [x] Ability to integrate with other applications via file system
+- [x] Windows releases
 - [ ] Cross-platform
 - [ ] Web-based widgets
 - [ ] Appearance editor for Web-based widgets
 - [ ] Appearance presets (themes) for widgets
-- [x] BetterTTV, FrankerFaceZ, 7TV emotes support on any streaming platform
-- [x] Ability to integrate with other applications via WebSocket
-- [x] Ability to integrate with other applications via file system
-- [x] Windows builds
-- [ ] Linux builds
-- [ ] macOS builds
-- [ ] Android builds
-- [ ] iOS builds
+- [ ] Linux releases
+- [ ] macOS releases
+- [ ] Android releases
+- [ ] iOS releases
 - [ ] Many other improvements
 
 Example of a chat participant information window:
