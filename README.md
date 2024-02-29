@@ -53,7 +53,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [ ] Patreon
 - [ ] Boosty
 - [ ] Chatterino Homies Edition
-- [ ] Many others. **You can suggest [here](https://github.com/3dproger/AxelChat/issues) or [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform)**
+- [ ] Many others. **You can suggest [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform) or [here](https://github.com/3dproger/AxelChat/issues)**
 
 # Features
 - [x] Display messages from multiple streaming platforms at once
