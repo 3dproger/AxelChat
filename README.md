@@ -18,37 +18,37 @@ The AxelChat application collects chat from various streaming platforms and disp
   <img src="misc/images/github-social7.png">
 </p>
 
-# Supported platforms
-- [x] Twitch integration
-- [x] YouTube integration
-- [x] Trovo integration
-- [x] GoodGame integration
-- [x] VK Play Live integration
-- [x] VK Video integration
-- [x] Kick integration
-- [ ] TikTok integration
-- [ ] Bigo Live integration
-- [x] Rumble integration
-- [x] Odysee integration
-- [x] DLive integration
-- [x] Rutube integration
-- [ ] Facebook Live integration
-- [ ] VStream integration
-- [ ] Nimo TV integration
-- [ ] Huya Live integration
-- [ ] Douyin integration
-- [ ] NUUM integration
-- [x] VIMM integration
-- [x] Discord integration
-- [x] Telegram integration
-- [x] DonationAlerts integration
-- [ ] DonatePay.ru integration
-- [ ] DonatePay.eu integration
-- [ ] StreamElements integration
-- [ ] Streamlabs integration
-- [ ] Patreon integration
-- [ ] Boosty integration
-- [ ] Integration for other platforms (you can offer me yourself)
+# Supported and planned platforms
+- [x] Twitch
+- [x] YouTube
+- [x] Trovo
+- [x] GoodGame
+- [x] VK Play Live
+- [x] VK Video
+- [x] Kick
+- [x] Rumble
+- [x] Odysee
+- [x] DLive
+- [x] Rutube
+- [x] VIMM
+- [x] Discord
+- [x] Telegram
+- [x] DonationAlerts
+- [ ] TikTok
+- [ ] Bigo Live
+- [ ] Facebook Live
+- [ ] VStream
+- [ ] Nimo TV
+- [ ] Huya Live
+- [ ] Douyin
+- [ ] NUUM
+- [ ] DonatePay.ru
+- [ ] DonatePay.eu
+- [ ] StreamElements
+- [ ] Streamlabs
+- [ ] Patreon
+- [ ] Boosty
+- [ ] Many others. **You can suggest [here](https://github.com/3dproger/AxelChat/issues)**
 
 # Features
 - [x] Display messages from multiple streaming platforms at once
