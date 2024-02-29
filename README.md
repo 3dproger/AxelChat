@@ -34,20 +34,25 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Discord
 - [x] Telegram
 - [x] DonationAlerts
+- [x] BetterTTV
+- [x] FrankerFaceZ
+- [x] 7TV
 - [ ] TikTok
 - [ ] Bigo Live
 - [ ] Facebook Live
 - [ ] VStream
+- [ ] shareplay.tv
+- [ ] live.space
 - [ ] Nimo TV
 - [ ] Huya Live
 - [ ] Douyin
 - [ ] NUUM
-- [ ] DonatePay.ru
-- [ ] DonatePay.eu
+- [ ] DonatePay
 - [ ] StreamElements
 - [ ] Streamlabs
 - [ ] Patreon
 - [ ] Boosty
+- [ ] Chatterino Homies Edition
 - [ ] Many others. **You can suggest [here](https://github.com/3dproger/AxelChat/issues)**
 
 # Features
