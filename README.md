@@ -1,4 +1,4 @@
-# AxelChat <img width="32" height="32" src="misc/images/youtube-icon.svg"> <img width="32" height="32" src="misc/images/twitch-icon.svg"> <img width="32" height="32" src="misc/images/trovo-icon.svg"> <img width="32" height="32" src="misc/images/kick-icon.svg"> <img width="32" height="32" src="misc/images/rumble-icon.svg"> <img width="32" height="32" src="misc/images/dlive-icon.svg"> <img width="32" height="32" src="misc/images/odysee-icon.svg"> <img width="32" height="32" src="misc/images/goodgame-icon.svg"> <img width="32" height="32" src="misc/images/vkplaylive-icon.svg"> <img width="32" height="32" src="misc/images/vkvideo-icon.svg"> <img width="32" height="32" src="misc/images/wasd-icon.svg"> <img width="32" height="32" src="misc/images/rutube-icon.svg"> <img width="32" height="32" src="misc/images/telegram-icon.svg"> <img width="32" height="32" src="misc/images/discord-icon.svg"> <img width="32" height="32" src="misc/images/donationalerts-icon.svg">
+# AxelChat <img width="32" height="32" src="misc/images/youtube-icon.svg"> <img width="32" height="32" src="misc/images/twitch-icon.svg"> <img width="32" height="32" src="misc/images/trovo-icon.svg"> <img width="32" height="32" src="misc/images/kick-icon.svg"> <img width="32" height="32" src="misc/images/rumble-icon.svg"> <img width="32" height="32" src="misc/images/dlive-icon.svg"> <img width="32" height="32" src="misc/images/odysee-icon.svg"> <img width="32" height="32" src="misc/images/goodgame-icon.svg"> <img width="32" height="32" src="misc/images/vkplaylive-icon.svg"> <img width="32" height="32" src="misc/images/vkvideo-icon.svg"> <img width="32" height="32" src="misc/images/rutube-icon.svg"> <img width="32" height="32" src="misc/images/vimm-icon.svg"> <img width="32" height="32" src="misc/images/telegram-icon.svg"> <img width="32" height="32" src="misc/images/discord-icon.svg"> <img width="32" height="32" src="misc/images/donationalerts-icon.svg">
 The AxelChat application collects chat from various streaming platforms and displays it in one window. Has a user-friendly interface and various useful features
 
 [Download](https://github.com/3dproger/axelchat/releases/latest/) |
@@ -6,8 +6,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 [Feedback](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform?usp=sf_link) |
 [Issues](https://github.com/3dproger/AxelChat/issues) |
 [Sponsor](https://3dproger.github.io/AxelChat/sponsor) |
-[Privacy Policy](https://3dproger.github.io/AxelChat/privacy) |
-[License, Terms and Conditions](https://github.com/3dproger/AxelChat/blob/main/LICENSE)
+[Privacy Policy](https://3dproger.github.io/AxelChat/privacy)
 
 [<img src="misc/images/button-download.png">](https://github.com/3dproger/AxelChat/releases)
 [<img src="misc/images/button-feedback.png">](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform?usp=sf_link)
@@ -16,38 +15,46 @@ The AxelChat application collects chat from various streaming platforms and disp
 [![Download AxelChat](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/axelchat/files/latest/download)
 
 <p align="center">
-  <img src="misc/images/github-social7.png">
+  <img src="misc/images/github-social8.png">
 </p>
 
-# Supported platforms
-- [x] Twitch support
-- [x] YouTube support
-- [x] Trovo support
-- [x] GoodGame support
-- [x] VK Play Live support
-- [x] VK Video support
-- [x] Kick support
-- [ ] TikTok support
-- [ ] Bigo Live support
-- [x] Rumble support
-- [x] Odysee support
-- [x] DLive support
-- [x] WASD support
-- [x] Rutube support
-- [ ] Facebook Live support
-- [ ] Nimo TV support
-- [ ] Huya Live support
-- [ ] Douyin support
-- [x] Discord support
-- [x] Telegram support
-- [x] DonationAlerts support
-- [ ] DonatePay.ru support
-- [ ] DonatePay.eu support
-- [ ] StreamElements support
-- [ ] Streamlabs support
-- [ ] Patreon support
-- [ ] Boosty support
-- [ ] Support for other platforms (you can offer me yourself)
+# Supported and planned platforms
+- [x] Twitch
+- [x] YouTube
+- [x] Trovo
+- [x] GoodGame
+- [x] VK Play Live
+- [x] VK Video
+- [x] Kick
+- [x] Rumble
+- [x] Odysee
+- [x] DLive
+- [x] Rutube
+- [x] VIMM
+- [x] Discord
+- [x] Telegram
+- [x] DonationAlerts
+- [x] BetterTTV
+- [x] FrankerFaceZ
+- [x] 7TV
+- [ ] TikTok
+- [ ] Bigo Live
+- [ ] Facebook Live
+- [ ] X / Twitter
+- [ ] VStream
+- [ ] shareplay.tv
+- [ ] live.space
+- [ ] Nimo TV
+- [ ] Huya Live
+- [ ] Douyin
+- [ ] NUUM
+- [ ] DonatePay
+- [ ] StreamElements
+- [ ] Streamlabs
+- [ ] Patreon
+- [ ] Boosty
+- [ ] Chatterino Homies Edition
+- [ ] Many others. **You can suggest [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform) or [here](https://github.com/3dproger/AxelChat/issues)**
 
 # Features
 - [x] Display messages from multiple streaming platforms at once
@@ -56,18 +63,18 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Displays detailed information about a participant in a live chat in a separate window including a link to the participant's page/channel (see example below)
 - [x] Sound commands that are activated by the corresponding message from the chat. There are built-in commands, but you can always add your own
 - [x] Saving messages and other information on the fly to text files. It may be useful for further processing by other software
+- [x] BetterTTV, FrankerFaceZ, 7TV emotes support on any streaming platform
+- [x] Ability to integrate with other applications via WebSocket
+- [x] Ability to integrate with other applications via file system
+- [x] Windows releases
 - [ ] Cross-platform
 - [ ] Web-based widgets
 - [ ] Appearance editor for Web-based widgets
 - [ ] Appearance presets (themes) for widgets
-- [x] BetterTTV, FrankerFaceZ, 7TV emotes support on any streaming platform
-- [x] Ability to integrate with other applications via WebSocket
-- [x] Ability to integrate with other applications via file system
-- [x] Windows builds
-- [ ] Linux builds
-- [ ] macOS builds
-- [ ] Android builds
-- [ ] iOS builds
+- [ ] Linux releases
+- [ ] macOS releases
+- [ ] Android releases
+- [ ] iOS releases
 - [ ] Many other improvements
 
 Example of a chat participant information window:
