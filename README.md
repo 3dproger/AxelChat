@@ -105,6 +105,7 @@ Example of a chat participant information window:
 ### Doesn't connect (General)
 - Check the correctness of the specified stream links/channel name
 - Check your internet connection
+- Try to use VPN
 - Check proxy settings if using
 - Check your firewall settings
 
