@@ -5,6 +5,8 @@
 <!--p align="center"> <a href="https://boosty.to/axel_k"> <img src="misc/images/button-boosty.png"> </a> </p-->
   
 <p align="center"> <a href="https://www.donationalerts.com/r/axel_k"> <img src="misc/images/button-donationalerts.png"> </a> </p>
+
+<p align="center"> <a href="https://punkto.me/27qxJWD"> <img src="misc/images/button-cryptocurrency.png"> </a> </p>
   
 <!--p align="center"> <a href="https://streamelements.com/axe1_k/tip"> <img src="misc/images/button-streamelements.png"> </a> </p-->
 
