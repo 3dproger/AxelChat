@@ -12,8 +12,6 @@ The AxelChat application collects chat from various streaming platforms and disp
 [<img src="misc/images/button-feedback.png">](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform?usp=sf_link)
 [<img src="misc/images/button-support.png">](https://3dproger.github.io/AxelChat/sponsor)
 
-[![Download AxelChat](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/axelchat/files/latest/download)
-
 <p align="center">
   <img src="misc/github-social8.png">
 </p>
