@@ -27,6 +27,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Rumble
 - [x] Odysee
 - [x] DLive
+- [x] TikTok
 - [x] Rutube
 - [x] VIMM
 - [x] Discord
@@ -35,7 +36,6 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] BetterTTV
 - [x] FrankerFaceZ
 - [x] 7TV
-- [ ] TikTok
 - [ ] Bigo Live
 - [ ] Facebook Live
 - [ ] X / Twitter
