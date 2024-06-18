@@ -76,9 +76,14 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [ ] iOS releases
 - [ ] Many other improvements
 
+Example of use in OBS:
+<p align="center">
+  <img src="misc/screenshots/13.png">
+</p>
+
 Example of a chat participant information window:
 <p align="center">
-  <img src="misc/images/11.png">
+  <img src="misc/screenshots/11.png">
 </p>
 
 # FAQ
