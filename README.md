@@ -113,10 +113,6 @@ Example of a chat participant information window:
 - Check proxy settings if using
 - Check your firewall settings
 
-### Doesn't connect (YouTube)
-- Check that the broadcast is not over
-- Check that the broadcast is publicly available or accessed via a link. Private broadcasts are not supported
-
 ### Twitch: Avatars not showing
 - Check that the link to the channel is correct
 - Check that the OAuth-token is correct. Update the OAuth-token, if necessary, by pressing the corresponding button in the AxelChat
