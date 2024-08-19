@@ -17,6 +17,16 @@ The AxelChat application collects chat from various streaming platforms and disp
   <img src="misc/github-social8.png">
 </p>
 
+### In OBS
+<p align="center">
+  <img src="misc/screenshots/13.png">
+</p>
+
+### Chat participants
+<p align="center">
+  <img src="misc/screenshots/11.png">
+</p>
+
 # Supported and planned platforms
 - [x] Twitch
 - [x] YouTube
@@ -76,16 +86,6 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [ ] Android releases
 - [ ] iOS releases
 - [ ] Many other improvements
-
-Example of use in OBS:
-<p align="center">
-  <img src="misc/screenshots/13.png">
-</p>
-
-Example of a chat participant information window:
-<p align="center">
-  <img src="misc/screenshots/11.png">
-</p>
 
 # FAQ
 - Is AxelChat considered a viewer? - Depending on the version of AxelChat and depending on the streaming platform, this may or may not be the case. If possible, we try not to allow AxelChat to be considered a viewer
