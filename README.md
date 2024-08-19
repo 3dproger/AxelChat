@@ -42,6 +42,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [ ] Bigo Live
 - [ ] Facebook Live
 - [ ] X / Twitter
+- [ ] Steam
 - [ ] VStream
 - [ ] shareplay.tv
 - [ ] live.space
