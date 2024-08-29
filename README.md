@@ -27,6 +27,11 @@ The AxelChat application collects chat from various streaming platforms and disp
   <img src="misc/screenshots/11.png">
 </p>
 
+### Connection settings
+<p align="center">
+  <img src="misc/screenshots/14.png">
+</p>
+
 # Supported and planned platforms
 - [x] Twitch
 - [x] YouTube
