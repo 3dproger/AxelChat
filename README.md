@@ -51,7 +51,6 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] TikTok
 - [x] NUUM
 - [x] Rutube
-- [x] VIMM
 - [x] Discord
 - [x] Telegram
 - [x] DonationAlerts
@@ -59,6 +58,8 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] BetterTTV
 - [x] FrankerFaceZ
 - [x] 7TV
+- [ ] NekoLive
+- [ ] VIMM
 - [ ] Bigo Live
 - [ ] Facebook Live
 - [ ] X / Twitter
