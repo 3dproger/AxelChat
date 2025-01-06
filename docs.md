@@ -10,7 +10,7 @@ To connect to AxelChat using WebSocket, follow these steps:
 
 * Launch AxelChat
 * Open the section `Settings->Developers`. If the WebSocket server was successfully launched, the message "State: Ok" should be displayed
-* This section will display the URL for connecting to AxelChat via WebSocket, usually `ws://127.0.0.1:8355`. Connect your WebSocket client using this link. See the documentation for your programming language or use the appropriate libraries
+* This section will display the URL for connecting to AxelChat via WebSocket, usually `ws://127.0.0.1:8356`. Connect your WebSocket client using this link. See the documentation for your programming language or use the appropriate libraries
 * If the connection is successful, a new client will be displayed in the `Developers` section
 * Immediately after connecting, your software should send a message in this format to provide AxelChat with information about your client:
 ```
