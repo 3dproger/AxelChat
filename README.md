@@ -104,8 +104,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - Is AxelChat considered a viewer? - Depending on the version of AxelChat and depending on the streaming platform, this may or may not be the case. If possible, we try not to allow AxelChat to be considered a viewer
 - Does AxelChat work with YouTube premieres? - Yes
 - Can I download a YouTube chat for an already past stream using the AxelChat? - No, use something else instead. For example, use the browser extension [Save Live Streaming Chats for YouTube™](https://chrome.google.com/webstore/detail/save-live-streaming-chats/bcclhcedlelimlnmcpfeiabljbpahnef)
-
-# How can I help the development of the project
+- Does AxelChat have API? - Yes, see [docs](https://3dproger.github.io/AxelChat/docs)
 - [Financial support](https://3dproger.github.io/AxelChat/sponsor)
 - Recommend to your favorite streamer
 - Create and improve widgets using front-end technologies like React. Here is the official widget repository: https://github.com/3dproger/AxelChatWidgets
