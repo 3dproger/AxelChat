@@ -122,6 +122,8 @@ The AxelChat application collects chat from various streaming platforms and disp
 - YouTube: works only with open access broadcasts or available via the link. Private broadcasts are not supported
 - YouTube: Doesn't work for streams with age and possibly other restrictions
 - Telegram: avatars of users who have disabled the display of avatars in the privacy settings are not displayed
+- DLive: Sometimes connects after a long delay. This problem is related to restrictions on the TikTok side and there is no way to improve it yet
+- TikTok: Sometimes it doesn't connect or it doesn't connect the first time. This problem is related to restrictions on the TikTok side and there is no way to improve it yet
 
 # Troubleshooting
 ### Doesn't connect (General)
