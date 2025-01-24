@@ -5,13 +5,13 @@ The AxelChat application collects chat from various streaming platforms and disp
 [Releases](https://github.com/3dproger/AxelChat/releases) |
 [Feedback](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform?usp=sf_link) |
 [Issues](https://github.com/3dproger/AxelChat/issues) |
-[Sponsor](https://3dproger.github.io/AxelChat/sponsor) |
 [Privacy Policy](https://3dproger.github.io/AxelChat/privacy) |
 [EULA](https://3dproger.github.io/AxelChat/eula) |
 [Data Deletion](https://3dproger.github.io/AxelChat/data-deletion) |
 [Documentation](https://3dproger.github.io/AxelChat/docs) |
 [Discussions](https://github.com/3dproger/AxelChat/discussions) |
-[Telegram](https://t.me/axelchatstreaming)
+[Telegram](https://t.me/axelchatstreaming) |
+[Donate](https://3dproger.github.io/AxelChat/sponsor)
 
 [<img src="misc/images/button-download.png">](https://github.com/3dproger/AxelChat/releases)
 [<img src="misc/images/button-feedback.png">](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform?usp=sf_link)
