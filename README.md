@@ -26,6 +26,11 @@ The AxelChat application collects chat from various streaming platforms and disp
   <img src="misc/screenshots/13.png">
 </p>
 
+### On smartphone
+<p align="center">
+  <img src="misc/images/phone-screensho1.png">
+</p>
+
 ### Chat participants
 <p align="center">
   <img src="misc/screenshots/11.png">
