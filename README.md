@@ -107,6 +107,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 # FAQ
 - I enabled Ignore Mouse and now I can't interact with AxelChat in any way and I can't disable this option. - You can open the menu via the AxelChat icon in the system tray
 - [How to Add AxelChat overlay with transparent background in OBS](https://github.com/3dproger/AxelChat/discussions/589)
+- [How to open the AxelChat on a smartphone or other device via a local network (Wi-Fi)](https://github.com/3dproger/AxelChat/discussions/597)
 - [Autostart and how to attach AxelChat as an OBS dock](https://github.com/3dproger/AxelChat/discussions/591)
 - Is AxelChat considered a viewer? - Depending on the version of AxelChat and depending on the streaming platform, this may or may not be the case. If possible, we try not to allow AxelChat to be considered a viewer
 - Does AxelChat work with YouTube premieres? - Yes
