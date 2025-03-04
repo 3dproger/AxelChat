@@ -85,7 +85,6 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] FrankerFaceZ
 - [x] 7TV
 - [ ] NekoLive
-- [ ] VIMM
 - [ ] CHZZK (https://chzzk.naver.com/)
 - [ ] Bigo Live
 - [ ] Facebook Live
