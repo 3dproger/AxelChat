@@ -90,9 +90,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [ ] Facebook Live
 - [ ] X / Twitter
 - [ ] Steam
-- [ ] VStream
 - [ ] shareplay.tv
-- [ ] live.space
 - [ ] Nimo TV
 - [ ] Huya Live
 - [ ] Douyin
