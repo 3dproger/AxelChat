@@ -60,8 +60,8 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Web-based widgets
 - [x] Displaying chat on your smartphone and other devices in your local network
 - [x] API for integration with your applications
+- [x] Styles for widgets
 - [ ] Appearance editor for Web-based widgets
-- [ ] Appearance presets (themes) for widgets
 - [ ] Many other improvements
 
 # Supported and planned platforms
