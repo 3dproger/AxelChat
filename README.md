@@ -76,6 +76,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Odysee
 - [x] DLive
 - [x] TikTok
+- [x] NekoLive
 - [x] NUUM
 - [x] Rutube
 - [x] Discord
@@ -85,7 +86,6 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] BetterTTV
 - [x] FrankerFaceZ
 - [x] 7TV
-- [ ] NekoLive
 - [ ] CHZZK (https://chzzk.naver.com/)
 - [ ] Bigo Live
 - [ ] Facebook Live
