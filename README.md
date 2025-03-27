@@ -69,7 +69,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] YouTube
 - [x] Trovo
 - [x] GoodGame
-- [x] VK Play Live
+- [x] VK Video Live
 - [x] VK Video
 - [x] Kick
 - [x] Rumble
