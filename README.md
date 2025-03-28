@@ -29,7 +29,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 
 ### On smartphone
 <p align="center">
-  <img src="misc/images/phone-screensho1.png">
+  <img src="misc/images/screenshot-phone1.png">
 </p>
 
 ### Chat participants
