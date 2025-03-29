@@ -79,9 +79,11 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] NekoLive
 - [x] NUUM
 - [x] Rutube
+- [x] NekoLive
 - [x] Discord
 - [x] Telegram
 - [x] DonationAlerts
+- [x] Meme Alerts
 - [x] DonatePay
 - [x] BetterTTV
 - [x] FrankerFaceZ
