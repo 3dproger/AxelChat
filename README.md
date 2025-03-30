@@ -67,6 +67,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 # Supported and planned platforms
 - [x] Twitch
 - [x] YouTube
+- [x] YouTube Shorts
 - [x] Trovo
 - [x] GoodGame
 - [x] VK Video Live
