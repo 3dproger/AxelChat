@@ -122,7 +122,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - You can report a bug or suggest a new feature in [Issues](https://github.com/3dproger/AxelChat/issues)
 - Help with translations into other languages using the [Qt Linguist](https://doc.qt.io/qt-5/qtlinguist-index.html). I can send you translation blank files, just write to me about it
 - Create and improve widgets using front-end technologies like React. Here is the official widget repository: https://github.com/3dproger/AxelChatWidgets
-- Create software that can be integrated into a AxelChat using a websocket or using a file system
+- Create software that can be integrated into a AxelChat using a websocket or using a file system. For example: https://github.com/3dproger/AxelChatClientGM/
 
 # Known Issues
 - YouTube: messages that YouTube may find inappropriate are not displayed
