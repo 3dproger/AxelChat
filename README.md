@@ -64,7 +64,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [ ] Appearance editor for Web-based widgets
 - [ ] Many other improvements
 
-# Supported and planned platforms
+# Supported platforms
 - [x] Twitch
 - [x] YouTube
 - [x] YouTube Shorts
@@ -72,12 +72,15 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] GoodGame
 - [x] VK Video Live
 - [x] VK Video
+- [x] OK
 - [x] Kick
 - [x] Rumble
 - [x] Odysee
 - [x] DLive
 - [x] TikTok
 - [x] Parti
+- [x] Picarto
+- [x] Vaughn Live
 - [x] NekoLive
 - [x] Rutube
 - [x] NekoLive
@@ -89,6 +92,8 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] BetterTTV
 - [x] FrankerFaceZ
 - [x] 7TV
+
+# Platforms that are not yet supported
 - [ ] CHZZK (https://chzzk.naver.com/)
 - [ ] Bigo Live
 - [ ] Facebook Live
