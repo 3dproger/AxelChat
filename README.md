@@ -94,12 +94,19 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] 7TV
 
 # Platforms that are not yet supported
-- [ ] CHZZK (https://chzzk.naver.com/)
+- [ ] CHZZK
+- [ ] SOOP
+- [ ] Icecast
+- [ ] Niconico
 - [ ] Bigo Live
 - [ ] Facebook Live
 - [ ] X / Twitter
 - [ ] Steam
+- [ ] RobotStreamer
+- [ ] MakerTube
+- [ ] FC2 Live
 - [ ] shareplay.tv
+- [ ] Rooter
 - [ ] Nimo TV
 - [ ] Huya Live
 - [ ] Douyin
