@@ -1,53 +1,51 @@
-# AxelChat <img width="32" height="32" src="misc/images/youtube-icon.svg"> <img width="32" height="32" src="misc/images/twitch-icon.svg"> <img width="32" height="32" src="misc/images/trovo-icon.svg"> <img width="32" height="32" src="misc/images/kick-icon.svg"> <img width="32" height="32" src="misc/images/rumble-icon.svg"> <img width="32" height="32" src="misc/images/dlive-icon.svg"> <img width="32" height="32" src="misc/images/odysee-icon.svg"> <img width="32" height="32" src="misc/images/goodgame-icon.svg"> <img width="32" height="32" src="misc/images/vkplaylive-icon.svg"> <img width="32" height="32" src="misc/images/vkvideo-icon.svg"> <img width="32" height="32" src="misc/images/wasd-icon.svg"> <img width="32" height="32" src="misc/images/rutube-icon.svg"> <img width="32" height="32" src="misc/images/telegram-icon.svg"> <img width="32" height="32" src="misc/images/discord-icon.svg"> <img width="32" height="32" src="misc/images/donationalerts-icon.svg">
+# AxelChat <img width="32" height="32" src="misc/images/twitch-icon.svg"> <img width="32" height="32" src="misc/images/youtube-icon.svg"> <img width="32" height="32" src="misc/images/youtube-shorts-icon.svg"> <img width="32" height="32" src="misc/images/trovo-icon.svg"> <img width="32" height="32" src="misc/images/kick-icon.svg"> <img width="32" height="32" src="misc/images/rumble-icon.svg"> <img width="32" height="32" src="misc/images/dlive-icon.svg"> <img width="32" height="32" src="misc/images/tiktok-icon.svg"> <img width="32" height="32" src="misc/images/odysee-icon.svg"> <img width="32" height="32" src="misc/images/niconicolive-icon.svg"> <img width="32" height="32" src="misc/images/goodgame-icon.svg"> <img width="32" height="32" src="misc/images/vkvideolive-icon.png"> <img width="32" height="32" src="misc/images/vkvideo-icon.png"> <img width="32" height="32" src="misc/images/rutube-icon.svg"> <img width="32" height="32" src="misc/images/ok-icon.svg"> <img width="32" height="32" src="misc/images/parti-icon.svg"> <img width="32" height="32" src="misc/images/picarto-icon.png"> <img width="32" height="32" src="misc/images/vaughnlive-icon.png"> <img width="32" height="32" src="misc/images/nekolive-icon.png"> <img width="32" height="32" src="misc/images/telegram-icon.svg"> <img width="32" height="32" src="misc/images/discord-icon.svg"> <img width="32" height="32" src="misc/images/donationalerts-icon.svg"> <img width="32" height="32" src="misc/images/memealerts-icon.png"> <img width="32" height="32" src="misc/images/donatepay-icon.svg">
 The AxelChat application collects chat from various streaming platforms and displays it in one window. Has a user-friendly interface and various useful features
 
 [Download](https://github.com/3dproger/axelchat/releases/latest/) |
 [Releases](https://github.com/3dproger/AxelChat/releases) |
 [Feedback](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform?usp=sf_link) |
 [Issues](https://github.com/3dproger/AxelChat/issues) |
-[Sponsor](https://3dproger.github.io/AxelChat/sponsor) |
 [Privacy Policy](https://3dproger.github.io/AxelChat/privacy) |
-[License, Terms and Conditions](https://github.com/3dproger/AxelChat/blob/main/LICENSE)
+[EULA](https://3dproger.github.io/AxelChat/eula) |
+[Data Deletion](https://3dproger.github.io/AxelChat/data-deletion) |
+[Documentation](https://3dproger.github.io/AxelChat/docs) |
+[Tutorials and discussions](https://github.com/3dproger/AxelChat/discussions) |
+[Custom styles](https://github.com/3dproger/AxelChat/discussions/621) |
+[Telegram](https://t.me/axelchatstreaming) |
+[Donate](https://3dproger.github.io/AxelChat/sponsor)
 
 [<img src="misc/images/button-download.png">](https://github.com/3dproger/AxelChat/releases)
 [<img src="misc/images/button-feedback.png">](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform?usp=sf_link)
 [<img src="misc/images/button-support.png">](https://3dproger.github.io/AxelChat/sponsor)
 
-[![Download AxelChat](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/axelchat/files/latest/download)
-
 <p align="center">
-  <img src="misc/images/github-social7.png">
+  <img src="misc/github-social8.png">
 </p>
 
-# Supported platforms
-- [x] Twitch support
-- [x] YouTube support
-- [x] Trovo support
-- [x] GoodGame support
-- [x] VK Play Live support
-- [x] VK Video support
-- [x] Kick support
-- [ ] TikTok support
-- [ ] Bigo Live support
-- [x] Rumble support
-- [x] Odysee support
-- [x] DLive support
-- [x] WASD support
-- [x] Rutube support
-- [ ] Facebook Live support
-- [ ] Nimo TV support
-- [ ] Huya Live support
-- [ ] Douyin support
-- [x] Discord support
-- [x] Telegram support
-- [x] DonationAlerts support
-- [ ] DonatePay.ru support
-- [ ] DonatePay.eu support
-- [ ] StreamElements support
-- [ ] Streamlabs support
-- [ ] Patreon support
-- [ ] Boosty support
-- [ ] Support for other platforms (you can offer me yourself)
+### In OBS
+<p align="center">
+  <img src="misc/screenshots/13.png">
+</p>
+
+### On smartphone
+<p align="center">
+  <img src="misc/images/screenshot-phone1.png">
+</p>
+
+### Chat participants
+<p align="center">
+  <img src="misc/screenshots/11.png">
+</p>
+
+### Connection settings
+<p align="center">
+  <img src="misc/screenshots/14.png">
+</p>
+
+### Common settings
+<p align="center">
+  <img src="misc/screenshots/15.png">
+</p>
 
 # Features
 - [x] Display messages from multiple streaming platforms at once
@@ -56,37 +54,87 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Displays detailed information about a participant in a live chat in a separate window including a link to the participant's page/channel (see example below)
 - [x] Sound commands that are activated by the corresponding message from the chat. There are built-in commands, but you can always add your own
 - [x] Saving messages and other information on the fly to text files. It may be useful for further processing by other software
-- [ ] Cross-platform
-- [ ] Web-based widgets
-- [ ] Appearance editor for Web-based widgets
-- [ ] Appearance presets (themes) for widgets
 - [x] BetterTTV, FrankerFaceZ, 7TV emotes support on any streaming platform
 - [x] Ability to integrate with other applications via WebSocket
 - [x] Ability to integrate with other applications via file system
-- [x] Windows builds
-- [ ] Linux builds
-- [ ] macOS builds
-- [ ] Android builds
-- [ ] iOS builds
+- [x] Web-based widgets
+- [x] Displaying chat on your smartphone and other devices in your local network
+- [x] API for integration with your applications
+- [x] Styles for widgets
+- [ ] Appearance editor for Web-based widgets
 - [ ] Many other improvements
 
-Example of a chat participant information window:
-<p align="center">
-  <img src="misc/images/11.png">
-</p>
+# Supported platforms
+- [x] Twitch
+- [x] YouTube
+- [x] YouTube Shorts
+- [x] Trovo
+- [x] GoodGame
+- [x] VK Video Live
+- [x] VK Video
+- [x] OK
+- [x] Kick
+- [x] Rumble
+- [x] Niconico Live (ニコニコ生放送)
+- [x] Odysee
+- [x] DLive
+- [x] TikTok
+- [x] Parti
+- [x] Picarto
+- [x] Vaughn Live
+- [x] NekoLive
+- [x] Rutube
+- [x] NekoLive
+- [x] Discord
+- [x] Telegram
+- [x] DonationAlerts
+- [x] Meme Alerts
+- [x] DonatePay
+- [x] BetterTTV
+- [x] FrankerFaceZ
+- [x] 7TV
+
+# Platforms that are not yet supported
+- [ ] CHZZK
+- [ ] SOOP
+- [ ] Icecast
+- [ ] Bigo Live
+- [ ] Facebook Live
+- [ ] X / Twitter
+- [ ] Steam
+- [ ] RobotStreamer
+- [ ] MakerTube
+- [ ] FC2 Live
+- [ ] shareplay.tv
+- [ ] Rooter
+- [ ] Nimo TV
+- [ ] Huya Live
+- [ ] Douyin
+- [ ] StreamElements
+- [ ] Streamlabs
+- [ ] Patreon
+- [ ] Boosty
+- [ ] Chatterino Homies Edition
+- [ ] Many others. **You can suggest [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform) or [here](https://github.com/3dproger/AxelChat/issues)**
 
 # FAQ
+- I enabled Ignore Mouse and now I can't interact with AxelChat in any way and I can't disable this option. - You can open the menu via the AxelChat icon in the system tray
+- [How to Add AxelChat overlay with transparent background in OBS](https://github.com/3dproger/AxelChat/discussions/589)
+- [How to open the AxelChat on a smartphone or other device via a local network (Wi-Fi)](https://github.com/3dproger/AxelChat/discussions/597)
+- [Autostart and how to attach AxelChat as an OBS dock](https://github.com/3dproger/AxelChat/discussions/591)
 - Is AxelChat considered a viewer? - Depending on the version of AxelChat and depending on the streaming platform, this may or may not be the case. If possible, we try not to allow AxelChat to be considered a viewer
 - Does AxelChat work with YouTube premieres? - Yes
-- Can I download a YouTube chat for an already past stream using the AxelChat? - No, use something else instead. For example, use the browser extension [Save Live Streaming Chats for YouTube™](https://chrome.google.com/webstore/detail/save-live-streaming-chats/bcclhcedlelimlnmcpfeiabljbpahnef)
+- Can I download a YouTube chat for an already past stream using the AxelChat? - No, but there are many other solutions. For example, special browser extensions
+- Does AxelChat have API? - Yes, see [docs](https://3dproger.github.io/AxelChat/docs)
 
-# How can I help the development of the project
+# How to help develop AxelChat
 - [Financial support](https://3dproger.github.io/AxelChat/sponsor)
 - Recommend to your favorite streamer
-- Create and improve widgets using front-end technologies like React. Here is the official widget repository: https://github.com/3dproger/AxelChatWidgets
-- Create software that can be integrated into a AxelChat using a websocket or using a file system
+- Suggest your idea in any convenient way
 - You can report a bug or suggest a new feature in [Issues](https://github.com/3dproger/AxelChat/issues)
 - Help with translations into other languages using the [Qt Linguist](https://doc.qt.io/qt-5/qtlinguist-index.html). I can send you translation blank files, just write to me about it
+- Create and improve widgets using front-end technologies like React. Here is the official widget repository: https://github.com/3dproger/AxelChatWidgets
+- Create software that can be integrated into a AxelChat using a websocket or using a file system. For example: https://github.com/3dproger/AxelChatClientGM/
 
 # Known Issues
 - YouTube: messages that YouTube may find inappropriate are not displayed
@@ -98,12 +146,9 @@ Example of a chat participant information window:
 ### Doesn't connect (General)
 - Check the correctness of the specified stream links/channel name
 - Check your internet connection
+- Try to use VPN
 - Check proxy settings if using
 - Check your firewall settings
-
-### Doesn't connect (YouTube)
-- Check that the broadcast is not over
-- Check that the broadcast is publicly available or accessed via a link. Private broadcasts are not supported
 
 ### Twitch: Avatars not showing
 - Check that the link to the channel is correct

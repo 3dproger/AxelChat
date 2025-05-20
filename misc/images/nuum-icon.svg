@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg:svg
+   viewBox="0 0 64 64"
+   fill="none"
+   version="1.1"
+   id="svg15"
+   sodipodi:docname="nuum-app.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview17"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="6.4765625"
+     inkscape:cx="37.828709"
+     inkscape:cy="29.954162"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g8" />
+  <script />
+  <svg:g
+     clip-path="url(#clip0_2121_4042)"
+     id="g8">
+    <svg:rect
+       width="64"
+       height="64"
+       rx="17.7778"
+       fill="#552BEF"
+       id="rect2"
+       style="fill:#552BEF;fill-opacity:1" />
+    <svg:path
+       d="M45.3909 49.0479C54.7661 49.0479 56.1852 37.7903 56.1066 31.0968C56.1066 27.5537 56.028 25.1931 55.9494 23.932C54.8447 23.3822 52.7181 22.671 50.513 21.0172C50.513 22.671 50.6702 26.2141 50.6702 30.0713C50.6702 35.5823 49.8056 44.7935 47.9105 44.7935C46.0154 44.7935 45.3909 40.9363 45.3909 29.1245C45.3909 28.0991 45.3909 20.9344 45.4695 16.9985C44.129 16.0517 37.1948 11.0163 35.6184 9.20547C35.697 15.9775 35.5398 26.6068 35.5398 30.9353C35.5398 43.454 40.5047 49.0436 45.3909 49.0436V49.0479Z"
+       fill="#FFFFFF"
+       id="path4"
+       style="fill:#FFFFFF;fill-opacity:1" />
+    <svg:path
+       d="M18.1258 54.7945C26.0075 54.7945 31.6797 49.205 31.6797 29.203C31.6797 23.5349 31.6011 18.8094 31.6011 15.8161C29.789 17.784 27.1865 19.909 25.8503 20.7773C25.8503 24.1633 25.6145 29.1245 25.5359 34.3213C25.3787 46.6829 22.9378 50.4617 21.2042 50.4617C18.9991 50.4617 19.3921 47.704 19.3921 43.454C19.3921 41.1719 20.4968 25.3458 21.1256 22.9808C18.2087 23.9276 11.9077 24.4775 8.51921 24.8702C7.96901 30.5383 7.89041 36.6034 7.89041 38.8855C7.89041 50.4616 12.4623 54.7901 18.1345 54.7901L18.1258 54.7945Z"
+       fill="#FFFFFF"
+       id="path6"
+       style="fill:#FFFFFF;fill-opacity:1" />
+  </svg:g>
+  <svg:defs
+     id="defs13">
+    <svg:clipPath
+       id="clip0_2121_4042">
+      <svg:rect
+         width="64"
+         height="64"
+         rx="16"
+         fill="white"
+         id="rect10" />
+    </svg:clipPath>
+  </svg:defs>
+</svg:svg>
