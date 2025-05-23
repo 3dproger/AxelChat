@@ -67,26 +67,26 @@ The AxelChat application collects chat from various streaming platforms and disp
 # Supported platforms
 - [x] Twitch
 - [x] YouTube
-- [x] YouTube Shorts
+- [x] Kick
 - [x] Trovo
+- [x] TikTok
+- [x] Rumble
+- [x] CHZZK
+- [x] DLive
+- [x] Facebook
 - [x] GoodGame
 - [x] VK Video Live
 - [x] VK Video
 - [x] OK
-- [x] Kick
-- [x] Rumble
-- [x] Niconico Live (ニコニコ生放送)
-- [x] Odysee
-- [x] DLive
-- [x] TikTok
+- [x] Rutube
 - [x] Parti
+- [x] Odysee
+- [x] Niconico Live (ニコニコ生放送)
 - [x] Picarto
 - [x] Vaughn Live
 - [x] NekoLive
-- [x] Rutube
-- [x] NekoLive
-- [x] Discord
 - [x] Telegram
+- [x] Discord
 - [x] DonationAlerts
 - [x] Meme Alerts
 - [x] DonatePay
@@ -95,11 +95,9 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] 7TV
 
 # Platforms that are not yet supported
-- [ ] CHZZK
 - [ ] SOOP
 - [ ] Icecast
 - [ ] Bigo Live
-- [ ] Facebook Live
 - [ ] X / Twitter
 - [ ] Steam
 - [ ] RobotStreamer
