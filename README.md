@@ -71,7 +71,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Trovo
 - [x] TikTok
 - [x] Rumble
-- [x] CHZZK
+- [x] CHZZK (치지직)
 - [x] DLive
 - [x] Facebook
 - [x] GoodGame
