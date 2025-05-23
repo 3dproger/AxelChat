@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 256 256"
+   fill="none"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="chzzk-icon.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.5665"
+     inkscape:cx="141.21801"
+     inkscape:cy="360.98853"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <rect
+     width="256"
+     height="256"
+     fill="#000000"
+     rx="72"
+     id="rect1"
+     x="0"
+     y="0"
+     style="stroke-width:0.256" />
+  <path
+     fill="#00ffa3"
+     d="M 192.848,197.312 V 159.05601 H 135.36 l 63.288,-87.320009 h -51.28 l 15.52,-21.424 h -51.28 L 69.223999,108.8 H 120.504 l -64.16,88.52 h 136.504 z"
+     id="path1"
+     style="stroke-width:0.256" />
+</svg>
