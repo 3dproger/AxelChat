@@ -1,4 +1,4 @@
-# AxelChat <img width="32" height="32" src="misc/images/twitch-icon.svg"> <img width="32" height="32" src="misc/images/youtube-icon.svg"> <img width="32" height="32" src="misc/images/youtube-shorts-icon.svg"> <img width="32" height="32" src="misc/images/trovo-icon.svg"> <img width="32" height="32" src="misc/images/kick-icon.svg"> <img width="32" height="32" src="misc/images/rumble-icon.svg"> <img width="32" height="32" src="misc/images/chzzk-icon.svg"> <img width="32" height="32" src="misc/images/dlive-icon.svg"> <img width="32" height="32" src="misc/images/facebook-icon.svg"> <img width="32" height="32" src="misc/images/tiktok-icon.svg"> <img width="32" height="32" src="misc/images/odysee-icon.svg"> <img width="32" height="32" src="misc/images/niconicolive-icon.svg"> <img width="32" height="32" src="misc/images/goodgame-icon.svg"> <img width="32" height="32" src="misc/images/vkvideolive-icon.png"> <img width="32" height="32" src="misc/images/vkvideo-icon.png"> <img width="32" height="32" src="misc/images/rutube-icon.svg"> <img width="32" height="32" src="misc/images/ok-icon.svg"> <img width="32" height="32" src="misc/images/parti-icon.svg"> <img width="32" height="32" src="misc/images/picarto-icon.png"> <img width="32" height="32" src="misc/images/vaughnlive-icon.png"> <img width="32" height="32" src="misc/images/nekolive-icon.png"> <img width="32" height="32" src="misc/images/telegram-icon.svg"> <img width="32" height="32" src="misc/images/discord-icon.svg"> <img width="32" height="32" src="misc/images/donationalerts-icon.svg"> <img width="32" height="32" src="misc/images/memealerts-icon.png"> <img width="32" height="32" src="misc/images/donatepay-icon.svg">
+# AxelChat <img width="32" height="32" src="misc/images/twitch-icon.svg"> <img width="32" height="32" src="misc/images/youtube-icon.svg"> <img width="32" height="32" src="misc/images/youtube-shorts-icon.svg"> <img width="32" height="32" src="misc/images/trovo-icon.svg"> <img width="32" height="32" src="misc/images/kick-icon.svg"> <img width="32" height="32" src="misc/images/rumble-icon.svg"> <img width="32" height="32" src="misc/images/loco-icon.svg"> <img width="32" height="32" src="misc/images/chzzk-icon.svg"> <img width="32" height="32" src="misc/images/dlive-icon.svg"> <img width="32" height="32" src="misc/images/steam-icon.svg"> <img width="32" height="32" src="misc/images/facebook-icon.svg"> <img width="32" height="32" src="misc/images/tiktok-icon.svg"> <img width="32" height="32" src="misc/images/odysee-icon.svg"> <img width="32" height="32" src="misc/images/niconicolive-icon.svg"> <img width="32" height="32" src="misc/images/goodgame-icon.svg"> <img width="32" height="32" src="misc/images/vkvideolive-icon.png"> <img width="32" height="32" src="misc/images/vkvideo-icon.png"> <img width="32" height="32" src="misc/images/rutube-icon.svg"> <img width="32" height="32" src="misc/images/ok-icon.svg"> <img width="32" height="32" src="misc/images/parti-icon.svg"> <img width="32" height="32" src="misc/images/picarto-icon.png"> <img width="32" height="32" src="misc/images/vaughnlive-icon.png"> <img width="32" height="32" src="misc/images/livacha-icon.png"> <img width="32" height="32" src="misc/images/nekolive-icon.png"> <img width="32" height="32" src="misc/images/telegram-icon.svg"> <img width="32" height="32" src="misc/images/discord-icon.svg"> <img width="32" height="32" src="misc/images/donationalerts-icon.svg"> <img width="32" height="32" src="misc/images/memealerts-icon.png"> <img width="32" height="32" src="misc/images/donatepay-icon.svg">
 The AxelChat application collects chat from various streaming platforms and displays it in one window. Has a user-friendly interface and various useful features
 
 [Download](https://github.com/3dproger/axelchat/releases/latest/) |
@@ -71,8 +71,10 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Trovo
 - [x] TikTok
 - [x] Rumble
+- [x] Loco
 - [x] CHZZK (치지직)
 - [x] DLive
+- [x] Steam
 - [x] Facebook
 - [x] GoodGame
 - [x] VK Video Live
@@ -84,6 +86,7 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [x] Niconico Live (ニコニコ生放送)
 - [x] Picarto
 - [x] Vaughn Live
+- [x] Livacha
 - [x] NekoLive
 - [x] Telegram
 - [x] Discord
@@ -99,7 +102,6 @@ The AxelChat application collects chat from various streaming platforms and disp
 - [ ] Icecast
 - [ ] Bigo Live
 - [ ] X / Twitter
-- [ ] Steam
 - [ ] RobotStreamer
 - [ ] MakerTube
 - [ ] FC2 Live
