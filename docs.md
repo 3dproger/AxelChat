@@ -161,6 +161,8 @@ The `services` field stores information about the services currently supported b
 }
 ```
 
+New types of messages may appear in future updates of AxelChat. Also, existing message types may be changed, usually by adding new data to the message object.
+
 ## Output to files
 
 This method is considered obsolete and may no longer be supported in the future.
