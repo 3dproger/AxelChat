@@ -1,6 +1,17 @@
 # AxelChat API
 
-The AxelChat API provides the ability to integrate third-party software with AxelChat, for example to read messages and viewer information. There are currently two ways to read data from AxelChat: `WebSocket` and `Output to files`
+The AxelChat API provides the ability to integrate third-party software with AxelChat, for example to read messages and viewer information. There are currently three ways to read data from AxelChat: `HTTP requests`, `WebSocket` and `Output to files`
+
+## HTTP requests
+
+* `http://127.0.0.1:8356/api/v1/set-visibility?main=0` - hide main window AxelChat
+* `http://127.0.0.1:8356/api/v1/set-visibility?main=1` - show main window AxelChat
+* `http://127.0.0.1:8356/api/v1/app` - get information about AxelChat version
+* `http://127.0.0.1:8356/api/v1/messages?count=100` - get list of last 100 messages
+* `http://127.0.0.1:8356/api/v1/selected-messages` - get list of selected messages
+* `http://127.0.0.1:8356/api/v1/state` - get information about the status of connected platforms, including information about the number of viewers and more
+
+AxelChat can handle HTTP requests.
 
 ## WebSocket
 
