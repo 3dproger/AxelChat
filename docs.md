@@ -4,6 +4,8 @@ The AxelChat API provides the ability to integrate third-party software with Axe
 
 ## HTTP requests
 
+AxelChat can work as a HTTP server.
+
 * `http://127.0.0.1:8356/api/v1/set-visibility?main=0` - hide main window AxelChat
 * `http://127.0.0.1:8356/api/v1/set-visibility?main=1` - show main window AxelChat
 * `http://127.0.0.1:8356/api/v1/app` - get information about AxelChat version
@@ -15,7 +17,7 @@ AxelChat can handle HTTP requests.
 
 ## WebSocket
 
-AxelChat can work as a WebSocket server. At the moment, this is the most preferred method of integration. For example, AxelChat web widgets use this method of communication. The main advantage of this method is instant receipt of messages and various events by your software.
+AxelChat can work as a WebSocket server. AxelChat web widgets use exactly this method of communication. The main advantage of this method is instant receipt of messages and various events by your software.
 
 To connect to AxelChat using WebSocket, follow these steps:
 
