@@ -5,12 +5,12 @@ The AxelChat API provides the ability to integrate third-party software with Axe
 ## HTTP requests
 
 AxelChat can work as a HTTP server. Using HTTP requests, you can receive various data or control the work of AxelChat. Here is a list of HTTP requests supported by the latest version of AxelChat:
-* `http://127.0.0.1:8356/api/v1/set-visibility?main=0` - hide main window AxelChat
-* `http://127.0.0.1:8356/api/v1/set-visibility?main=1` - show main window AxelChat
-* `http://127.0.0.1:8356/api/v1/app` - get information about AxelChat version
-* `http://127.0.0.1:8356/api/v1/messages?count=100` - get list of last 100 messages
-* `http://127.0.0.1:8356/api/v1/selected-messages` - get list of selected messages
-* `http://127.0.0.1:8356/api/v1/state` - get information about the status of connected platforms, including information about the number of viewers and more
+* `GET http://127.0.0.1:8356/api/v1/set-visibility?main=0` - hide main window AxelChat
+* `GET http://127.0.0.1:8356/api/v1/set-visibility?main=1` - show main window AxelChat
+* `GET http://127.0.0.1:8356/api/v1/app` - get information about AxelChat version
+* `GET http://127.0.0.1:8356/api/v1/messages?count=100` - get list of last 100 messages
+* `GET http://127.0.0.1:8356/api/v1/selected-messages` - get list of selected messages
+* `GET http://127.0.0.1:8356/api/v1/state` - get information about the status of connected platforms, including information about the number of viewers and more
 
 ## WebSocket
 
