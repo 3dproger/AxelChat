@@ -11,7 +11,7 @@ AxelChat can work as a HTTP server. Using HTTP requests, you can receive various
 * GET `http://127.0.0.1:8356/api/v1/messages?count=100` - get list of last 100 messages
 * GET `http://127.0.0.1:8356/api/v1/selected-messages` - get list of selected messages
 * GET `http://127.0.0.1:8356/api/v1/state` - get information about the status of connected platforms, including information about the number of viewers and more
-* GET `http://127.0.0.1:8356/api/v1/chat/clear` - (since 0.40.4-beta) clear chat
+* GET `http://127.0.0.1:8356/api/v1/chat/clear` - (since 0.40.5) clear chat
 
 ## WebSocket
 
