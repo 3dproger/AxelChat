@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 24.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   version="1.1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 256 256"
+   xml:space="preserve"
+   id="svg22"
+   sodipodi:docname="Boosty_logo.svg"
+   width="256"
+   height="256"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs26" /><sodipodi:namedview
+   id="namedview24"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="1.8832076"
+   inkscape:cx="78.058307"
+   inkscape:cy="122.13205"
+   inkscape:window-width="1920"
+   inkscape:window-height="1009"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg22" />
+<style
+   type="text/css"
+   id="style2">
+	.st0{fill:#242B2C;}
+	.st1{fill:url(#SVGID_1_);}
+</style>
+
+<g
+   id="sign"
+   transform="matrix(1.3202911,0,0,1.3202911,-85.255473,-64.272828)">
+	<g
+   id="b_1_">
+		<linearGradient
+   id="SVGID_1_"
+   gradientUnits="userSpaceOnUse"
+   x1="188.30141"
+   y1="75.559097"
+   x2="123.8106"
+   y2="295.4895">
+			<stop
+   offset="0"
+   style="stop-color:#EF7829"
+   id="stop7" />
+			<stop
+   offset="5.189538e-02"
+   style="stop-color:#F07529"
+   id="stop9" />
+			<stop
+   offset="0.3551"
+   style="stop-color:#F0672B"
+   id="stop11" />
+			<stop
+   offset="0.6673"
+   style="stop-color:#F15E2C"
+   id="stop13" />
+			<stop
+   offset="1"
+   style="stop-color:#F15A2C"
+   id="stop15" />
+		</linearGradient>
+		<path
+   class="st1"
+   d="M 87.5,163.9 120.2,51 h 50.1 l -10.1,35 c -0.1,0.2 -0.2,0.4 -0.3,0.6 L 133.3,179 h 24.8 c -10.4,25.9 -18.5,46.2 -24.3,60.9 C 88,239.4 75.2,206.6 86.4,167.8 m 47.5,72.2 60.4,-86.9 H 168.7 L 191,97.4 c 38.2,4 56.2,34.1 45.6,70.5 -11.3,39.1 -57.2,72.1 -101.8,72.1 -0.3,0 -0.6,0 -0.9,0 z"
+   id="path18"
+   style="fill:url(#SVGID_1_)" />
+	</g>
+</g>
+</svg>
