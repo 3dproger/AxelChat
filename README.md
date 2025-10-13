@@ -92,7 +92,9 @@ AxelChat is an application that combines chats from various streaming and other 
 - [x] NekoLive
 - [x] Telegram
 - [x] Discord
+- [x] Streamlabs
 - [x] DonationAlerts
+- [x] Boosty
 - [x] Meme Alerts
 - [x] donate.stream
 - [x] DonatePay
@@ -114,9 +116,7 @@ AxelChat is an application that combines chats from various streaming and other 
 - [ ] Huya Live
 - [ ] Douyin
 - [ ] StreamElements
-- [ ] Streamlabs
 - [ ] Patreon
-- [ ] Boosty
 - [ ] Chatterino Homies Edition
 - [ ] Many others. **You can suggest [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform) or [here](https://github.com/3dproger/AxelChat/issues)**
 
