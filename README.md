@@ -4,7 +4,7 @@
 
 AxelChat is an application that combines chats from various streaming and other platforms and displays them in one window or in a widget for OBS or even on the smartphone screen. It supports a large number of platforms, has a user-friendly interface and many useful features
 
-### **Please note: Due to the transition to new technologies, support for AxelChat on Windows 7, 8, and 8.1 may soon be discontinued in future updates**
+### **Please note: Due to the transition to new technologies, support for AxelChat in Windows 7, 8 and 8.1 has been discontinued**
 
 [Download](https://github.com/3dproger/axelchat/releases/latest/) |
 [Releases](https://github.com/3dproger/AxelChat/releases) |
