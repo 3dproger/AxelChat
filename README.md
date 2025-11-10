@@ -119,6 +119,7 @@ AxelChat is an application that combines chats from various streaming and other 
 - [ ] Huya Live
 - [ ] Douyin
 - [ ] StreamElements
+- [ ] W (w.tv)
 - [ ] Patreon
 - [ ] Chatterino Homies Edition
 - [ ] Many others. **You can suggest [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform) or [here](https://github.com/3dproger/AxelChat/issues)**
