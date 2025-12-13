@@ -125,6 +125,7 @@ AxelChat is an application that combines chats from various streaming and other 
 - [ ] Many others. **You can suggest [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform) or [here](https://github.com/3dproger/AxelChat/issues)**
 
 # FAQ
+- Windows: At startup application errors about missing DLL files are displayed, for example `MSVCP140.dll`, `VCRUNTIME140.dll` or other similar. - You need to install `Microsoft Visual C++ Redistributable` from https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist or by file `vc_redist.x64.exe` located in the application folder
 - Is AxelChat Open Source? - Partially yes. AxelChat widgets are open source, see: https://github.com/3dproger/AxelChatWidgets. Also, AxelChat has an API that will allow you to create your own software integrated with AxelChat, see [docs](https://3dproger.github.io/AxelChat/docs)
 - I enabled Ignore Mouse and now I can't interact with AxelChat in any way and I can't disable this option. - You can open the menu via the AxelChat icon in the system tray
 - [How to Add AxelChat overlay with transparent background in OBS](https://github.com/3dproger/AxelChat/discussions/589)
