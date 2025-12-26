@@ -5,6 +5,7 @@
 AxelChat is a powerful chat aggregator for streamers, combining messages from Twitch, YouTube, and many other services into a single interface, widget, or mobile view, supporting custom emotes (like BTTV), viewer counts, sound commands, and integrations for OBS and other apps, making it easier to manage audience interaction during live streams. 
 
 ### **Please note: Due to the transition to new technologies, support for AxelChat in Windows 7, 8 and 8.1 has been discontinued**
+Latest version with Windows 7 support: [0.41.2](https://github.com/3dproger/AxelChat/releases/tag/0.41.2)
 
 [Download](https://github.com/3dproger/axelchat/releases/latest/) |
 [Releases](https://github.com/3dproger/AxelChat/releases) |
