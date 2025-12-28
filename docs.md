@@ -12,7 +12,126 @@ AxelChat can work as a HTTP server. Using HTTP requests, you can receive various
 * GET `http://127.0.0.1:8356/api/v1/selected-messages` - get list of selected messages
 * GET `http://127.0.0.1:8356/api/v1/state` - get information about the status of connected platforms, including information about the number of viewers and more
 * GET `http://127.0.0.1:8356/api/v1/chat/clear` - (since 0.40.5) clear chat
-
+* POST `http://127.0.0.1:8356/api/v1/receive-events` - (since 0.44.0) send events to AxelChat. The request body must contain an array of objects. Each object is an event, such as a message event. Please note that it is not necessary to specify all fields in the object. Also note that if you don't specify an event ID or message author ID, AxelChat will generate one automatically. If you send two messages with the same ID, the second message will be ignored. However, if the `edited` field in the second message is `true`, the first message will be overwritten by the second message, and a corresponding note will be added indicating that the message has been edited. An example of two message events:
+```JSON
+[
+    {
+        "contents": [
+            {
+                "data": {
+                    "text": "Simple message"
+                },
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "author": {
+            "id": "twitch_15VIhcy2f6qvy6eKaI79d",
+            "name": "Goose Doe",
+            "serviceId": "twitch",
+            "color": "#FF3FEF",
+            "customBackgroundColor": "#99D9FF",
+            "avatar": "https://img.icons8.com/?size=100&id=CqciCrEqfguR&format=png&color=000000",
+            "page": "https://en.wikipedia.org/wiki/Goose",
+            "serviceBadge": "https://img.icons8.com/?size=100&id=3XZiNbyjUeNL&format=png&color=000000",
+            "leftBadges": [
+                "https://img.icons8.com/?size=100&id=0WWwdtiSb6xB&format=png&color=000000",
+                "https://img.icons8.com/?size=100&id=81210&format=png&color=000000"
+            ],
+            "leftTags": [
+                {
+                    "text": "GOOSE",
+                    "backgroundColor": "#990026",
+                    "textColor": "#FFFFFF"
+                }
+            ],
+            "rightBadges": [
+                "https://img.icons8.com/?size=100&id=101716&format=png&color=000000",
+                "https://img.icons8.com/?size=100&id=120346&format=png&color=000000"
+            ],
+            "rightTags": [
+                {
+                    "text": "STREAMER",
+                    "backgroundColor": "#9900E4",
+                    "textColor": "#FFFFFF"
+                }
+            ]
+        },
+        "id": "twitch_15VIhcy2f6qvy6eKaI79_9BPXd1Q75B65zHgnQppd7Mjg7m3G7Zv",
+        "eventType": "Message",
+        "edited": false,
+        "deletedOnPlatform": false,
+        "markedAsDeleted": false,
+        "customAuthorAvatarUrl": "",
+        "customAuthorName": "",
+        "mentionedYouAs": "",
+        "publishedAt": "2025-12-27T12:13:47.266",
+        "receivedAt": "2025-12-27T12:43:48.145",
+        "reply": null,
+        "bodyStyle": {
+            "backgroundColor": "#0000FF",
+            "borderColor": "#00FF00",
+            "sideLineColor": "#FF0000"
+        },
+        "contents": [
+            {
+                "data": {
+                    "text": "Hi! I'm Goose Doe\n"
+                },
+                "style": {
+                    "font-weight": "bold"
+                },
+                "type": "text"
+            },
+            {
+                "data": {
+                    "text": "This is my friend, Duckinson Duck: "
+                },
+                "style": {
+                    "font-style": "italic"
+                },
+                "type": "text"
+            },
+            {
+                "data": {
+                    "url": "https://img.icons8.com/?size=100&id=BO1UW1ckftwU&format=png&color=000000"
+                },
+                "type": "image"
+            },
+            {
+                "data": {
+                    "text": "\nI found his photo "
+                },
+                "type": "text"
+            },
+            {
+                "data": {
+                    "text": "here",
+                    "url": "https://icons8.com/icons/set/duck"
+                },
+                "style": {
+                    "font-style": "italic"
+                },
+                "type": "hyperlink"
+            },
+            {
+                "data": {
+                    "text": "\nAnd this is arbitrary HTML content:\n"
+                },
+                "type": "text"
+            },
+            {
+                "data": {
+                    "html": "This is another friend of mine, Platy Platypus:<br><img src=\"https://img.icons8.com/?size=100&id=Ssxi5U7QWAK4&format=png&color=000000\">"
+                },
+                "type": "html"
+            }
+        ]
+    }
+]
+```
+  
 ## WebSocket
 
 AxelChat can work as a WebSocket server. AxelChat web widgets use exactly this method of communication. The main advantage of this method is instant receipt of messages and various events by your software.
@@ -24,7 +143,7 @@ To connect to AxelChat using WebSocket, follow these steps:
 * This section will display the URL for connecting to AxelChat via WebSocket, usually `ws://127.0.0.1:8356`. Connect your WebSocket client using this link. See the documentation for your programming language or use the appropriate libraries
 * If the connection is successful, a new client will be displayed in the `Developers` section
 * Immediately after connecting, your software should send a message in this format to provide AxelChat with information about your client:
-```
+```JSON
 {
     "data": {
         "client": {
@@ -43,7 +162,7 @@ To connect to AxelChat using WebSocket, follow these steps:
 If you do not send this message within a few seconds, or send another message, the connection will be automatically terminated.
 
 * Next, AxelChat will send a message in the format:
-```
+```JSON
 {
     "data": {
         "app_name": "AxelChat",
@@ -62,7 +181,7 @@ The `services` field stores information about the services currently supported b
 
 ### `STATES_CHANGED` - Information about the status of services:
 
-```
+```JSON
 {
     "data": {
         "services": [
@@ -87,7 +206,7 @@ The `services` field stores information about the services currently supported b
 
 ### `NEW_MESSAGES_RECEIVED`, `MESSAGES_CHANGED` - New messages received or changed existing messages:
 
-```
+```JSON
 {
     "data": {
         "messages": [
@@ -115,7 +234,7 @@ The `services` field stores information about the services currently supported b
                 "customAuthorName": "",
 				"deleted": false,
                 "destination": [],
-                "forcedColors": {},
+                "bodyStyle": {},
                 "id": "<message_id>",
                 "publishedAt": "2024-08-04T16:18:02.954",
                 "receivedAt": "2024-08-04T16:19:18.548",
@@ -151,7 +270,7 @@ The `services` field stores information about the services currently supported b
                 "customAuthorName": "",
 				"deleted": false,
                 "destination": [],
-                "forcedColors": {},
+                "bodyStyle": {},
                 "id": "<message_id>",
                 "publishedAt": "2024-08-04T16:18:04.069",
                 "receivedAt": "2024-08-04T16:19:18.548",
@@ -165,7 +284,7 @@ The `services` field stores information about the services currently supported b
 
 ### `CLEAR_MESSAGES` - Cleared all messages
 
-```
+```JSON
 {
     "data": null,
     "type": "CLEAR_MESSAGES"
