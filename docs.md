@@ -329,4 +329,7 @@ This list is current as of version 0.44.0
 ```JSON
 ["bigolive", "boosty", "chzzk", "discord", "dlive", "donatepayeu", "donatepayru", "donatestream", "donationalerts", "facebook", "goodgame", "kick", "livacha", "loco", "memealerts", "nekolive", "niconico", "nimotv", "nuum", "odysee", "ok", "parti", "picarto", "rumble", "rutube", "software", "soopglobal", "soopkorea", "steam", "streamelements", "streamlabs", "telegram", "tiktok", "trovo", "twitch", "unknown", "vaughnlive", "vimm", "vkvideo", "vkvideolive", "xcom", "youtube", "youtubeshorts"]
 ```
-
+You can find the most up-to-date list of platforms for your version this way:
+1. Enable `Output to a files` (`Settings`->`Output to a files`)
+2. Click `Show in Explorer`
+3. In the folder that opens, open the folder `services`. This folder will list folders whose names correspond to the IDs of known AxelChat platforms except for IDs `software` and `unknown`
