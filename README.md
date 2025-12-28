@@ -59,6 +59,7 @@ Latest version with Windows 7 support: [0.41.2](https://github.com/3dproger/Axel
 - [x] Displaying the number of viewers both total and for individual platforms
 - [x] Voice-over of text messages (Text-to-Speech)
 - [x] Displays detailed information about a participant in a live chat in a separate window including a link to the participant's page/channel (see example below)
+- [x] Highlighting messages mentioning a streamer
 - [x] Sound commands that are activated by the corresponding message from the chat. There are built-in commands, but you can always add your own
 - [x] Saving messages and other information on the fly to text files. It may be useful for further processing by other software
 - [x] BetterTTV, FrankerFaceZ, 7TV emotes support on any streaming platform
