@@ -4,7 +4,7 @@ The AxelChat API provides the ability to integrate third-party software with Axe
 
 ## HTTP requests
 
-AxelChat can work as a HTTP server. Using HTTP requests, you can receive various data or control the work of AxelChat. Here is a list of HTTP requests supported by the latest version of AxelChat:
+AxelChat can work as a HTTP server. Using HTTP requests, you can receive various data or control the work of AxelChat. For ease of API testing, use Postman or similar applications. Here is a list of HTTP requests supported by the latest version of AxelChat:
 * GET `http://127.0.0.1:8356/api/v1/set-visibility?main=0` - hide main window AxelChat
 * GET `http://127.0.0.1:8356/api/v1/set-visibility?main=1` - show main window AxelChat
 * GET `http://127.0.0.1:8356/api/v1/app` - get information about AxelChat version
