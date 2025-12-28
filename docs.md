@@ -138,8 +138,9 @@ An example of two message events:
     }
 ]
 ```
+
 Response example:
-```
+```JSON
 {
     "addedMessages": [
         "twitch_15VIhcy2f6qvy6eKaI79_9BPXd1Q75B65zHgnQppd7Mjg7m3G7Zv"
