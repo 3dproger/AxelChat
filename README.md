@@ -95,6 +95,7 @@ Latest version with Windows 7 support: [0.41.2](https://github.com/3dproger/Axel
 - [x] Picarto
 - [x] Vaughn Live
 - [x] Livacha
+- [x] W (w.tv)
 - [x] NekoLive
 - [x] Telegram
 - [x] Discord
@@ -122,7 +123,6 @@ Latest version with Windows 7 support: [0.41.2](https://github.com/3dproger/Axel
 - [ ] Huya Live
 - [ ] Douyin
 - [ ] StreamElements
-- [ ] W (w.tv)
 - [ ] Patreon
 - [ ] Chatterino Homies Edition
 - [ ] Many others. **You can suggest [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform) or [here](https://github.com/3dproger/AxelChat/issues)**
