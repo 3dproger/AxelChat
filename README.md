@@ -173,3 +173,12 @@ Latest version with Windows 7 support: [0.41.2](https://github.com/3dproger/Axel
 ### Control panel web page does not open correctly
 - Make sure you're logged into your streaming site in your default browser
 - Make sure that you have specified a stream in AxelChat that belongs to your streaming platform account in the default browser, and not someone else's stream
+
+# Star History
+<a href="https://star-history.com/#3dproger/AxelChat&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=3dproger/AxelChat&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=3dproger/AxelChat&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=3dproger/AxelChat&type=Date" />
+ </picture>
+</a>
