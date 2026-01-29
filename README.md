@@ -53,7 +53,7 @@ Latest version with Windows 7 support: [0.41.2](https://github.com/3dproger/Axel
   <img src="misc/screenshots/15.png">
 </p>
 
-# Features
+# Key Features
 - [x] Display messages from multiple streaming platforms at once
 - [x] Display avatars of participants of chat
 - [x] Displaying the number of viewers both total and for individual platforms
