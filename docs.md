@@ -172,7 +172,7 @@ To connect to AxelChat using WebSocket, follow these steps:
 * Open the section `Settings->Developers`. If the WebSocket server was successfully launched, the message "State: Ok" should be displayed
 * This section will display the URL for connecting to AxelChat via WebSocket, usually `ws://127.0.0.1:8356`. Connect your WebSocket client using this link. See the documentation for your programming language or use the appropriate libraries
 * If the connection is successful, a new client will be displayed in the `Developers` section
-* Immediately after connecting, your software should send a message in this format to provide AxelChat with information about your client:
+* (DEPRECATED since 0.47.6) Immediately after connecting, your software should send a message in this format to provide AxelChat with information about your client:
 ```JSON
 {
     "data": {
@@ -189,9 +189,32 @@ To connect to AxelChat using WebSocket, follow these steps:
     "type": "HELLO"
 }
 ```
-If you do not send this message within a few seconds, or send another message, the connection will be automatically terminated.
+(DEPRECATED since 0.47.6) If you do not send this message within a few seconds, or send another message, the connection will be automatically terminated.
 
-* Next, AxelChat will send a message in the format:
+* Next, AxelChat will send a message in the format (since 0.47.6):
+```JSON
+{
+	"data": {
+		"app": {
+			"locale": "en-US",
+			"name": "AxelChat",
+			"version": "0.47.6"
+		},
+		"client": {
+			"address": "127.0.0.1",
+			"executablePath": "<path-to-executable>",
+			"executableVersion": "<executable-version>",
+			"local": true,
+			"pid": 12345,
+			"port": 54321
+		},
+		"services": [...]
+	},
+	"type": "HELLO"
+}
+```
+
+* Before 0.47.6 this message looks like this:
 ```JSON
 {
     "data": {
