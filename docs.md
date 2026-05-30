@@ -152,8 +152,8 @@ Response example:
 }
 ```
 
-(since 0.47.6) An example of deleting one of the messages from the previous example:
-```
+An example of deleting one of the messages from the previous example (since 0.47.6):
+```JSON
 [
     {
         "id": "twitch_15VIhcy2f6qvy6eKaI79_9BPXd1Q75B65zHgnQppd7Mjg7m3G7Zv",
