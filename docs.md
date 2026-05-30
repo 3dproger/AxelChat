@@ -251,13 +251,19 @@ If the server fails to send this message for an extended period, it indicates th
                 "connection_state": "connecting",
                 "enabled": true,
                 "type_id": "youtube",
-                "viewers": 11
+				"icon": "/resources?path=qrc:/resources/images/youtube-icon.svg",
+                "viewers": 11,
+				"viewersCounterEnabled": true,
+				"followers": -1
             },
             {
                 "connection_state": "not_connected",
                 "enabled": false,
                 "type_id": "twitch",
-                "viewers": 13
+				"icon": "/resources?path=qrc:/resources/images/twitch-icon.svg",
+                "viewers": 13,
+				"viewersCounterEnabled": true,
+				"followers": 123
             }
         ],
         "viewers": 24
