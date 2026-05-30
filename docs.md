@@ -17,7 +17,7 @@ AxelChat can work as a HTTP server. Using HTTP requests, you can receive various
   	- It is not necessary to specify all fields in the object
  	- If you don't specify an event ID or message author ID, AxelChat will generate them automatically
   	- It is recommended to additionally specify the platform ID at the beginning of the author ID to avoid identifier conflicts. For message IDs, it is also recommended to add the author ID at the beginning
- 	- If you send two messages with the same ID, the second message will be ignored. However, if the `edited` field in the second message is `true`, the first message will be overwritten by the second message, and a corresponding note will be added indicating that the message has been edited
+ 	- If you send two messages with the same ID, the second message will be ignored. However, if the `edited` field or `markedAsDeleted` field (since 0.47.6) in the second message is `true`, the first message will be overwritten or deleted by the second message, and a corresponding note will be added indicating that the message has been edited
   - The `serviceId` field contains the text ID of the platform from which this event was received. If the event was received from a platform AxelChat doesn't know anything about, you can create your own ID. In this case, it is recommended to also specify the URL to the platform's icon in the `serviceBadge` field. A list of known AxelChat platform IDs can be found below in this documentation.
   - If this request is successfully processed, AxelChat will return information about how the event was handled (the IDs of the messages that were added, updated, or deleted). A sample response is below.
 
