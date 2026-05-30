@@ -230,10 +230,16 @@ The `services` field will display the client ID, which is assigned to the client
 
 The `services` field stores information about the services currently supported by AxelChat.
 
-* Next, AxelChat will send messages:
+Next, AxelChat will send other messages (see below).
 
 ### `SERVER_ALIVE` - (since 0.47.6) The server reports that it is active
-If the server fails to send this message for an extended period, it indicates that the server has shut down, frozen, or that the connection to the server has been severed
+If the server fails to send this message for an extended period, it indicates that the server has shut down, frozen, or that the connection to the server has been severed. Message example:
+```JSON
+{
+    "data": null,
+    "type": "SERVER_ALIVE"
+}
+```
 
 ### `STATES_CHANGED` - Information about the status of services:
 
