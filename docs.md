@@ -152,7 +152,7 @@ Response example:
 }
 ```
 
-An example of deleting one of the messages from the previous example (since 0.47.6):
+An example of deleting one of the messages from the previous example (works since 0.47.6):
 ```JSON
 [
     {
