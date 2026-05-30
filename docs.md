@@ -21,7 +21,7 @@ AxelChat can work as a HTTP server. Using HTTP requests, you can receive various
   - The `serviceId` field contains the text ID of the platform from which this event was received. If the event was received from a platform AxelChat doesn't know anything about, you can create your own ID. In this case, it is recommended to also specify the URL to the platform's icon in the `serviceBadge` field. A list of known AxelChat platform IDs can be found below in this documentation.
   - If this request is successfully processed, AxelChat will return information about how the event was handled (the IDs of the messages that were added, updated, or deleted). A sample response is below.
 
-An example of two message events:
+An example of two new message events:
 ```JSON
 [
     {
