@@ -12,8 +12,8 @@ AxelChat can work as a HTTP server. Using HTTP requests, you can receive various
 * GET `http://127.0.0.1:8356/api/v1/selected-messages` - get list of selected messages
 * GET `http://127.0.0.1:8356/api/v1/state` - get information about the status of connected platforms, including information about the number of viewers and more
 * GET `http://127.0.0.1:8356/api/v1/chat/clear` - (since 0.40.5) clear chat
-* POST `http://127.0.0.1:8356/api/v1/receive-events` - (since 0.44.0) send events to AxelChat. This endpoint can be used both for sending test events and for integration with a third-party program that receives data from a platform that is not natively supported in AxelChat, or for displaying any other messages. The request body must contain an array of objects. Each object is an event, such as a message event. Please keep some points in mind:
-	- As of version 0.44.0, message deletion events are not yet supported. Only message adding and updating events work
+* POST `http://127.0.0.1:8356/api/v1/receive-events` - (since 0.44.0) allows adding new messages to AxelChat and modifying or deleting (since 0.47.6) existing ones. This endpoint can be used both for sending test events and for integration with a third-party program that receives data from a platform that is not natively supported in AxelChat, or for displaying any other messages. The request body must contain an array of objects. Each object is an event, such as a message event. Please keep some points in mind:
+	- Support for deleting messages was introduced only in version 0.47.6.
   	- It is not necessary to specify all fields in the object
  	- If you don't specify an event ID or message author ID, AxelChat will generate them automatically
   	- It is recommended to additionally specify the platform ID at the beginning of the author ID to avoid identifier conflicts. For message IDs, it is also recommended to add the author ID at the beginning
