@@ -92,7 +92,7 @@ An example of two new message events:
         "contents": [
             {
                 "data": {
-                    "text": "Hi! I'm Goose Doe\n"
+                    "text": "Hi, Bob the Beaver! I'm Goose Doe\n"
                 },
                 "style": {
                     "font-weight": "bold"
