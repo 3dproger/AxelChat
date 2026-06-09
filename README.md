@@ -124,7 +124,6 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 - [ ] X / Twitter
 - [ ] RobotStreamer
 - [ ] MakerTube
-- [ ] FC2 Live
 - [ ] shareplay.tv
 - [ ] Rooter
 - [ ] Nimo TV
