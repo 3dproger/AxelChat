@@ -40,6 +40,10 @@ An example of two new message events:
             "id": "twitch_15VIhcy2f6qvy6eKaI79d",
             "name": "Goose Doe",
             "serviceId": "twitch",
+            "visible": {
+                "private": true,
+                "public": true
+            },
             "color": "#FF3FEF",
             "customBackgroundColor": "#99D9FF",
             "avatar": "https://img.icons8.com/?size=100&id=CqciCrEqfguR&format=png&color=000000",
@@ -78,6 +82,10 @@ An example of two new message events:
         "mentionedYouAs": "",
         "publishedAt": "2025-12-27T12:13:47.266",
         "receivedAt": "2025-12-27T12:43:48.145",
+        "visible": {
+            "private": true,
+            "public": true
+        },
         "reply": {
             "name": "Bob the Beaver",
             "text": "Hi, I finished the dam!",
