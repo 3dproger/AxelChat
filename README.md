@@ -92,6 +92,7 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 - [x] Parti
 - [x] Picarto
 - [x] Beam (beamstream.gg)
+- [x] Blaze Stream
 - [x] Odysee
 - [x] FC2 Live (FC2ライブ)
 - [x] Niconico Live (ニコニコ生放送)
@@ -100,6 +101,8 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 - [x] Matreshka (matreshka.tv)
 - [x] W (w.tv)
 - [x] Tach (tach.id)
+- [x] Prime
+- [x] stream.space
 - [x] Velora
 - [x] VPZONE
 - [x] NekoLive
@@ -113,9 +116,11 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 - [x] DonateX
 - [x] Donatty
 - [x] donate.stream
+- [x] iHAQ Donate
 - [x] BetterTTV
 - [x] FrankerFaceZ
 - [x] 7TV
+- [x] OBS
 
 # Platforms that are not yet supported
 - [ ] SOOP
