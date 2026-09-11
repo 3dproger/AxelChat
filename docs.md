@@ -20,7 +20,8 @@ AxelChat can work as a HTTP server. Using HTTP requests, you can receive various
  	- If you send two messages with the same ID, the second message will be ignored. However, if the `edited` field or `markedAsDeleted` field (since 0.47.6) in the second message is `true`, the first message will be overwritten or deleted by the second message, and a corresponding note will be added indicating that the message has been edited
   - The `serviceId` field contains the text ID of the platform from which this event was received. If the event was received from a platform AxelChat doesn't know anything about, you can create your own ID. In this case, it is recommended to also specify the URL to the platform's icon in the `serviceBadge` field. A list of known AxelChat platform IDs can be found below in this documentation.
   - If this request is successfully processed, AxelChat will return information about how the event was handled (the IDs of the messages that were added, updated, or deleted). A sample response is below.
-  - Support for the `reply` field was introduced in version 0.47.6. The fields of this object are optional, although it is recommended to specify them if possible
+  - Support for the `reply` field was introduced in version 0.47.6. The fields of this object are optional, although it is recommended to specify them if possible.
+  - Starting with version 0.48.1, you can send a JSON object representing a single message. Previously, it was only possible to send an array of JSON objects, even if you needed to transmit just one message.
 
 An example of two new message events:
 ```JSON
