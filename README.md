@@ -54,6 +54,7 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 </p>
 
 # Key Features
+- [x] Supported on Windows, Linux, and macOS, as well as mobile (and other) devices via web widgets
 - [x] Display messages from multiple streaming platforms at once
 - [x] Display avatars of participants of chat
 - [x] Displaying the number of viewers both total and for individual platforms
@@ -69,7 +70,6 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 - [x] Displaying chat on your smartphone and other devices in your local network
 - [x] API for integration with your applications
 - [x] Styles for widgets
-- [x] Supported on Windows, Linux, and macOS, as well as mobile (and other) devices via web widgets
 - [ ] Appearance editor for Web-based widgets
 - [ ] Many other improvements
 
