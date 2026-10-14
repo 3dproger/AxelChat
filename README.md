@@ -119,7 +119,7 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 - [x] BetterTTV
 - [x] FrankerFaceZ
 - [x] 7TV
-- [x] OBS via Web Widgets and WebSocket
+- [x] OBS via Web Widgets or WebSocket
 - [x] Gosh
 
 # Platforms that are not yet supported
