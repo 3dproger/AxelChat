@@ -389,6 +389,13 @@ Since 0.50.0 AxelChat has a built-in [MCP](https://modelcontextprotocol.io) (Mod
 
 Address: `http://127.0.0.1:8356/mcp` (transport: Streamable HTTP, protocol version `2025-03-26`). AxelChat must be running.
 
+### Settings
+
+The MCP server is configured in `Settings` -> `AI assistants (MCP)`:
+* `Enable MCP server` - enabled by default
+* `Read only` - enabled by default. AI assistants can only read data, tools that change AxelChat (`clear_chat`, `set_service_enabled`) are hidden and can't be called
+* `Allow access from other devices` - disabled by default. Allows connecting to MCP from other devices on the local network, the addresses are shown on the same settings page
+
 ### Connecting
 
 Claude Code:
@@ -441,7 +448,7 @@ Troubleshooting:
 | `list_log_sessions` | List of app launches with logs |
 | `read_logs` | Read logs. Parameters: `count`, `minLevel` (`debug`, `info`, `warning`, `critical`, `fatal`), `contains`, `session` (`current`, `previous` or a name from `list_log_sessions`) |
 
-`clear_chat` and `set_service_enabled` change the state of AxelChat, they are marked as non-read-only so that the AI client may ask you for confirmation. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
+`clear_chat` and `set_service_enabled` change the state of AxelChat, so they are available only if `Read only` is disabled in the settings. They are marked as non-read-only so that the AI client may ask you for confirmation. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
 
 ### Resources
 
@@ -473,7 +480,8 @@ For interactive testing use [MCP Inspector](https://github.com/modelcontextproto
 
 ### Security and privacy
 
-* MCP is available only from the computer where AxelChat is running (unlike HTTP API and widgets, it doesn't work over the local network). Requests from web pages of other sites are rejected
+* By default MCP is available only from the computer where AxelChat is running. If you enable `Allow access from other devices`, anyone on your local network will be able to read the chat and logs of AxelChat, and also change it if `Read only` is disabled
+* Requests from web pages of other sites are rejected
 * Tokens are not returned. For donation platforms whose connection parameter is a secret token, only the fact that the parameter is set is returned
 * Keep in mind that chat messages and logs are sent to the AI provider you use
 
