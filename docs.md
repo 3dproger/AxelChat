@@ -1,6 +1,6 @@
 # AxelChat API
 
-The AxelChat API provides the ability to integrate third-party software with AxelChat, for example to read messages and viewer information. There are currently three ways to read data from AxelChat: `HTTP requests`, `WebSocket` and `Output to files`
+The AxelChat API provides the ability to integrate third-party software with AxelChat, for example to read messages and viewer information. There are currently four ways to read data from AxelChat: `HTTP requests`, `WebSocket`, `MCP` (for AI assistants) and `Output to files`
 
 ## HTTP requests
 
@@ -379,6 +379,108 @@ If the server fails to send this message for an extended period, it indicates th
 ### Notification of changes
 
 New message types may appear in future updates of AxelChat. Also, existing message types may be changed, usually by adding new data to the message object. Stay tuned for updates
+
+## MCP (for AI assistants)
+
+Since 0.50.0 AxelChat has a built-in [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server. It allows AI assistants (Claude, Cursor, Cline and others) to read the chat, check the status of platforms and help with troubleshooting. For example, you can ask the assistant:
+* "What has the chat been talking about for the last 10 minutes?"
+* "What questions did viewers ask me?"
+* "Why isn't Twitch connecting?"
+
+Address: `http://127.0.0.1:8356/mcp` (transport: Streamable HTTP, protocol version `2025-03-26`). AxelChat must be running.
+
+### Connecting
+
+Claude Code:
+```
+claude mcp add --transport http axelchat http://127.0.0.1:8356/mcp
+```
+
+Clients supporting HTTP transport (Cursor, Cline, etc.), add to the MCP config:
+```JSON
+{
+    "mcpServers": {
+        "axelchat": {
+            "url": "http://127.0.0.1:8356/mcp"
+        }
+    }
+}
+```
+
+Clients supporting only stdio (e.g. Claude Desktop) can connect through a proxy:
+```JSON
+{
+    "mcpServers": {
+        "axelchat": {
+            "command": "npx",
+            "args": ["mcp-remote", "http://127.0.0.1:8356/mcp"]
+        }
+    }
+}
+```
+
+### Tools
+
+Chat and state:
+
+| Tool | Description |
+|---|---|
+| `get_state` | Status of platforms, viewers |
+| `get_messages` | Last messages. Parameters: `count` (default 30, max 500), `service` (platform ID), `author` |
+| `search_messages` | Search messages by text. Parameters: `query`, `count`, `service` |
+| `get_selected_messages` | Messages selected by the streamer |
+| `clear_chat` | Clear the chat in AxelChat (doesn't affect platforms) |
+| `set_service_enabled` | Enable or disable a platform. Parameters: `instanceId`, `enabled` |
+
+Troubleshooting:
+
+| Tool | Description |
+|---|---|
+| `get_app_info` | AxelChat version, OS, internet state, number of connected platforms |
+| `diagnose_service` | Why a platform doesn't connect: detailed state, notifications shown in the settings, probable reasons and recent log records. Parameters: `instanceId` |
+| `list_log_sessions` | List of app launches with logs |
+| `read_logs` | Read logs. Parameters: `count`, `minLevel` (`debug`, `info`, `warning`, `critical`, `fatal`), `contains`, `session` (`current`, `previous` or a name from `list_log_sessions`) |
+
+`clear_chat` and `set_service_enabled` change the state of AxelChat, they are marked as non-read-only so that the AI client may ask you for confirmation. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
+
+### Resources
+
+* `axelchat://state` - status of platforms and viewers
+* `axelchat://messages/recent` - last 30 messages
+* `axelchat://messages/selected` - selected messages
+
+### Message format
+
+Unlike the HTTP API, messages are returned in a compact form to save AI context: no styles and HTML, images are replaced with their text (emoji, emote code) if known, otherwise with `[image]`:
+```JSON
+{
+    "id": "<message_id>",
+    "service": "youtube",
+    "time": "2026-11-01T00:11:58",
+    "text": "omg it's so funny 😭😭",
+    "authorId": "<user_id>",
+    "authorName": "<username>"
+}
+```
+
+### Testing without an AI client
+
+MCP is JSON-RPC 2.0 over HTTP POST, so you can test it with Postman or curl:
+```
+curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"get_messages\",\"arguments\":{\"count\":5}}}"
+```
+For interactive testing use [MCP Inspector](https://github.com/modelcontextprotocol/inspector): `npx @modelcontextprotocol/inspector`
+
+### Security and privacy
+
+* MCP is available only from the computer where AxelChat is running (unlike HTTP API and widgets, it doesn't work over the local network). Requests from web pages of other sites are rejected
+* Tokens are not returned. For donation platforms whose connection parameter is a secret token, only the fact that the parameter is set is returned
+* Keep in mind that chat messages and logs are sent to the AI provider you use
+
+### Limitations
+
+* Server-to-client notifications (SSE) are not supported: the assistant receives new messages only when it requests them
+* The set of tools may change in future versions
 
 ## Output to files
 

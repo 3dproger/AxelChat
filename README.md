@@ -141,7 +141,7 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 
 # FAQ
 - Windows: At startup application errors about missing DLL files are displayed, for example `MSVCP140.dll`, `VCRUNTIME140.dll` or other similar. - You need to install `Microsoft Visual C++ Redistributable` from https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist or by file `vc_redist.x64.exe` located in the application folder
-- Is AxelChat Open Source? - Partially yes. AxelChat widgets are open source, see: https://github.com/3dproger/AxelChatWidgets. Also, AxelChat has an API that will allow you to create your own software integrated with AxelChat, see [docs](https://3dproger.github.io/AxelChat/docs)
+- Is AxelChat Open Source? - Partially yes. AxelChat widgets are open source, see: https://github.com/3dproger/AxelChatWidgets. Also, AxelChat has an API that will allow you to create your own software integrated with AxelChat, including an MCP server for AI assistants, see [docs](https://3dproger.github.io/AxelChat/docs)
 - I enabled Ignore Mouse and now I can't interact with AxelChat in any way and I can't disable this option. - You can open the menu via the AxelChat icon in the system tray
 - [How to Add AxelChat overlay with transparent background in OBS](https://github.com/3dproger/AxelChat/discussions/589)
 - [How to open the AxelChat on a smartphone or other device via a local network (Wi-Fi)](https://github.com/3dproger/AxelChat/discussions/597)
@@ -172,6 +172,7 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 - Try to use VPN
 - Check proxy settings if using
 - Check your firewall settings
+- Ask an AI assistant connected to AxelChat via [MCP](https://3dproger.github.io/AxelChat/docs#mcp-for-ai-assistants) to find out why the platform doesn't connect
 
 ### Twitch: Avatars not showing
 - Check that the link to the channel is correct
