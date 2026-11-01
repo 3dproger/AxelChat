@@ -443,6 +443,7 @@ Chat and state:
 | `get_selected_messages` | Messages selected by the streamer |
 | `clear_chat` | Clear the chat in AxelChat (doesn't affect platforms) |
 | `set_service_enabled` | Enable or disable a platform. Parameters: `instanceId`, `enabled` |
+| `send_message` | Add a message to AxelChat, similar to `POST api/v1/receive-events` (the message is shown only in AxelChat and its widgets, it is not sent to platforms). Parameters: `text`, `authorName`, `serviceId` or `events` (an event or an array of events in the `receive-events` format, for full control including editing and deleting messages). If the platform is not specified (`serviceId`, or `author.serviceId` in events), `mcp` is used. Returns the IDs of added, updated, removed and ignored messages |
 
 Troubleshooting:
 
@@ -453,7 +454,7 @@ Troubleshooting:
 | `list_log_sessions` | List of app launches with logs |
 | `read_logs` | Read logs. Parameters: `count`, `minLevel` (`debug`, `info`, `warning`, `critical`, `fatal`), `contains`, `session` (`current`, `previous` or a name from `list_log_sessions`) |
 
-`clear_chat` and `set_service_enabled` change the state of AxelChat, so they are available only if `Read only` is disabled in the settings. They are marked as non-read-only so that the AI client may ask you for confirmation. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
+`clear_chat`, `set_service_enabled` and `send_message` change the state of AxelChat, so they are available only if `Read only` is disabled in the settings. They are marked as non-read-only so that the AI client may ask you for confirmation. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
 
 ### Resources
 
@@ -481,6 +482,11 @@ MCP is JSON-RPC 2.0 over HTTP POST, so you can test it with Postman or curl:
 ```
 curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"get_messages\",\"arguments\":{\"count\":5}}}"
 ```
+Sending a message (requires `Read only` to be disabled):
+```
+curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/call\",\"params\":{\"name\":\"send_message\",\"arguments\":{\"text\":\"Hello from AI\",\"authorName\":\"Assistant\"}}}"
+```
+
 For interactive testing use [MCP Inspector](https://github.com/modelcontextprotocol/inspector): `npx @modelcontextprotocol/inspector`
 
 ### Security and privacy
@@ -508,7 +514,7 @@ To connect to AxelChat using file reading, follow these steps:
 ## List of known AxelChat platform IDs
 This list is current as of version 0.44.0
 ```JSON
-["bigolive", "boosty", "chzzk", "discord", "dlive", "donatepayeu", "donatepayru", "donatestream", "donationalerts", "facebook", "goodgame", "kick", "livacha", "loco", "memealerts", "nekolive", "niconico", "nimotv", "nuum", "odysee", "ok", "parti", "picarto", "rumble", "rutube", "software", "soopglobal", "soopkorea", "steam", "streamelements", "streamlabs", "telegram", "tiktok", "trovo", "twitch", "unknown", "vaughnlive", "vimm", "vkvideo", "vkvideolive", "xcom", "youtube", "youtubeshorts"]
+["bigolive", "boosty", "chzzk", "discord", "dlive", "donatepayeu", "donatepayru", "donatestream", "donationalerts", "facebook", "goodgame", "kick", "livacha", "loco", "mcp", "memealerts", "nekolive", "niconico", "nimotv", "nuum", "odysee", "ok", "parti", "picarto", "rumble", "rutube", "software", "soopglobal", "soopkorea", "steam", "streamelements", "streamlabs", "telegram", "tiktok", "trovo", "twitch", "unknown", "vaughnlive", "vimm", "vkvideo", "vkvideolive", "xcom", "youtube", "youtubeshorts"]
 ```
 You can find the most up-to-date list of platforms for your version this way:
 1. Enable `Output to a files` (`Settings`->`Output to a files`)
