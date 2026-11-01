@@ -382,7 +382,8 @@ New message types may appear in future updates of AxelChat. Also, existing messa
 
 ## MCP (for AI assistants)
 
-Since 0.50.0 AxelChat has a built-in [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server. It allows AI assistants (Claude, Cursor, Cline and others) to read the chat, check the status of platforms and help with troubleshooting. For example, you can ask the assistant:
+Since 0.50.0 AxelChat has a built-in [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server. It allows AI assistants (Claude, Cursor, Cline and others) to read the chat, check the status of platforms and help with troubleshooting. For instance, an AI agent can provide a brief summary of the chat conversation from the last few minutes, gauge the audience's sentiment, read out important messages, perform diagnostics on AxelChat, assist with troubleshooting connection issues, and much more. The potential use cases are vast and limited only by your imagination. For example, you can ask the assistant:
+* "Monitor the AxelChat chat, provide me with a summary of the audience's sentiment every 5 minutes, and also read out important messages aloud"
 * "What has the chat been talking about for the last 10 minutes?"
 * "What questions did viewers ask me?"
 * "Why isn't Twitch connecting?"
