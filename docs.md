@@ -393,7 +393,7 @@ Address: `http://127.0.0.1:8356/mcp` (transport: Streamable HTTP, protocol versi
 
 The MCP server is configured in `Settings` -> `AI assistants (MCP)`:
 * `Enable MCP server` - enabled by default
-* `Read only` - enabled by default. AI assistants can only read data, tools that change AxelChat (`clear_chat`, `set_service_enabled`) are hidden and can't be called
+* `Read only` - enabled by default. AI assistants can only read data, tools that change AxelChat (`clear_chat`, `set_service_enabled`) can't be called. The AI assistant is informed about this mode, so if you ask it to do something that is not allowed, it will tell you which setting to disable
 * `Allow access from other devices` - disabled by default. Allows connecting to MCP from other devices on the local network, the addresses are shown on the same settings page
 
 ### Connecting
