@@ -44,7 +44,7 @@ Clients supporting HTTP transport (Cursor, Cline, etc.), add to the MCP config:
 }
 ```
 
-Clients supporting only stdio (e.g. Claude Desktop) launch AxelChat with the `--mcp-stdio` argument. In this mode AxelChat doesn't open windows, it only forwards messages between the client and the already running AxelChat, so AxelChat must be running. The ready-made config with the path to AxelChat on your computer can be copied in `Settings` -> `AI assistants (MCP)`, section `MCP config for manual setup`:
+Clients supporting only stdio (e.g. Claude Desktop) launch AxelChat with the `--mcp-stdio` argument. In this mode AxelChat doesn't open windows, it only forwards messages between the client and the already running AxelChat, so AxelChat must be running. Add to the MCP config of the client:
 ```JSON
 {
     "mcpServers": {
