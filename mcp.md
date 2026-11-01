@@ -14,7 +14,7 @@ Other ways to integrate with AxelChat (HTTP requests, WebSocket) are described i
 
 The MCP server is configured in `Settings` -> `AI assistants (MCP)`:
 * `Enable MCP server` - enabled by default
-* `Read only` - enabled by default. AI assistants can only read data, tools that change AxelChat (`clear_chat`, `set_service_enabled`) can't be called. The AI assistant is informed about this mode, so if you ask it to do something that is not allowed, it will tell you which setting to disable
+* `Read only` - enabled by default. AI assistants can only read data, tools that change AxelChat (`send_message`, `edit_message`, `delete_messages`, `clear_chat`, `set_service_enabled`) can't be called. The AI assistant is informed about this mode, so if you ask it to do something that is not allowed, it will tell you which setting to disable
 * `Allow access from other devices` - disabled by default. Allows connecting to MCP from other devices on the local network, the addresses are shown on the same settings page
 
 ## Connecting
@@ -62,9 +62,11 @@ Chat and state:
 | `search_messages` | Search messages by text. Parameters: `query`, `count`, `service`, `afterId` |
 | `wait_for_events` | Wait for new messages and changes of platform state, see [Reacting to events](#reacting-to-events). Parameters: `types`, `query`, `author`, `service`, `afterId`, `count`, `timeoutSec` (default 20, max 25) |
 | `get_selected_messages` | Messages selected by the streamer |
-| `clear_chat` | Clear the chat in AxelChat (doesn't affect platforms) |
+| `send_message` | Add a new message to AxelChat, similar to [`POST api/v1/receive-events`](docs.md#http-requests) (the message is shown only in AxelChat and its widgets, it is not sent to platforms). Parameters: `text`, `authorName`, `serviceId` or `events` (an event or an array of events in the `receive-events` format, for full control: author badges, colors). If the platform is not specified (`serviceId`, or `author.serviceId` in events), `mcp` is used. It doesn't edit or delete messages: an event with the ID of an existing message or with `markedAsDeleted` returns an error. Returns the IDs of added and ignored messages |
+| `edit_message` | Replace the content of an existing message (including messages from platforms) in AxelChat and its widgets, the message is marked as edited (it is not edited on the platform). Parameters: `id`, `text` or `contents` (array in the `contents` format of `receive-events`: text, images, links). Author, time and ID stay the same. Returns the edited message in the [message format](#message-format) |
+| `delete_messages` | Delete messages in AxelChat and its widgets (they are not deleted on platforms). Parameters: `ids` (array of message IDs) and/or `userId` (delete all messages of the user, `authorId` of a message). Returns `deletedMessages` (IDs of deleted messages), `alreadyDeletedMessages` (IDs from `ids` that were already deleted), `notFoundMessages` (IDs from `ids` that were not found) and `notFoundUser` (if the user with `userId` was not found) |
+| `clear_chat` | Clear the chat in AxelChat and its widgets (doesn't affect platforms) |
 | `set_service_enabled` | Enable or disable a platform. Parameters: `instanceId`, `enabled` |
-| `send_message` | Add a message to AxelChat, similar to [`POST api/v1/receive-events`](docs.md#http-requests) (the message is shown only in AxelChat and its widgets, it is not sent to platforms). Parameters: `text`, `authorName`, `serviceId` or `events` (an event or an array of events in the `receive-events` format, for full control including editing and deleting messages). If the platform is not specified (`serviceId`, or `author.serviceId` in events), `mcp` is used. Returns the IDs of added, updated, removed and ignored messages |
 
 Troubleshooting:
 
@@ -75,7 +77,7 @@ Troubleshooting:
 | `list_log_sessions` | List of app launches with logs |
 | `read_logs` | Read logs. Parameters: `count`, `minLevel` (`debug`, `info`, `warning`, `critical`, `fatal`), `contains`, `session` (`current`, `previous` or a name from `list_log_sessions`) |
 
-`clear_chat`, `set_service_enabled` and `send_message` change the state of AxelChat, so they are available only if `Read only` is disabled in the settings. They are marked as non-read-only so that the AI client may ask you for confirmation. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
+`send_message`, `edit_message`, `delete_messages`, `clear_chat` and `set_service_enabled` change the state of AxelChat, so they are available only if `Read only` is disabled in the settings. They are marked as non-read-only so that the AI client may ask you for confirmation; `delete_messages` and `clear_chat` are additionally marked as destructive. Each action is a separate tool, so in the AI client you can allow, for example, adding messages without confirmation but keep confirmation for deleting. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
 
 `afterId` - ID of a message (e.g. the last message the assistant has seen). If set, only newer messages are returned, starting from the oldest of them (at most `count`), so if exactly `count` messages are returned, there may be more: request again with the ID of the last returned message. Without `afterId` the last `count` messages are returned. If the message with this ID is no longer in AxelChat (e.g. the chat was cleared), the last `count` messages are returned.
 
@@ -132,6 +134,12 @@ Example (waits up to 20 seconds for a message containing `Pay attention to me!`)
 ```
 curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"wait_for_events\",\"arguments\":{\"types\":[\"message\"],\"query\":\"DATA\",\"timeoutSec\":20}}}"
 ```
+
+Moderation example: "Watch the chat and delete messages with links". The assistant calls `wait_for_events` in a loop and, for each unwanted message, calls `delete_messages` with its `id` (or with `userId` = `authorId` to delete all messages of the author):
+```
+curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/call\",\"params\":{\"name\":\"delete_messages\",\"arguments\":{\"ids\":[\"<message_id>\"]}}}"
+```
+Messages are deleted only in AxelChat and its widgets (e.g. in OBS), they stay on the platform and the author is not banned. Requires `Read only` to be disabled.
 
 ## Resources
 
