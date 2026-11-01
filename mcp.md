@@ -8,7 +8,7 @@ Since 0.50.0 AxelChat has a built-in [MCP](https://modelcontextprotocol.io) (Mod
 
 Address: `http://127.0.0.1:8356/mcp` (transport: Streamable HTTP, protocol version `2025-03-26`). AxelChat must be running.
 
-Other ways to integrate with AxelChat (HTTP requests, WebSocket) are described in the [AxelChat API documentation](docs).
+Other ways to integrate with AxelChat (HTTP requests, WebSocket) are described in the [AxelChat API documentation](docs.md).
 
 ## Settings
 
@@ -58,13 +58,13 @@ Chat and state:
 | Tool | Description |
 |---|---|
 | `get_state` | Status of platforms, viewers |
-| `get_messages` | Last messages. Parameters: `count` (default 30, max 500), `service` ([platform ID](docs#list-of-known-axelchat-platform-ids)), `author`, `afterId` |
+| `get_messages` | Last messages. Parameters: `count` (default 30, max 500), `service` ([platform ID](docs.md#list-of-known-axelchat-platform-ids)), `author`, `afterId` |
 | `search_messages` | Search messages by text. Parameters: `query`, `count`, `service`, `afterId` |
 | `wait_for_events` | Wait for new messages and changes of platform state, see [Reacting to events](#reacting-to-events). Parameters: `types`, `query`, `author`, `service`, `afterId`, `count`, `timeoutSec` (default 20, max 25) |
 | `get_selected_messages` | Messages selected by the streamer |
 | `clear_chat` | Clear the chat in AxelChat (doesn't affect platforms) |
 | `set_service_enabled` | Enable or disable a platform. Parameters: `instanceId`, `enabled` |
-| `send_message` | Add a message to AxelChat, similar to [`POST api/v1/receive-events`](docs#http-requests) (the message is shown only in AxelChat and its widgets, it is not sent to platforms). Parameters: `text`, `authorName`, `serviceId` or `events` (an event or an array of events in the `receive-events` format, for full control including editing and deleting messages). If the platform is not specified (`serviceId`, or `author.serviceId` in events), `mcp` is used. Returns the IDs of added, updated, removed and ignored messages |
+| `send_message` | Add a message to AxelChat, similar to [`POST api/v1/receive-events`](docs.md#http-requests) (the message is shown only in AxelChat and its widgets, it is not sent to platforms). Parameters: `text`, `authorName`, `serviceId` or `events` (an event or an array of events in the `receive-events` format, for full control including editing and deleting messages). If the platform is not specified (`serviceId`, or `author.serviceId` in events), `mcp` is used. Returns the IDs of added, updated, removed and ignored messages |
 
 Troubleshooting:
 
