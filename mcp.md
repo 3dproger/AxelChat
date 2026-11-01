@@ -1,11 +1,10 @@
 # MCP (for AI assistants)
 
 Since 0.50.0 AxelChat has a built-in [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server. It allows AI assistants (Claude, Cursor, Cline and others) to read the chat, check the status of platforms and help with troubleshooting. For instance, an AI agent can provide a brief summary of the chat conversation from the last few minutes, gauge the audience's sentiment, read out important messages, perform diagnostics on AxelChat, assist with troubleshooting connection issues, and much more. The potential use cases are vast and limited only by your imagination. For example, you can ask the assistant:
-* "Monitor the AxelChat chat, provide me with a summary of the audience's sentiment every 5 minutes, and also read out important messages aloud"
 * "What has the chat been talking about for the last 10 minutes?"
 * "What questions did viewers ask me?"
 * "Why isn't Twitch connecting?"
-* "Wait until someone writes `DATA` in the chat and tell me"
+* "Wait until someone writes `Pay attention to me!` in the chat and tell me"
 
 Address: `http://127.0.0.1:8356/mcp` (transport: Streamable HTTP, protocol version `2025-03-26`). AxelChat must be running.
 
@@ -127,7 +126,7 @@ The result is returned on the first matching event (several messages that arrive
 
 `timeoutSec` is limited to 25 seconds, because MCP clients and the stdio mode usually stop waiting for a reply after 30 seconds. `wait_for_events` can't be called in a JSON-RPC batch, call it in a separate request.
 
-Example (waits up to 20 seconds for a message containing `DATA`):
+Example (waits up to 20 seconds for a message containing `Pay attention to me!`):
 ```
 curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"wait_for_events\",\"arguments\":{\"types\":[\"message\"],\"query\":\"DATA\",\"timeoutSec\":20}}}"
 ```
