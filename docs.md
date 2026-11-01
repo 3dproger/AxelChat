@@ -380,7 +380,7 @@ If the server fails to send this message for an extended period, it indicates th
 
 New message types may appear in future updates of AxelChat. Also, existing message types may be changed, usually by adding new data to the message object. Stay tuned for updates
 
-##  (for AI assistants)
+## MCP (for AI assistants)
 
 AxelChat has a built-in  server for AI assistants (Claude, Cursor, Cline and others), see [MCP documentation](mcp.md)
 
