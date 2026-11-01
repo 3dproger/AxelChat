@@ -82,7 +82,7 @@ Troubleshooting:
 
 ## Reacting to events
 
-The assistant can react to events in AxelChat, for example: "Wait until someone writes `DATA` in the chat and tell me" or "Tell me if Twitch disconnects". `wait_for_events` uses long polling: AxelChat holds the request until a matching event occurs or `timeoutSec` expires, without blocking the app.
+The assistant can react to events in AxelChat, for example: "Wait until someone writes `Pay attention to me!` in the chat and tell me" or "Tell me if Twitch disconnects". `wait_for_events` uses long polling: AxelChat holds the request until a matching event occurs or `timeoutSec` expires, without blocking the app.
 
 Event types (parameter `types`, an array; by default all types):
 * `message` - a new chat message. Filters: `query` (text), `author`, `service` - case-insensitive substrings, except `service` (platform ID). Service messages of AxelChat are ignored. Donations come as messages from donation platforms, so use `service` to wait for them, e.g. `"service": "donationalerts"`
