@@ -8,6 +8,8 @@ Since 0.50.0 AxelChat has a built-in [MCP](https://modelcontextprotocol.io) (Mod
 
 Address: `http://127.0.0.1:8356/mcp` (transport: Streamable HTTP). AxelChat must be running. The current version of the MCP protocol is shown in `Settings` -> `AI assistants (MCP)`.
 
+The AI app (MCP client) must run on the same computer as AxelChat, or on your local network if `Allow access from other devices` is enabled. Desktop apps and command-line agents work (Claude Code, Claude Desktop, Cursor, Cline, Codex CLI, etc.). Web versions and cloud agents don't, because they connect from the provider's servers and can't reach your computer. See [Limitations](#limitations).
+
 Other ways to integrate with AxelChat (HTTP requests, WebSocket) are described in the [AxelChat API documentation](docs.md).
 
 ## Quick setup via AI agent
@@ -187,6 +189,7 @@ For interactive testing use [MCP Inspector](https://github.com/modelcontextproto
 
 * By default MCP is available only from the computer where AxelChat is running. If you enable `Allow access from other devices`, anyone on your local network will be able to read the chat and logs of AxelChat, and also change it if `Read only` is disabled
 * Requests from web pages of other sites are rejected
+* Don't make MCP reachable from the internet, for example with tunnels like ngrok or cloudflared. The MCP server has no authorization, so anyone who knows the address could read the chat and logs of AxelChat, and also change it if `Read only` is disabled. Requests that come through a tunnel running on your computer look local to AxelChat, so `Allow access from other devices` doesn't protect against them
 * Tokens are not returned. For donation platforms whose connection parameter is a secret token, only the fact that the parameter is set is returned
 * Keep in mind that chat messages and logs are sent to the AI provider you use
 
@@ -194,4 +197,5 @@ For interactive testing use [MCP Inspector](https://github.com/modelcontextproto
 
 * Server-to-client notifications (SSE) are not supported: the assistant receives new messages only when it requests them. To react to events, use `wait_for_events`, but the assistant (or its client) still has to call it again after each result
 * Only chat messages and platform state changes can be waited for. Donations, subscriptions, raids and other platform events are not separate event types yet, they come as chat messages
+* Only local MCP clients are supported, i.e. clients that run on the same computer as AxelChat (or on the local network if `Allow access from other devices` is enabled). It doesn't matter where the AI model itself runs: a desktop app or a command-line agent that uses a cloud model works fine. Clients that connect to MCP servers from the provider's servers don't work. These include connectors in the web versions of ChatGPT and Claude, and cloud agents that run tasks on the provider's servers. AxelChat is not reachable from the internet and doesn't support the authorization such clients require
 * The set of tools may change in future versions
