@@ -387,6 +387,7 @@ Since 0.50.0 AxelChat has a built-in [MCP](https://modelcontextprotocol.io) (Mod
 * "What has the chat been talking about for the last 10 minutes?"
 * "What questions did viewers ask me?"
 * "Why isn't Twitch connecting?"
+* "Wait until someone writes `DATA` in the chat and tell me"
 
 Address: `http://127.0.0.1:8356/mcp` (transport: Streamable HTTP, protocol version `2025-03-26`). AxelChat must be running.
 
@@ -438,8 +439,9 @@ Chat and state:
 | Tool | Description |
 |---|---|
 | `get_state` | Status of platforms, viewers |
-| `get_messages` | Last messages. Parameters: `count` (default 30, max 500), `service` (platform ID), `author` |
-| `search_messages` | Search messages by text. Parameters: `query`, `count`, `service` |
+| `get_messages` | Last messages. Parameters: `count` (default 30, max 500), `service` (platform ID), `author`, `afterId` |
+| `search_messages` | Search messages by text. Parameters: `query`, `count`, `service`, `afterId` |
+| `wait_for_messages` | Wait for new messages matching the filters, see [Reacting to new messages](#reacting-to-new-messages). Parameters: `query`, `author`, `service`, `afterId`, `count`, `timeoutSec` (default 20, max 25) |
 | `get_selected_messages` | Messages selected by the streamer |
 | `clear_chat` | Clear the chat in AxelChat (doesn't affect platforms) |
 | `set_service_enabled` | Enable or disable a platform. Parameters: `instanceId`, `enabled` |
@@ -455,6 +457,42 @@ Troubleshooting:
 | `read_logs` | Read logs. Parameters: `count`, `minLevel` (`debug`, `info`, `warning`, `critical`, `fatal`), `contains`, `session` (`current`, `previous` or a name from `list_log_sessions`) |
 
 `clear_chat`, `set_service_enabled` and `send_message` change the state of AxelChat, so they are available only if `Read only` is disabled in the settings. They are marked as non-read-only so that the AI client may ask you for confirmation. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
+
+`afterId` - ID of a message (e.g. the last message the assistant has seen). If set, only newer messages are returned. If the message with this ID is no longer in AxelChat (e.g. the chat was cleared), the last `count` messages are returned.
+
+### Reacting to new messages
+
+The assistant can react to messages, for example: "Wait until someone writes `DATA` in the chat and tell me". `wait_for_messages` uses long polling: AxelChat holds the request until a matching message arrives or `timeoutSec` expires, without blocking the app. Filters (`query`, `author`, `service`) are case-insensitive substrings; service messages of AxelChat are ignored.
+
+Result:
+```JSON
+{
+    "messages": [
+        {
+            "id": "<message_id>",
+            "service": "twitch",
+            "time": "2026-11-01T07:18:25",
+            "text": "Here is the DATA",
+            "authorId": "<user_id>",
+            "authorName": "<username>"
+        }
+    ],
+    "lastId": "<message_id>",
+    "timedOut": false
+}
+```
+* `messages` - matching messages (oldest first). Empty if the timeout expired
+* `lastId` - ID of the newest message in AxelChat (not necessarily a matching one). Pass it as `afterId` to the next call
+* `timedOut` - `true` if no matching messages arrived in time
+
+To keep watching the chat, the assistant calls `wait_for_messages` in a loop with `afterId` = `lastId` of the previous call, so no messages are missed between calls. If there are already matching messages after `afterId`, the result is returned immediately. Without `afterId` only messages that arrive after the call are returned.
+
+`timeoutSec` is limited to 25 seconds, because MCP clients and the stdio mode usually stop waiting for a reply after 30 seconds. `wait_for_messages` can't be called in a JSON-RPC batch, call it in a separate request.
+
+Example (waits up to 20 seconds for a message containing `DATA`):
+```
+curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"wait_for_messages\",\"arguments\":{\"query\":\"DATA\",\"timeoutSec\":20}}}"
+```
 
 ### Resources
 
@@ -498,7 +536,8 @@ For interactive testing use [MCP Inspector](https://github.com/modelcontextproto
 
 ### Limitations
 
-* Server-to-client notifications (SSE) are not supported: the assistant receives new messages only when it requests them
+* Server-to-client notifications (SSE) are not supported: the assistant receives new messages only when it requests them. To react to new messages, use `wait_for_messages`, but the assistant (or its client) still has to call it again after each result
+* Only chat messages can be waited for. Other events (e.g. a platform connected or disconnected) are available only on request via `get_state`, `diagnose_service` and `read_logs`
 * The set of tools may change in future versions
 
 ## Output to files
