@@ -441,7 +441,7 @@ Chat and state:
 | `get_state` | Status of platforms, viewers |
 | `get_messages` | Last messages. Parameters: `count` (default 30, max 500), `service` (platform ID), `author`, `afterId` |
 | `search_messages` | Search messages by text. Parameters: `query`, `count`, `service`, `afterId` |
-| `wait_for_messages` | Wait for new messages matching the filters, see [Reacting to new messages](#reacting-to-new-messages). Parameters: `query`, `author`, `service`, `afterId`, `count`, `timeoutSec` (default 20, max 25) |
+| `wait_for_events` | Wait for new messages and changes of platform state, see [Reacting to events](#reacting-to-events). Parameters: `types`, `query`, `author`, `service`, `afterId`, `count`, `timeoutSec` (default 20, max 25) |
 | `get_selected_messages` | Messages selected by the streamer |
 | `clear_chat` | Clear the chat in AxelChat (doesn't affect platforms) |
 | `set_service_enabled` | Enable or disable a platform. Parameters: `instanceId`, `enabled` |
@@ -460,38 +460,56 @@ Troubleshooting:
 
 `afterId` - ID of a message (e.g. the last message the assistant has seen). If set, only newer messages are returned. If the message with this ID is no longer in AxelChat (e.g. the chat was cleared), the last `count` messages are returned.
 
-### Reacting to new messages
+### Reacting to events
 
-The assistant can react to messages, for example: "Wait until someone writes `DATA` in the chat and tell me". `wait_for_messages` uses long polling: AxelChat holds the request until a matching message arrives or `timeoutSec` expires, without blocking the app. Filters (`query`, `author`, `service`) are case-insensitive substrings; service messages of AxelChat are ignored.
+The assistant can react to events in AxelChat, for example: "Wait until someone writes `DATA` in the chat and tell me" or "Tell me if Twitch disconnects". `wait_for_events` uses long polling: AxelChat holds the request until a matching event occurs or `timeoutSec` expires, without blocking the app.
+
+Event types (parameter `types`, an array; by default all types):
+* `message` - a new chat message. Filters: `query` (text), `author`, `service` - case-insensitive substrings, except `service` (platform ID). Service messages of AxelChat are ignored. Donations come as messages from donation platforms, so use `service` to wait for them, e.g. `"service": "donationalerts"`
+* `service_state` - a platform changed its connection state or was enabled/disabled. Filter: `service` (platform ID or instance ID from `get_state`). Changes of viewers count and settings are not reported
 
 Result:
 ```JSON
 {
-    "messages": [
+    "events": [
         {
-            "id": "<message_id>",
-            "service": "twitch",
-            "time": "2026-11-01T07:18:25",
-            "text": "Here is the DATA",
-            "authorId": "<user_id>",
-            "authorName": "<username>"
+            "type": "message",
+            "message": {
+                "id": "<message_id>",
+                "service": "twitch",
+                "time": "2026-11-01T07:18:25",
+                "text": "Here is the DATA",
+                "authorId": "<user_id>",
+                "authorName": "<username>"
+            }
+        },
+        {
+            "type": "service_state",
+            "time": "2026-11-01T07:40:14",
+            "instanceId": "kick",
+            "service": "kick",
+            "connectionState": "connecting",
+            "previousConnectionState": "not_connected",
+            "enabled": true,
+            "previousEnabled": false
         }
     ],
     "lastId": "<message_id>",
     "timedOut": false
 }
 ```
-* `messages` - matching messages (oldest first). Empty if the timeout expired
+* `events` - events, oldest first. Empty if the timeout expired. Messages are in the [message format](#message-format)
+* `connectionState`, `previousConnectionState` - `not_connected`, `connecting`, `waiting_for_live` or `connected`
 * `lastId` - ID of the newest message in AxelChat (not necessarily a matching one). Pass it as `afterId` to the next call
-* `timedOut` - `true` if no matching messages arrived in time
+* `timedOut` - `true` if no matching events occurred in time
 
-To keep watching the chat, the assistant calls `wait_for_messages` in a loop with `afterId` = `lastId` of the previous call, so no messages are missed between calls. If there are already matching messages after `afterId`, the result is returned immediately. Without `afterId` only messages that arrive after the call are returned.
+The result is returned on the first matching event (several messages that arrived together are returned together). To keep watching, the assistant calls `wait_for_events` in a loop with `afterId` = `lastId` of the previous call, so no messages are missed between calls. If there are already matching messages after `afterId`, the result is returned immediately. Without `afterId` only messages that arrive after the call are returned. Platform state events are not stored: they are returned only if they occur during the call, use `get_state` to get the current state.
 
-`timeoutSec` is limited to 25 seconds, because MCP clients and the stdio mode usually stop waiting for a reply after 30 seconds. `wait_for_messages` can't be called in a JSON-RPC batch, call it in a separate request.
+`timeoutSec` is limited to 25 seconds, because MCP clients and the stdio mode usually stop waiting for a reply after 30 seconds. `wait_for_events` can't be called in a JSON-RPC batch, call it in a separate request.
 
 Example (waits up to 20 seconds for a message containing `DATA`):
 ```
-curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"wait_for_messages\",\"arguments\":{\"query\":\"DATA\",\"timeoutSec\":20}}}"
+curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"wait_for_events\",\"arguments\":{\"types\":[\"message\"],\"query\":\"DATA\",\"timeoutSec\":20}}}"
 ```
 
 ### Resources
@@ -536,8 +554,8 @@ For interactive testing use [MCP Inspector](https://github.com/modelcontextproto
 
 ### Limitations
 
-* Server-to-client notifications (SSE) are not supported: the assistant receives new messages only when it requests them. To react to new messages, use `wait_for_messages`, but the assistant (or its client) still has to call it again after each result
-* Only chat messages can be waited for. Other events (e.g. a platform connected or disconnected) are available only on request via `get_state`, `diagnose_service` and `read_logs`
+* Server-to-client notifications (SSE) are not supported: the assistant receives new messages only when it requests them. To react to events, use `wait_for_events`, but the assistant (or its client) still has to call it again after each result
+* Only chat messages and platform state changes can be waited for. Donations, subscriptions, raids and other platform events are not separate event types yet, they come as chat messages
 * The set of tools may change in future versions
 
 ## Output to files
