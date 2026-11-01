@@ -77,7 +77,7 @@ Troubleshooting:
 
 `clear_chat`, `set_service_enabled` and `send_message` change the state of AxelChat, so they are available only if `Read only` is disabled in the settings. They are marked as non-read-only so that the AI client may ask you for confirmation. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
 
-`afterId` - ID of a message (e.g. the last message the assistant has seen). If set, only newer messages are returned. If the message with this ID is no longer in AxelChat (e.g. the chat was cleared), the last `count` messages are returned.
+`afterId` - ID of a message (e.g. the last message the assistant has seen). If set, only newer messages are returned, starting from the oldest of them (at most `count`), so if exactly `count` messages are returned, there may be more: request again with the ID of the last returned message. Without `afterId` the last `count` messages are returned. If the message with this ID is no longer in AxelChat (e.g. the chat was cleared), the last `count` messages are returned.
 
 ## Reacting to events
 
@@ -114,15 +114,17 @@ Result:
         }
     ],
     "lastId": "<message_id>",
+    "hasMore": false,
     "timedOut": false
 }
 ```
 * `events` - events, oldest first. Empty if the timeout expired. Messages are in the [message format](#message-format)
 * `connectionState`, `previousConnectionState` - `not_connected`, `connecting`, `waiting_for_live` or `connected`
-* `lastId` - ID of the newest message in AxelChat (not necessarily a matching one). Pass it as `afterId` to the next call
+* `lastId` - pass it as `afterId` to the next call. Usually it is the ID of the newest message in AxelChat (not necessarily a matching one); if `hasMore` is `true`, it is the ID of the last returned message
+* `hasMore` - `true` if more than `count` matching messages are available and only the oldest `count` of them are returned. The next call with `afterId` = `lastId` returns the rest immediately
 * `timedOut` - `true` if no matching events occurred in time
 
-The result is returned on the first matching event (several messages that arrived together are returned together). To keep watching, the assistant calls `wait_for_events` in a loop with `afterId` = `lastId` of the previous call, so no messages are missed between calls. If there are already matching messages after `afterId`, the result is returned immediately. Without `afterId` only messages that arrive after the call are returned. Platform state events are not stored: they are returned only if they occur during the call, use `get_state` to get the current state.
+The result is returned on the first matching event (several messages that arrived together are returned together). To keep watching, the assistant calls `wait_for_events` in a loop with `afterId` = `lastId` of the previous call, so no messages are missed between calls, even if many messages arrive at once. If there are already matching messages after `afterId`, the result is returned immediately. Without `afterId` only messages that arrive after the call are returned. Platform state events are not stored: they are returned only if they occur during the call, use `get_state` to get the current state.
 
 `timeoutSec` is limited to 25 seconds, because MCP clients and the stdio mode usually stop waiting for a reply after 30 seconds. `wait_for_events` can't be called in a JSON-RPC batch, call it in a separate request.
 
