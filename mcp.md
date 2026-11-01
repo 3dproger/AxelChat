@@ -6,16 +6,25 @@ Since 0.50.0 AxelChat has a built-in [MCP](https://modelcontextprotocol.io) (Mod
 * "Why isn't Twitch connecting?"
 * "Wait until someone writes `Pay attention to me!` in the chat and tell me"
 
-Address: `http://127.0.0.1:8356/mcp` (transport: Streamable HTTP, protocol version `2025-03-26`). AxelChat must be running.
+Address: `http://127.0.0.1:8356/mcp` (transport: Streamable HTTP). AxelChat must be running. The current version of the MCP protocol is shown in `Settings` -> `AI assistants (MCP)`.
 
 Other ways to integrate with AxelChat (HTTP requests, WebSocket) are described in the [AxelChat API documentation](docs.md).
+
+## Quick setup via AI agent
+
+The easiest way to connect is to let the AI agent set itself up:
+1. Launch AxelChat
+2. Open `Settings` -> `AI assistants (MCP)` and click `Copy prompt`
+3. Paste the copied prompt into your AI agent (Claude Code, Cursor, Cline, Codex, etc.) and follow its instructions
+
+The prompt already contains the address and the path to AxelChat on your computer and is in the language of the AxelChat interface. The agent determines which client it is running in, adds the `axelchat` MCP server to its config (showing you the change first) and checks the connection. If the agent fails, connect manually as described in [Connecting](#connecting).
 
 ## Settings
 
 The MCP server is configured in `Settings` -> `AI assistants (MCP)`:
 * `Enable MCP server` - enabled by default
 * `Read only` - enabled by default. AI assistants can only read data, tools that change AxelChat (`send_message`, `edit_message`, `delete_messages`, `clear_chat`, `set_service_enabled`) can't be called. The AI assistant is informed about this mode, so if you ask it to do something that is not allowed, it will tell you which setting to disable
-* `Allow access from other devices` - disabled by default. Allows connecting to MCP from other devices on the local network, the addresses are shown on the same settings page
+* `Allow access from other devices` - disabled by default. Allows connecting to MCP from other devices on the local network at `http://<IP address of the computer with AxelChat>:8356/mcp`
 
 ## Connecting
 
@@ -35,7 +44,7 @@ Clients supporting HTTP transport (Cursor, Cline, etc.), add to the MCP config:
 }
 ```
 
-Clients supporting only stdio (e.g. Claude Desktop) launch AxelChat with the `--mcp-stdio` argument. In this mode AxelChat doesn't open windows, it only forwards messages between the client and the already running AxelChat, so AxelChat must be running. The ready-made config with the path to AxelChat on your computer can be copied in `Settings` -> `AI assistants (MCP)`:
+Clients supporting only stdio (e.g. Claude Desktop) launch AxelChat with the `--mcp-stdio` argument. In this mode AxelChat doesn't open windows, it only forwards messages between the client and the already running AxelChat, so AxelChat must be running. The ready-made config with the path to AxelChat on your computer can be copied in `Settings` -> `AI assistants (MCP)`, section `MCP config for manual setup`:
 ```JSON
 {
     "mcpServers": {
