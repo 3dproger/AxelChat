@@ -414,17 +414,21 @@ Clients supporting HTTP transport (Cursor, Cline, etc.), add to the MCP config:
 }
 ```
 
-Clients supporting only stdio (e.g. Claude Desktop) can connect through a proxy:
+Clients supporting only stdio (e.g. Claude Desktop) launch AxelChat with the `--mcp-stdio` argument. In this mode AxelChat doesn't open windows, it only forwards messages between the client and the already running AxelChat, so AxelChat must be running. The ready-made config with the path to AxelChat on your computer can be copied in `Settings` -> `AI assistants (MCP)`:
 ```JSON
 {
     "mcpServers": {
         "axelchat": {
-            "command": "npx",
-            "args": ["mcp-remote", "http://127.0.0.1:8356/mcp"]
+            "command": "<path to AxelChat>",
+            "args": ["--mcp-stdio"]
         }
     }
 }
 ```
+Path to AxelChat:
+* Windows: `<path to AxelChat folder>\\AxelChat.exe` (the folder where AxelChat is installed, backslashes in JSON must be doubled)
+* macOS usually: `/Applications/AxelChat.app/Contents/MacOS/AxelChat`
+* Linux: path to the AppImage file
 
 ### Tools
 
