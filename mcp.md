@@ -104,7 +104,7 @@ Parameters:
 * `instanceId` - connect an already added instance (see `get_state`)
 * `addNew` - `true` to add one more instance of the platform (e.g. a second channel) instead of reusing the first one. It depends on the subscription
 
-What to pass as `value` for platforms that are not connected by a channel:
+What to pass as `value` for platforms that are not connected by a channel (The list is current as of version 0.50.0):
 
 | Platform | `value` |
 |---|---|
