@@ -96,7 +96,7 @@ Troubleshooting:
 
 ## Connecting to a stream
 
-The assistant can connect AxelChat to a stream itself, for example: "Connect AxelChat to https://www.youtube.com/@lofigirl" or "Connect my Telegram bot, the token is ...". The `connect_service` tool adds the platform if you haven't added it yet, enables it and starts connecting. Requires `Read only` to be disabled. After that the assistant checks the result with `get_state` or `diagnose_service`.
+The assistant can connect AxelChat to a stream itself, for example: "Connect AxelChat to https://www.youtube.com/@lofigirl" or "Connect my Telegram bot, the token is ...". Please note that the token will remain in the chat history with the AI ​​assistant; therefore, for security reasons, consider connecting it manually. The `connect_service` tool adds the platform if you haven't added it yet, enables it and starts connecting. Requires `Read only` to be disabled. After that the assistant checks the result with `get_state` or `diagnose_service`.
 
 Parameters:
 * `value` - what you would type into the main field of the platform: a link or a channel name for streaming platforms. For platforms without channels it is the secret they use instead (see the table below)
