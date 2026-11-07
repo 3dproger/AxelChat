@@ -25,7 +25,7 @@ The prompt already contains the address and the path to AxelChat on your compute
 
 The MCP server is configured in `Settings` -> `AI assistants (MCP)`:
 * `Enable MCP server` - enabled by default
-* `Read only` - enabled by default. AI assistants can only read data, tools that change AxelChat (`send_message`, `edit_message`, `delete_messages`, `clear_chat`, `set_service_enabled`) can't be called. The AI assistant is informed about this mode, so if you ask it to do something that is not allowed, it will tell you which setting to disable
+* `Read only` - enabled by default. AI assistants can only read data, tools that change AxelChat (`send_message`, `edit_message`, `delete_messages`, `clear_chat`, `set_service_enabled`, `connect_service`) can't be called. The AI assistant is informed about this mode, so if you ask it to do something that is not allowed, it will tell you which setting to disable
 * `Allow access from other devices` - disabled by default. Allows connecting to MCP from other devices on the local network at `http://<IP address of the computer with AxelChat>:8356/mcp`
 
 ## Connecting
@@ -78,6 +78,8 @@ Chat and state:
 | `delete_messages` | Delete messages in AxelChat and its widgets (they are not deleted on platforms). Parameters: `ids` (array of message IDs) and/or `userId` (delete all messages of the user, `authorId` of a message). Returns `deletedMessages` (IDs of deleted messages), `alreadyDeletedMessages` (IDs from `ids` that were already deleted), `notFoundMessages` (IDs from `ids` that were not found) and `notFoundUser` (if the user with `userId` was not found) |
 | `clear_chat` | Clear the chat in AxelChat and its widgets (doesn't affect platforms) |
 | `set_service_enabled` | Enable or disable a platform. Parameters: `instanceId`, `enabled` |
+| `list_service_types` | Platforms that can be added to AxelChat (`typeId` for `connect_service`) and the instances already added |
+| `connect_service` | Connect AxelChat to a stream or a channel, see [Connecting to a stream](#connecting-to-a-stream). Parameters: `value` (link, channel name, token or widget address), `serviceType` (platform ID, optional for links), `instanceId`, `addNew` |
 
 Troubleshooting:
 
@@ -88,9 +90,42 @@ Troubleshooting:
 | `list_log_sessions` | List of app launches with logs |
 | `read_logs` | Read logs. Parameters: `count`, `minLevel` (`debug`, `info`, `warning`, `critical`, `fatal`), `contains`, `session` (`current`, `previous` or a name from `list_log_sessions`) |
 
-`send_message`, `edit_message`, `delete_messages`, `clear_chat` and `set_service_enabled` change the state of AxelChat, so they are available only if `Read only` is disabled in the settings. They are marked as non-read-only so that the AI client may ask you for confirmation; `delete_messages` and `clear_chat` are additionally marked as destructive. Each action is a separate tool, so in the AI client you can allow, for example, adding messages without confirmation but keep confirmation for deleting. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
+`send_message`, `edit_message`, `delete_messages`, `clear_chat`, `set_service_enabled` and `connect_service` change the state of AxelChat, so they are available only if `Read only` is disabled in the settings. They are marked as non-read-only so that the AI client may ask you for confirmation; `delete_messages` and `clear_chat` are additionally marked as destructive. Each action is a separate tool, so in the AI client you can allow, for example, adding messages without confirmation but keep confirmation for deleting. The full up-to-date list of tools with parameters is returned by the `tools/list` method.
 
 `afterId` - ID of a message (e.g. the last message the assistant has seen). If set, only newer messages are returned, starting from the oldest of them (at most `count`), so if exactly `count` messages are returned, there may be more: request again with the ID of the last returned message. Without `afterId` the last `count` messages are returned. If the message with this ID is no longer in AxelChat (e.g. the chat was cleared), the last `count` messages are returned.
+
+## Connecting to a stream
+
+The assistant can connect AxelChat to a stream itself, for example: "Connect AxelChat to https://www.youtube.com/@lofigirl" or "Connect my Telegram bot, the token is ...". The `connect_service` tool adds the platform if you haven't added it yet, enables it and starts connecting. Requires `Read only` to be disabled. After that the assistant checks the result with `get_state` or `diagnose_service`.
+
+Parameters:
+* `value` - what you would type into the main field of the platform: a link or a channel name for streaming platforms. For platforms without channels it is the secret they use instead (see the table below)
+* `serviceType` - [platform ID](docs.md#list-of-known-axelchat-platform-ids) (see `list_service_types`). Can be omitted if `value` is a link: the platform is detected by it. If the link fits several platforms (e.g. a YouTube channel link fits `youtube` and `youtubeshorts`), the tool returns an error and the assistant has to specify `serviceType`
+* `instanceId` - connect an already added instance (see `get_state`)
+* `addNew` - `true` to add one more instance of the platform (e.g. a second channel) instead of reusing the first one. It depends on the subscription
+
+What to pass as `value` for platforms that are not connected by a channel:
+
+| Platform | `value` |
+|---|---|
+| Telegram, Discord | Bot token |
+| DonatePay.ru, DonatePay.eu | API token |
+| DonateX, Donatty, donate.stream, iHAQ Donate, StreamElements | Widget address |
+| Streamlabs | Socket API token |
+| Meme Alerts | Link for OBS |
+
+Some platforms can't be connected by the assistant, because they need an action from you. The tool then doesn't change anything (a platform added for the attempt is removed) and returns `"supported": false` with `reason` and `userAction`, and the assistant explains to you what to do:
+* DonationAlerts - authorization in the browser (OAuth)
+* Boosty - logging in to the account in the embedded browser
+* OBS - address, port and password of obs-websocket in the platform settings
+
+In this case add the platform yourself: `Connections` -> add the platform -> follow the instructions in its settings.
+
+Example:
+```
+curl -X POST http://127.0.0.1:8356/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"connect_service\",\"arguments\":{\"value\":\"https://www.youtube.com/@lofigirl\",\"serviceType\":\"youtube\"}}}"
+```
+The token is not repeated in the reply. Keep in mind that a token you give to the assistant is sent to the AI provider you use, and may remain in the history of the conversation. If that is undesirable, enter tokens in the platform settings yourself.
 
 ## Reacting to events
 
