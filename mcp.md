@@ -145,7 +145,7 @@ Result:
                 "id": "<message_id>",
                 "service": "twitch",
                 "time": "2026-11-01T07:18:25",
-                "text": "Here is the DATA",
+                "text": "Here is the message text",
                 "authorId": "<user_id>",
                 "authorName": "<username>"
             }
