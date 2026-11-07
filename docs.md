@@ -1,6 +1,6 @@
 # AxelChat API
 
-The AxelChat API provides the ability to integrate third-party software with AxelChat, for example to read messages and viewer information. There are currently four ways to read data from AxelChat: `HTTP requests`, `WebSocket`, `MCP` (for AI assistants) and `Output to files`
+The AxelChat API provides the ability to integrate third-party software with AxelChat, for example to read messages and viewer information. There are currently three ways to read data from AxelChat: `HTTP requests`, `WebSocket` and `Output to files`
 
 ## HTTP requests
 
@@ -380,10 +380,6 @@ If the server fails to send this message for an extended period, it indicates th
 
 New message types may appear in future updates of AxelChat. Also, existing message types may be changed, usually by adding new data to the message object. Stay tuned for updates
 
-## MCP (for AI assistants)
-
-AxelChat has a built-in  server for AI assistants (Claude, Cursor, Cline and others), see [MCP documentation](mcp.md)
-
 ## Output to files
 
 This method is considered obsolete and may no longer be supported in the future.
@@ -397,7 +393,7 @@ To connect to AxelChat using file reading, follow these steps:
 ## List of known AxelChat platform IDs
 This list is current as of version 0.44.0
 ```JSON
-["bigolive", "boosty", "chzzk", "discord", "dlive", "donatepayeu", "donatepayru", "donatestream", "donationalerts", "facebook", "goodgame", "kick", "livacha", "loco", "mcp", "memealerts", "nekolive", "niconico", "nimotv", "nuum", "odysee", "ok", "parti", "picarto", "rumble", "rutube", "software", "soopglobal", "soopkorea", "steam", "streamelements", "streamlabs", "telegram", "tiktok", "trovo", "twitch", "unknown", "vaughnlive", "vimm", "vkvideo", "vkvideolive", "xcom", "youtube", "youtubeshorts"]
+["bigolive", "boosty", "chzzk", "discord", "dlive", "donatepayeu", "donatepayru", "donatestream", "donationalerts", "facebook", "goodgame", "kick", "livacha", "loco", "memealerts", "nekolive", "niconico", "nimotv", "nuum", "odysee", "ok", "parti", "picarto", "rumble", "rutube", "software", "soopglobal", "soopkorea", "steam", "streamelements", "streamlabs", "telegram", "tiktok", "trovo", "twitch", "unknown", "vaughnlive", "vimm", "vkvideo", "vkvideolive", "xcom", "youtube", "youtubeshorts"]
 ```
 You can find the most up-to-date list of platforms for your version this way:
 1. Enable `Output to a files` (`Settings`->`Output to a files`)
