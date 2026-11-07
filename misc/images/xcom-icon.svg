@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 49.8 45"
+   style="enable-background:new 0 0 49.8 45;"
+   xml:space="preserve"
+   sodipodi:docname="xcom-icon.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:ns="ns_sfw;"><defs
+   id="defs1" /><sodipodi:namedview
+   id="namedview1"
+   pagecolor="#ffffff"
+   bordercolor="#111111"
+   borderopacity="1"
+   inkscape:showpageshadow="0"
+   inkscape:pageopacity="0"
+   inkscape:pagecheckerboard="1"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="25.177778"
+   inkscape:cx="24.902913"
+   inkscape:cy="22.5"
+   inkscape:window-width="2560"
+   inkscape:window-height="1351"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="g1" />
+ <style
+   type="text/css"
+   id="style1">
+  .st0{fill:#FFFFFF;}
+ </style>
+ <metadata
+   id="metadata1">
+  <ns:sfw>
+   <ns:slices>
+   </ns:slices>
+   <ns:sliceSourceBounds
+   bottomLeftOrigin="true"
+   height="45"
+   width="49.8"
+   x="-67.2"
+   y="-209.8">
+   </ns:sliceSourceBounds>
+  </ns:sfw>
+ </metadata>
+ <g
+   id="g1">
+  <path
+   id="rect1"
+   style="enable-background:new 0 0 49.8 45;stroke-width:30;paint-order:markers stroke fill"
+   d="M 13.901147,1.7475729 47.343335,44.126214 36.381288,44.364522 4.0909089,1.7078575 Z"
+   sodipodi:nodetypes="ccccc" /><path
+   class="st0"
+   d="M39.2,0h7.6L30.2,19.1L49.8,45H34.4l-12-15.7L8.6,45H1l17.8-20.4L0,0h15.8l10.9,14.4L39.2,0z M36.5,40.4h4.2   L13.5,4.3H8.9L36.5,40.4z"
+   id="path1">
+  </path>
+ </g>
+</svg>

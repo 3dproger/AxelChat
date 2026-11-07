@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 105 105"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="casta-dialog.svg"
+   width="105"
+   height="105"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs5" />
+  <sodipodi:namedview
+     id="namedview5"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.1936364"
+     inkscape:cx="189.63945"
+     inkscape:cy="-13.903854"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5" />
+  <path
+     fill="#b58ade"
+     d="m 32.293825,5.0145048 h 40 c 16,0 25,11.0000002 25,25.0000002 q 0,4 -5,4 h -16 q -4,0 -5,-4 -2,-3 -7,-3 h -29 q -6,0 -6,7 v 28 q 0,7 7,7 h 30 q 6,0 8,-7 h 24 c -2,18 -12,30 -29,30 h -32 l -20,11.999995 q -3,2 -2,-3 l 4,-11.999995 q -11.9999999,-7 -11.9999999,-22 v -36 q 0,-26.0000002 24.9999999,-26.0000002 z"
+     id="path1" />
+  <path
+     fill="#b58ade"
+     d="m 46.293825,40.014505 q 0,-4 4,-2 l 14,9 q 4,2 0,5 l -14,9 q -4,2 -4,-2 z"
+     id="path2" />
+</svg>
