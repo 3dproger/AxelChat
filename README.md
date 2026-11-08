@@ -132,18 +132,7 @@ Latest version with Windows 7/8/8.1 support: [0.41.2](https://github.com/3dproge
 - [x] Piczel.tv
 - [x] Starvios
 - [x] Casta.is
-
-# Platforms that are not yet supported
-- [ ] Icecast
-- [ ] RobotStreamer
-- [ ] MakerTube
-- [ ] shareplay.tv
-- [ ] Rooter
-- [ ] Douyin
-- [ ] StreamElements
-- [ ] Patreon
-- [ ] Chatterino Homies Edition
-- [ ] Many others. **You can suggest [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform) or [here](https://github.com/3dproger/AxelChat/issues)**
+- [x] **You can also suggest other platforms [here](https://docs.google.com/forms/d/e/1FAIpQLSeWahZ2AiyrPNtoF7LLrs3hO4ylYJmth4PmNvjSGsDxiwuwZg/viewform) or [here](https://github.com/3dproger/AxelChat/issues)**
 
 # FAQ
 - Windows: At startup application errors about missing DLL files are displayed, for example `MSVCP140.dll`, `VCRUNTIME140.dll` or other similar. - You need to install `Microsoft Visual C++ Redistributable` from https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist or by file `vc_redist.x64.exe` located in the application folder
